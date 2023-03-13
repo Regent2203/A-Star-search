@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed05ec5d6fafd4a44bf5cd529c5ae448, type: 3}
+  m_Name: CellSprites
+  m_EditorClassIdentifier: 
+  Normal: {fileID: 21300000, guid: 4dd7eae77fac7bc44b7908a1d4f635c9, type: 3}
+  Blocked: {fileID: 21300000, guid: 261a3ba2840fae948bb18ad026b5cbbb, type: 3}
+  Start: {fileID: 21300000, guid: d55c322f62a375b448137a676a001c0d, type: 3}
+  Finish: {fileID: 21300000, guid: 4846d6b2c9bd8664eb1cfead16e43252, type: 3}
+  Way: {fileID: 21300000, guid: 8aed04b11e345dc45a9d69ab610d44c1, type: 3}
