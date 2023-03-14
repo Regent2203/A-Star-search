@@ -6,11 +6,22 @@ namespace Nodes.Cells
     public class CellSprites : ScriptableObject
     {
         [Header("Sprites")]
-        public Sprite Normal;
-        public Sprite Blocked;
-        public Sprite Start;
-        public Sprite Finish;
-        public Sprite Way;
+        [SerializeField]
+        private Sprite _normal = default;
+        [SerializeField]
+        private Sprite _blocked = default;
+        [SerializeField]
+        private Sprite _start = default;
+        [SerializeField]
+        private Sprite _finish = default;
+        [SerializeField]
+        private Sprite _way = default;
+
+        public Sprite Normal => _normal;
+        public Sprite Blocked => _blocked;
+        public Sprite Start => _start;
+        public Sprite Finish => _finish;
+        public Sprite Way => _way;
 
 #if UNITY_EDITOR
         [MenuItem("Assets/Create/ScriptableObject/CellSprites")]
