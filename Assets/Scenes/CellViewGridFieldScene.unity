@@ -1468,7 +1468,7 @@ GameObject:
   - component: {fileID: 1877987553}
   - component: {fileID: 1877987555}
   m_Layer: 0
-  m_Name: GridField
+  m_Name: CellViewGridField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1494,7 +1494,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877987552}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1513,11 +1513,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _grid: {fileID: 1877987553}
-  _nodePrefab: {fileID: 114955348567688574, guid: 4f308c0d114b35741af95ce9a758d700,
-    type: 3}
   _size: {x: 10, y: 10}
   _doCentering: 1
-  _timeDelay: 0.1
+  _cellViewPrefab: {fileID: 114955348567688574, guid: 4f308c0d114b35741af95ce9a758d700,
+    type: 3}
 --- !u!1 &1887786348
 GameObject:
   m_ObjectHideFlags: 0

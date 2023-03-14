@@ -3,12 +3,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Algorithm
+namespace Nodes
 {
     public interface INode
     {
         List<ILink> Links { get; }
+        bool IsObstacle { get; }
 
         Vector3 GetCenter();
+        void DrawPath();
+        void ResetState();
     }
 }

@@ -1,4 +1,4 @@
-﻿using Algorithm;
+﻿using Nodes;
 
 namespace Links
 {

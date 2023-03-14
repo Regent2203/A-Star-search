@@ -1,4 +1,4 @@
-﻿namespace Demo
+﻿namespace Fields
 {
     public enum FieldMode
     {

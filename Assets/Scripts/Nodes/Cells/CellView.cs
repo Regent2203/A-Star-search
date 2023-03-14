@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using Algorithm;
-using Demo;
 using System.Collections.Generic;
+using Fields;
 using Links;
 
-namespace Cells
+namespace Nodes.Cells
 {
-    public class CellView : MonoBehaviour, INode
+    public class CellView : MonoBehaviour, INode, IView
     {
         [SerializeField]
         private CellSprites _cellSprites = default;
@@ -32,14 +31,26 @@ namespace Cells
             _index = index;
         }
 
-        public Vector2 GetSize()
-        {
-            return _boxCollider2D.size * (Vector2)transform.localScale;
-        }
+        public bool IsObstacle => CellState == CellState.Blocked;
 
         public Vector3 GetCenter()
         {
             return _boxCollider2D.bounds.center;
+        }
+
+        public void DrawPath()
+        {
+            ChangeState(CellState.Way);
+        }
+
+        public void ResetState()
+        {
+            ChangeState(CellState.Normal);
+        }
+
+        public Vector2 GetSize()
+        {
+            return _boxCollider2D.size * (Vector2)transform.localScale;
         }
 
         public void SetScale(Vector2 scale)
@@ -80,25 +91,23 @@ namespace Cells
             }
         }
 
-        public void ChangeState(CellState state)
+        private void ChangeState(CellState newState)
         {
-            _cellState = state;
+            _cellState = newState;
 
             //unique cells - start and finish
-            switch (state)
+            switch (newState)
             {
                 case CellState.Start:
-                    (_field.StartNode as CellView)?.ChangeState(CellState.Normal);
-                    _field.SetStartNode((INode)this);
+                    _field.SetStartNode(this);
                     break;
                 case CellState.Finish:
-                    (_field.FinishNode as CellView)?.ChangeState(CellState.Normal);
                     _field.SetFinishNode(this);
                     break;
             }
 
             //changing sprite
-            switch (state)
+            switch (newState)
             {
                 case CellState.Normal:
                     _spriteRenderer.sprite = _cellSprites.Normal;

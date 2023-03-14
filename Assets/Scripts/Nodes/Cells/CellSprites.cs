@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Cells
+namespace Nodes.Cells
 {
     public class CellSprites : ScriptableObject
     {
