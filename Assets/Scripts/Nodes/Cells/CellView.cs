@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using Fields;
 using Links;
+using Nodes.Cells.CellStates;
 
 namespace Nodes.Cells
 {
@@ -15,7 +16,7 @@ namespace Nodes.Cells
         [SerializeField]
         private BoxCollider2D _boxCollider2D = default;
 
-        private CellState _cellState = CellState.Normal;
+        private CellState _cellState;
         private Vector2Int _index;
         private List<ILink> _links = new List<ILink>();
         private AbstractField _field;
@@ -29,9 +30,11 @@ namespace Nodes.Cells
         {
             _field = field;
             _index = index;
+
+            ResetState();
         }
 
-        public bool IsObstacle => CellState == CellState.Blocked;
+        public bool IsObstacle => CellState is CellStateBlocked;
 
         public Vector3 GetCenter()
         {
@@ -40,12 +43,12 @@ namespace Nodes.Cells
 
         public void DrawPath()
         {
-            ChangeState(CellState.Way);
+            ChangeState(new CellStateWay(this, _field, _spriteRenderer, _cellSprites));
         }
 
         public void ResetState()
         {
-            ChangeState(CellState.Normal);
+            ChangeState(new CellStateNormal(this, _field, _spriteRenderer, _cellSprites));
         }
 
         public Vector2 GetSize()
@@ -60,71 +63,12 @@ namespace Nodes.Cells
 
         private void OnMouseOver()
         {
-            if (_field.Mode == FieldMode.SelectObstacles)
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    if (_cellState == CellState.Normal)
-                        ChangeState(CellState.Blocked);
-                }
-                else
-                if (Input.GetMouseButton(1))
-                {
-                    if (_cellState == CellState.Blocked)
-                        ChangeState(CellState.Normal);
-                }
-            }
-            else
-            if (_field.Mode == FieldMode.SelectStartFinish)
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    if (_cellState == CellState.Normal)
-                        ChangeState(CellState.Start);
-                }
-                else
-                if (Input.GetMouseButton(1))
-                {
-                    if (_cellState == CellState.Normal)
-                        ChangeState(CellState.Finish);
-                }
-            }
+            _cellState.OnMouseOver();            
         }
 
-        private void ChangeState(CellState newState)
+        public void ChangeState(CellState newState)
         {
             _cellState = newState;
-
-            //unique cells - start and finish
-            switch (newState)
-            {
-                case CellState.Start:
-                    _field.SetStartNode(this);
-                    break;
-                case CellState.Finish:
-                    _field.SetFinishNode(this);
-                    break;
-            }
-
-            //changing sprite
-            switch (newState)
-            {
-                case CellState.Normal:
-                    _spriteRenderer.sprite = _cellSprites.Normal;
-                break;
-                case CellState.Blocked:
-                    _spriteRenderer.sprite = _cellSprites.Blocked;
-                break;
-                case CellState.Start:
-                    _spriteRenderer.sprite = _cellSprites.Start;
-                    break;
-                case CellState.Finish:
-                    _spriteRenderer.sprite = _cellSprites.Finish;
-                    break;
-                case CellState.Way:
-                    _spriteRenderer.sprite = _cellSprites.Way;
-                    break;
-            }
         }
 
         private void OnDrawGizmos()
