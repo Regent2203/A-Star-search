@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Algorithm
+namespace Core.SearchAlgorithms
 {
     public class PriorityQueue<T>
     {

@@ -1,30 +1,13 @@
-﻿using Fields;
-using UnityEngine;
-using Zenject;
-using static Core.Installers.SpritesLibraryInstaller;
+﻿using UnityEngine;
 
 namespace Nodes.Cells.CellStates
 {
     public abstract class CellState
     {
-        protected CellView _cellView; //parent
-        protected AbstractField _field;
-        protected SpriteRenderer _spriteRenderer;
-        protected CellSprites _cellSprites;
+        protected Sprite _sprite;
+        protected float _weight;
 
-
-        public CellState(CellView cellView, AbstractField field, SpriteRenderer spriteRenderer, CellSprites cellSprites)
-        {
-            _field = field;
-            _cellView = cellView;
-            _spriteRenderer = spriteRenderer;
-            _cellSprites = cellSprites;
-
-            Init();
-        }
-
-        public abstract void OnMouseOver();
-
-        protected abstract void Init();
+        public Sprite Sprite => _sprite;
+        public float Weight => _weight;
     }
 }

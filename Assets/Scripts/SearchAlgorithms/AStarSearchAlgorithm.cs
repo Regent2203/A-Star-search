@@ -1,41 +1,36 @@
 ﻿using Nodes;
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 using Fields;
 
-namespace Algorithm
+namespace Core.SearchAlgorithms
 {
-    public class AStarSearchAlgorithm
+    public class AStarSearchAlgorithm : ISearchAlgorithm
     {
-        private AbstractField _field;
         private Dictionary<INode, INode> _cameFrom;
         private Dictionary<INode, float> _costSoFar;
 
 
-        public AStarSearchAlgorithm(AbstractField field)
+        public IList<INode> GetPath(AbstractField field)
         {
-            _field = field;
+            return CalculateWay(field);
         }
 
-        public IList<INode> CalculateWay()
+        private IList<INode> CalculateWay(AbstractField field)
         {
-            //Debug.Log("Path calculating started...");
-
             _cameFrom = new Dictionary<INode, INode>();
             _costSoFar = new Dictionary<INode, float>();
 
             var needToCheck = new PriorityQueue<INode>();
-            needToCheck.Enqueue(_field.StartNode, 0);
+            needToCheck.Enqueue(field.StartNode, 0);
 
-            _cameFrom[_field.StartNode] = _field.StartNode;
-            _costSoFar[_field.StartNode] = 0;
+            _cameFrom[field.StartNode] = field.StartNode;
+            _costSoFar[field.StartNode] = 0;
 
             while (needToCheck.Count > 0)
             {
                 var current = needToCheck.Dequeue();
 
-                if (current == _field.FinishNode)
+                if (current == field.FinishNode)
                 {
                     break;
                 }
@@ -46,21 +41,14 @@ namespace Algorithm
                     if (!_costSoFar.ContainsKey(link.To) || newCost < _costSoFar[link.To])
                     {
                         _costSoFar[link.To] = newCost;
-                        var priority = newCost + _field.EstimateCost(link.To, _field.FinishNode);
+                        var priority = newCost + field.EstimateCost(link.To, field.FinishNode);
                         needToCheck.Enqueue(link.To, priority);
                         _cameFrom[link.To] = current;
                     }
-
                 }
             }
-            //Debug.Log("Path calculating finished...");
 
-            return GetPath();
-        }
-
-        private IList<INode> GetPath()
-        {
-            var node = _field.FinishNode;
+            var node = field.FinishNode;
 
             if (!_cameFrom.ContainsKey(node))
             {
@@ -74,8 +62,8 @@ namespace Algorithm
             {
                 node = _cameFrom[node];
                 path.Add(node);
-                
-                if (node == _field.StartNode)
+
+                if (node == field.StartNode)
                     break;
             }
 

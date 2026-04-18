@@ -6,47 +6,40 @@ using Nodes;
 using Nodes.Cells;
 using Links;
 using Zenject;
+using Core.SearchAlgorithms;
+using Nodes.Cells.CellStates;
 
 namespace Fields
 {
-    /// <summary>
-    /// Uses CellView in grid's cells.
-    /// </summary>
-    public class CellViewGridField : AbstractGridField
+    public class CellGridField : AbstractGridField<Cell>
     {
         [SerializeField]
-        private CellView _cellViewPrefab = default;
+        private Cell _cellViewPrefab;
 
         protected override IView _nodePrefab => _cellViewPrefab;
 
-        [Inject] private IInstantiator _instantiator; //todo
+        private IInstantiator _instantiator;
 
+
+        [Inject]
+        public void Construct(IInstantiator instantiator)
+        {
+            _instantiator = instantiator;
+        }
 
         protected override void Awake()
         {
             base.Awake();
 
             //recreates links each time after we finished setting obstacles
+            /*
             ModeChangedPrevious += (prevMode) =>
             {
                 if (prevMode == DrawMode.SelectObstacles)
                     CreateLinksForNodes();
-            };
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
+            };*/
 
             CreateNodes();
-        }
-
-        public override float EstimateCost(INode node1, INode node2)
-        {
-            var p1 = node1.GetCenter();
-            var p2 = node2.GetCenter();
-
-            return Mathf.Abs(p2.x - p1.x) / _scaleMod.x + Math.Abs(p2.y - p1.y) / _scaleMod.y;
         }
 
         private void CreateNodes()
@@ -55,15 +48,11 @@ namespace Fields
             {
                 for (int j = 0; j < _gridNodes.GetLength(1); j++)
                 {
-                    var node = _instantiator.InstantiatePrefabForComponent<CellView>(
+                    var node = _instantiator.InstantiatePrefabForComponent<Cell>(
                         _cellViewPrefab,
                         transform.position + new Vector3(_cellSize.x * i, _cellSize.y * j, 0) + new Vector3(_grid.cellGap.x * i, _grid.cellGap.y * j),
                         Quaternion.identity, transform);
-
-                    node.Init(this, new Vector2Int(i, j));
-                    node.SetScale(_scaleMod);
-                    node.name = $"Cell {i},{j}";
-
+                    node.Init(new Vector2Int(i, j), _scaleFactor);
                     _gridNodes[i, j] = node;
                 }
             }
@@ -99,6 +88,28 @@ namespace Fields
                     var link = new Link(node, _gridNodes[i, j], weight);
                     node.Links.Add(link);
                 }
+            }
+        }
+
+        public override float EstimateCost(INode node1, INode node2)
+        {
+            var p1 = node1.GetCenterCoords();
+            var p2 = node2.GetCenterCoords();
+
+            return Mathf.Abs(p2.x - p1.x) / _scaleFactor.x + Math.Abs(p2.y - p1.y) / _scaleFactor.y;
+        }
+
+        public override void ShowPath(bool show, IList<INode> path)
+        {
+            if (path is null)
+                return;
+
+            int from = 1;
+            int to = path.Count - 1;
+
+            for (int i = from; i < to; i++)
+            {
+                path[i].DrawPath(show);
             }
         }
     }

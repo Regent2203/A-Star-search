@@ -7,11 +7,10 @@ namespace Nodes
 {
     public interface INode
     {
-        List<ILink> Links { get; }
-        bool IsObstacle { get; }
+        public List<ILink> Links { get; }
+        public bool IsObstacle { get; }
 
-        Vector3 GetCenter();
-        void DrawPath();
-        void ResetState();
+        public Vector3 GetCenterCoords(); //todo
+        public void DrawPath(bool draw);
     }
 }

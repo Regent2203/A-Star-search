@@ -4,7 +4,7 @@ namespace Links
 {
     public class Link : ILink
     {
-        private INode _from;
+        protected INode _from;
         protected INode _to;
         protected float _cost;
 

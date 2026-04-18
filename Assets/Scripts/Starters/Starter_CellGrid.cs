@@ -1,44 +1,39 @@
 ﻿using System;
 using UnityEngine;
-using Algorithm;
-using UI;
+using Core.SearchAlgorithms;
 using Fields;
-using Core;
+using Zenject;
 
 
 namespace Core.Starters
 {
-    public class Starter : MonoBehaviour
+    public class Starter_CellGrid : MonoBehaviour
     {
-        [SerializeField]
         private AbstractField _field;
-        [SerializeField]
-        private UICanvas _ui;
+        private ISearchAlgorithm _searchAlgorithm;
 
+
+        [Inject]
+        public void Construct(AbstractField field, ISearchAlgorithm searchAlgorithm)
+        {
+            _field = field;
+            _searchAlgorithm = searchAlgorithm;
+        }
 
         private void Start()
         {
-            _field.Initialize();
-            _ui.UIModeSwitcher.Init(_field);
 
+            /*
             _field.ModeChangedCurrent += (currMode) =>
             {
                 if (currMode == DrawMode.Launch)
                     RunAlgorithm();
-            };
-        }
-
-        private void Variant1()
-        {
-            //A-star algorithm
-            //CellView-Grid
-            //UI
+            };*/
         }
 
         private void RunAlgorithm()
         {
-            var alg = new AStarSearchAlgorithm(_field);
-            var path = alg.CalculateWay();
+            var path = _searchAlgorithm.GetPath(_field);
 
             //foreach (var node in path)
             //    Debug.Log(node);
