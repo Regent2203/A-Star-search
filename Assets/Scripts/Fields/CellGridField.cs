@@ -8,6 +8,7 @@ using Links;
 using Zenject;
 using Core.SearchAlgorithms;
 using Nodes.Cells.CellStates;
+using System.IO;
 
 namespace Fields
 {
@@ -17,7 +18,7 @@ namespace Fields
         private Cell _cellViewPrefab;
 
         protected override IView _nodePrefab => _cellViewPrefab;
-
+        private CellGridFieldEditor _fieldEditor;
         private IInstantiator _instantiator;
 
 
@@ -25,6 +26,8 @@ namespace Fields
         public void Construct(IInstantiator instantiator)
         {
             _instantiator = instantiator;
+
+            _fieldEditor = _instantiator.Instantiate<CellGridFieldEditor>();
         }
 
         protected override void Awake()
@@ -39,6 +42,15 @@ namespace Fields
                     CreateLinksForNodes();
             };*/
 
+
+            //clears path when we start changing setup
+            /*
+            ModeChangedPrevious += (prevMode) =>
+            {
+                if (prevMode == DrawMode.Launch)
+                    ShowPath(false, _path, true);
+            };*/
+
             CreateNodes();
         }
 
@@ -50,9 +62,13 @@ namespace Fields
                 {
                     var node = _instantiator.InstantiatePrefabForComponent<Cell>(
                         _cellViewPrefab,
-                        transform.position + new Vector3(_cellSize.x * i, _cellSize.y * j, 0) + new Vector3(_grid.cellGap.x * i, _grid.cellGap.y * j),
+                        transform.position + new Vector3(_grid.cellSize.x * i, _grid.cellSize.y * j, 0) + new Vector3(_grid.cellGap.x * i, _grid.cellGap.y * j),
                         Quaternion.identity, transform);
+
                     node.Init(new Vector2Int(i, j), _scaleFactor);
+                    node.CellClicked += _fieldEditor.ChangeCell;
+                    node.CellStateChanged += OnCellChanged;
+
                     _gridNodes[i, j] = node;
                 }
             }
@@ -91,26 +107,33 @@ namespace Fields
             }
         }
 
+        private void OnCellChanged(Cell cell, CellState state)
+        {
+            if (state is CellStateWay || cell.CellState is CellStateWay) //todo: fix this
+                return;
+
+            if (state is CellStateStart)
+                SetStartNode(cell);
+            else if (state is CellStateFinish)
+                SetFinishNode(cell);
+            else
+            {
+                if (_startNode == cell)
+                    SetStartNode(null);
+                if (_finishNode == cell)
+                    SetFinishNode(null);
+            }
+
+            //ShowPath(false);
+            CheckStartFinishReady();
+        }
+
         public override float EstimateCost(INode node1, INode node2)
         {
             var p1 = node1.GetCenterCoords();
             var p2 = node2.GetCenterCoords();
 
             return Mathf.Abs(p2.x - p1.x) / _scaleFactor.x + Math.Abs(p2.y - p1.y) / _scaleFactor.y;
-        }
-
-        public override void ShowPath(bool show, IList<INode> path)
-        {
-            if (path is null)
-                return;
-
-            int from = 1;
-            int to = path.Count - 1;
-
-            for (int i = from; i < to; i++)
-            {
-                path[i].DrawPath(show);
-            }
         }
     }
 }

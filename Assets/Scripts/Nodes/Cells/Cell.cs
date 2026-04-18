@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using Fields;
 using Links;
 using Nodes.Cells.CellStates;
 using Zenject;
 using System;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine.UIElements;
+using UnityEngine.EventSystems;
 
 namespace Nodes.Cells
 {
-    public class Cell : MonoBehaviour, INode, IView
+    public class Cell : MonoBehaviour, INode
     {
         [SerializeField]
         private SpriteRenderer _spriteRenderer;
@@ -23,7 +21,7 @@ namespace Nodes.Cells
         public List<ILink> Links => _links;
 
         public event Action<Cell> CellClicked;
-        public event Action<CellState> CellStateChanged;
+        public event Action<Cell, CellState> CellStateChanged;
 
         private IInstantiator _instantiator;
 
@@ -40,7 +38,7 @@ namespace Nodes.Cells
             transform.localScale = scale;
             name = $"Cell {index.x},{index.y}";
 
-            ChangeState(_instantiator.Instantiate<CellStateNormal>());
+            ResetState();
         }
 
         public bool IsObstacle => CellState is CellStateBlocked;
@@ -50,12 +48,17 @@ namespace Nodes.Cells
             return _spriteRenderer.bounds.center;
         }
 
-        public void DrawPath(bool draw)
+        public void DrawPath(bool show)
         {
-            if (draw)
+            if (show)
                 ChangeState(_instantiator.Instantiate<CellStateWay>());
             else
                 ChangeState(_instantiator.Instantiate<CellStateNormal>());
+        }
+
+        public void ResetState()
+        {
+            ChangeState(_instantiator.Instantiate<CellStateNormal>());
         }
 
         public Vector2 GetSize()
@@ -67,13 +70,15 @@ namespace Nodes.Cells
         {
             _cellState = state;
             _spriteRenderer.sprite = state.Sprite;
-
-            CellStateChanged?.Invoke(state);
+            
+            CellStateChanged?.Invoke(this, state);
         }
 
-        private void OnMouseDown()
+
+        private void OnMouseOver()
         {
-            CellClicked?.Invoke(this);
+            if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+                CellClicked?.Invoke(this);
         }
 
         private void OnDrawGizmos()
@@ -85,6 +90,5 @@ namespace Nodes.Cells
                 Gizmos.DrawLine(l.From.GetCenterCoords(), l.To.GetCenterCoords());
             }
         }
-
     }
 }

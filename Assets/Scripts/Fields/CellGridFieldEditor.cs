@@ -1,4 +1,3 @@
-using Core.Installers;
 using Nodes.Cells;
 using Nodes.Cells.CellStates;
 using UnityEngine;
@@ -9,19 +8,17 @@ namespace Fields
     public class CellGridFieldEditor
     {
         private IInstantiator _instantiator;
-        private AbstractField _field;
 
-        public CellGridFieldEditor(IInstantiator instantiator, AbstractField field)
+        public CellGridFieldEditor(IInstantiator instantiator)
         {
             _instantiator = instantiator;
-            _field = field;
         }
 
-        public void RedrawCell(Cell cell)
+        public void ChangeCell(Cell cell)
         {
             CellState state = null;
 
-            if (!Input.GetKeyDown(KeyCode.LeftAlt))
+            if (!Input.GetKey(KeyCode.LeftAlt))
             {
                 if (Input.GetMouseButton(0)) //lmb
                 {
@@ -44,7 +41,8 @@ namespace Fields
                 }
             }
 
-            cell.ChangeState(state);
+            if (state != null && cell.CellState.GetType() != state.GetType())
+                cell.ChangeState(state);
         }
     }
 }

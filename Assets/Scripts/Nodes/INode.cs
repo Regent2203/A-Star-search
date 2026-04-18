@@ -5,12 +5,12 @@ using UnityEngine;
 
 namespace Nodes
 {
-    public interface INode
+    public interface INode : IView
     {
         public List<ILink> Links { get; }
-        public bool IsObstacle { get; }
+        public bool IsObstacle { get; } //todo
 
-        public Vector3 GetCenterCoords(); //todo
-        public void DrawPath(bool draw);
+        public void DrawPath(bool show);
+        public void ResetState();
     }
 }

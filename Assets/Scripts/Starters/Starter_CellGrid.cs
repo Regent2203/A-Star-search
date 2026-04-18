@@ -22,23 +22,15 @@ namespace Core.Starters
 
         private void Start()
         {
-
-            /*
-            _field.ModeChangedCurrent += (currMode) =>
-            {
-                if (currMode == DrawMode.Launch)
-                    RunAlgorithm();
-            };*/
+            _field.StartFinishReady += RunAlgorithm;
         }
 
         private void RunAlgorithm()
         {
             var path = _searchAlgorithm.GetPath(_field);
 
-            //foreach (var node in path)
-            //    Debug.Log(node);
-
-            _field.ShowPath(true, path);
+            _field.SetPath(path);
+            _field.ShowPath(true);
         }
     }
 }
