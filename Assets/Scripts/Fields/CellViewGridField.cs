@@ -5,6 +5,7 @@ using System;
 using Nodes;
 using Nodes.Cells;
 using Links;
+using Zenject;
 
 namespace Fields
 {
@@ -18,6 +19,8 @@ namespace Fields
 
         protected override IView _nodePrefab => _cellViewPrefab;
 
+        [Inject] private IInstantiator _instantiator; //todo
+
 
         protected override void Awake()
         {
@@ -26,7 +29,7 @@ namespace Fields
             //recreates links each time after we finished setting obstacles
             ModeChangedPrevious += (prevMode) =>
             {
-                if (prevMode == FieldMode.SelectObstacles)
+                if (prevMode == DrawMode.SelectObstacles)
                     CreateLinksForNodes();
             };
         }
@@ -52,7 +55,10 @@ namespace Fields
             {
                 for (int j = 0; j < _gridNodes.GetLength(1); j++)
                 {
-                    var node = GameObject.Instantiate(_cellViewPrefab, this.transform.position + new Vector3(_cellSize.x * i, _cellSize.y * j, 0), Quaternion.identity, this.transform);
+                    var node = _instantiator.InstantiatePrefabForComponent<CellView>(
+                        _cellViewPrefab,
+                        transform.position + new Vector3(_cellSize.x * i, _cellSize.y * j, 0) + new Vector3(_grid.cellGap.x * i, _grid.cellGap.y * j),
+                        Quaternion.identity, transform);
 
                     node.Init(this, new Vector2Int(i, j));
                     node.SetScale(_scaleMod);

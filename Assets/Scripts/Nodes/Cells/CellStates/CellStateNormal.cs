@@ -1,6 +1,7 @@
 ﻿using Fields;
 using System;
 using UnityEngine;
+using static Core.Installers.SpritesLibraryInstaller;
 
 namespace Nodes.Cells.CellStates
 {
@@ -12,7 +13,7 @@ namespace Nodes.Cells.CellStates
 
         public override void OnMouseOver()
         {
-            if (_field.Mode == FieldMode.SelectObstacles)
+            if (_field.Mode == DrawMode.SelectObstacles)
             {
                 if (Input.GetMouseButton(0))
                 {
@@ -20,7 +21,7 @@ namespace Nodes.Cells.CellStates
                 }
             }
             else
-            if (_field.Mode == FieldMode.SelectStartFinish)
+            if (_field.Mode == DrawMode.SelectStartFinish)
             {
                 if (Input.GetMouseButton(0))
                 {

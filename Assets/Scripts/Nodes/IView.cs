@@ -4,6 +4,6 @@ namespace Nodes
 {
     public interface IView
     {
-        Vector2 GetSize();
+        public Vector2 GetSize();
     }
 }

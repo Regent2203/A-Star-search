@@ -1,6 +1,6 @@
 ﻿namespace Fields
 {
-    public enum FieldMode
+    public enum DrawMode
     {
         SelectObstacles = 1,
         SelectStartFinish = 2,

@@ -39,6 +39,7 @@ namespace Algorithm
 
             T bestItem = _items[bestIndex].Obj;
             _items.RemoveAt(bestIndex);
+
             return bestItem;
         }
 

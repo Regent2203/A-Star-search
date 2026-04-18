@@ -9,17 +9,17 @@ namespace Fields
     public abstract class AbstractField : MonoBehaviour //interface IField
     {
         public abstract void Initialize();
-        public FieldMode Mode { get; protected set; }
+        public DrawMode Mode { get; protected set; }
         public INode StartNode { get; protected set; }
         public INode FinishNode { get; protected set; }
 
-        public event Action<FieldMode> ModeChangedPrevious;
-        public event Action<FieldMode> ModeChangedCurrent;
+        public event Action<DrawMode> ModeChangedPrevious;
+        public event Action<DrawMode> ModeChangedCurrent;
 
         protected IList<INode> _path;
 
 
-        public void SetMode(FieldMode mode)
+        public void SetMode(DrawMode mode)
         {
             ModeChangedPrevious?.Invoke(Mode);
             Mode = mode;

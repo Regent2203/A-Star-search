@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using Fields;
 using Links;
 using Nodes.Cells.CellStates;
+using Zenject;
+using static Core.Installers.SpritesLibraryInstaller;
 
 namespace Nodes.Cells
 {
     public class CellView : MonoBehaviour, INode, IView
     {
-        [SerializeField]
-        private CellSprites _cellSprites = default;
+        [Inject]
+        private CellSprites _cellSprites;
         [SerializeField]
         private SpriteRenderer _spriteRenderer = default;
-        [SerializeField]
-        private BoxCollider2D _boxCollider2D = default;
 
         private CellState _cellState;
         private Vector2Int _index;
@@ -38,7 +38,7 @@ namespace Nodes.Cells
 
         public Vector3 GetCenter()
         {
-            return _boxCollider2D.bounds.center;
+            return _spriteRenderer.bounds.center;
         }
 
         public void DrawPath()
@@ -53,7 +53,7 @@ namespace Nodes.Cells
 
         public Vector2 GetSize()
         {
-            return _boxCollider2D.size * (Vector2)transform.localScale;
+            return _spriteRenderer.size * (Vector2)transform.localScale;
         }
 
         public void SetScale(Vector2 scale)
@@ -73,8 +73,12 @@ namespace Nodes.Cells
 
         private void OnDrawGizmos()
         {
+            Gizmos.color = Color.cyan;
+
             foreach (var l in _links)
+            {
                 Gizmos.DrawLine(l.From.GetCenter(), l.To.GetCenter());
+            }
         }
 
     }

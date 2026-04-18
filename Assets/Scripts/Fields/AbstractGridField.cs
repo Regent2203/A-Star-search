@@ -6,7 +6,7 @@ namespace Fields
     public abstract class AbstractGridField : AbstractField
     {
         [SerializeField]
-        protected Grid _grid = default;
+        protected Grid _grid;
         [SerializeField]
         protected Vector2Int _size = new Vector2Int(10, 10);
         [SerializeField]
@@ -24,7 +24,7 @@ namespace Fields
             //clears path when we start changing setup
             ModeChangedPrevious += (prevMode) =>
             {
-                if (prevMode == FieldMode.Launch)
+                if (prevMode == DrawMode.Launch)
                     ShowPath(false, _path, true);
             };
         }

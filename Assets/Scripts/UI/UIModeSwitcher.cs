@@ -26,19 +26,19 @@ namespace UI
         public void SwitchModeObstacles(bool value)
         {
             if (value)
-                _field.SetMode(FieldMode.SelectObstacles);
+                _field.SetMode(DrawMode.SelectObstacles);
         }
 
         public void SwitchModeStartAndFinish(bool value)
         {
             if (value)
-                _field.SetMode(FieldMode.SelectStartFinish);
+                _field.SetMode(DrawMode.SelectStartFinish);
         }
 
         public void SwitchModeLaunch(bool value)
         {
             if (value)
-                _field.SetMode(FieldMode.Launch);
+                _field.SetMode(DrawMode.Launch);
         }
     }
 }
