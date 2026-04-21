@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Nodes.Cells.CellStates
+namespace Core.Nodes.Cells
 {
-    public abstract class CellState
+    public abstract class CellType
     {
         protected Sprite _sprite;
         protected float _weight;

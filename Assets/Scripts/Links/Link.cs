@@ -1,19 +1,19 @@
-﻿using Nodes;
+﻿using Core.Nodes;
 
-namespace Links
+namespace Core.Links
 {
-    public class Link : ILink
+    public class Link<T> : ILink<T> where T : INode<T>
     {
-        protected INode _from;
-        protected INode _to;
+        protected T _from;
+        protected T _to;
         protected float _cost;
 
-        public INode From => _from;
-        public INode To => _to;
+        public T From => _from;
+        public T To => _to;
         public float Cost => _cost;
 
 
-        public Link(INode from, INode to, float cost)
+        public Link(T from, T to, float cost)
         {
             _from = from;
             _to = to;

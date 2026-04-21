@@ -1,16 +1,10 @@
-﻿using Links;
-using System;
+﻿using Core.Links;
 using System.Collections.Generic;
-using UnityEngine;
 
-namespace Nodes
+namespace Core.Nodes
 {
-    public interface INode : IView
+    public interface INode<T> : IView
     {
-        public List<ILink> Links { get; }
-        public bool IsObstacle { get; } //todo
-
-        public void DrawPath(bool show);
-        public void ResetState();
+        public List<ILink<T>> Links { get; }
     }
 }

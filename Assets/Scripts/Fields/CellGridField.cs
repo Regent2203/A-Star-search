@@ -1,16 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
-using Nodes;
-using Nodes.Cells;
-using Links;
+using Core.Nodes;
+using Core.Nodes.Cells;
+using Core.Links;
 using Zenject;
-using Core.SearchAlgorithms;
-using Nodes.Cells.CellStates;
-using System.IO;
 
-namespace Fields
+namespace Core.Fields
 {
     public class CellGridField : AbstractGridField<Cell>
     {
@@ -18,7 +13,7 @@ namespace Fields
         private Cell _cellViewPrefab;
 
         protected override IView _nodePrefab => _cellViewPrefab;
-        private CellGridFieldEditor _fieldEditor;
+        private CellPainter _fieldEditor;
         private IInstantiator _instantiator;
 
 
@@ -27,7 +22,7 @@ namespace Fields
         {
             _instantiator = instantiator;
 
-            _fieldEditor = _instantiator.Instantiate<CellGridFieldEditor>();
+            _fieldEditor = _instantiator.Instantiate<CellPainter>();
         }
 
         protected override void Awake()
@@ -66,8 +61,8 @@ namespace Fields
                         Quaternion.identity, transform);
 
                     node.Init(new Vector2Int(i, j), _scaleFactor);
-                    node.CellClicked += _fieldEditor.ChangeCell;
-                    node.CellStateChanged += OnCellChanged;
+                    node.CellClicked += _fieldEditor.ChangeCellType;
+                    node.CellTypeChanged += OnCellChanged;
 
                     _gridNodes[i, j] = node;
                 }
@@ -94,46 +89,28 @@ namespace Fields
             }
             
 
-            void TryCreateLink(int i, int j, INode node, float weight)
+            void TryCreateLink(int i, int j, Cell node, float weight)
             {
                 if (_gridNodes.IndexExists(i) && _gridNodes.IndexExists(j))
                 {
-                    if (_gridNodes[i, j].IsObstacle)
-                        return;
-
-                    var link = new Link(node, _gridNodes[i, j], weight);
+                    var link = new Link<Cell>(node, _gridNodes[i, j], weight);
                     node.Links.Add(link);
                 }
             }
         }
 
-        private void OnCellChanged(Cell cell, CellState state)
+        private void OnCellChanged(Cell cell, CellType state)
         {
-            if (state is CellStateWay || cell.CellState is CellStateWay) //todo: fix this
-                return;
-
-            if (state is CellStateStart)
-                SetStartNode(cell);
-            else if (state is CellStateFinish)
-                SetFinishNode(cell);
-            else
-            {
+            //todo
+            {/*
                 if (_startNode == cell)
                     SetStartNode(null);
                 if (_finishNode == cell)
-                    SetFinishNode(null);
+                    SetFinishNode(null);*/
             }
 
             //ShowPath(false);
-            CheckStartFinishReady();
-        }
-
-        public override float EstimateCost(INode node1, INode node2)
-        {
-            var p1 = node1.GetCenterCoords();
-            var p2 = node2.GetCenterCoords();
-
-            return Mathf.Abs(p2.x - p1.x) / _scaleFactor.x + Math.Abs(p2.y - p1.y) / _scaleFactor.y;
+            //CheckStartFinishReady();
         }
     }
 }

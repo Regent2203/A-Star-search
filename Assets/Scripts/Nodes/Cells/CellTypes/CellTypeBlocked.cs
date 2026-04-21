@@ -1,10 +1,10 @@
 ﻿using Core.Installers;
 
-namespace Nodes.Cells.CellStates
+namespace Core.Nodes.Cells
 {
-    public class CellStateBlocked : CellState
+    public class CellTypeBlocked : CellType
     {
-        public CellStateBlocked(CellSprites cellSprites)
+        public CellTypeBlocked(CellSprites cellSprites)
         {
             _sprite = cellSprites.Blocked;
             _weight = float.PositiveInfinity;

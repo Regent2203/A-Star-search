@@ -1,27 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using Links;
-using Nodes.Cells.CellStates;
+using Core.Links;
 using Zenject;
 using System;
-using UnityEngine.EventSystems;
 
-namespace Nodes.Cells
+namespace Core.Nodes.Cells
 {
-    public class Cell : MonoBehaviour, INode
+    public class Cell : MonoBehaviour, INode<Cell>
     {
+        [SerializeField]
+        private GameObject _pathMarker;
+        [SerializeField]
+        private GameObject _startMarker;
+        [SerializeField]
+        private GameObject _finishMarker;
+
         [SerializeField]
         private SpriteRenderer _spriteRenderer;
 
-        private CellState _cellState;
         private Vector2Int _index;
-        private List<ILink> _links = new List<ILink>();
+        private CellType _cellType;
+        private List<ILink<Cell>> _links = new();
 
-        public CellState CellState => _cellState;
-        public List<ILink> Links => _links;
+        public CellType CellType => _cellType;
+        public List<ILink<Cell>> Links => _links;
 
         public event Action<Cell> CellClicked;
-        public event Action<Cell, CellState> CellStateChanged;
+        public event Action<Cell, CellType> CellTypeChanged;
 
         private IInstantiator _instantiator;
 
@@ -38,46 +43,49 @@ namespace Nodes.Cells
             transform.localScale = scale;
             name = $"Cell {index.x},{index.y}";
 
-            ResetState();
+            ChangeType(_instantiator.Instantiate<CellTypeNormal>());
+
+            ShowPathMarker(false);
+            ShowStartMarker(false);
+            ShowFinishMarker(false);
         }
+        
 
-        public bool IsObstacle => CellState is CellStateBlocked;
-
-        public Vector3 GetCenterCoords()
+        public void ShowPathMarker(bool show)
         {
-            return _spriteRenderer.bounds.center;
+            _pathMarker.SetActive(show);
+        }
+        public void ShowStartMarker(bool show)
+        {
+            _startMarker.SetActive(show);
+        }
+        public void ShowFinishMarker(bool show)
+        {
+            _finishMarker.SetActive(show);
         }
 
-        public void DrawPath(bool show)
-        {
-            if (show)
-                ChangeState(_instantiator.Instantiate<CellStateWay>());
-            else
-                ChangeState(_instantiator.Instantiate<CellStateNormal>());
-        }
-
-        public void ResetState()
-        {
-            ChangeState(_instantiator.Instantiate<CellStateNormal>());
-        }
 
         public Vector2 GetSize()
         {
             return _spriteRenderer.size * (Vector2)transform.localScale;
         }
-
-        public void ChangeState(CellState state)
+        public Vector3 GetCenterCoords()
         {
-            _cellState = state;
-            _spriteRenderer.sprite = state.Sprite;
-            
-            CellStateChanged?.Invoke(this, state);
+            return _spriteRenderer.bounds.center;
         }
 
 
+        public void ChangeType(CellType cellType)
+        {
+            _cellType = cellType;
+            _spriteRenderer.sprite = cellType.Sprite;
+            
+            CellTypeChanged?.Invoke(this, cellType);
+        }
+
         private void OnMouseOver()
         {
-            if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+            if (Input.anyKey)
                 CellClicked?.Invoke(this);
         }
 

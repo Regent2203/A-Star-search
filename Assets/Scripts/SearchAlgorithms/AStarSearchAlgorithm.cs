@@ -1,36 +1,31 @@
-﻿using Nodes;
+﻿using Core.HeuristicFunctions;
+using Core.Nodes;
 using System.Collections.Generic;
-using Fields;
 
 namespace Core.SearchAlgorithms
 {
-    public class AStarSearchAlgorithm : ISearchAlgorithm
+    public class AStarSearchAlgorithm<T> : ISearchAlgorithm<T> where T : INode<T>
     {
-        private Dictionary<INode, INode> _cameFrom;
-        private Dictionary<INode, float> _costSoFar;
+        private Dictionary<T, T> _cameFrom;
+        private Dictionary<T, float> _costSoFar;
 
 
-        public IList<INode> GetPath(AbstractField field)
+        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicFunction heuristicFunction)
         {
-            return CalculateWay(field);
-        }
+            _cameFrom = new Dictionary<T, T>();
+            _costSoFar = new Dictionary<T, float>();
 
-        private IList<INode> CalculateWay(AbstractField field)
-        {
-            _cameFrom = new Dictionary<INode, INode>();
-            _costSoFar = new Dictionary<INode, float>();
+            var needToCheck = new PriorityQueue<T>();
+            needToCheck.Enqueue(startNode, 0);
 
-            var needToCheck = new PriorityQueue<INode>();
-            needToCheck.Enqueue(field.StartNode, 0);
-
-            _cameFrom[field.StartNode] = field.StartNode;
-            _costSoFar[field.StartNode] = 0;
+            _cameFrom[startNode] = startNode;
+            _costSoFar[startNode] = 0;
 
             while (needToCheck.Count > 0)
             {
                 var current = needToCheck.Dequeue();
 
-                if (current == field.FinishNode)
+                if (EqualityComparer<T>.Default.Equals(current, finishNode))
                 {
                     break;
                 }
@@ -38,24 +33,24 @@ namespace Core.SearchAlgorithms
                 foreach (var link in current.Links)
                 {
                     var newCost = _costSoFar[current] + link.Cost;
-                    if (!_costSoFar.ContainsKey(link.To) || newCost < _costSoFar[link.To])
+                    if (!_costSoFar.ContainsKey((T)link.To) || newCost < _costSoFar[link.To])
                     {
                         _costSoFar[link.To] = newCost;
-                        var priority = newCost + field.EstimateCost(link.To, field.FinishNode);
+                        var priority = newCost + heuristicFunction.EstimateCost(link.To, finishNode);
                         needToCheck.Enqueue(link.To, priority);
                         _cameFrom[link.To] = current;
                     }
                 }
             }
 
-            var node = field.FinishNode;
+            var node = finishNode;
 
             if (!_cameFrom.ContainsKey(node))
             {
                 return null;
             }
 
-            var path = new List<INode>();
+            var path = new List<T>();
             path.Add(node);
 
             while (true)
@@ -63,7 +58,7 @@ namespace Core.SearchAlgorithms
                 node = _cameFrom[node];
                 path.Add(node);
 
-                if (node == field.StartNode)
+                if (EqualityComparer<T>.Default.Equals(node , startNode))
                     break;
             }
 

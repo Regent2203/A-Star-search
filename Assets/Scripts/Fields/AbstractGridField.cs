@@ -1,9 +1,9 @@
-﻿using Nodes;
+﻿using Core.Nodes;
 using UnityEngine;
 
-namespace Fields
+namespace Core.Fields
 {
-    public abstract class AbstractGridField<T> : AbstractField where T : INode
+    public abstract class AbstractGridField<T> : AbstractField where T : INode<T>
     {
         [SerializeField]
         protected Grid _grid;
@@ -15,12 +15,12 @@ namespace Fields
         protected abstract IView _nodePrefab { get; }
         protected Vector2 _scaleFactor;
 
-        protected INode[,] _gridNodes;
+        protected T[,] _gridNodes;
 
 
         protected virtual void Awake()
         {
-            _gridNodes = new INode[_cellsNumber.x, _cellsNumber.y];
+            _gridNodes = new T[_cellsNumber.x, _cellsNumber.y];
 
             _scaleFactor = _grid.cellSize / _nodePrefab.GetSize();
 

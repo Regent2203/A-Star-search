@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Nodes
+namespace Core
 {
     public interface IView
     {

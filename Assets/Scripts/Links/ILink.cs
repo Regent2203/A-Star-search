@@ -1,11 +1,11 @@
-﻿using Nodes;
+﻿using Core.Nodes;
 
-namespace Links
+namespace Core.Links
 {
-    public interface ILink
+    public interface ILink<T>
     {
-        INode From { get; }
-        INode To { get; }
+        T From { get; }
+        T To { get; }
         float Cost { get; }
     }
 }

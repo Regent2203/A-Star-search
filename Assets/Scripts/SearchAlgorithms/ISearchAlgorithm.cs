@@ -1,11 +1,11 @@
-﻿using Fields;
-using Nodes;
+﻿using Core.HeuristicFunctions;
+using Core.Nodes;
 using System.Collections.Generic;
 
 namespace Core.SearchAlgorithms
 {
-    public interface ISearchAlgorithm
+    public interface ISearchAlgorithm<T> where T : INode<T>
     {
-        public IList<INode> GetPath(AbstractField field);
+        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicFunction heuristicFunction);
     }
 }
