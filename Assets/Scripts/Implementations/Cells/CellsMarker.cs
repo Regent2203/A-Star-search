@@ -15,6 +15,9 @@ namespace Core.Implementations.Cells
 
         public void TryMarkCell(Cell cell)
         {
+            if (cell.IsBlocked)
+                return;
+
             if (Input.GetKey(KeyCode.LeftAlt))
             {
                 if (Input.GetMouseButton(0)) //lmb

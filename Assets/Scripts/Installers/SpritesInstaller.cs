@@ -22,10 +22,10 @@ namespace Core.Installers
         [SerializeField]
         private Sprite _normal;
         [SerializeField]
-        private Sprite _blocked;
+        private Sprite _obstacle;
         
         public Sprite Normal => _normal;
-        public Sprite Blocked => _blocked;
+        public Sprite Obstacle => _obstacle;
         //todo: swamp, dirt, rough
     }
 }

@@ -20,14 +20,13 @@ namespace Core.Implementations.Cells
             {
                 if (Input.GetMouseButton(0)) //lmb
                 {
-                    cellType = _instantiator.Instantiate<CellTypeBlocked>();
+                    cellType = _instantiator.Instantiate<CellTypeObstacle>();
                 }
                 else if (Input.GetMouseButton(1)) //rmb
                 {
                     cellType = _instantiator.Instantiate<CellTypeNormal>();
                 }
             }
-            Debug.Log(cellType);
 
             if (cellType != null)
                 cell.ChangeType(cellType);

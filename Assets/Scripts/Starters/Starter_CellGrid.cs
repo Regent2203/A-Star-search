@@ -9,7 +9,7 @@ namespace Core.Starters
 {
     public class Starter_CellGrid : MonoBehaviour
     {
-        private CellGridField _field;
+        private CellsGridField _field;
         private AStarSearchAlgorithm<Cell> _searchAlgorithm;
         private ManhattanDistance _heuristicFunction;
         private PathFinder<Cell> _pathFinder;
@@ -19,7 +19,7 @@ namespace Core.Starters
 
 
         [Inject]
-        public void Construct(CellGridField field, AStarSearchAlgorithm<Cell> searchAlgorithm, ManhattanDistance heuristicFunction, PathFinder<Cell> pathFinder,
+        public void Construct(CellsGridField field, AStarSearchAlgorithm<Cell> searchAlgorithm, ManhattanDistance heuristicFunction, PathFinder<Cell> pathFinder,
             CellsPathDrawer pathDrawer, CellsPainter painter, CellsMarker marker)
         {
             _field = field;
@@ -34,15 +34,6 @@ namespace Core.Starters
         private void Start()
         {
             Init();
-
-            //field
-            //recreates links each time after we finished setting obstacles
-            /*
-            ModeChangedPrevious += (prevMode) =>
-            {
-                if (prevMode == DrawMode.SelectObstacles)
-                    CreateLinksForNodes();
-            };*/
         }
 
         private void Init()
@@ -51,11 +42,24 @@ namespace Core.Starters
             {
                 cell.CellClicked += _painter.TryChangeCellType;
                 cell.CellClicked += _marker.TryMarkCell;
-                cell.CellTypeChanged += (_,_) => _pathDrawer.ShowPath(false);
+                cell.CellTypeChanged += (_, _) => _pathDrawer.ShowPath(false);
+                cell.CellTypeChanged += (_, _) => _pathFinder.CheckStartAndFinishReady();
             }
+
+            _pathFinder.StartNodeSet += (_, b) =>
+            {
+                if (!b)
+                   _pathDrawer.ShowPath(false);
+            };
+            _pathFinder.FinishNodeSet += (_, b) =>
+            {
+                if (!b)
+                    _pathDrawer.ShowPath(false);
+            };
 
             _pathFinder.StartNodeSet += (cell, b) => cell.ShowStartMarker(b);
             _pathFinder.FinishNodeSet += (cell, b) => cell.ShowFinishMarker(b);
+            
             _pathFinder.StartAndFinishReady += Run;
         }
 
@@ -66,10 +70,6 @@ namespace Core.Starters
                 var path = _pathFinder.GetPath();
                 _pathDrawer.SetPath(path);
                 _pathDrawer.ShowPath(true);
-            }
-            else
-            {
-                _pathDrawer.ShowPath(false);
             }
         }
     }

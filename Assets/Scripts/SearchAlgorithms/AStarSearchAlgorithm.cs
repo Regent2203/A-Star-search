@@ -12,6 +12,9 @@ namespace Core.SearchAlgorithms
 
         public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicFunction heuristicFunction)
         {
+            if (EqualityComparer<T>.Default.Equals(startNode, finishNode))
+                return null;
+
             _cameFrom = new Dictionary<T, T>();
             _costSoFar = new Dictionary<T, float>();
 
@@ -33,7 +36,7 @@ namespace Core.SearchAlgorithms
                 foreach (var link in current.Links)
                 {
                     var newCost = _costSoFar[current] + link.Cost;
-                    if (!_costSoFar.ContainsKey((T)link.To) || newCost < _costSoFar[link.To])
+                    if (!_costSoFar.ContainsKey(link.To) || newCost < _costSoFar[link.To])
                     {
                         _costSoFar[link.To] = newCost;
                         var priority = newCost + heuristicFunction.EstimateCost(link.To, finishNode);

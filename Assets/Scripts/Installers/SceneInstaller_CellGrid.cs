@@ -10,11 +10,11 @@ namespace Core.Installers
     public class SceneInstaller_CellGrid : MonoInstaller
     {
         [SerializeField]
-        private CellGridField _field;
+        private CellsGridField _field;
 
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<CellGridField>().FromInstance(_field).AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsGridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<Cell>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<Cell>>().AsSingle();

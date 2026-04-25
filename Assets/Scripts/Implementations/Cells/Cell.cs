@@ -3,11 +3,12 @@ using Core.Nodes;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace Core.Implementations.Cells
 {
-    public class Cell : MonoBehaviour, INode<Cell>
+    public class Cell : MonoBehaviour, INode<Cell>, IPointerDownHandler
     {
         [SerializeField]
         private GameObject _pathMarker;
@@ -23,8 +24,11 @@ namespace Core.Implementations.Cells
         private CellType _cellType;
         private List<ILink<Cell>> _links = new();
 
+        public Vector2Int Index => _index;
         public CellType CellType => _cellType;
         public List<ILink<Cell>> Links => _links;
+
+        public bool IsBlocked => float.IsPositiveInfinity(CellType.Weight);
 
         public event Action<Cell> CellClicked;
         public event Action<Cell, CellType> CellTypeChanged;
@@ -87,13 +91,9 @@ namespace Core.Implementations.Cells
             CellTypeChanged?.Invoke(this, cellType);
         }
 
-        private void OnMouseOver()
+        public void OnPointerDown(PointerEventData eventData)
         {
-            if (Input.anyKey)
-                Debug.Log(_index);
-
-            if (Input.anyKey)
-                CellClicked?.Invoke(this);
+            CellClicked?.Invoke(this);
         }
 
         private void OnDrawGizmos()

@@ -2,11 +2,11 @@
 
 namespace Core.Implementations.Cells
 {
-    public class CellTypeBlocked : CellType
+    public class CellTypeObstacle : CellType
     {
-        public CellTypeBlocked(CellSprites cellSprites)
+        public CellTypeObstacle(CellSprites cellSprites)
         {
-            _sprite = cellSprites.Blocked;
+            _sprite = cellSprites.Obstacle;
             _weight = float.PositiveInfinity;
         }
     }

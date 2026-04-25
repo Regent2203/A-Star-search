@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Core.HeuristicFunctions;
 using Core.Nodes;
 using Core.SearchAlgorithms;
+using UnityEngine;
 
 namespace Core.PathFinders
 {
@@ -28,31 +29,35 @@ namespace Core.PathFinders
             FinishNodeSet += (_,_) => CheckStartAndFinishReady();
         }
 
-        public void SetStartNode(T newNode)
+        public void SetStartNode(T node)
         {
-            if (EqualityComparer<T>.Default.Equals(_startNode, newNode))
+            if (EqualityComparer<T>.Default.Equals(_startNode, node))
                 return;
 
-            var oldNode = _startNode;
-            _startNode = newNode;
+            //old node: event is called with false
+            if (_startNode != null)
+                StartNodeSet?.Invoke(_startNode, false);
 
-            StartNodeSet?.Invoke(oldNode, false);
-            StartNodeSet?.Invoke(newNode, true);
+            //new node: event is called with true
+            _startNode = node;
+            StartNodeSet?.Invoke(_startNode, true);
         }
 
-        public void SetFinishNode(T newNode)
+        public void SetFinishNode(T node)
         {
-            if (EqualityComparer<T>.Default.Equals(_finishNode, newNode))
+            if (EqualityComparer<T>.Default.Equals(_finishNode, node))
                 return;
 
-            var oldNode = _finishNode;
-            _finishNode = newNode;
+            //old node: event is called with false
+            if (_finishNode != null)
+                FinishNodeSet?.Invoke(_finishNode, false);
 
-            FinishNodeSet?.Invoke(oldNode, false);
-            FinishNodeSet?.Invoke(newNode, true);
+            //new node: event is called with true
+            _finishNode = node;
+            FinishNodeSet?.Invoke(_finishNode, true);
         }
 
-        protected void CheckStartAndFinishReady()
+        public void CheckStartAndFinishReady()
         {
             StartAndFinishReady?.Invoke(_startNode != null && _finishNode != null);
         }
