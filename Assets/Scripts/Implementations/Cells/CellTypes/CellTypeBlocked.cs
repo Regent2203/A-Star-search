@@ -1,6 +1,6 @@
 ﻿using Core.Installers;
 
-namespace Core.Nodes.Cells
+namespace Core.Implementations.Cells
 {
     public class CellTypeBlocked : CellType
     {

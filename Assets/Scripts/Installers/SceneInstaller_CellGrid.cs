@@ -1,5 +1,6 @@
-using Core.Fields;
 using Core.HeuristicFunctions;
+using Core.Implementations.Cells;
+using Core.PathFinders;
 using Core.SearchAlgorithms;
 using UnityEngine;
 using Zenject;
@@ -13,11 +14,13 @@ namespace Core.Installers
 
         public override void InstallBindings()
         {
-            /*
-            Container.Bind<AbstractField>().FromInstance(_field).AsSingle();
-            Container.Bind<IHeuristicFunction>().To<ManhattanDistance>().AsSingle();
-            Container.Bind<ISearchAlgorithm>().To<AStarSearchAlgorithm>().AsSingle();
-            */
+            Container.BindInterfacesAndSelfTo<CellGridField>().FromInstance(_field).AsSingle();
+            Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<Cell>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PathFinder<Cell>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsPathDrawer>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsPainter>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsMarker>().AsSingle();
         }
     }
 }

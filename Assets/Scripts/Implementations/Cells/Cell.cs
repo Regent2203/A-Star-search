@@ -1,10 +1,11 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using Core.Links;
-using Zenject;
+﻿using Core.Links;
+using Core.Nodes;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
+using Zenject;
 
-namespace Core.Nodes.Cells
+namespace Core.Implementations.Cells
 {
     public class Cell : MonoBehaviour, INode<Cell>
     {
@@ -77,6 +78,9 @@ namespace Core.Nodes.Cells
 
         public void ChangeType(CellType cellType)
         {
+            if (_cellType == cellType)
+                return;
+
             _cellType = cellType;
             _spriteRenderer.sprite = cellType.Sprite;
             
@@ -85,6 +89,9 @@ namespace Core.Nodes.Cells
 
         private void OnMouseOver()
         {
+            if (Input.anyKey)
+                Debug.Log(_index);
+
             if (Input.anyKey)
                 CellClicked?.Invoke(this);
         }

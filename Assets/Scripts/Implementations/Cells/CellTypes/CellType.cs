@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Nodes.Cells
+namespace Core.Implementations.Cells
 {
     public abstract class CellType
     {

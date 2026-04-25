@@ -1,9 +1,10 @@
 ﻿using Core.Nodes;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Core.Fields
 {
-    public abstract class AbstractGridField<T> : AbstractField where T : INode<T>
+    public abstract class AbstractGridField<T> : MonoBehaviour, IField<T> where T : INode<T>
     {
         [SerializeField]
         protected Grid _grid;
@@ -14,8 +15,9 @@ namespace Core.Fields
 
         protected abstract IView _nodePrefab { get; }
         protected Vector2 _scaleFactor;
-
         protected T[,] _gridNodes;
+
+        public abstract List<T> Nodes { get; }
 
 
         protected virtual void Awake()

@@ -2,33 +2,35 @@
 using System.Collections.Generic;
 using Core.HeuristicFunctions;
 using Core.Nodes;
-using Core.Nodes.Cells;
 using Core.SearchAlgorithms;
 
 namespace Core.PathFinders
 {
-    public class PathFinder : IPathFinder<Cell>
+    public class PathFinder<T> : IPathFinder<T> where T : INode<T>
     {
         private IHeuristicFunction _heuristicFunction;
-        private ISearchAlgorithm<Cell> _searchAlgorithm;
+        private ISearchAlgorithm<T> _searchAlgorithm;
 
-        private Cell _startNode;
-        private Cell _finishNode;
+        private T _startNode;
+        private T _finishNode;
         
-        public event Action<Cell, bool> StartNodeSet;
-        public event Action<Cell, bool> FinishNodeSet;
-        public event Action StartFinishReady;
+        public event Action<T, bool> StartNodeSet;
+        public event Action<T, bool> FinishNodeSet;
+        public event Action<bool> StartAndFinishReady;
 
 
-        public PathFinder(IHeuristicFunction heuristicFunction, ISearchAlgorithm<Cell> searchAlgorithm)
+        public PathFinder(IHeuristicFunction heuristicFunction, ISearchAlgorithm<T> searchAlgorithm)
         {
             _heuristicFunction = heuristicFunction;
             _searchAlgorithm = searchAlgorithm;
+
+            StartNodeSet += (_,_) => CheckStartAndFinishReady();
+            FinishNodeSet += (_,_) => CheckStartAndFinishReady();
         }
 
-        public void SetStartNode(Cell newNode)
+        public void SetStartNode(T newNode)
         {
-            if (_startNode == newNode) 
+            if (EqualityComparer<T>.Default.Equals(_startNode, newNode))
                 return;
 
             var oldNode = _startNode;
@@ -38,9 +40,9 @@ namespace Core.PathFinders
             StartNodeSet?.Invoke(newNode, true);
         }
 
-        public void SetFinishNode(Cell newNode)
+        public void SetFinishNode(T newNode)
         {
-            if (_finishNode == newNode)
+            if (EqualityComparer<T>.Default.Equals(_finishNode, newNode))
                 return;
 
             var oldNode = _finishNode;
@@ -50,13 +52,12 @@ namespace Core.PathFinders
             FinishNodeSet?.Invoke(newNode, true);
         }
 
-        protected void CheckStartFinishReady() //
+        protected void CheckStartAndFinishReady()
         {
-            if (_startNode != null && _finishNode != null)
-                StartFinishReady?.Invoke();
+            StartAndFinishReady?.Invoke(_startNode != null && _finishNode != null);
         }
 
-        public IList<Cell> GetPath()
+        public IList<T> GetPath()
         {
             return _searchAlgorithm.CalculateWay(_startNode, _finishNode, _heuristicFunction);
         }

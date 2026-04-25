@@ -26,5 +26,6 @@ namespace Core.Installers
         
         public Sprite Normal => _normal;
         public Sprite Blocked => _blocked;
+        //todo: swamp, dirt, rough
     }
 }

@@ -1,9 +1,12 @@
-﻿using Core.Nodes.Cells;
+﻿using Core.PathDrawers;
 using System.Collections.Generic;
 
-namespace Core.PathDrawers
+namespace Core.Implementations.Cells
 {
-    public class CellGridPathDrawer : IPathDrawer
+    /// <summary>
+    /// Works with class Cell, draws path by calling method "ShowPathMarker" on cells
+    /// </summary>
+    public class CellsPathDrawer : IPathDrawer
     {
         private IList<Cell> _path;
 

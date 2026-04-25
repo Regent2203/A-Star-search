@@ -1,8 +1,7 @@
-﻿using Core.Nodes.Cells;
-using Core.PathFinders;
+﻿using Core.PathFinders;
 using UnityEngine;
 
-namespace Core.Nodes.Cells
+namespace Core.Implementations.Cells
 {
     public class CellsMarker
     {
@@ -14,19 +13,17 @@ namespace Core.Nodes.Cells
             _pathFinder = pathFinder;
         }
 
-        public void MarkCell(Cell cell)
+        public void TryMarkCell(Cell cell)
         {
             if (Input.GetKey(KeyCode.LeftAlt))
             {
                 if (Input.GetMouseButton(0)) //lmb
                 {
                     _pathFinder.SetStartNode(cell);
-                    cell.ShowStartMarker(true);
                 }
                 else if (Input.GetMouseButton(1)) //rmb
                 {
                     _pathFinder.SetFinishNode(cell);
-                    cell.ShowFinishMarker(true);
                 }
             }
         }

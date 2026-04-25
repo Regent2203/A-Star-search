@@ -58,7 +58,7 @@ namespace Core.SearchAlgorithms
                 node = _cameFrom[node];
                 path.Add(node);
 
-                if (EqualityComparer<T>.Default.Equals(node , startNode))
+                if (EqualityComparer<T>.Default.Equals(node, startNode))
                     break;
             }
 

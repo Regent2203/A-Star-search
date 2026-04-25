@@ -1,11 +1,10 @@
-﻿using UnityEngine;
-using System;
-using Core.Nodes;
-using Core.Nodes.Cells;
+﻿using Core.Fields;
 using Core.Links;
+using System.Collections.Generic;
+using UnityEngine;
 using Zenject;
 
-namespace Core.Fields
+namespace Core.Implementations.Cells
 {
     public class CellGridField : AbstractGridField<Cell>
     {
@@ -13,7 +12,9 @@ namespace Core.Fields
         private Cell _cellViewPrefab;
 
         protected override IView _nodePrefab => _cellViewPrefab;
-        private CellPainter _fieldEditor;
+        public override List<Cell> Nodes => _cells;
+
+        private List<Cell> _cells = new List<Cell>();
         private IInstantiator _instantiator;
 
 
@@ -21,35 +22,16 @@ namespace Core.Fields
         public void Construct(IInstantiator instantiator)
         {
             _instantiator = instantiator;
-
-            _fieldEditor = _instantiator.Instantiate<CellPainter>();
         }
 
         protected override void Awake()
         {
             base.Awake();
-
-            //recreates links each time after we finished setting obstacles
-            /*
-            ModeChangedPrevious += (prevMode) =>
-            {
-                if (prevMode == DrawMode.SelectObstacles)
-                    CreateLinksForNodes();
-            };*/
-
-
-            //clears path when we start changing setup
-            /*
-            ModeChangedPrevious += (prevMode) =>
-            {
-                if (prevMode == DrawMode.Launch)
-                    ShowPath(false, _path, true);
-            };*/
-
-            CreateNodes();
+            
+            CreateCells();
         }
 
-        private void CreateNodes()
+        private void CreateCells()
         {
             for (int i = 0; i < _gridNodes.GetLength(0); i++)
             {
@@ -61,8 +43,8 @@ namespace Core.Fields
                         Quaternion.identity, transform);
 
                     node.Init(new Vector2Int(i, j), _scaleFactor);
-                    node.CellClicked += _fieldEditor.ChangeCellType;
-                    node.CellTypeChanged += OnCellChanged;
+                    //node.CellClicked += _fieldEditor.ChangeCellType;
+                    //node.CellTypeChanged += OnCellChanged;
 
                     _gridNodes[i, j] = node;
                 }

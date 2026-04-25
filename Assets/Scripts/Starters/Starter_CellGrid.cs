@@ -1,45 +1,76 @@
-﻿using UnityEngine;
-using Core.Fields;
-using Core.SearchAlgorithms;
-using Core.HeuristicFunctions;
-using Zenject;
-using Core.PathDrawers;
+﻿using Core.HeuristicFunctions;
+using Core.Implementations.Cells;
 using Core.PathFinders;
-using Core.Nodes;
-using Core.Nodes.Cells;
+using Core.SearchAlgorithms;
+using UnityEngine;
+using Zenject;
 
 namespace Core.Starters
 {
     public class Starter_CellGrid : MonoBehaviour
     {
-        private AbstractField _field;
-        private ISearchAlgorithm<Cell> _searchAlgorithm;
-        private IHeuristicFunction _heuristicFunction;
-        private PathFinder _pathFinder;
-        private CellGridPathDrawer _pathDrawer;
+        private CellGridField _field;
+        private AStarSearchAlgorithm<Cell> _searchAlgorithm;
+        private ManhattanDistance _heuristicFunction;
+        private PathFinder<Cell> _pathFinder;
+        private CellsPathDrawer _pathDrawer;
+        private CellsPainter _painter;
+        private CellsMarker _marker;
 
 
         [Inject]
-        public void Construct(AbstractField field, ISearchAlgorithm<Cell> searchAlgorithm, IHeuristicFunction heuristicFunction, PathFinder pathFinder, CellGridPathDrawer pathDrawer)
+        public void Construct(CellGridField field, AStarSearchAlgorithm<Cell> searchAlgorithm, ManhattanDistance heuristicFunction, PathFinder<Cell> pathFinder,
+            CellsPathDrawer pathDrawer, CellsPainter painter, CellsMarker marker)
         {
             _field = field;
             _searchAlgorithm = searchAlgorithm;
             _heuristicFunction = heuristicFunction;
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
+            _painter = painter;
+            _marker = marker;
         }
 
         private void Start()
         {
-            var path = _pathFinder.GetPath();
-            _pathDrawer.SetPath(path);
+            Init();
 
-            //_field.StartFinishReady += RunAlgorithm;
+            //field
+            //recreates links each time after we finished setting obstacles
+            /*
+            ModeChangedPrevious += (prevMode) =>
+            {
+                if (prevMode == DrawMode.SelectObstacles)
+                    CreateLinksForNodes();
+            };*/
         }
 
-        private void RunAlgorithm()
+        private void Init()
         {
-            //            
+            foreach (var cell in _field.Nodes)
+            {
+                cell.CellClicked += _painter.TryChangeCellType;
+                cell.CellClicked += _marker.TryMarkCell;
+                cell.CellTypeChanged += (_,_) => _pathDrawer.ShowPath(false);
+            }
+
+            _pathFinder.StartNodeSet += (cell, b) => cell.ShowStartMarker(b);
+            _pathFinder.FinishNodeSet += (cell, b) => cell.ShowFinishMarker(b);
+            _pathFinder.StartAndFinishReady += Run;
+        }
+
+        private void Run(bool isReady)
+        {
+            if (isReady)
+            {
+                var path = _pathFinder.GetPath();
+                _pathDrawer.SetPath(path);
+                _pathDrawer.ShowPath(true);
+            }
+            else
+            {
+                _pathDrawer.ShowPath(false);
+            }
         }
     }
 }
