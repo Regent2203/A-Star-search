@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.HeuristicFunctions;
+using Core.Heuristic;
 using Core.Nodes;
 using Core.SearchAlgorithms;
 
@@ -8,7 +8,7 @@ namespace Core.PathFinders
 {
     public class PathFinder<T> : IPathFinder<T> where T : INode<T>
     {
-        private IHeuristicFunction _heuristicFunction;
+        private IHeuristicsProvider _heuristicsProvider;
         private ISearchAlgorithm<T> _searchAlgorithm;
 
         private T _startNode;
@@ -20,9 +20,9 @@ namespace Core.PathFinders
         public event Action<bool> StartAndFinishReady;
 
 
-        public PathFinder(IHeuristicFunction heuristicFunction, ISearchAlgorithm<T> searchAlgorithm)
+        public PathFinder(IHeuristicsProvider heuristicFunction, ISearchAlgorithm<T> searchAlgorithm)
         {
-            _heuristicFunction = heuristicFunction;
+            _heuristicsProvider = heuristicFunction;
             _searchAlgorithm = searchAlgorithm;
         }
 
@@ -90,7 +90,7 @@ namespace Core.PathFinders
             if (_startNode == null || _finishNode == null) 
                 return null;
 
-            return _searchAlgorithm.CalculateWay(_startNode, _finishNode, _heuristicFunction);
+            return _searchAlgorithm.CalculateWay(_startNode, _finishNode, _heuristicsProvider);
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using Core.Nodes;
 using UnityEngine;
 
-namespace Core.HeuristicFunctions
+namespace Core.Heuristic
 {
-    public class EuclideanDistance : IHeuristicFunction
+    public class DiagonalDistance : IHeuristicFunction
     {
         public float EstimateCost(IEstimatable node1, IEstimatable node2)
         {
@@ -13,7 +13,7 @@ namespace Core.HeuristicFunctions
             var dx = Mathf.Abs(p2.x - p1.x);
             var dy = Mathf.Abs(p2.y - p1.y);
 
-            return Mathf.Sqrt(Mathf.Pow(dx,2) + Mathf.Pow(dy, 2));
+            return dx + dy + (Mathf.Sqrt(2) - 2) * Mathf.Min(dx, dy);
         }
     }
 }

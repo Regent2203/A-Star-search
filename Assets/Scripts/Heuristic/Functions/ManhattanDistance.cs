@@ -1,7 +1,7 @@
 ﻿using Core.Nodes;
 using UnityEngine;
 
-namespace Core.HeuristicFunctions
+namespace Core.Heuristic
 {
     public class ManhattanDistance : IHeuristicFunction
     {

@@ -1,4 +1,4 @@
-﻿using Core.HeuristicFunctions;
+﻿using Core.Heuristic;
 using Core.Nodes;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +11,7 @@ namespace Core.SearchAlgorithms
         private Dictionary<T, float> _costSoFar;
 
 
-        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicFunction heuristicFunction)
+        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider heuristicsController)
         {
             if (startNode.Equals(finishNode))
                 return null;
@@ -43,7 +43,7 @@ namespace Core.SearchAlgorithms
                         _costSoFar[link.To] = newCost;
                         _cameFrom[link.To] = current;
 
-                        var newPriority = newCost + heuristicFunction.EstimateCost(link.To, finishNode);
+                        var newPriority = newCost + heuristicsController.EstimateCost(link.To, finishNode);
                         needToCheck.Enqueue(link.To, newPriority);
                     }
                 }

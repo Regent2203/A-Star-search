@@ -1,6 +1,6 @@
 ﻿using Core.Nodes;
 
-namespace Core.HeuristicFunctions
+namespace Core.Heuristic
 {
     public interface IHeuristicFunction
     {

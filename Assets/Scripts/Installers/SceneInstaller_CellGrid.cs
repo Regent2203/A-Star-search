@@ -1,4 +1,4 @@
-using Core.HeuristicFunctions;
+using Core.Heuristic;
 using Core.Implementations.Cells;
 using Core.PathFinders;
 using Core.SearchAlgorithms;
@@ -14,9 +14,10 @@ namespace Core.Installers
 
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<CellsGridField>().FromInstance(_field).AsSingle();
-            Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsGridField>().FromInstance(_field).AsSingle();            
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<Cell>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<HeuristicsProvider>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<Cell>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPathDrawer>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPainter>().AsSingle();

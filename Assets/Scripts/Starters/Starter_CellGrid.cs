@@ -1,4 +1,4 @@
-﻿using Core.HeuristicFunctions;
+﻿using Core.Heuristic;
 using Core.Implementations.Cells;
 using Core.PathFinders;
 using Core.SearchAlgorithms;
@@ -11,6 +11,7 @@ namespace Core.Starters
     {
         private CellsGridField _field;
         private AStarSearchAlgorithm<Cell> _searchAlgorithm;
+        private HeuristicsProvider _heuristicsProvider;
         private ManhattanDistance _heuristicFunction;
         private PathFinder<Cell> _pathFinder;
         private CellsPathDrawer _pathDrawer;
@@ -19,11 +20,12 @@ namespace Core.Starters
 
 
         [Inject]
-        public void Construct(CellsGridField field, AStarSearchAlgorithm<Cell> searchAlgorithm, ManhattanDistance heuristicFunction, PathFinder<Cell> pathFinder,
-            CellsPathDrawer pathDrawer, CellsPainter painter, CellsMarker marker)
+        public void Construct(CellsGridField field, AStarSearchAlgorithm<Cell> searchAlgorithm, HeuristicsProvider heuristicsController, ManhattanDistance heuristicFunction,
+            PathFinder<Cell> pathFinder, CellsPathDrawer pathDrawer, CellsPainter painter, CellsMarker marker)
         {
             _field = field;
             _searchAlgorithm = searchAlgorithm;
+            _heuristicsProvider = heuristicsController;
             _heuristicFunction = heuristicFunction;
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
@@ -42,6 +44,7 @@ namespace Core.Starters
             {
                 cell.CellClicked += _painter.TryChangeCellType;
                 cell.CellClicked += _marker.TryMarkCell;
+                cell.CellTypeChanged += (cell, _) => _heuristicsProvider.SetMinimumStepCost(cell.CellType.Weight, false);
                 cell.CellTypeChanged += (_, _) => _pathDrawer.ShowPath(false);
                 cell.CellTypeChanged += (_, _) => _pathFinder.CheckStartAndFinishReady();
             }

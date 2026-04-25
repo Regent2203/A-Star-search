@@ -39,7 +39,7 @@ namespace Core.Implementations.Cells
                 {
                     var cell = _instantiator.InstantiatePrefabForComponent<Cell>(
                         _cellViewPrefab,
-                        transform.position + new Vector3(_grid.cellSize.x * i, _grid.cellSize.y * j, 0) + new Vector3(_grid.cellGap.x * i, _grid.cellGap.y * j),
+                        transform.position + new Vector3(_grid.cellSize.x * i, _grid.cellSize.y * j) + new Vector3(_grid.cellGap.x * i, _grid.cellGap.y * j),
                         Quaternion.identity, transform);
 
                     cell.Init(new Vector2Int(i, j), _scaleFactor);
