@@ -1,6 +1,7 @@
 ﻿using Core.HeuristicFunctions;
 using Core.Nodes;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Core.SearchAlgorithms
 {
@@ -12,7 +13,7 @@ namespace Core.SearchAlgorithms
 
         public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicFunction heuristicFunction)
         {
-            if (EqualityComparer<T>.Default.Equals(startNode, finishNode))
+            if (startNode.Equals(finishNode))
                 return null;
 
             _cameFrom = new Dictionary<T, T>();
@@ -21,50 +22,49 @@ namespace Core.SearchAlgorithms
             var needToCheck = new PriorityQueue<T>();
             needToCheck.Enqueue(startNode, 0);
 
-            _cameFrom[startNode] = startNode;
+            _cameFrom[startNode] = default;
             _costSoFar[startNode] = 0;
 
             while (needToCheck.Count > 0)
             {
                 var current = needToCheck.Dequeue();
 
-                if (EqualityComparer<T>.Default.Equals(current, finishNode))
+                if (current.Equals(finishNode))
                 {
-                    break;
+                    return RetracePath(startNode, finishNode);
                 }
 
                 foreach (var link in current.Links)
                 {
                     var newCost = _costSoFar[current] + link.Cost;
+
                     if (!_costSoFar.ContainsKey(link.To) || newCost < _costSoFar[link.To])
                     {
                         _costSoFar[link.To] = newCost;
-                        var priority = newCost + heuristicFunction.EstimateCost(link.To, finishNode);
-                        needToCheck.Enqueue(link.To, priority);
                         _cameFrom[link.To] = current;
+
+                        var newPriority = newCost + heuristicFunction.EstimateCost(link.To, finishNode);
+                        needToCheck.Enqueue(link.To, newPriority);
                     }
                 }
             }
 
-            var node = finishNode;
+            return null;
+        }
 
-            if (!_cameFrom.ContainsKey(node))
-            {
-                return null;
-            }
-
+        private IList<T> RetracePath(T startNode, T finishNode)
+        {
             var path = new List<T>();
-            path.Add(node);
+            var current = finishNode;
 
-            while (true)
+            while (!current.Equals(startNode))
             {
-                node = _cameFrom[node];
-                path.Add(node);
-
-                if (EqualityComparer<T>.Default.Equals(node, startNode))
-                    break;
+                path.Add(current);
+                current = _cameFrom[current];
             }
 
+            path.Add(startNode);
+            path.Reverse();
             return path;
         }
     }

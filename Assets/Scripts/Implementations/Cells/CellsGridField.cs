@@ -54,14 +54,24 @@ namespace Core.Implementations.Cells
                 CreateLinksForCell(cell);
         }
 
-        private void UpdateLinksForCellAndItsNeighbours(Cell cell)
+        private void CreateLinksForCell(Cell cell1)
         {
-            var cellsToUpdate = new List<Cell>();
-            cellsToUpdate.Add(cell);
-            cellsToUpdate.AddRange(GetCellNeighbours(cell));
+            cell1.Links.Clear();
 
-            foreach (var updatingCell in cellsToUpdate)
-                CreateLinksForCell(updatingCell);
+            if (cell1.IsBlocked)
+                return;
+
+            var neighbours = GetCellNeighbours(cell1);
+            foreach (var cell2 in neighbours)
+            {
+                if (cell2.IsBlocked)
+                    continue;
+
+                var weight = cell1.CellType.Weight / 2 + cell2.CellType.Weight / 2;
+
+                var link = new Link<Cell>(cell1, cell2, weight);
+                cell1.Links.Add(link);
+            }
         }
 
         private List<Cell> GetCellNeighbours(Cell cell) //up, down, left, right, no diagonal
@@ -83,24 +93,14 @@ namespace Core.Implementations.Cells
             }
         }
 
-        private void CreateLinksForCell(Cell cell1) 
+        private void UpdateLinksForCellAndItsNeighbours(Cell cell)
         {
-            cell1.Links.Clear();
+            var cellsToUpdate = new List<Cell>();
+            cellsToUpdate.Add(cell);
+            cellsToUpdate.AddRange(GetCellNeighbours(cell));
 
-            if (cell1.IsBlocked)
-                return;
-
-            var neighbours = GetCellNeighbours(cell1);
-            foreach (var cell2 in neighbours)
-            {
-                if (cell2.IsBlocked)
-                    continue;
-
-                var weight = cell1.CellType.Weight / 2 + cell2.CellType.Weight / 2;
-
-                var link = new Link<Cell>(cell1, cell2, weight);
-                cell1.Links.Add(link);
-            }
+            foreach (var updatingCell in cellsToUpdate)
+                CreateLinksForCell(updatingCell);
         }
     }
 }

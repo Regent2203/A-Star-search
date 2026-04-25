@@ -12,6 +12,8 @@ namespace Core.HeuristicFunctions
             var dx = Mathf.Abs(p2.x - p1.x);
             var dy = Mathf.Abs(p2.y - p1.y);
 
+            Debug.Log($"{dx + dy} {node1} {node2}");
+
             return dx + dy;
         }
     }

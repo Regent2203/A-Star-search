@@ -1,54 +1,37 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Core.SearchAlgorithms
 {
     public class PriorityQueue<T>
     {
-        private class Item
-        {
-            public readonly T Obj;
-            public readonly float Priority;
-
-            public Item(T I, float p)
-            {
-                Obj = I;
-                Priority = p;
-            }
-        }
-
-        private List<Item> _items = new List<Item>();
+        private List<(T Obj, float Priority)> _items = new();
 
         public int Count => _items.Count;
 
-        public void Enqueue(T item, float priority)
-        {
-            _items.Add(new Item(item, priority));
-        }
+        public void Enqueue(T item, float priority) => _items.Add((item, priority));
 
         public T Dequeue()
         {
-            int bestIndex = 0;
+            if (_items.Count == 0)
+                throw new InvalidOperationException("Queue is empty");
 
-            for (int i = 0; i < _items.Count; i++)
+            int bestIndex = 0;
+            for (int i = 1; i < _items.Count; i++)
             {
                 if (_items[i].Priority < _items[bestIndex].Priority)
-                {
                     bestIndex = i;
-                }
             }
 
-            T bestItem = _items[bestIndex].Obj;
-            _items.RemoveAt(bestIndex);
+            var bestItem = _items[bestIndex].Obj;
+
+            // Оптимизация удаления: меняем местами с последним и удаляем последний
+            _items[bestIndex] = _items[_items.Count - 1];
+            _items.RemoveAt(_items.Count - 1);
 
             return bestItem;
         }
 
-        public void Clear()
-        {
-            for (int i = _items.Count - 1; i >= 0; i--)
-            {
-                _items.RemoveAt(i);
-            }
-        }
+        public void Clear() => _items.Clear();
     }
 }

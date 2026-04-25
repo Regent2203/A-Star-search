@@ -22,7 +22,7 @@ namespace Core.Implementations.Cells
 
         private Vector2Int _index;
         private CellType _cellType;
-        private List<ILink<Cell>> _links = new();
+        private List<ILink<Cell>> _links = new List<ILink<Cell>>();
 
         public Vector2Int Index => _index;
         public CellType CellType => _cellType;
