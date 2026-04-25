@@ -74,16 +74,18 @@ namespace Core.Implementations.Cells
             }
         }
 
+        private List<Cell> _neighboursList = new List<Cell>(4);
+
         private List<Cell> GetCellNeighbours(Cell cell) //up, down, left, right, no diagonal
         {
-            var neighbours = new List<Cell>();
+            _neighboursList.Clear();
 
-            TryAddCell(neighbours, cell.Index.x, cell.Index.y + 1);
-            TryAddCell(neighbours, cell.Index.x, cell.Index.y - 1);
-            TryAddCell(neighbours, cell.Index.x - 1, cell.Index.y);
-            TryAddCell(neighbours, cell.Index.x + 1, cell.Index.y);
+            TryAddCell(_neighboursList, cell.Index.x, cell.Index.y + 1);
+            TryAddCell(_neighboursList, cell.Index.x, cell.Index.y - 1);
+            TryAddCell(_neighboursList, cell.Index.x - 1, cell.Index.y);
+            TryAddCell(_neighboursList, cell.Index.x + 1, cell.Index.y);
 
-            return neighbours;
+            return _neighboursList;
 
 
             void TryAddCell(List<Cell> list, int i, int j)
@@ -93,13 +95,15 @@ namespace Core.Implementations.Cells
             }
         }
 
+        private List<Cell> _cellsToUpdateList = new List<Cell>(5);
+
         private void UpdateLinksForCellAndItsNeighbours(Cell cell)
         {
-            var cellsToUpdate = new List<Cell>();
-            cellsToUpdate.Add(cell);
-            cellsToUpdate.AddRange(GetCellNeighbours(cell));
+            _cellsToUpdateList.Clear();
+            _cellsToUpdateList.Add(cell);
+            _cellsToUpdateList.AddRange(GetCellNeighbours(cell));
 
-            foreach (var updatingCell in cellsToUpdate)
+            foreach (var updatingCell in _cellsToUpdateList)
                 CreateLinksForCell(updatingCell);
         }
     }

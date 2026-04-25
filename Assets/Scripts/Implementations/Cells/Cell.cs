@@ -79,6 +79,14 @@ namespace Core.Implementations.Cells
             return _spriteRenderer.bounds.center;
         }
 
+        public Vector2 GetEstimatedPosition()
+        {
+            var center = _spriteRenderer.bounds.center;
+            var scale = transform.localScale;
+
+            return new Vector2(center.x / scale.x, center.y / scale.y);
+        }
+
 
         public void ChangeType(CellType cellType)
         {

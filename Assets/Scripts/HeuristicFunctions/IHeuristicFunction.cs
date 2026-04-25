@@ -1,7 +1,9 @@
-﻿namespace Core.HeuristicFunctions
+﻿using Core.Nodes;
+
+namespace Core.HeuristicFunctions
 {
     public interface IHeuristicFunction
     {
-        public float EstimateCost(IView node1, IView node2);
+        public float EstimateCost(IEstimatable node1, IEstimatable node2);
     }
 }

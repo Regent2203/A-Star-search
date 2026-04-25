@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Core.HeuristicFunctions;
 using Core.Nodes;
 using Core.SearchAlgorithms;
-using UnityEngine;
 
 namespace Core.PathFinders
 {
@@ -14,9 +13,10 @@ namespace Core.PathFinders
 
         private T _startNode;
         private T _finishNode;
-        
-        public event Action<T, bool> StartNodeSet;
-        public event Action<T, bool> FinishNodeSet;
+
+        public event Action NodeChanged;
+        public event Action<T, bool> StartNodeChanged;  //false is called when cleared, true is called when assigned
+        public event Action<T, bool> FinishNodeChanged; //false is called when cleared, true is called when assigned
         public event Action<bool> StartAndFinishReady;
 
 
@@ -24,37 +24,60 @@ namespace Core.PathFinders
         {
             _heuristicFunction = heuristicFunction;
             _searchAlgorithm = searchAlgorithm;
-
-            StartNodeSet += (_,_) => CheckStartAndFinishReady();
-            FinishNodeSet += (_,_) => CheckStartAndFinishReady();
         }
 
         public void SetStartNode(T node)
         {
-            if (EqualityComparer<T>.Default.Equals(_startNode, node))
+            if (!EqualityComparer<T>.Default.Equals(node, default) && EqualityComparer<T>.Default.Equals(_finishNode, node)) //trying to set finish node as start node
                 return;
 
-            //old node: event is called with false
-            if (_startNode != null)
-                StartNodeSet?.Invoke(_startNode, false);
+            if (EqualityComparer<T>.Default.Equals(node, default) && EqualityComparer<T>.Default.Equals(_startNode, default)) //null to null
+                return;
 
-            //new node: event is called with true
+            if (EqualityComparer<T>.Default.Equals(_startNode, node)) //if same node, we clear it instead
+            {
+                var startNode = _startNode;
+                _startNode = default;
+                StartNodeChanged?.Invoke(startNode, false);
+                NodeChanged?.Invoke();
+                return;
+            }
+
+            if (!EqualityComparer<T>.Default.Equals(_startNode, default)) //if start node is already set, we should clear the previous one
+            {
+                StartNodeChanged?.Invoke(_startNode, false);
+            }
             _startNode = node;
-            StartNodeSet?.Invoke(_startNode, true);
+            StartNodeChanged?.Invoke(_startNode, true);
+            NodeChanged?.Invoke();
+            CheckStartAndFinishReady();
         }
 
         public void SetFinishNode(T node)
         {
-            if (EqualityComparer<T>.Default.Equals(_finishNode, node))
+            if (!EqualityComparer<T>.Default.Equals(node, default) && EqualityComparer<T>.Default.Equals(_startNode, node)) //trying to set start node as finish node
                 return;
 
-            //old node: event is called with false
-            if (_finishNode != null)
-                FinishNodeSet?.Invoke(_finishNode, false);
+            if (EqualityComparer<T>.Default.Equals(node, default) && EqualityComparer<T>.Default.Equals(_finishNode, default)) //null to null
+                return;
 
-            //new node: event is called with true
+            if (EqualityComparer<T>.Default.Equals(_finishNode, node)) //if same node, we clear it instead
+            {
+                var finishNode = _finishNode;
+                _finishNode = default;
+                FinishNodeChanged?.Invoke(finishNode, false);
+                NodeChanged?.Invoke();
+                return;
+            }
+
+            if (!EqualityComparer<T>.Default.Equals(_finishNode, default)) //if finish node is already set, we should clear the previous one
+            {
+                FinishNodeChanged?.Invoke(_finishNode, false);
+            }
             _finishNode = node;
-            FinishNodeSet?.Invoke(_finishNode, true);
+            FinishNodeChanged?.Invoke(_finishNode, true);
+            NodeChanged?.Invoke();
+            CheckStartAndFinishReady();
         }
 
         public void CheckStartAndFinishReady()
@@ -64,6 +87,9 @@ namespace Core.PathFinders
 
         public IList<T> GetPath()
         {
+            if (_startNode == null || _finishNode == null) 
+                return null;
+
             return _searchAlgorithm.CalculateWay(_startNode, _finishNode, _heuristicFunction);
         }
     }

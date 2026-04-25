@@ -45,20 +45,11 @@ namespace Core.Starters
                 cell.CellTypeChanged += (_, _) => _pathDrawer.ShowPath(false);
                 cell.CellTypeChanged += (_, _) => _pathFinder.CheckStartAndFinishReady();
             }
-
-            _pathFinder.StartNodeSet += (_, b) =>
-            {
-                if (!b)
-                   _pathDrawer.ShowPath(false);
-            };
-            _pathFinder.FinishNodeSet += (_, b) =>
-            {
-                if (!b)
-                    _pathDrawer.ShowPath(false);
-            };
-
-            _pathFinder.StartNodeSet += (cell, b) => cell.ShowStartMarker(b);
-            _pathFinder.FinishNodeSet += (cell, b) => cell.ShowFinishMarker(b);
+            
+            _pathFinder.NodeChanged += () => _pathDrawer.ShowPath(false);
+            
+            _pathFinder.StartNodeChanged += (cell, b) => cell?.ShowStartMarker(b);
+            _pathFinder.FinishNodeChanged += (cell, b) => cell?.ShowFinishMarker(b);
             
             _pathFinder.StartAndFinishReady += Run;
         }

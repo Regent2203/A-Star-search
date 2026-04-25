@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Core.SearchAlgorithms
 {
-    public class PriorityQueue<T>
+    public class PriorityQueue<T> //AI-generated
     {
         private List<(T Obj, float Priority)> _items = new();
 
@@ -25,7 +25,7 @@ namespace Core.SearchAlgorithms
 
             var bestItem = _items[bestIndex].Obj;
 
-            // Оптимизация удаления: меняем местами с последним и удаляем последний
+            // optimization of deleting from list
             _items[bestIndex] = _items[_items.Count - 1];
             _items.RemoveAt(_items.Count - 1);
 
