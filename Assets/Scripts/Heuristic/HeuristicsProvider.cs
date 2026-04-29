@@ -5,7 +5,7 @@ namespace Core.Heuristic
     public class HeuristicsProvider : IHeuristicsProvider
     {
         private IHeuristicFunction _heuristicFunction;
-        private float _minStepCost = float.PositiveInfinity;
+        private float _minStepCost = 1.0f;
 
 
         public HeuristicsProvider(IHeuristicFunction heuristicFunction)
@@ -26,7 +26,10 @@ namespace Core.Heuristic
 
         public float EstimateCost(IEstimatable node1, IEstimatable node2)
         {
-            return _heuristicFunction.EstimateCost(node1, node2) * _minStepCost;
+            var p1 = node1.GetEstimatedPosition();
+            var p2 = node2.GetEstimatedPosition();
+
+            return _heuristicFunction.Estimate(p1, p2) * _minStepCost;
         }
     }
 }

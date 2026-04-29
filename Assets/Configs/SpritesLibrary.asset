@@ -15,3 +15,6 @@ MonoBehaviour:
   Cells:
     _normal: {fileID: 21300000, guid: 4dd7eae77fac7bc44b7908a1d4f635c9, type: 3}
     _obstacle: {fileID: 21300000, guid: 261a3ba2840fae948bb18ad026b5cbbb, type: 3}
+    _dirt: {fileID: 21300000, guid: f5ca05003fd667c478f2bf42b551af70, type: 3}
+    _sand: {fileID: 21300000, guid: 8aed04b11e345dc45a9d69ab610d44c1, type: 3}
+    _swamp: {fileID: 21300000, guid: 820d2043b75a7ac48862afcbe3c18c4b, type: 3}

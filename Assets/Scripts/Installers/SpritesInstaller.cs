@@ -23,9 +23,18 @@ namespace Core.Installers
         private Sprite _normal;
         [SerializeField]
         private Sprite _obstacle;
-        
+        [SerializeField]
+        private Sprite _dirt;
+        [SerializeField]
+        private Sprite _sand;
+        [SerializeField]
+        private Sprite _swamp;
+
         public Sprite Normal => _normal;
         public Sprite Obstacle => _obstacle;
-        //todo: swamp, dirt, rough
+        public Sprite Dirt => _dirt;
+        public Sprite Sand => _sand;
+        public Sprite Swamp => _swamp;
+
     }
 }

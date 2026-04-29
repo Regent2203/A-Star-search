@@ -16,15 +16,30 @@ namespace Core.Implementations.Cells
         {
             CellType cellType = null;
 
-            if (!Input.GetKey(KeyCode.LeftAlt))
+            if (!Input.GetKey(KeyCode.LeftShift))
             {
-                if (Input.GetMouseButton(0)) //lmb
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
                 {
-                    cellType = _instantiator.Instantiate<CellTypeObstacle>();
+                    cellType = _instantiator.Instantiate<CellTypeSwamp>();
                 }
-                else if (Input.GetMouseButton(1)) //rmb
+                else if (Input.GetKey(KeyCode.LeftControl))
                 {
-                    cellType = _instantiator.Instantiate<CellTypeNormal>();
+                    cellType = _instantiator.Instantiate<CellTypeSand>();
+                }
+                else if (Input.GetKey(KeyCode.LeftAlt))
+                {
+                    cellType = _instantiator.Instantiate<CellTypeDirt>();
+                }
+                else
+                {
+                    if (Input.GetMouseButton(0)) //lmb
+                    {
+                        cellType = _instantiator.Instantiate<CellTypeObstacle>();
+                    }
+                    else if (Input.GetMouseButton(1)) //rmb
+                    {
+                        cellType = _instantiator.Instantiate<CellTypeNormal>();
+                    }
                 }
             }
 
