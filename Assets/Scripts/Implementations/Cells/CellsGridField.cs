@@ -93,12 +93,15 @@ namespace Core.Implementations.Cells
             }
         }
 
+        private List<Cell> _cellsToUpdateList = new List<Cell>(5);
+
         private void UpdateLinksForCellAndItsNeighbours(Cell cell)
         {
-            CreateLinksForCell(cell);
+            _cellsToUpdateList.Clear();
+            _cellsToUpdateList.Add(cell);
+            _cellsToUpdateList.AddRange(GetCellNeighbours(cell, _neighboursList));
 
-            var neighbours = GetCellNeighbours(cell, _neighboursList);
-            foreach (var updatingCell in neighbours)
+            foreach (var updatingCell in _cellsToUpdateList)
                 CreateLinksForCell(updatingCell);
         }
 

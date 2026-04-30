@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c98529cdb9beb544ea80f289fcef51f2, type: 3}
   m_Name: CellTypeSand
   m_EditorClassIdentifier: 
+  _id: 4
   _name: Sand
   _sprite: {fileID: 21300000, guid: 8aed04b11e345dc45a9d69ab610d44c1, type: 3}
   _weight: 1.5

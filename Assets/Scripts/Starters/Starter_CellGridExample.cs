@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Core.Starters
 {
-    public class Starter_CellGrid : MonoBehaviour
+    public class Starter_CellGridExample : MonoBehaviour
     {
         private CellsGridField _field;
         private AStarSearchAlgorithm<Cell> _searchAlgorithm;
@@ -45,7 +45,7 @@ namespace Core.Starters
                 cell.CellClicked += _painter.TryChangeCellType;
                 cell.CellClicked += _marker.TryMarkCell;
                 cell.CellTypeChanged += (_, _) => _pathDrawer.ShowPath(false);
-                cell.CellTypeChanged += (_, _) => _pathFinder.CheckStartAndFinishReady();
+                cell.CellTypeChanged += (_, _) => TryRun();
             }
             
             _pathFinder.NodeChanged += () => _pathDrawer.ShowPath(false);
@@ -53,12 +53,12 @@ namespace Core.Starters
             _pathFinder.StartNodeChanged += (cell, b) => cell?.ShowStartMarker(b);
             _pathFinder.FinishNodeChanged += (cell, b) => cell?.ShowFinishMarker(b);
             
-            _pathFinder.StartAndFinishReady += Run;
+            _pathFinder.NodeChanged += TryRun;
         }
 
-        private void Run(bool isReady)
+        private void TryRun()
         {
-            if (isReady)
+            if (_pathFinder.IsReady)
             {
                 var path = _pathFinder.GetPath();
                 _pathDrawer.SetPath(path);

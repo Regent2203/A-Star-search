@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Core.Heuristic;
 using Core.Nodes;
 using Core.SearchAlgorithms;
-using UnityEngine;
 
 namespace Core.PathFinders
 {
@@ -18,7 +17,7 @@ namespace Core.PathFinders
         public event Action NodeChanged;
         public event Action<T, bool> StartNodeChanged;  //false is called when cleared, true is called when assigned
         public event Action<T, bool> FinishNodeChanged; //false is called when cleared, true is called when assigned
-        public event Action<bool> StartAndFinishReady;
+        public bool IsReady => _startNode != null && _finishNode != null;
 
 
         public PathFinder(IHeuristicsProvider heuristicFunction, ISearchAlgorithm<T> searchAlgorithm)
@@ -62,12 +61,6 @@ namespace Core.PathFinders
             desiredNodeChanged?.Invoke(desiredNode, true);
 
             NodeChanged?.Invoke();
-            CheckStartAndFinishReady();
-        }
-
-        public void CheckStartAndFinishReady()
-        {
-            StartAndFinishReady?.Invoke(_startNode != null && _finishNode != null);
         }
 
         public IList<T> GetPath()
