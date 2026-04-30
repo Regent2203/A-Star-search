@@ -7,34 +7,21 @@ namespace Core.Installers
     [CreateAssetMenu(fileName = "SpritesLibrary", menuName = "Installers/SpritesLibrary")]
     public class SpritesLibraryInstaller : ScriptableObjectInstaller<SpritesLibraryInstaller>
     {
-        public CellSprites Cells;
+        //public SomeConfig Something1;
 
         public override void InstallBindings()
         {
-            Container.BindInstance(Cells).AsSingle();
+            //Container.BindInstance(Something1).AsSingle();
         }
     }
 
 
     [Serializable]
-    public class CellSprites
+    public class SomeConfig //todo
     {
         [SerializeField]
-        private Sprite _normal;
-        [SerializeField]
-        private Sprite _obstacle;
-        [SerializeField]
-        private Sprite _dirt;
-        [SerializeField]
-        private Sprite _sand;
-        [SerializeField]
-        private Sprite _swamp;
-
-        public Sprite Normal => _normal;
-        public Sprite Obstacle => _obstacle;
-        public Sprite Dirt => _dirt;
-        public Sprite Sand => _sand;
-        public Sprite Swamp => _swamp;
-
+        private Sprite _someSprite;
+        
+        public Sprite SomeSprite => _someSprite;
     }
 }

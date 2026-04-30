@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Core.Installers
 {
-    public class SceneInstaller_CellGrid : MonoInstaller
+    public class SceneInstaller_CellGridExample : MonoInstaller
     {
         [SerializeField]
         private CellsGridField _field;
@@ -16,7 +16,7 @@ namespace Core.Installers
         {
             Container.BindInterfacesAndSelfTo<CellsGridField>().FromInstance(_field).AsSingle();            
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<Cell>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<HeuristicsProvider>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<Cell>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPathDrawer>().AsSingle();

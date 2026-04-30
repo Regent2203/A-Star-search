@@ -15,7 +15,7 @@ namespace Core.Implementations.Cells
         public void TryChangeCellType(Cell cell)
         {
             CellType cellType = null;
-
+            /*
             if (!Input.GetKey(KeyCode.LeftShift))
             {
                 if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
@@ -41,7 +41,7 @@ namespace Core.Implementations.Cells
                         cellType = _instantiator.Instantiate<CellTypeNormal>();
                     }
                 }
-            }
+            }*/
 
             if (cellType != null)
                 cell.ChangeType(cellType);

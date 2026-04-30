@@ -24,10 +24,13 @@ namespace Core.Implementations.Cells
             _instantiator = instantiator;
         }
 
-        protected override void Awake()
+        private void Start()
         {
-            base.Awake();
-            
+            Init(); //todo: remove from Start() if we want to call Init() manually (to set grid size before that)  
+        }
+
+        public void Init()
+        {
             CreateCells();
         }
 
@@ -43,7 +46,7 @@ namespace Core.Implementations.Cells
                         Quaternion.identity, transform);
 
                     cell.Init(new Vector2Int(i, j), _scaleFactor);
-                    cell.CellTypeChanged += (cell, _) => UpdateLinksForCellAndItsNeighbours(cell);
+                    cell.CellTypeChanged += (cell, _) => UpdateLinksForCellAndItsNeighbours(cell); //todo unsubscribe
 
                     _gridNodes[i, j] = cell;
                     _cells.Add(cell);
@@ -61,13 +64,13 @@ namespace Core.Implementations.Cells
             if (cell1.IsBlocked)
                 return;
 
-            var neighbours = GetCellNeighbours(cell1);
+            var neighbours = GetCellNeighbours(cell1, _neighboursList);
             foreach (var cell2 in neighbours)
             {
                 if (cell2.IsBlocked)
                     continue;
 
-                var weight = cell1.CellType.Weight / 2 + cell2.CellType.Weight / 2;
+                var weight = CalculateWeight(cell1, cell2);
 
                 var link = new Link<Cell>(cell1, cell2, weight);
                 cell1.Links.Add(link);
@@ -76,16 +79,16 @@ namespace Core.Implementations.Cells
 
         private List<Cell> _neighboursList = new List<Cell>(4);
 
-        private List<Cell> GetCellNeighbours(Cell cell) //up, down, left, right, no diagonal
+        private List<Cell> GetCellNeighbours(Cell cell, List<Cell> neighboursList) //up, down, left, right, no diagonal
         {
-            _neighboursList.Clear();
+            neighboursList.Clear();
 
-            TryAddCell(_neighboursList, cell.Index.x, cell.Index.y + 1);
-            TryAddCell(_neighboursList, cell.Index.x, cell.Index.y - 1);
-            TryAddCell(_neighboursList, cell.Index.x - 1, cell.Index.y);
-            TryAddCell(_neighboursList, cell.Index.x + 1, cell.Index.y);
+            TryAddCell(neighboursList, cell.Index.x, cell.Index.y + 1);
+            TryAddCell(neighboursList, cell.Index.x, cell.Index.y - 1);
+            TryAddCell(neighboursList, cell.Index.x - 1, cell.Index.y);
+            TryAddCell(neighboursList, cell.Index.x + 1, cell.Index.y);
 
-            return _neighboursList;
+            return neighboursList;
 
 
             void TryAddCell(List<Cell> list, int i, int j)
@@ -101,10 +104,15 @@ namespace Core.Implementations.Cells
         {
             _cellsToUpdateList.Clear();
             _cellsToUpdateList.Add(cell);
-            _cellsToUpdateList.AddRange(GetCellNeighbours(cell));
+            _cellsToUpdateList.AddRange(GetCellNeighbours(cell, _neighboursList));
 
             foreach (var updatingCell in _cellsToUpdateList)
                 CreateLinksForCell(updatingCell);
+        }
+
+        private float CalculateWeight(Cell cell1, Cell cell2)
+        {
+            return cell1.CellType.Weight / 2 + cell2.CellType.Weight / 2;
         }
     }
 }

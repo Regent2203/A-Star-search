@@ -1,10 +1,11 @@
 ﻿using Core.Nodes;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Core.Fields
 {
-    public abstract class AbstractGridField<T> : MonoBehaviour, IField<T> where T : INode<T>
+    public abstract class AbstractGridField<T> : MonoBehaviour, IInitializable, IField<T> where T : INode<T>
     {
         [SerializeField]
         protected Grid _grid;
@@ -20,7 +21,12 @@ namespace Core.Fields
         public abstract List<T> Nodes { get; }
 
 
-        protected virtual void Awake()
+        public void Initialize()
+        {
+            InitGrid();
+        }
+        
+        private void InitGrid()
         {
             _gridNodes = new T[_cellsNumber.x, _cellsNumber.y];
 

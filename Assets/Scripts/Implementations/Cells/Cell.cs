@@ -33,13 +33,13 @@ namespace Core.Implementations.Cells
         public event Action<Cell> CellClicked;
         public event Action<Cell, CellType> CellTypeChanged;
 
-        private IInstantiator _instantiator;
+        private CellsConfig _cellsConfig;
 
 
         [Inject]
-        public void Construct(IInstantiator instantiator)
+        public void Construct(CellsConfig cellsConfig)
         {
-            _instantiator = instantiator;
+            _cellsConfig = cellsConfig;
         }
 
         public void Init(Vector2Int index, Vector2 scale)
@@ -48,7 +48,7 @@ namespace Core.Implementations.Cells
             transform.localScale = scale;
             name = $"Cell {index.x},{index.y}";
 
-            ChangeType(_instantiator.Instantiate<CellTypeNormal>());
+            ChangeType(_cellsConfig.DefaultCellType);
 
             ShowPathMarker(false);
             ShowStartMarker(false);
