@@ -18,12 +18,13 @@ namespace Core.Fields
         protected Vector2 _scaleFactor;
         protected T[,] _gridNodes;
 
-        public abstract List<T> Nodes { get; }
+        public abstract IReadOnlyList<T> Nodes { get; }
 
 
-        public void Initialize()
+        public void Initialize() //zenject
         {
             InitGrid();
+            Init();
         }
         
         private void InitGrid()
@@ -33,7 +34,14 @@ namespace Core.Fields
             _scaleFactor = _grid.cellSize / _nodePrefab.GetSize();
 
             if (_doCentering)
-                transform.position -= 0.5f * Vector3.Scale(_grid.cellSize, new Vector3(_cellsNumber.x, _cellsNumber.y, 0));
+                DoCentering();
         }
+
+        private void DoCentering()
+        {
+            transform.position -= 0.5f * Vector3.Scale(_grid.cellSize, new Vector3(_cellsNumber.x, _cellsNumber.y, 0));
+        }
+
+        protected virtual void Init() { }
     }
 }

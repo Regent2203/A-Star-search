@@ -19,11 +19,11 @@ namespace Core.Implementations.Cells
             {
                 if (Input.GetMouseButton(0)) //lmb
                 {
-                    _pathFinder.SetStartNode(cell);
+                    _pathFinder.UpdateStartNode(cell);
                 }
                 else if (Input.GetMouseButton(1)) //rmb
                 {
-                    _pathFinder.SetFinishNode(cell);
+                    _pathFinder.UpdateFinishNode(cell);
                 }
             }
         }

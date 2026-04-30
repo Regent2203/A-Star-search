@@ -10,7 +10,7 @@ namespace Core.Heuristic
             var dx = Mathf.Abs(p2.x - p1.x);
             var dy = Mathf.Abs(p2.y - p1.y);
 
-            return dx + dy;
+            return (dx + dy) * 1.001f; //1.001f makes path more straight
         }
     }
 }

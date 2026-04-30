@@ -519,7 +519,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers:
-  - {fileID: 11400000, guid: 0e7320c0e4b22524a8b427e51713f9fc, type: 2}
+  - {fileID: 11400000, guid: f8cb54b0f30a5734cb39cff238473aff, type: 2}
   _monoInstallers:
   - {fileID: 1332422903}
   _installerPrefabs: []
@@ -655,7 +655,7 @@ GameObject:
   - component: {fileID: 1877987553}
   - component: {fileID: 1877987555}
   m_Layer: 0
-  m_Name: CellViewGridField
+  m_Name: CellsGridField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -12,7 +12,7 @@ namespace Core.Implementations.Cells
         private Cell _cellViewPrefab;
 
         protected override IView _nodePrefab => _cellViewPrefab;
-        public override List<Cell> Nodes => _cells;
+        public override IReadOnlyList<Cell> Nodes => _cells;
 
         private List<Cell> _cells = new List<Cell>();
         private IInstantiator _instantiator;
@@ -24,14 +24,9 @@ namespace Core.Implementations.Cells
             _instantiator = instantiator;
         }
 
-        private void Start()
+        protected override void Init()
         {
-            Init(); //todo: remove from Start() if we want to call Init() manually (to set grid size before that)  
-        }
-
-        public void Init()
-        {
-            CreateCells();
+            CreateCells(); //todo: change if we want to call CreateCells() manually (after we change grid size or else)
         }
 
         private void CreateCells()
@@ -98,15 +93,12 @@ namespace Core.Implementations.Cells
             }
         }
 
-        private List<Cell> _cellsToUpdateList = new List<Cell>(5);
-
         private void UpdateLinksForCellAndItsNeighbours(Cell cell)
         {
-            _cellsToUpdateList.Clear();
-            _cellsToUpdateList.Add(cell);
-            _cellsToUpdateList.AddRange(GetCellNeighbours(cell, _neighboursList));
+            CreateLinksForCell(cell);
 
-            foreach (var updatingCell in _cellsToUpdateList)
+            var neighbours = GetCellNeighbours(cell, _neighboursList);
+            foreach (var updatingCell in neighbours)
                 CreateLinksForCell(updatingCell);
         }
 

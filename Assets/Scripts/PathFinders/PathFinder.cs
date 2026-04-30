@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using Core.Heuristic;
 using Core.Nodes;
 using Core.SearchAlgorithms;
+using UnityEngine;
 
 namespace Core.PathFinders
 {
-    public class PathFinder<T> : IPathFinder<T> where T : INode<T>
+    public class PathFinder<T> : IPathFinder<T> where T : class, INode<T>
     {
         private IHeuristicsProvider _heuristicsProvider;
         private ISearchAlgorithm<T> _searchAlgorithm;
@@ -26,56 +27,40 @@ namespace Core.PathFinders
             _searchAlgorithm = searchAlgorithm;
         }
 
-        public void SetStartNode(T node)
+        public void UpdateStartNode(T node)
         {
-            if (!EqualityComparer<T>.Default.Equals(node, default) && EqualityComparer<T>.Default.Equals(_finishNode, node)) //trying to set finish node as start node
-                return;
-
-            if (EqualityComparer<T>.Default.Equals(node, default) && EqualityComparer<T>.Default.Equals(_startNode, default)) //null to null
-                return;
-
-            if (EqualityComparer<T>.Default.Equals(_startNode, node)) //if same node, we clear it instead
-            {
-                var startNode = _startNode;
-                _startNode = default;
-                StartNodeChanged?.Invoke(startNode, false);
-                NodeChanged?.Invoke();
-                return;
-            }
-
-            if (!EqualityComparer<T>.Default.Equals(_startNode, default)) //if start node is already set, we should clear the previous one
-            {
-                StartNodeChanged?.Invoke(_startNode, false);
-            }
-            _startNode = node;
-            StartNodeChanged?.Invoke(_startNode, true);
-            NodeChanged?.Invoke();
-            CheckStartAndFinishReady();
+            UpdateDesiredNode(node, ref _startNode, ref _finishNode, StartNodeChanged);
         }
 
-        public void SetFinishNode(T node)
+        public void UpdateFinishNode(T node)
         {
-            if (!EqualityComparer<T>.Default.Equals(node, default) && EqualityComparer<T>.Default.Equals(_startNode, node)) //trying to set start node as finish node
+            UpdateDesiredNode(node, ref _finishNode, ref _startNode, FinishNodeChanged);
+        }
+
+        private void UpdateDesiredNode(T node, ref T desiredNode, ref T notDesiredNode, Action<T, bool> desiredNodeChanged)
+        {
+            if (node is not null && (notDesiredNode == node)) //when trying to set start node as finish node or vice versa
                 return;
 
-            if (EqualityComparer<T>.Default.Equals(node, default) && EqualityComparer<T>.Default.Equals(_finishNode, default)) //null to null
+            if (node is null && desiredNode is null) //when trying to set null to null
                 return;
 
-            if (EqualityComparer<T>.Default.Equals(_finishNode, node)) //if same node, we clear it instead
+            if (ReferenceEquals(desiredNode, node)) //if same node, we clear it instead
             {
-                var finishNode = _finishNode;
-                _finishNode = default;
-                FinishNodeChanged?.Invoke(finishNode, false);
+                var oldDesiredNode = desiredNode;
+                desiredNode = null;
+                desiredNodeChanged?.Invoke(oldDesiredNode, false);
                 NodeChanged?.Invoke();
                 return;
             }
 
-            if (!EqualityComparer<T>.Default.Equals(_finishNode, default)) //if finish node is already set, we should clear the previous one
+            if (desiredNode is not null) //if desired node is already set, we should clear the previous one
             {
-                FinishNodeChanged?.Invoke(_finishNode, false);
+                desiredNodeChanged?.Invoke(desiredNode, false);
             }
-            _finishNode = node;
-            FinishNodeChanged?.Invoke(_finishNode, true);
+            desiredNode = node;
+            desiredNodeChanged?.Invoke(desiredNode, true);
+
             NodeChanged?.Invoke();
             CheckStartAndFinishReady();
         }
