@@ -1,12 +1,10 @@
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Core.Implementations.Cells.UI
 {
-    public class UICellsPalleteChoiceItem : MonoBehaviour
+    public class UICellsPaletteChoiceItem : MonoBehaviour
     {
         [SerializeField]
         private Image _icon;

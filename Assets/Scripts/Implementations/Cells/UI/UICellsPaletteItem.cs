@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Core.Implementations.Cells.UI
 {
-    public class UICellsPalleteItem : MonoBehaviour, IPointerDownHandler
+    public class UICellsPaletteItem : MonoBehaviour, IPointerDownHandler
     {
         [SerializeField]
         private CellType _cellTypeItem;

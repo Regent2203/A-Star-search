@@ -4,15 +4,15 @@ using Zenject;
 
 namespace Core.Implementations.Cells.UI
 {
-    public class UICellsPallete : MonoBehaviour
+    public class UICellsPalette : MonoBehaviour
     {
         [SerializeField]
-        private UICellsPalleteItem[] _allItems;
+        private UICellsPaletteItem[] _allItems;
 
         [SerializeField]
-        private UICellsPalleteChoiceItem _lmbChoiceItem;
+        private UICellsPaletteChoiceItem _lmbChoiceItem;
         [SerializeField]
-        private UICellsPalleteChoiceItem _rmbChoiceItem;
+        private UICellsPaletteChoiceItem _rmbChoiceItem;
 
 
         private CellsPainter _cellsPainter;

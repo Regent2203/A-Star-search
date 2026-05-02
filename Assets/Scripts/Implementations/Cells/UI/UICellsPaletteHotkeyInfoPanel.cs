@@ -1,12 +1,9 @@
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace Core.Implementations.Cells.UI
 {
-    public class UIHotkeyInfoPanel : MonoBehaviour
+    public class UICellsPaletteHotkeyInfoPanel : MonoBehaviour
     {
         [SerializeField]
         private TMP_Text _lmbText;
