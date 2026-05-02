@@ -1,5 +1,6 @@
 using Core.Heuristic;
 using Core.Implementations.Cells;
+using Core.Implementations.Cells.UI;
 using Core.PathFinders;
 using Core.SearchAlgorithms;
 using UnityEngine;
@@ -12,6 +13,12 @@ namespace Core.Installers
         [SerializeField]
         private CellsGridField _field;
         [SerializeField]
+        private UICellsPalette _palette;
+        [SerializeField]
+        private UICellsPaletteChoicePanel _paletteChoice;
+        [SerializeField]
+        private UICellsPaletteHotkeyInfoPanel _hotkeyInfoPanel;
+        [SerializeField]
         private KeyCode _markingKeyCode = KeyCode.LeftShift;
 
         public override void InstallBindings()
@@ -22,7 +29,11 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<Cell>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPathDrawer>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsPainter>().AsSingle().WithArguments(_markingKeyCode); ;
+            Container.BindInterfacesAndSelfTo<CellsPainter>().AsSingle();
+            Container.BindInterfacesAndSelfTo<UICellsPalette>().FromInstance(_palette).AsSingle();
+            Container.BindInterfacesAndSelfTo<UICellsPaletteChoicePanel>().FromInstance(_paletteChoice).AsSingle();
+            Container.BindInterfacesAndSelfTo<UICellsPaletteHotkeyInfoPanel>().FromInstance(_hotkeyInfoPanel).AsSingle();
+            Container.BindInstance(_markingKeyCode).WithId("MarkingKey").AsSingle();
         }
     }
 }

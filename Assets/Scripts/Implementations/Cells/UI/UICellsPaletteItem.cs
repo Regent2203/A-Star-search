@@ -17,11 +17,13 @@ namespace Core.Implementations.Cells.UI
 
         public event Action<CellType, PointerEventData.InputButton> ItemClicked;
 
+        private string _textFormat = "{0}\n({1})";
+
         
         private void Start()
         {
             _icon.sprite = _cellTypeItem.Sprite;
-            _hotkeyText.text = _cellTypeItem.PaletteHotkey.ToString();
+            _hotkeyText.text = string.Format(_textFormat, _cellTypeItem.Name, _cellTypeItem.PaletteHotkey.ToString());
         }
 
         private void Update()

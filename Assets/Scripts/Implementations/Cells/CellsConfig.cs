@@ -9,25 +9,17 @@ namespace Core.Implementations.Cells
     public class CellsConfig : ScriptableObjectInstaller<CellsConfig>
     {
         [SerializeField]
-        private CellType[] _cellTypes;
+        private List<CellType> _cellTypes;
         [SerializeField]
         private CellType _defaultCellType;
 
-        private Dictionary<CellId, CellType> _cellTypesDict;
+        public IReadOnlyList<CellType> CellTypes => _cellTypes;
+        public CellType DefaultCellType => _defaultCellType;
 
 
         public override void InstallBindings()
         {
             Container.BindInstance(this).AsSingle();
-
-            _cellTypesDict = _cellTypes.ToDictionary(t => t.Id);
-        }
-
-        public CellType DefaultCellType => _defaultCellType;
-
-        public CellType GetCellType(CellId id)
-        {
-            return _cellTypesDict.TryGetValue(id, out var cell) ? cell : null;
         }
 
         public float GetMinimumCellTypeWeight()

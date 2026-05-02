@@ -1,6 +1,8 @@
 using Core.PathFinders;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 
 namespace Core.Implementations.Cells
 {
@@ -10,30 +12,28 @@ namespace Core.Implementations.Cells
         private CellType _rmbType;
         private KeyCode _markingKeyCode = KeyCode.LeftShift;
 
-        public KeyCode MarkingKeyCode => _markingKeyCode;
+        public event Action<CellType> LMBTypeSet;
+        public event Action<CellType> RMBTypeSet;
 
-        private CellsConfig _cellsConfig;
         private IPathFinder<Cell> _pathFinder;
 
 
-        public CellsPainter(CellsConfig cellsConfig, IPathFinder<Cell> pathFinder, KeyCode markingKeyCode)
+        public CellsPainter(IPathFinder<Cell> pathFinder, [Inject(Id = "MarkingKey")] KeyCode markingKeyCode)
         {
-            _cellsConfig = cellsConfig;
             _pathFinder = pathFinder;
             _markingKeyCode = markingKeyCode;
-
-            _lmbType = _cellsConfig.DefaultCellType;
-            _rmbType = _cellsConfig.DefaultCellType;
         }
 
         public void SetLMBType(CellType cellType)
         {
             _lmbType = cellType;
+            LMBTypeSet?.Invoke(cellType);
         }
 
         public void SetRMBType(CellType cellType)
         {
             _rmbType = cellType;
+            RMBTypeSet?.Invoke(cellType);
         }
 
         public void TryChangeCell(Cell cell, PointerEventData.InputButton btn)
