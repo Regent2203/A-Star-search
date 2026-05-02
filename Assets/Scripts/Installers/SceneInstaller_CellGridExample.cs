@@ -11,6 +11,8 @@ namespace Core.Installers
     {
         [SerializeField]
         private CellsGridField _field;
+        [SerializeField]
+        private KeyCode _markingKeyCode = KeyCode.LeftShift;
 
         public override void InstallBindings()
         {
@@ -20,8 +22,7 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<Cell>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPathDrawer>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsPainter>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsMarker>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsPainter>().AsSingle().WithArguments(_markingKeyCode); ;
         }
     }
 }

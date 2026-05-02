@@ -30,7 +30,7 @@ namespace Core.Implementations.Cells
 
         public bool IsBlocked => float.IsPositiveInfinity(CellType.Weight);
 
-        public event Action<Cell> CellClicked;
+        public event Action<Cell, PointerEventData.InputButton> CellClicked;
         public event Action<Cell, CellType> CellTypeChanged;
 
         private CellsConfig _cellsConfig;
@@ -101,7 +101,7 @@ namespace Core.Implementations.Cells
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            CellClicked?.Invoke(this);
+            CellClicked?.Invoke(this, eventData.button);
         }
 
         private void OnDrawGizmos()

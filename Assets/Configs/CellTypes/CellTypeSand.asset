@@ -16,3 +16,4 @@ MonoBehaviour:
   _name: Sand
   _sprite: {fileID: 21300000, guid: 8aed04b11e345dc45a9d69ab610d44c1, type: 3}
   _weight: 1.5
+  _paletteHotkey: 114

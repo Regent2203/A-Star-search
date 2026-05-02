@@ -1,50 +1,81 @@
+using Core.PathFinders;
 using UnityEngine;
-using Zenject;
+using UnityEngine.EventSystems;
 
 namespace Core.Implementations.Cells
 {
     public class CellsPainter
     {
-        private CellsConfig _cellsConfig;
+        private CellType _lmbType;
+        private CellType _rmbType;
+        private KeyCode _markingKeyCode = KeyCode.LeftShift;
 
-        public CellsPainter(CellsConfig cellsConfig)
+        public KeyCode MarkingKeyCode => _markingKeyCode;
+
+        private CellsConfig _cellsConfig;
+        private IPathFinder<Cell> _pathFinder;
+
+
+        public CellsPainter(CellsConfig cellsConfig, IPathFinder<Cell> pathFinder, KeyCode markingKeyCode)
         {
             _cellsConfig = cellsConfig;
+            _pathFinder = pathFinder;
+            _markingKeyCode = markingKeyCode;
+
+            _lmbType = _cellsConfig.DefaultCellType;
+            _rmbType = _cellsConfig.DefaultCellType;
         }
 
-        public void TryChangeCellType(Cell cell)
+        public void SetLMBType(CellType cellType)
+        {
+            _lmbType = cellType;
+        }
+
+        public void SetRMBType(CellType cellType)
+        {
+            _rmbType = cellType;
+        }
+
+        public void TryChangeCell(Cell cell, PointerEventData.InputButton btn)
+        {
+            bool isMarkingMode = Input.GetKey(_markingKeyCode);
+
+            if (isMarkingMode)
+                TryMarkCell(cell, btn);
+            else
+                TrySetCellType(cell, btn);
+        }
+
+        private void TrySetCellType(Cell cell, PointerEventData.InputButton btn)
         {
             CellType cellType = null;
-            
-            if (!Input.GetKey(KeyCode.LeftShift))
+
+            if (btn == PointerEventData.InputButton.Left) //lmb
             {
-                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
-                {
-                    cellType = _cellsConfig.GetCellType(CellId.Swamp);
-                }
-                else if (Input.GetKey(KeyCode.LeftControl))
-                {
-                    cellType = _cellsConfig.GetCellType(CellId.Sand);
-                }
-                else if (Input.GetKey(KeyCode.LeftAlt))
-                {
-                    cellType = _cellsConfig.GetCellType(CellId.Dirt);
-                }
-                else
-                {
-                    if (Input.GetMouseButton(0)) //lmb
-                    {
-                        cellType = _cellsConfig.GetCellType(CellId.Obstacle);
-                    }
-                    else if (Input.GetMouseButton(1)) //rmb
-                    {
-                        cellType = _cellsConfig.GetCellType(CellId.Normal);
-                    }
-                }
+                cellType = _lmbType;
+            }
+            else if (btn == PointerEventData.InputButton.Right) //rmb
+            {
+                cellType = _rmbType;
             }
 
             if (cellType != null)
                 cell.ChangeType(cellType);
+        }
+
+        private void TryMarkCell(Cell cell, PointerEventData.InputButton btn)
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                if (btn == PointerEventData.InputButton.Left) //lmb
+                {
+                    _pathFinder.UpdateStartNode(cell);
+                }
+                else if (btn == PointerEventData.InputButton.Right) //rmb
+                {
+                    _pathFinder.UpdateFinishNode(cell);
+                }
+            }
         }
     }
 }

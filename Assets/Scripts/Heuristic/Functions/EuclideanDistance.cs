@@ -1,5 +1,4 @@
-﻿using Core.Nodes;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Core.Heuristic
 {

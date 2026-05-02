@@ -16,12 +16,11 @@ namespace Core.Starters
         private PathFinder<Cell> _pathFinder;
         private CellsPathDrawer _pathDrawer;
         private CellsPainter _painter;
-        private CellsMarker _marker;
 
 
         [Inject]
         public void Construct(CellsGridField field, AStarSearchAlgorithm<Cell> searchAlgorithm, CellsHeuristicsProvider heuristicsController, ManhattanDistance heuristicFunction,
-            PathFinder<Cell> pathFinder, CellsPathDrawer pathDrawer, CellsPainter painter, CellsMarker marker)
+            PathFinder<Cell> pathFinder, CellsPathDrawer pathDrawer, CellsPainter painter)
         {
             _field = field;
             _searchAlgorithm = searchAlgorithm;
@@ -30,7 +29,6 @@ namespace Core.Starters
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
             _painter = painter;
-            _marker = marker;
         }
 
         private void Start()
@@ -42,8 +40,7 @@ namespace Core.Starters
         {
             foreach (var cell in _field.Nodes)
             {
-                cell.CellClicked += _painter.TryChangeCellType;
-                cell.CellClicked += _marker.TryMarkCell;
+                cell.CellClicked += _painter.TryChangeCell;
                 cell.CellTypeChanged += (_, _) => _pathDrawer.ShowPath(false);
                 cell.CellTypeChanged += (_, _) => TryRun();
             }

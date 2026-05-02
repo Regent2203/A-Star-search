@@ -23,10 +23,13 @@ namespace Core.Implementations.Cells
         private Sprite _sprite;
         [SerializeField]
         private float _weight = float.PositiveInfinity;
+        [SerializeField]
+        private KeyCode _paletteHotkey;
 
         public CellId Id => _id;
         public string Name => _name;
         public Sprite Sprite => _sprite;
         public float Weight => _weight;
+        public KeyCode PaletteHotkey => _paletteHotkey;
     }
 }

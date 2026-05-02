@@ -41,7 +41,7 @@ namespace Core.Implementations.Cells
                         Quaternion.identity, transform);
 
                     cell.Init(new Vector2Int(i, j), _scaleFactor);
-                    cell.CellTypeChanged += (cell, _) => UpdateLinksForCellAndItsNeighbours(cell); //todo unsubscribe
+                    cell.CellTypeChanged += (cell, _) => UpdateLinksForCellAndItsNeighbours(cell); //todo unsubscribe if I want to destroy field gameobject
 
                     _gridNodes[i, j] = cell;
                     _cells.Add(cell);
