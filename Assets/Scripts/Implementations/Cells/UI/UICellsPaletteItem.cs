@@ -10,7 +10,7 @@ namespace Core.Implementations.Cells.UI
     public class UICellsPaletteItem : MonoBehaviour, IPointerDownHandler
     {
         [SerializeField]
-        private CellType _cellTypeItem;
+        private CellType _cellType;
         [SerializeField]
         private Image _icon;
         [SerializeField]
@@ -28,26 +28,27 @@ namespace Core.Implementations.Cells.UI
             _markingKeyCode = markingKeyCode;
         }
 
-        private void Start()
+        public void Init(CellType cellType)
         {
-            _icon.sprite = _cellTypeItem.Sprite;
-            _hotkeyText.text = string.Format(_textFormat, _cellTypeItem.Name, _cellTypeItem.PaletteHotkey.ToString());
+            _cellType = cellType;
+            _icon.sprite = _cellType.Sprite;
+            _hotkeyText.text = string.Format(_textFormat, _cellType.Name, _cellType.PaletteHotkey.ToString());
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(_cellTypeItem.PaletteHotkey))
+            if (Input.GetKeyDown(_cellType.PaletteHotkey))
             {
                 if (Input.GetKey(_markingKeyCode))
-                    ItemClicked?.Invoke(_cellTypeItem, PointerEventData.InputButton.Right);
+                    ItemClicked?.Invoke(_cellType, PointerEventData.InputButton.Right);
                 else
-                    ItemClicked?.Invoke(_cellTypeItem, PointerEventData.InputButton.Left);
+                    ItemClicked?.Invoke(_cellType, PointerEventData.InputButton.Left);
             }
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            ItemClicked?.Invoke(_cellTypeItem, eventData.button);
+            ItemClicked?.Invoke(_cellType, eventData.button);
         }
     }
 }
