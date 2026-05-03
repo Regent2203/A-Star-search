@@ -20,6 +20,7 @@ namespace Core.Starters
         private PathFinder<Cell> _pathFinder;
         private CellsPathDrawer _pathDrawer;
         private CellsPainter _painter;
+        private CellsMarker _marker;
         private UICellsPalette _palette;
         private UICellsPaletteChoicePanel _paletteChoice;
         private UICellsPaletteHotkeyInfoPanel _hotkeyInfoPanel;
@@ -28,7 +29,7 @@ namespace Core.Starters
     [Inject]
         public void Construct(CellsConfig config, CellsGridField field, 
             AStarSearchAlgorithm<Cell> searchAlgorithm, CellsHeuristicsProvider heuristicsController, ManhattanDistance heuristicFunction,
-            PathFinder<Cell> pathFinder, CellsPathDrawer pathDrawer, CellsPainter painter, 
+            PathFinder<Cell> pathFinder, CellsPathDrawer pathDrawer, CellsPainter painter, CellsMarker marker,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)
         {
             _config = config;
@@ -39,6 +40,7 @@ namespace Core.Starters
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
             _painter = painter;
+            _marker = marker;
             _palette = palette;
             _paletteChoice = paletteChoice;
             _hotkeyInfoPanel = hotkeyInfoPanel;
@@ -53,7 +55,8 @@ namespace Core.Starters
         {
             foreach (var cell in _field.Nodes)
             {
-                cell.CellClicked += _painter.TryChangeCell;
+                cell.CellClicked += _painter.TryChangeCellType;
+                cell.CellClicked += _marker.TryMarkCell;
                 cell.CellTypeChanged += (_, _) => _pathDrawer.ShowPath(false);
                 cell.CellTypeChanged += (_, _) => TryRun();
             }

@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Core.Implementations.Cells.UI
 {
@@ -18,8 +19,15 @@ namespace Core.Implementations.Cells.UI
         public event Action<CellType, PointerEventData.InputButton> ItemClicked;
 
         private string _textFormat = "{0}\n({1})";
+        private KeyCode _markingKeyCode = KeyCode.LeftShift;
 
-        
+
+        [Inject]
+        public void Construct([Inject(Id = "MarkingKey")] KeyCode markingKeyCode)
+        {
+            _markingKeyCode = markingKeyCode;
+        }
+
         private void Start()
         {
             _icon.sprite = _cellTypeItem.Sprite;
@@ -30,7 +38,10 @@ namespace Core.Implementations.Cells.UI
         {
             if (Input.GetKeyDown(_cellTypeItem.PaletteHotkey))
             {
-                ItemClicked?.Invoke(_cellTypeItem, PointerEventData.InputButton.Left);
+                if (Input.GetKey(_markingKeyCode))
+                    ItemClicked?.Invoke(_cellTypeItem, PointerEventData.InputButton.Right);
+                else
+                    ItemClicked?.Invoke(_cellTypeItem, PointerEventData.InputButton.Left);
             }
         }
 
