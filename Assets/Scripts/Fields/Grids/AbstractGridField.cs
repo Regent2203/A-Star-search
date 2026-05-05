@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-namespace Core.Fields
+namespace Core.Fields.Grids
 {
     public abstract class AbstractGridField<T> : MonoBehaviour, IInitializable, IField<T> where T : INode<T>
     {
@@ -14,7 +14,7 @@ namespace Core.Fields
         [SerializeField]
         protected bool _doCentering = true;
 
-        protected abstract IView _nodePrefab { get; }
+        protected IView _nodePrefab;
         protected Vector2 _scaleFactor;
         protected T[,] _gridNodes;
 

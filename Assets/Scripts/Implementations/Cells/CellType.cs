@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Core.Weightables;
+using UnityEngine;
 
 namespace Core.Implementations.Cells
 {
@@ -13,7 +14,7 @@ namespace Core.Implementations.Cells
     }
 
     [CreateAssetMenu(fileName = "CellType", menuName = "Core/CellType")]
-    public class CellType : ScriptableObject
+    public class CellType : ScriptableObject, IWeightable
     {
         [SerializeField]
         private CellId _id;

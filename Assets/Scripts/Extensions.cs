@@ -2,14 +2,8 @@
 
 public static class Extensions
 {
-    public static bool IndexExists(this Array array, int index, int dimension)
+    public static bool IsWithinBounds(this Array grid, int i, int j)
     {
-        if (array == null) 
-            return false;
-        
-        if (dimension < 0 || dimension >= array.Rank) 
-            return false;
-
-        return index >= 0 && index < array.GetLength(dimension);
+        return i >= 0 && i < grid.GetLength(0) && j >= 0 && j < grid.GetLength(1);
     }
 }

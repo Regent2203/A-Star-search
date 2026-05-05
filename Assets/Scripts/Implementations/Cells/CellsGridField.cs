@@ -1,4 +1,5 @@
-﻿using Core.Fields;
+﻿using Core.CostProviders;
+using Core.Fields.Grids;
 using Core.Links;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,20 +9,19 @@ namespace Core.Implementations.Cells
 {
     public class CellsGridField : AbstractGridField<Cell>
     {
-        [SerializeField]
-        private Cell _cellViewPrefab;
-
-        protected override IView _nodePrefab => _cellViewPrefab;
         public override IReadOnlyList<Cell> Nodes => _cells;
 
-        private List<Cell> _cells = new List<Cell>();
-        private IInstantiator _instantiator;
+        private readonly List<Cell> _cells = new List<Cell>();
+        private CellsFactory _factory;
+        private CellsLinker _linker;
 
 
         [Inject]
-        public void Construct(IInstantiator instantiator)
+        public void Construct(CellsFactory factory, CellsLinker linker, Cell cellPrefab)
         {
-            _instantiator = instantiator;
+            _factory = factory;
+            _linker = linker;
+            _nodePrefab = cellPrefab;
         }
 
         protected override void Init()
@@ -35,13 +35,10 @@ namespace Core.Implementations.Cells
             {
                 for (int j = 0; j < _gridNodes.GetLength(1); j++)
                 {
-                    var cell = _instantiator.InstantiatePrefabForComponent<Cell>(
-                        _cellViewPrefab,
-                        transform.position + new Vector3(_grid.cellSize.x * i, _grid.cellSize.y * j) + new Vector3(_grid.cellGap.x * i, _grid.cellGap.y * j),
-                        Quaternion.identity, transform);
+                    var pos = transform.position + new Vector3((_grid.cellSize.x + _grid.cellGap.x) * i, (_grid.cellSize.y + _grid.cellGap.y) * j);
 
-                    cell.Init(new Vector2Int(i, j), _scaleFactor);
-                    cell.CellTypeChanged += (cell, _) => UpdateLinksForCellAndItsNeighbours(cell); //todo unsubscribe if I want to destroy field gameobject
+                    var cell = _factory.Create(pos, new Vector2Int(i, j), _scaleFactor, transform);
+                    cell.CellTypeChanged += OnCellTypeChanged; //todo unsubscribe if I want to destroy field gameobject
 
                     _gridNodes[i, j] = cell;
                     _cells.Add(cell);
@@ -49,65 +46,12 @@ namespace Core.Implementations.Cells
             }
 
             foreach (var cell in _cells)
-                CreateLinksForCell(cell);
+                _linker.CreateLinksForCell(cell, _gridNodes);
         }
 
-        private void CreateLinksForCell(Cell cell1)
+        private void OnCellTypeChanged(Cell cell, CellType type)
         {
-            cell1.Links.Clear();
-
-            if (cell1.IsBlocked)
-                return;
-
-            var neighbours = GetCellNeighbours(cell1, _neighboursList);
-            foreach (var cell2 in neighbours)
-            {
-                if (cell2.IsBlocked)
-                    continue;
-
-                var weight = CalculateWeight(cell1, cell2);
-
-                var link = new Link<Cell>(cell1, cell2, weight);
-                cell1.Links.Add(link);
-            }
-        }
-
-        private List<Cell> _neighboursList = new List<Cell>(4);
-
-        private List<Cell> GetCellNeighbours(Cell cell, List<Cell> neighboursList) //up, down, left, right, no diagonal
-        {
-            neighboursList.Clear();
-
-            TryAddCell(neighboursList, cell.Index.x, cell.Index.y + 1);
-            TryAddCell(neighboursList, cell.Index.x, cell.Index.y - 1);
-            TryAddCell(neighboursList, cell.Index.x - 1, cell.Index.y);
-            TryAddCell(neighboursList, cell.Index.x + 1, cell.Index.y);
-
-            return neighboursList;
-
-
-            void TryAddCell(List<Cell> list, int i, int j)
-            {
-                if (_gridNodes.IndexExists(i, 0) && _gridNodes.IndexExists(j, 1))
-                    list.Add(_gridNodes[i, j]);
-            }
-        }
-
-        private List<Cell> _cellsToUpdateList = new List<Cell>(5);
-
-        private void UpdateLinksForCellAndItsNeighbours(Cell cell)
-        {
-            _cellsToUpdateList.Clear();
-            _cellsToUpdateList.Add(cell);
-            _cellsToUpdateList.AddRange(GetCellNeighbours(cell, _neighboursList));
-
-            foreach (var updatingCell in _cellsToUpdateList)
-                CreateLinksForCell(updatingCell);
-        }
-
-        private float CalculateWeight(Cell cell1, Cell cell2)
-        {
-            return cell1.CellType.Weight / 2 + cell2.CellType.Weight / 2;
+            _linker.UpdateLinksForCellAndItsNeighbours(cell, _gridNodes);
         }
     }
 }

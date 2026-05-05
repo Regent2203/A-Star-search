@@ -1,4 +1,5 @@
-﻿using Core.Heuristic;
+﻿using Core.CostProviders;
+using Core.Heuristic;
 using Core.Implementations.Cells;
 using Core.Implementations.Cells.UI;
 using Core.PathFinders;
@@ -14,9 +15,6 @@ namespace Core.Starters
     {
         private CellsConfig _config;
         private CellsGridField _field;
-        private AStarSearchAlgorithm<Cell> _searchAlgorithm;
-        private CellsHeuristicsProvider _heuristicsProvider;
-        private ManhattanDistance _heuristicFunction;
         private PathFinder<Cell> _pathFinder;
         private CellsPathDrawer _pathDrawer;
         private CellsPainter _painter;
@@ -26,17 +24,13 @@ namespace Core.Starters
         private UICellsPaletteHotkeyInfoPanel _hotkeyInfoPanel;
 
 
-    [Inject]
-        public void Construct(CellsConfig config, CellsGridField field, 
-            AStarSearchAlgorithm<Cell> searchAlgorithm, CellsHeuristicsProvider heuristicsController, ManhattanDistance heuristicFunction,
+        [Inject]
+        public void Construct(CellsConfig config, CellsGridField field,
             PathFinder<Cell> pathFinder, CellsPathDrawer pathDrawer, CellsPainter painter, CellsMarker marker,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)
         {
             _config = config;
             _field = field;
-            _searchAlgorithm = searchAlgorithm;
-            _heuristicsProvider = heuristicsController;
-            _heuristicFunction = heuristicFunction;
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
             _painter = painter;
