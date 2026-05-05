@@ -8,8 +8,8 @@ namespace Core.PathFinders
 {
     public class PathFinder<T> : IPathFinder<T> where T : class, INode<T>
     {
-        private IHeuristicsProvider _heuristicsProvider;
-        private ISearchAlgorithm<T> _searchAlgorithm;
+        private readonly IHeuristicsProvider _heuristicsProvider;
+        private readonly ISearchAlgorithm<T> _searchAlgorithm;
 
         private T _startNode;
         private T _finishNode;
@@ -38,7 +38,7 @@ namespace Core.PathFinders
 
         private void UpdateDesiredNode(T node, ref T desiredNode, ref T notDesiredNode, Action<T, bool> desiredNodeChanged)
         {
-            if (node is not null && (notDesiredNode == node)) //when trying to set start node as finish node or vice versa
+            if (node is not null && ReferenceEquals(notDesiredNode, node)) //when trying to set start node as finish node or vice versa
                 return;
 
             if (node is null && desiredNode is null) //when trying to set null to null

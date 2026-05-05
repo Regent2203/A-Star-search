@@ -4,7 +4,6 @@ namespace Core.Heuristic
 {
     public interface IHeuristicsProvider
     {
-        public void SetMinimumStepCost(float value);
         public float EstimateCost(IEstimatable node1, IEstimatable node2);
     }
 }

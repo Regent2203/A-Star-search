@@ -7,8 +7,8 @@ namespace Core.Implementations.Cells
 {
     public class CellsLinker
     {
-        private ICostProvider _costProvider;
-        private IGridNeighboursProvider<Cell> _neighboursProvider;
+        private readonly ICostProvider _costProvider;
+        private readonly IGridNeighboursProvider<Cell> _neighboursProvider;
 
 
         public CellsLinker(ICostProvider costProvider, IGridNeighboursProvider<Cell> neighboursProvider)
@@ -37,7 +37,7 @@ namespace Core.Implementations.Cells
             }
         }
 
-        private List<Cell> _cellsToUpdateList = new List<Cell>();
+        private readonly List<Cell> _cellsToUpdateList = new List<Cell>();
 
         public void UpdateLinksForCellAndItsNeighbours(Cell cell, Cell[,] gridNodes)
         {

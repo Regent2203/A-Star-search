@@ -9,11 +9,11 @@ namespace Core.Implementations.Cells
     {
         private CellType _lmbType;
         private CellType _rmbType;
-        private KeyCode _markingKeyCode = KeyCode.LeftShift;
+
+        private readonly KeyCode _markingKeyCode = KeyCode.LeftShift;
 
         public event Action<CellType> LMBTypeSet;
         public event Action<CellType> RMBTypeSet;
-
 
 
         public CellsPainter([Inject(Id = "MarkingKey")] KeyCode markingKeyCode)

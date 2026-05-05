@@ -7,9 +7,8 @@ namespace Core.Implementations.Cells
 {
     public class CellsMarker
     {
-        private KeyCode _markingKeyCode = KeyCode.LeftShift;
-
-        private IPathFinder<Cell> _pathFinder;
+        private readonly KeyCode _markingKeyCode = KeyCode.LeftShift;
+        private readonly IPathFinder<Cell> _pathFinder;
 
 
         public CellsMarker(IPathFinder<Cell> pathFinder, [Inject(Id = "MarkingKey")] KeyCode markingKeyCode)
