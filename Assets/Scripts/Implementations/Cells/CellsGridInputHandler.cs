@@ -12,7 +12,7 @@ namespace Core.Fields.Grids
         [SerializeField] 
         private Grid _grid;
 
-        public event Action<CellView, PointerEventData.InputButton> CellClicked;
+        public event Action<CellNode, PointerEventData.InputButton> CellNodeClicked;
 
 
         public void OnPointerDown(PointerEventData eventData)
@@ -22,10 +22,10 @@ namespace Core.Fields.Grids
             int x = Mathf.FloorToInt(localPos.x / _grid.cellSize.x);
             int y = Mathf.FloorToInt(localPos.y / _grid.cellSize.y);
 
-            var view = _field.GetViewByIndex(x, y);
-            if (view != null)
+            var node = _field.GetNodeByIndex(x, y);
+            if (node != null)
             {
-                CellClicked?.Invoke(view, eventData.button);
+                CellNodeClicked?.Invoke(node, eventData.button);
             }
         }
     }

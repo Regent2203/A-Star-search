@@ -51,8 +51,8 @@ namespace Core.Starters
 
         private void Init()
         {
-            _fieldInputHandler.CellClicked += _painter.TryChangeCellType;
-            _fieldInputHandler.CellClicked += _pathSetter.TryUseCell;
+            _fieldInputHandler.CellNodeClicked += _painter.TryChangeCellType;
+            _fieldInputHandler.CellNodeClicked += _pathSetter.TryUseCell;
             _field.CellNodeChanged += (_) => _pathDrawer.ShowPath(false);
             _field.CellNodeChanged += (_) => TryRun();
             

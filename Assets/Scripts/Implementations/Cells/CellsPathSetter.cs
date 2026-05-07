@@ -19,15 +19,12 @@ namespace Core.Implementations.Cells
             _markingKeyCode = markingKeyCode;
         }
 
-        public void TryUseCell(CellView view, PointerEventData.InputButton btn)
+        public void TryUseCell(CellNode node, PointerEventData.InputButton btn)
         {
             bool isMarkingMode = Input.GetKey(_markingKeyCode);
 
             if (isMarkingMode)
             {
-                var index = view.Index;
-                var node = _field.GetNodeByIndex(index.x, index.y);
-
                 if (btn == PointerEventData.InputButton.Left) //lmb
                 {
                     _pathFinder.UpdateStartNode(node);
