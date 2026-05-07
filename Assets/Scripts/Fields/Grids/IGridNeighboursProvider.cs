@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace Core.Fields.Grids
 {
-    public interface IGridNeighboursProvider
+    public interface IGridNeighboursProvider<T> where T : INode<T>
     {
-        public IReadOnlyList<INode> GetNeighbours(int i, int j, INode[,] gridNodes);
+        public IReadOnlyList<T> GetNeighbours(int i, int j, T[,] gridNodes);
     }
 }

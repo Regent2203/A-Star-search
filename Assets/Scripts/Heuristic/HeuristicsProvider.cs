@@ -2,7 +2,7 @@
 
 namespace Core.Heuristic
 {
-    public abstract class HeuristicsProvider : IHeuristicsProvider
+    public abstract class HeuristicsProvider<T> : IHeuristicsProvider<T> where T : INode<T>
     {
         private readonly IHeuristicFunction _heuristicFunction;        
         private readonly float _minStepCost;
@@ -14,7 +14,7 @@ namespace Core.Heuristic
             _minStepCost = minStepCost;
         }
 
-        public float EstimateCost(INode node1, INode node2)
+        public float EstimateCost(T node1, T node2)
         {
             return _heuristicFunction.Estimate(node1.Position, node2.Position) * _minStepCost;
         }

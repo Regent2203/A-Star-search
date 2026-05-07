@@ -4,21 +4,21 @@ using System.Collections.Generic;
 
 namespace Core.SearchAlgorithms
 {
-    public class AStarSearchAlgorithm : ISearchAlgorithm
+    public class AStarSearchAlgorithm<T> : ISearchAlgorithm<T> where T : class, INode<T>
     {
-        private Dictionary<INode, INode> _cameFrom;
-        private Dictionary<INode, float> _costSoFar;
+        private Dictionary<T, T> _cameFrom;
+        private Dictionary<T, float> _costSoFar;
 
 
-        public IList<INode> CalculateWay(INode startNode, INode finishNode, IHeuristicsProvider heuristicsController)
+        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider<T> heuristicsController)
         {
             if (startNode.Equals(finishNode))
                 return null;
 
-            _cameFrom = new Dictionary<INode, INode>();
-            _costSoFar = new Dictionary<INode, float>();
+            _cameFrom = new Dictionary<T, T>();
+            _costSoFar = new Dictionary<T, float>();
 
-            var needToCheck = new PriorityQueue<INode>();
+            var needToCheck = new PriorityQueue<T>();
             needToCheck.Enqueue(startNode, 0);
 
             _cameFrom[startNode] = default;
@@ -51,9 +51,9 @@ namespace Core.SearchAlgorithms
             return null;
         }
 
-        private IList<INode> RetracePath(INode startNode, INode finishNode)
+        private IList<T> RetracePath(T startNode, T finishNode)
         {
-            var path = new List<INode>();
+            var path = new List<T>();
             var current = finishNode;
 
             while (!current.Equals(startNode))

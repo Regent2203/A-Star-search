@@ -2,9 +2,9 @@
 
 namespace Core.CostProviders
 {
-    public class AverageCostProvider : ICostProvider
+    public class AverageCostProvider<T> : ICostProvider<T> where T: INode<T>
     {
-        public float GetCost(INode from, INode to)
+        public float GetCost(T from, T to)
         {
             return from.Weight * 0.5f + to.Weight * 0.5f;
         }

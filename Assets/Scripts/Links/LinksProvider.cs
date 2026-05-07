@@ -5,17 +5,17 @@ using System.Collections.Generic;
 
 namespace Core.Fields.Grids
 {
-    public class LinksProvider : ILinksProvider
+    public class LinksProvider<T> : ILinksProvider<T> where T: class, INode<T>
     {
-        private readonly ICostProvider _costProvider;
+        private readonly ICostProvider<T> _costProvider;
 
         
-        public LinksProvider(ICostProvider costProvider)
+        public LinksProvider(ICostProvider<T> costProvider)
         {
             _costProvider = costProvider;
         }
 
-        public IEnumerable<ILink> GetLinks(INode from, IEnumerable<INode> neighbours)
+        public IEnumerable<ILink<T>> GetLinks(T from, IEnumerable<T> neighbours)
         {
             if (from.IsBlocked)
                 yield break;
@@ -27,7 +27,7 @@ namespace Core.Fields.Grids
 
                 var cost = _costProvider.GetCost(from, to);
 
-                yield return new Link(from, to, cost);
+                yield return new Link<T>(from, to, cost);
             }
         }
     }

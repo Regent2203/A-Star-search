@@ -2,8 +2,8 @@
 
 namespace Core.CostProviders
 {
-    public interface ICostProvider
+    public interface ICostProvider<T> where T : INode<T>
     {
-        float GetCost(INode from, INode to);
+        float GetCost(T from, T to);
     }
 }

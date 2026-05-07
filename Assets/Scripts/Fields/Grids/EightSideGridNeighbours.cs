@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Core.Fields.Grids
 {
-    public class EightSideGridNeighbours : IGridNeighboursProvider //all eight directions
+    public class EightSideGridNeighbours<T> : IGridNeighboursProvider<T> where T: INode<T> //all eight directions
     {
-        private readonly List<INode> _neighboursList = new List<INode>(8);
+        private readonly List<T> _neighboursList = new List<T>(8);
 
-        public IReadOnlyList<INode> GetNeighbours(int i, int j, INode[,] gridNodes)
+        public IReadOnlyList<T> GetNeighbours(int i, int j, T[,] gridNodes)
         {
             _neighboursList.Clear();
 
@@ -26,7 +26,7 @@ namespace Core.Fields.Grids
             return _neighboursList;
 
 
-            void TryAddCell(List<INode> list, int i, int j)
+            void TryAddCell(List<T> list, int i, int j)
             {
                 if (gridNodes.IsWithinBounds(i, j))
                     list.Add(gridNodes[i, j]);

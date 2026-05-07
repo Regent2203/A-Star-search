@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Core.Implementations.Cells
 {
-    public class CellNode : INode
+    public class CellNode : INode<CellNode>
     {
         private readonly Vector2 _position;
         private readonly Vector2Int _index;
@@ -40,7 +40,7 @@ namespace Core.Implementations.Cells
             CellTypeChanged?.Invoke(cellType);
         }
 
-        public IEnumerable<ILink> GetLinks()
+        public IEnumerable<ILink<CellNode>> GetLinks()
         {
             return _field.GetLinksForNode(this);
         }

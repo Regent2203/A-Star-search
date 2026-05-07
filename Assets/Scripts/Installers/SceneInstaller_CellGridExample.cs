@@ -32,13 +32,13 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<CellsGridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LinksProvider>().AsSingle();
-            Container.BindInterfacesAndSelfTo<FourSideGridNeighbours>().AsSingle();
-            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinksProvider<CellNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<FourSideGridNeighbours<CellNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
-            Container.BindInterfacesAndSelfTo<AverageCostProvider>().AsSingle();
-            Container.BindInterfacesAndSelfTo<PathFinder>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AverageCostProvider<CellNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PathFinder<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPathDrawer>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPainter>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPathSetter>().AsSingle(); 

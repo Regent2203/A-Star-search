@@ -2,18 +2,18 @@
 
 namespace Core.Links
 {
-    public struct Link : ILink
+    public struct Link<T> : ILink<T> where T : class, INode<T>
     {
-        private INode _from;
-        private INode _to;
+        private T _from;
+        private T _to;
         private float _cost;
 
-        public INode From => _from;
-        public INode To => _to;
+        public T From => _from;
+        public T To => _to;
         public float Cost => _cost;
 
 
-        public Link(INode from, INode to, float cost)
+        public Link(T from, T to, float cost)
         {
             _from = from;
             _to = to;

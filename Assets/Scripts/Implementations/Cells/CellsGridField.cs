@@ -14,15 +14,16 @@ namespace Core.Implementations.Cells
         private CellViewFactory _viewsFactory;
         private CellNodeFactory _nodesFactory;
         private CellsConfig _cellsConfig;
-        private IGridNeighboursProvider _neighboursProvider;
-        private LinksProvider _linksProvider;
+        private IGridNeighboursProvider<CellNode> _neighboursProvider;
+        private LinksProvider<CellNode> _linksProvider;
 
         public event Action<CellView, PointerEventData.InputButton> CellClicked;
+        public event Action<CellNode> CellNodeChanged;
 
 
         [Inject]
         public void Construct(CellViewFactory viewsFactory, CellNodeFactory nodesFactory, CellsConfig cellsConfig, 
-            IGridNeighboursProvider neighboursProvider, LinksProvider linker, CellView cellviewPrefab)
+            IGridNeighboursProvider<CellNode> neighboursProvider, LinksProvider<CellNode> linker, CellView cellviewPrefab)
         {
             _viewsFactory = viewsFactory;
             _nodesFactory = nodesFactory;
@@ -56,6 +57,7 @@ namespace Core.Implementations.Cells
                     var cellNode = _nodesFactory.Create(estimatedPosition, index, _cellsConfig.DefaultCellType);
 
                     cellNode.CellTypeChanged += (type) => cellView.UpdateSprite(type.Sprite);
+                    cellNode.CellTypeChanged += (_) => CellNodeChanged?.Invoke(cellNode);
 
                     _nodes[i, j] = cellNode;
                     _views[i, j] = cellView;
@@ -63,7 +65,15 @@ namespace Core.Implementations.Cells
             }
         }
 
-        public override IEnumerable<ILink> GetLinksForNode(CellNode node)
+        public CellView GetViewByIndex(int i, int j)
+        {
+            if (_views.IsWithinBounds(i, j))
+                return _views[i, j];
+
+            return null;
+        }
+
+        public override IEnumerable<ILink<CellNode>> GetLinksForNode(CellNode node)
         {
             var index = node.Index;
             var neighbours = _neighboursProvider.GetNeighbours(index.x, index.y, _nodes);

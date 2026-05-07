@@ -4,6 +4,7 @@ using Core.Implementations.Cells;
 using Core.Implementations.Cells.UI;
 using Core.PathFinders;
 using Core.SearchAlgorithms;
+using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,7 +16,7 @@ namespace Core.Starters
     {
         private CellsConfig _config;
         private CellsGridField _field;
-        private PathFinder _pathFinder;
+        private PathFinder<CellNode> _pathFinder;
         private CellsPathDrawer _pathDrawer;
         private CellsPainter _painter;
         private CellsPathSetter _pathSetter;
@@ -26,7 +27,7 @@ namespace Core.Starters
 
         [Inject]
         public void Construct(CellsConfig config, CellsGridField field,
-            PathFinder pathFinder, CellsPathDrawer pathDrawer, CellsPainter painter, CellsPathSetter pathSetter,
+            PathFinder<CellNode> pathFinder, CellsPathDrawer pathDrawer, CellsPainter painter, CellsPathSetter pathSetter,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)
         {
             _config = config;
@@ -49,14 +50,22 @@ namespace Core.Starters
         {
             _field.CellClicked += _painter.TryChangeCellType;
             _field.CellClicked += _pathSetter.TryUseCell;
-            //_field.CellTypeChanged += (_, _) => _pathDrawer.ShowPath(false);
-            //_field.CellTypeChanged += (_, _) => TryRun();
-            
+            _field.CellNodeChanged += (_) => _pathDrawer.ShowPath(false);
+            _field.CellNodeChanged += (_) => TryRun();
             
             _pathFinder.NodeChanged += () => _pathDrawer.ShowPath(false);
-            
-            //_pathFinder.StartNodeChanged += (cell, b) => cell?.ShowStartMarker(b);
-            //_pathFinder.FinishNodeChanged += (cell, b) => cell?.ShowFinishMarker(b);
+            _pathFinder.StartNodeChanged += (node, b) =>
+            {
+                var index = node.Index;
+                var view = _field.GetViewByIndex(index.x, index.y);
+                view?.ShowStartMarker(b);
+            };
+            _pathFinder.FinishNodeChanged += (node, b) =>
+            {
+                var index = node.Index;
+                var view = _field.GetViewByIndex(index.x, index.y);
+                view?.ShowFinishMarker(b); 
+            };
             
             _pathFinder.NodeChanged += TryRun;
 
@@ -79,10 +88,20 @@ namespace Core.Starters
         {
             if (_pathFinder.IsReady)
             {
-                var path = _pathFinder.GetPath();
-                //_field.TryGetView(path[0].index
-                //_pathDrawer.SetPath(path);
-                //_pathDrawer.ShowPath(true); //todo
+                var nodePath = _pathFinder.GetPath();
+
+                if (nodePath != null)
+                {
+                    var viewPath = new List<CellView>(nodePath.Count);
+
+                    foreach (var node in nodePath)
+                    {
+                        viewPath.Add(_field.GetViewByIndex(node.Index.x, node.Index.y));
+                    }
+                    
+                    _pathDrawer.SetPath(viewPath);
+                    _pathDrawer.ShowPath(true);
+                }
             }
         }
 

@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace Core.Fields
 {
-    public interface IField<T> where T : INode
+    public interface IField<T> where T : INode<T>
     {
-        public IEnumerable<ILink> GetLinksForNode(T node);
+        public IEnumerable<ILink<T>> GetLinksForNode(T node);
     }
 }

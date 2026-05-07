@@ -2,10 +2,10 @@
 
 namespace Core.Links
 {
-    public interface ILink
+    public interface ILink<T> where T : INode<T>
     {
-        public INode From { get; }
-        public INode To { get; }
+        public T From { get; }
+        public T To { get; }
         public float Cost { get; }
     }
 }
