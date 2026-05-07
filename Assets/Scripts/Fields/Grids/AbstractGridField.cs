@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Core.Fields.Grids
 {
-    public abstract class AbstractGridField : MonoBehaviour, IInitializable, IField
+    public abstract class AbstractGridField<T> : MonoBehaviour, IInitializable, IField<T> where T : INode
     {
         [SerializeField]
         protected Grid _grid;
@@ -19,7 +19,7 @@ namespace Core.Fields.Grids
         protected Vector2 _scaleFactor;
         protected INode[,] _nodes;
 
-
+        
         public void Initialize() //zenject
         {
             InitGrid();
@@ -43,10 +43,6 @@ namespace Core.Fields.Grids
 
         protected virtual void Init() { }
 
-
-        public List<ILink> GetNeighboursFor(Vector2Int index)
-        {
-            return new List<ILink>(); //todo
-        }
+        public abstract IEnumerable<ILink> GetLinksForNode(T node);
     }
 }

@@ -33,7 +33,7 @@ namespace Core.SearchAlgorithms
                     return RetracePath(startNode, finishNode);
                 }
 
-                foreach (var link in current.Links)
+                foreach (var link in current.GetLinks())
                 {
                     var newCost = _costSoFar[current] + link.Cost;
 

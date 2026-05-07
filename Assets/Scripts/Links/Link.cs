@@ -2,11 +2,11 @@
 
 namespace Core.Links
 {
-    public class Link : ILink
+    public struct Link : ILink
     {
-        protected INode _from;
-        protected INode _to;
-        protected float _cost;
+        private INode _from;
+        private INode _to;
+        private float _cost;
 
         public INode From => _from;
         public INode To => _to;

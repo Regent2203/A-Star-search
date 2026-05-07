@@ -1,9 +1,6 @@
-﻿using Core.Links;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Zenject;
 
 namespace Core.Implementations.Cells
 {
@@ -68,7 +65,7 @@ namespace Core.Implementations.Cells
         {
             Gizmos.color = Color.cyan;
 
-            //foreach (var l in _node.Links)
+            //foreach (var l in _node.GetLinks)
             {
                 //Gizmos.DrawLine(l.From.GetCenterCoords(), l.To.GetCenterCoords()); //todo
             }

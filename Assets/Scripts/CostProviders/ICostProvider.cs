@@ -1,9 +1,9 @@
-﻿using Core.Weightables;
+﻿using Core.Nodes;
 
 namespace Core.CostProviders
 {
     public interface ICostProvider
     {
-        float GetCost(IWeightable from, IWeightable to);
+        float GetCost(INode from, INode to);
     }
 }

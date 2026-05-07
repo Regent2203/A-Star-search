@@ -14,7 +14,7 @@ namespace Core.Implementations.Cells
     }
 
     [CreateAssetMenu(fileName = "CellType", menuName = "Core/CellType")]
-    public class CellType : ScriptableObject, IWeightable
+    public class CellType : ScriptableObject
     {
         [SerializeField]
         private CellId _id;

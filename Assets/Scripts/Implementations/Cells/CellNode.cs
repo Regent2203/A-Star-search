@@ -1,3 +1,4 @@
+using Core.Fields;
 using Core.Links;
 using Core.Nodes;
 using System;
@@ -8,25 +9,26 @@ namespace Core.Implementations.Cells
 {
     public class CellNode : INode
     {
-        private Vector2Int _index;
+        private readonly Vector2 _position;
+        private readonly Vector2Int _index;
         private CellType _cellType;
-        private Vector2 _position;
-        private List<ILink> _links = new List<ILink>();
+        private readonly IField<CellNode> _field;
 
+        public Vector2 Position => _position;
         public Vector2Int Index => _index;
         public CellType CellType => _cellType;
-        public Vector2 Position => _position;
-        public IReadOnlyList<ILink> Links => _links;
         public bool IsBlocked => float.IsPositiveInfinity(_cellType.Weight);
+        public float Weight => _cellType.Weight;
 
         public event Action<CellType> CellTypeChanged;
 
 
-        public CellNode(Vector2 position, Vector2Int index, CellType cellType)
+        public CellNode(Vector2 position, Vector2Int index, CellType cellType, IField<CellNode> field)
         {
             _position = position;
             _index = index;
             _cellType = cellType;
+            _field = field;
         }
 
         public void ChangeType(CellType cellType)
@@ -36,6 +38,11 @@ namespace Core.Implementations.Cells
 
             _cellType = cellType;
             CellTypeChanged?.Invoke(cellType);
+        }
+
+        public IEnumerable<ILink> GetLinks()
+        {
+            return _field.GetLinksForNode(this);
         }
     }
 }
