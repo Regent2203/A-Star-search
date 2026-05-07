@@ -1157,6 +1157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _field: {fileID: 1877987555}
+  _fieldInputHandler: {fileID: 1877987557}
   _cellViewPrefab: {fileID: 114955348567688574, guid: 4f308c0d114b35741af95ce9a758d700,
     type: 3}
   _palette: {fileID: 541786301}
@@ -1673,6 +1674,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1877987554}
   - component: {fileID: 1877987555}
+  - component: {fileID: 1877987557}
   - component: {fileID: 1877987553}
   - component: {fileID: 1877987556}
   m_Layer: 0
@@ -1770,6 +1772,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1877987557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877987552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2540d02ed4cff544c8ac91aa7b9e122e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _field: {fileID: 1877987555}
+  _grid: {fileID: 1877987553}
 --- !u!1 &2005332839
 GameObject:
   m_ObjectHideFlags: 0

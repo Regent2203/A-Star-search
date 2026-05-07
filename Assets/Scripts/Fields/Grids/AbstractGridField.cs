@@ -21,17 +21,17 @@ namespace Core.Fields.Grids
         protected Vector2 _scaleFactor;
         protected T[,] _nodes;
 
-        
+        public Vector2Int CellsNumber => _cellsNumber;
+
+
         public void Initialize() //zenject
         {
-            InitGrid();
+            SetupGridPhysics();
             Init();
         }
         
-        private void InitGrid()
+        private void SetupGridPhysics()
         {
-            _nodes = new T[_cellsNumber.x, _cellsNumber.y];
-
             _collider.size = (Vector2)_grid.cellSize * _cellsNumber;
             _collider.offset = _collider.size * 0.5f;
 
@@ -46,7 +46,7 @@ namespace Core.Fields.Grids
             transform.position -= 0.5f * Vector3.Scale(_grid.cellSize, new Vector3(_cellsNumber.x, _cellsNumber.y, 0));
         }
 
-        protected virtual void Init() { }
+        protected abstract void Init();
 
         public abstract IEnumerable<ILink<T>> GetLinksForNode(T node);
 

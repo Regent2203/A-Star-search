@@ -1,4 +1,5 @@
 ﻿using Core.CostProviders;
+using Core.Fields.Grids;
 using Core.Heuristic;
 using Core.Implementations.Cells;
 using Core.Implementations.Cells.UI;
@@ -16,6 +17,7 @@ namespace Core.Starters
     {
         private CellsConfig _config;
         private CellsGridField _field;
+        private CellsGridInputHandler _fieldInputHandler;
         private PathFinder<CellNode> _pathFinder;
         private CellsPathDrawer _pathDrawer;
         private CellsPainter _painter;
@@ -26,12 +28,13 @@ namespace Core.Starters
 
 
         [Inject]
-        public void Construct(CellsConfig config, CellsGridField field,
+        public void Construct(CellsConfig config, CellsGridField field, CellsGridInputHandler fieldInputHandler,
             PathFinder<CellNode> pathFinder, CellsPathDrawer pathDrawer, CellsPainter painter, CellsPathSetter pathSetter,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)
         {
             _config = config;
             _field = field;
+            _fieldInputHandler = fieldInputHandler;
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
             _painter = painter;
@@ -48,8 +51,8 @@ namespace Core.Starters
 
         private void Init()
         {
-            _field.CellClicked += _painter.TryChangeCellType;
-            _field.CellClicked += _pathSetter.TryUseCell;
+            _fieldInputHandler.CellClicked += _painter.TryChangeCellType;
+            _fieldInputHandler.CellClicked += _pathSetter.TryUseCell;
             _field.CellNodeChanged += (_) => _pathDrawer.ShowPath(false);
             _field.CellNodeChanged += (_) => TryRun();
             
