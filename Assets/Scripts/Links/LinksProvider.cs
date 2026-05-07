@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace Core.Fields.Grids
 {
-    public class LinkProvider : ILinkProvider
+    public class LinksProvider : ILinksProvider
     {
         private readonly ICostProvider _costProvider;
 
         
-        public LinkProvider(ICostProvider costProvider)
+        public LinksProvider(ICostProvider costProvider)
         {
             _costProvider = costProvider;
         }

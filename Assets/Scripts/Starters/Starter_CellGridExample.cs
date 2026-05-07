@@ -47,20 +47,17 @@ namespace Core.Starters
 
         private void Init()
         {
-            /*
-            foreach (var cell in _field.Nodes)
-            {
-                cell.CellClicked += _painter.TryChangeCellType;
-                cell.CellClicked += _pathSetter.TryUseCell;
-                cell.CellTypeChanged += (_, _) => _pathDrawer.ShowPath(false);
-                cell.CellTypeChanged += (_, _) => TryRun();
-            }
+            _field.CellClicked += _painter.TryChangeCellType;
+            _field.CellClicked += _pathSetter.TryUseCell;
+            //_field.CellTypeChanged += (_, _) => _pathDrawer.ShowPath(false);
+            //_field.CellTypeChanged += (_, _) => TryRun();
+            
             
             _pathFinder.NodeChanged += () => _pathDrawer.ShowPath(false);
             
-            _pathFinder.StartNodeChanged += (cell, b) => cell?.ShowStartMarker(b);
-            _pathFinder.FinishNodeChanged += (cell, b) => cell?.ShowFinishMarker(b);
-            */
+            //_pathFinder.StartNodeChanged += (cell, b) => cell?.ShowStartMarker(b);
+            //_pathFinder.FinishNodeChanged += (cell, b) => cell?.ShowFinishMarker(b);
+            
             _pathFinder.NodeChanged += TryRun;
 
             _painter.LMBTypeSet += (cellType) => _hotkeyInfoPanel.SetLMBText(cellType.Name);

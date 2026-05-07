@@ -49,5 +49,13 @@ namespace Core.Fields.Grids
         protected virtual void Init() { }
 
         public abstract IEnumerable<ILink> GetLinksForNode(T node);
+
+        public T GetNodeByIndex(int i, int j)
+        {
+            if (_nodes.IsWithinBounds(i, j))
+                return _nodes[i, j];
+
+            return default(T);
+        }
     }
 }

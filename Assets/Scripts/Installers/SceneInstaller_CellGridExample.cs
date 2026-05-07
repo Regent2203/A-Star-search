@@ -32,7 +32,7 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<CellsGridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LinkProvider>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinksProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<FourSideGridNeighbours>().AsSingle();
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();

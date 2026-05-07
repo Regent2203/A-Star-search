@@ -7,29 +7,34 @@ namespace Core.Implementations.Cells
 {
     public class CellsPathSetter
     {
-        private readonly KeyCode _markingKeyCode = KeyCode.LeftShift;
+        private CellsGridField _field;
         private readonly IPathFinder _pathFinder;
+        private readonly KeyCode _markingKeyCode = KeyCode.LeftShift;
+        
 
-
-        public CellsPathSetter(IPathFinder pathFinder, [Inject(Id = "MarkingKey")] KeyCode markingKeyCode)
+        public CellsPathSetter(CellsGridField field, IPathFinder pathFinder, [Inject(Id = "MarkingKey")] KeyCode markingKeyCode)
         {
+            _field = field;
             _pathFinder = pathFinder;
             _markingKeyCode = markingKeyCode;
         }
 
-        public void TryUseCell(CellView cell, PointerEventData.InputButton btn)
+        public void TryUseCell(CellView view, PointerEventData.InputButton btn)
         {
             bool isMarkingMode = Input.GetKey(_markingKeyCode);
 
             if (isMarkingMode)
             {
+                var index = view.Index;
+                var node = _field.GetNodeByIndex(index.x, index.y);
+
                 if (btn == PointerEventData.InputButton.Left) //lmb
                 {
-                    _pathFinder.UpdateStartNode(cell.Node);
+                    _pathFinder.UpdateStartNode(node);
                 }
                 else if (btn == PointerEventData.InputButton.Right) //rmb
                 {
-                    _pathFinder.UpdateFinishNode(cell.Node);
+                    _pathFinder.UpdateFinishNode(node);
                 }
             }
         }

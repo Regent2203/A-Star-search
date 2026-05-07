@@ -10,14 +10,16 @@ namespace Core.Implementations.Cells
         private CellType _lmbType;
         private CellType _rmbType;
 
+        private CellsGridField _field;
         private readonly KeyCode _markingKeyCode = KeyCode.LeftShift;
 
         public event Action<CellType> LMBTypeSet;
         public event Action<CellType> RMBTypeSet;
 
 
-        public CellsPainter([Inject(Id = "MarkingKey")] KeyCode markingKeyCode)
+        public CellsPainter(CellsGridField field, [Inject(Id = "MarkingKey")] KeyCode markingKeyCode)
         {
+            _field = field;
             _markingKeyCode = markingKeyCode;
         }
 
@@ -33,12 +35,15 @@ namespace Core.Implementations.Cells
             RMBTypeSet?.Invoke(cellType);
         }
 
-        public void TryChangeCellType(CellView cell, PointerEventData.InputButton btn)
+        public void TryChangeCellType(CellView view, PointerEventData.InputButton btn)
         {
             bool isMarkingMode = Input.GetKey(_markingKeyCode);
 
             if (!isMarkingMode)
             {
+                var index = view.Index;
+                var node = _field.GetNodeByIndex(index.x, index.y);
+
                 CellType cellType = null;
 
                 if (btn == PointerEventData.InputButton.Left) //lmb
@@ -50,8 +55,8 @@ namespace Core.Implementations.Cells
                     cellType = _rmbType;
                 }
 
-                //if (cellType != null)
-                //    cell.ChangeType(cellType);
+                if (cellType != null)
+                    node.ChangeType(cellType);
             }
         }
     }

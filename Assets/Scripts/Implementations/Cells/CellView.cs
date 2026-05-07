@@ -15,12 +15,11 @@ namespace Core.Implementations.Cells
         [SerializeField]
         private SpriteRenderer _spriteRenderer;
 
-        private CellNode _node;
+        private Vector2Int _index;
+        public Vector2Int Index => _index;
         //private Vector2 _viewSize;
         //private Vector3 _viewCenter;
 
-        public CellNode Node => _node;
-        
 
 
         private void Awake()
@@ -35,6 +34,7 @@ namespace Core.Implementations.Cells
 
         public void Init(Vector2Int index, Vector2 scale)
         {
+            _index = index;
             transform.localScale = scale;
             name = $"Cell {index.x},{index.y}";
         }
@@ -50,6 +50,10 @@ namespace Core.Implementations.Cells
         public void ShowFinishMarker(bool show)
         {
             _finishMarker.SetActive(show);
+        }
+        public void UpdateSprite(Sprite sprite)
+        {
+            _spriteRenderer.sprite = sprite;
         }
 
         public Vector2 GetSize() => _spriteRenderer.size;

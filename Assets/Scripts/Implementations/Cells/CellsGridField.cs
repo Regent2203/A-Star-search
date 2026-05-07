@@ -15,20 +15,20 @@ namespace Core.Implementations.Cells
         private CellNodeFactory _nodesFactory;
         private CellsConfig _cellsConfig;
         private IGridNeighboursProvider _neighboursProvider;
-        private LinkProvider _linker;
+        private LinksProvider _linksProvider;
 
         public event Action<CellView, PointerEventData.InputButton> CellClicked;
 
 
         [Inject]
         public void Construct(CellViewFactory viewsFactory, CellNodeFactory nodesFactory, CellsConfig cellsConfig, 
-            IGridNeighboursProvider neighboursProvider, LinkProvider linker, CellView cellviewPrefab)
+            IGridNeighboursProvider neighboursProvider, LinksProvider linker, CellView cellviewPrefab)
         {
             _viewsFactory = viewsFactory;
             _nodesFactory = nodesFactory;
             _cellsConfig = cellsConfig;
             _neighboursProvider = neighboursProvider;
-            _linker = linker;
+            _linksProvider = linker;
             _viewPrefab = cellviewPrefab;
         }
 
@@ -48,13 +48,14 @@ namespace Core.Implementations.Cells
                 {
                     var pos = _grid.CellToWorld(new Vector3Int(i, j, 0));
                     var index = new Vector2Int(i, j);
-
                     
                     var cellView = _viewsFactory.Create(pos, index);
 
                     var center = cellView.GetCenterCoords();
                     var estimatedPosition = new Vector2(center.x / _scaleFactor.x, center.y / _scaleFactor.y);
                     var cellNode = _nodesFactory.Create(estimatedPosition, index, _cellsConfig.DefaultCellType);
+
+                    cellNode.CellTypeChanged += (type) => cellView.UpdateSprite(type.Sprite);
 
                     _nodes[i, j] = cellNode;
                     _views[i, j] = cellView;
@@ -67,7 +68,7 @@ namespace Core.Implementations.Cells
             var index = node.Index;
             var neighbours = _neighboursProvider.GetNeighbours(index.x, index.y, _nodes);
 
-            return _linker.GetLinks(node, neighbours);
+            return _linksProvider.GetLinks(node, neighbours);
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -79,7 +80,7 @@ namespace Core.Implementations.Cells
 
             if (_views[x, y] != null)
             {
-                Debug.Log($"Cell clicked: {x}, {y}");
+                //Debug.Log($"Cell clicked: {x}, {y}");
                 CellClicked?.Invoke(_views[x, y], eventData.button);
             }
         }
