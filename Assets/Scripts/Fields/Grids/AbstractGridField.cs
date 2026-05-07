@@ -11,13 +11,15 @@ namespace Core.Fields.Grids
         [SerializeField]
         protected Grid _grid;
         [SerializeField]
+        protected BoxCollider2D _collider;
+        [SerializeField]
         protected Vector2Int _cellsNumber = new Vector2Int(10, 10);
         [SerializeField]
         protected bool _doCentering = true;
 
         protected IView _viewPrefab;
         protected Vector2 _scaleFactor;
-        protected INode[,] _nodes;
+        protected T[,] _nodes;
 
         
         public void Initialize() //zenject
@@ -28,7 +30,10 @@ namespace Core.Fields.Grids
         
         private void InitGrid()
         {
-            _nodes = new INode[_cellsNumber.x, _cellsNumber.y];
+            _nodes = new T[_cellsNumber.x, _cellsNumber.y];
+
+            _collider.size = (Vector2)_grid.cellSize * _cellsNumber;
+            _collider.offset = _collider.size * 0.5f;
 
             _scaleFactor = _grid.cellSize / _viewPrefab.GetSize();
 

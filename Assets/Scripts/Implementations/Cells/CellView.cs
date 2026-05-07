@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace Core.Implementations.Cells
 {
-    public class CellView : MonoBehaviour, IView, IPointerDownHandler
+    public class CellView : MonoBehaviour, IView
     {
         [SerializeField]
         private GameObject _pathMarker;
@@ -20,7 +20,7 @@ namespace Core.Implementations.Cells
         //private Vector3 _viewCenter;
 
         public CellNode Node => _node;
-        public event Action<CellView, PointerEventData.InputButton> CellClicked;
+        
 
 
         private void Awake()
@@ -54,21 +54,5 @@ namespace Core.Implementations.Cells
 
         public Vector2 GetSize() => _spriteRenderer.size;
         public Vector3 GetCenterCoords() => _spriteRenderer.bounds.center;
-        
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            CellClicked?.Invoke(this, eventData.button); //todo in grid
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.cyan;
-
-            //foreach (var l in _node.GetLinks)
-            {
-                //Gizmos.DrawLine(l.From.GetCenterCoords(), l.To.GetCenterCoords()); //todo
-            }
-        }
     }
 }

@@ -1,12 +1,14 @@
 ﻿using Core.Fields.Grids;
 using Core.Links;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace Core.Implementations.Cells
 {
-    public class CellsGridField : AbstractGridField<CellNode>
+    public class CellsGridField : AbstractGridField<CellNode>, IPointerDownHandler
     {
         private CellView[,] _views;
         private CellViewFactory _viewsFactory;
@@ -14,6 +16,8 @@ namespace Core.Implementations.Cells
         private CellsConfig _cellsConfig;
         private IGridNeighboursProvider _neighboursProvider;
         private LinkProvider _linker;
+
+        public event Action<CellView, PointerEventData.InputButton> CellClicked;
 
 
         [Inject]
@@ -64,6 +68,33 @@ namespace Core.Implementations.Cells
             var neighbours = _neighboursProvider.GetNeighbours(index.x, index.y, _nodes);
 
             return _linker.GetLinks(node, neighbours);
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            Vector3 localPos = transform.InverseTransformPoint(eventData.pointerCurrentRaycast.worldPosition);
+
+            int x = Mathf.FloorToInt(localPos.x / _grid.cellSize.x);
+            int y = Mathf.FloorToInt(localPos.y / _grid.cellSize.y);
+
+            if (_views[x, y] != null)
+            {
+                Debug.Log($"Cell clicked: {x}, {y}");
+                CellClicked?.Invoke(_views[x, y], eventData.button);
+            }
+        }
+
+        private void OnDrawGizmos()
+        {/*
+            Gizmos.color = Color.cyan;
+
+            foreach (var node in _nodes)
+            {
+                foreach (var l in node.GetLinks())
+                {
+                    Gizmos.DrawLine(l.From.GetCenterCoords(), l.To.GetCenterCoords()); //todo
+                }
+            }*/
         }
     }
 }
