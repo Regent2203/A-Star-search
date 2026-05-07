@@ -1,10 +1,10 @@
 ﻿using Core.Nodes;
-using System.Collections.Generic;
+using UnityEngine;
 
 namespace Core.Fields
 {
-    public interface IField<T> where T : INode<T>
+    public interface IField
     {
-        public IReadOnlyList<T> Nodes { get; }
+        //public INode TryGetNode(Vector2 pos);
     }
 }

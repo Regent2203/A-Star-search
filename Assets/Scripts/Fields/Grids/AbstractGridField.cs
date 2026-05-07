@@ -1,11 +1,12 @@
-﻿using Core.Nodes;
+﻿using Core.Links;
+using Core.Nodes;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 namespace Core.Fields.Grids
 {
-    public abstract class AbstractGridField<T> : MonoBehaviour, IInitializable, IField<T> where T : INode<T>
+    public abstract class AbstractGridField : MonoBehaviour, IInitializable, IField
     {
         [SerializeField]
         protected Grid _grid;
@@ -14,11 +15,9 @@ namespace Core.Fields.Grids
         [SerializeField]
         protected bool _doCentering = true;
 
-        protected IView _nodePrefab;
+        protected IView _viewPrefab;
         protected Vector2 _scaleFactor;
-        protected T[,] _gridNodes;
-
-        public abstract IReadOnlyList<T> Nodes { get; }
+        protected INode[,] _nodes;
 
 
         public void Initialize() //zenject
@@ -29,9 +28,9 @@ namespace Core.Fields.Grids
         
         private void InitGrid()
         {
-            _gridNodes = new T[_cellsNumber.x, _cellsNumber.y];
+            _nodes = new INode[_cellsNumber.x, _cellsNumber.y];
 
-            _scaleFactor = _grid.cellSize / _nodePrefab.GetSize();
+            _scaleFactor = _grid.cellSize / _viewPrefab.GetSize();
 
             if (_doCentering)
                 DoCentering();
@@ -43,5 +42,10 @@ namespace Core.Fields.Grids
         }
 
         protected virtual void Init() { }
+
+        public List<ILink> GetNeighboursFor(Vector2Int index)
+        {
+            return new List<ILink>(); //todo
+        }
     }
 }

@@ -2,18 +2,18 @@
 
 namespace Core.Links
 {
-    public class Link<T> : ILink<T> where T : INode<T>
+    public class Link : ILink
     {
-        protected T _from;
-        protected T _to;
+        protected INode _from;
+        protected INode _to;
         protected float _cost;
 
-        public T From => _from;
-        public T To => _to;
+        public INode From => _from;
+        public INode To => _to;
         public float Cost => _cost;
 
 
-        public Link(T from, T to, float cost)
+        public Link(INode from, INode to, float cost)
         {
             _from = from;
             _to = to;

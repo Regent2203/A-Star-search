@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Core.Nodes;
+using System.Collections.Generic;
 
 namespace Core.Fields.Grids
 {
-    public interface IGridNeighboursProvider<T>
+    public interface IGridNeighboursProvider
     {
-        public IReadOnlyList<T> GetNeighbours(T node, T[,] gridNodes);
+        public IReadOnlyList<INode> GetNeighbours(int i, int j, INode[,] gridNodes);
     }
 }

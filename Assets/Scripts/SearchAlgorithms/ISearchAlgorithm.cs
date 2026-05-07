@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace Core.SearchAlgorithms
 {
-    public interface ISearchAlgorithm<T> where T : INode<T>
+    public interface ISearchAlgorithm
     {
-        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider heuristicsController);
+        public IList<INode> CalculateWay(INode startNode, INode finishNode, IHeuristicsProvider heuristicsController);
     }
 }

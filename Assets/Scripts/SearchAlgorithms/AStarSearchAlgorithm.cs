@@ -1,25 +1,24 @@
 ﻿using Core.Heuristic;
 using Core.Nodes;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Core.SearchAlgorithms
 {
-    public class AStarSearchAlgorithm<T> : ISearchAlgorithm<T> where T : INode<T>
+    public class AStarSearchAlgorithm : ISearchAlgorithm
     {
-        private Dictionary<T, T> _cameFrom;
-        private Dictionary<T, float> _costSoFar;
+        private Dictionary<INode, INode> _cameFrom;
+        private Dictionary<INode, float> _costSoFar;
 
 
-        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider heuristicsController)
+        public IList<INode> CalculateWay(INode startNode, INode finishNode, IHeuristicsProvider heuristicsController)
         {
             if (startNode.Equals(finishNode))
                 return null;
 
-            _cameFrom = new Dictionary<T, T>();
-            _costSoFar = new Dictionary<T, float>();
+            _cameFrom = new Dictionary<INode, INode>();
+            _costSoFar = new Dictionary<INode, float>();
 
-            var needToCheck = new PriorityQueue<T>();
+            var needToCheck = new PriorityQueue<INode>();
             needToCheck.Enqueue(startNode, 0);
 
             _cameFrom[startNode] = default;
@@ -52,9 +51,9 @@ namespace Core.SearchAlgorithms
             return null;
         }
 
-        private IList<T> RetracePath(T startNode, T finishNode)
+        private IList<INode> RetracePath(INode startNode, INode finishNode)
         {
-            var path = new List<T>();
+            var path = new List<INode>();
             var current = finishNode;
 
             while (!current.Equals(startNode))

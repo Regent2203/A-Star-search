@@ -1,11 +1,13 @@
 ﻿using Core.Links;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Core.Nodes
 {
-    public interface INode<T> : IEstimatable, IView where T : INode<T>
+    public interface INode
     {
-        public List<ILink<T>> Links { get; }
+        public Vector2 Position { get; }
+        public List<ILink> Links { get; }
         public bool IsBlocked { get; }
     }
 }

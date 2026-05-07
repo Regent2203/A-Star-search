@@ -4,13 +4,13 @@ using System.Collections.Generic;
 namespace Core.Implementations.Cells
 {
     /// <summary>
-    /// Works with class Cell, draws path by calling method "ShowPathMarker" on cells
+    /// Works with class CellView, draws path by calling method "ShowPathMarker" on cells
     /// </summary>
     public class CellsPathDrawer : IPathDrawer
     {
-        private IList<Cell> _path;
+        private IList<CellView> _path;
 
-        public void SetPath(IList<Cell> path)
+        public void SetPath(IList<CellView> path)
         {
             _path = path;
         }

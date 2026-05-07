@@ -6,37 +6,37 @@ using Core.SearchAlgorithms;
 
 namespace Core.PathFinders
 {
-    public class PathFinder<T> : IPathFinder<T> where T : class, INode<T>
+    public class PathFinder : IPathFinder
     {
         private readonly IHeuristicsProvider _heuristicsProvider;
-        private readonly ISearchAlgorithm<T> _searchAlgorithm;
+        private readonly ISearchAlgorithm _searchAlgorithm;
 
-        private T _startNode;
-        private T _finishNode;
+        private INode _startNode;
+        private INode _finishNode;
 
         public event Action NodeChanged;
-        public event Action<T, bool> StartNodeChanged;  //false is called when cleared, true is called when assigned
-        public event Action<T, bool> FinishNodeChanged; //false is called when cleared, true is called when assigned
+        public event Action<INode, bool> StartNodeChanged;  //false is called when cleared, true is called when assigned
+        public event Action<INode, bool> FinishNodeChanged; //false is called when cleared, true is called when assigned
         public bool IsReady => _startNode != null && _finishNode != null;
 
 
-        public PathFinder(IHeuristicsProvider heuristicFunction, ISearchAlgorithm<T> searchAlgorithm)
+        public PathFinder(IHeuristicsProvider heuristicFunction, ISearchAlgorithm searchAlgorithm)
         {
             _heuristicsProvider = heuristicFunction;
             _searchAlgorithm = searchAlgorithm;
         }
 
-        public void UpdateStartNode(T node)
+        public void UpdateStartNode(INode node)
         {
             UpdateDesiredNode(node, ref _startNode, ref _finishNode, StartNodeChanged);
         }
 
-        public void UpdateFinishNode(T node)
+        public void UpdateFinishNode(INode node)
         {
             UpdateDesiredNode(node, ref _finishNode, ref _startNode, FinishNodeChanged);
         }
 
-        private void UpdateDesiredNode(T node, ref T desiredNode, ref T notDesiredNode, Action<T, bool> desiredNodeChanged)
+        private void UpdateDesiredNode(INode node, ref INode desiredNode, ref INode notDesiredNode, Action<INode, bool> desiredNodeChanged)
         {
             if (node is not null && ReferenceEquals(notDesiredNode, node)) //when trying to set start node as finish node or vice versa
                 return;
@@ -63,7 +63,7 @@ namespace Core.PathFinders
             NodeChanged?.Invoke();
         }
 
-        public IList<T> GetPath()
+        public IList<INode> GetPath()
         {
             if (_startNode == null || _finishNode == null) 
                 return null;

@@ -1157,7 +1157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _field: {fileID: 1877987555}
-  _cellPrefab: {fileID: 114955348567688574, guid: 4f308c0d114b35741af95ce9a758d700,
+  _cellViewPrefab: {fileID: 114955348567688574, guid: 4f308c0d114b35741af95ce9a758d700,
     type: 3}
   _palette: {fileID: 541786301}
   _paletteChoice: {fileID: 332002408}
@@ -1723,8 +1723,6 @@ MonoBehaviour:
   _grid: {fileID: 1877987553}
   _cellsNumber: {x: 16, y: 10}
   _doCentering: 1
-  _cellViewPrefab: {fileID: 114955348567688574, guid: 4f308c0d114b35741af95ce9a758d700,
-    type: 3}
 --- !u!1 &2005332839
 GameObject:
   m_ObjectHideFlags: 0

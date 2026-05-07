@@ -33,7 +33,7 @@ namespace Core.Implementations.Cells
             RMBTypeSet?.Invoke(cellType);
         }
 
-        public void TryChangeCellType(Cell cell, PointerEventData.InputButton btn)
+        public void TryChangeCellType(CellView cell, PointerEventData.InputButton btn)
         {
             bool isMarkingMode = Input.GetKey(_markingKeyCode);
 
@@ -50,8 +50,8 @@ namespace Core.Implementations.Cells
                     cellType = _rmbType;
                 }
 
-                if (cellType != null)
-                    cell.ChangeType(cellType);
+                //if (cellType != null)
+                //    cell.ChangeType(cellType);
             }
         }
     }

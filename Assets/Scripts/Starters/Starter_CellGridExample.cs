@@ -15,10 +15,10 @@ namespace Core.Starters
     {
         private CellsConfig _config;
         private CellsGridField _field;
-        private PathFinder<Cell> _pathFinder;
+        private PathFinder _pathFinder;
         private CellsPathDrawer _pathDrawer;
         private CellsPainter _painter;
-        private CellsMarker _marker;
+        private CellsPathSetter _pathSetter;
         private UICellsPalette _palette;
         private UICellsPaletteChoicePanel _paletteChoice;
         private UICellsPaletteHotkeyInfoPanel _hotkeyInfoPanel;
@@ -26,7 +26,7 @@ namespace Core.Starters
 
         [Inject]
         public void Construct(CellsConfig config, CellsGridField field,
-            PathFinder<Cell> pathFinder, CellsPathDrawer pathDrawer, CellsPainter painter, CellsMarker marker,
+            PathFinder pathFinder, CellsPathDrawer pathDrawer, CellsPainter painter, CellsPathSetter pathSetter,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)
         {
             _config = config;
@@ -34,7 +34,7 @@ namespace Core.Starters
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
             _painter = painter;
-            _marker = marker;
+            _pathSetter = pathSetter;
             _palette = palette;
             _paletteChoice = paletteChoice;
             _hotkeyInfoPanel = hotkeyInfoPanel;
@@ -47,10 +47,11 @@ namespace Core.Starters
 
         private void Init()
         {
+            /*
             foreach (var cell in _field.Nodes)
             {
                 cell.CellClicked += _painter.TryChangeCellType;
-                cell.CellClicked += _marker.TryMarkCell;
+                cell.CellClicked += _pathSetter.TryUseCell;
                 cell.CellTypeChanged += (_, _) => _pathDrawer.ShowPath(false);
                 cell.CellTypeChanged += (_, _) => TryRun();
             }
@@ -59,7 +60,7 @@ namespace Core.Starters
             
             _pathFinder.StartNodeChanged += (cell, b) => cell?.ShowStartMarker(b);
             _pathFinder.FinishNodeChanged += (cell, b) => cell?.ShowFinishMarker(b);
-            
+            */
             _pathFinder.NodeChanged += TryRun;
 
             _painter.LMBTypeSet += (cellType) => _hotkeyInfoPanel.SetLMBText(cellType.Name);
@@ -82,8 +83,9 @@ namespace Core.Starters
             if (_pathFinder.IsReady)
             {
                 var path = _pathFinder.GetPath();
-                _pathDrawer.SetPath(path);
-                _pathDrawer.ShowPath(true);
+                //_field.TryGetView(path[0].index
+                //_pathDrawer.SetPath(path);
+                //_pathDrawer.ShowPath(true); //todo
             }
         }
 

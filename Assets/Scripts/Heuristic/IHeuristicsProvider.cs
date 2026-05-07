@@ -4,6 +4,6 @@ namespace Core.Heuristic
 {
     public interface IHeuristicsProvider
     {
-        public float EstimateCost(IEstimatable node1, IEstimatable node2);
+        public float EstimateCost(INode node1, INode node2);
     }
 }
