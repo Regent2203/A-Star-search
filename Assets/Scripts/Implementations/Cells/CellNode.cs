@@ -16,17 +16,17 @@ namespace Core.Implementations.Cells
         public Vector2Int Index => _index;
         public CellType CellType => _cellType;
         public Vector2 Position => _position;
-        public List<ILink> Links => _links;
+        public IReadOnlyList<ILink> Links => _links;
         public bool IsBlocked => float.IsPositiveInfinity(_cellType.Weight);
 
         public event Action<CellType> CellTypeChanged;
 
 
-        public void Init(Vector2 position, Vector2Int index, CellType cellType)
+        public CellNode(Vector2 position, Vector2Int index, CellType cellType)
         {
             _position = position;
             _index = index;
-            ChangeType(cellType);
+            _cellType = cellType;
         }
 
         public void ChangeType(CellType cellType)

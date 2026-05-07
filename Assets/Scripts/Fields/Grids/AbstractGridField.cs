@@ -43,6 +43,7 @@ namespace Core.Fields.Grids
 
         protected virtual void Init() { }
 
+
         public List<ILink> GetNeighboursFor(Vector2Int index)
         {
             return new List<ILink>(); //todo
