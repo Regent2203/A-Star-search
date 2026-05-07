@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Core.Fields.Grids
 {
-    public abstract class AbstractGridField<T> : MonoBehaviour, IInitializable, IField<T> where T : class, INode<T>
+    public abstract class AbstractGridField<T, V> : MonoBehaviour, IInitializable, IField<T> where T : class, INode<T> where V : class, IView
     {
         [SerializeField]
         protected Grid _grid;
@@ -17,9 +17,11 @@ namespace Core.Fields.Grids
         [SerializeField]
         protected bool _doCentering = true;
 
-        protected IView _viewPrefab;
+        protected V _viewPrefab;
         protected Vector2 _scaleFactor;
+
         protected T[,] _nodes;
+        protected V[,] _views;
 
         public Vector2Int CellsNumber => _cellsNumber;
 
@@ -48,12 +50,26 @@ namespace Core.Fields.Grids
 
         protected abstract void Init();
 
+        public void SetData(T[,] nodes, V[,] views)
+        {
+            _nodes = nodes;
+            _views = views;
+        }
+
         public abstract IEnumerable<ILink<T>> GetLinksForNode(T node);
 
         public T GetNodeByIndex(int i, int j)
         {
             if (_nodes.IsWithinBounds(i, j))
                 return _nodes[i, j];
+
+            return null;
+        }
+
+        public V GetViewByIndex(int i, int j)
+        {
+            if (_views.IsWithinBounds(i, j))
+                return _views[i, j];
 
             return null;
         }

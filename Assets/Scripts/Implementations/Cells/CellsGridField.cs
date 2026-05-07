@@ -2,29 +2,27 @@
 using Core.Links;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
 using Zenject;
 
 namespace Core.Implementations.Cells
 {
-    public class CellsGridField : AbstractGridField<CellNode>
+    public class CellsGridField : AbstractGridField<CellNode, CellView>
     {
         private CellsGridGenerator _generator;
-        private CellView[,] _views;
-        private IGridNeighboursProvider<CellNode> _neighboursProvider;
+        
+        private IGridNeighboursProvider<CellNode> _gridNeighboursProvider;
         private LinksProvider<CellNode> _linksProvider;
 
-        public event Action<CellNode> CellNodeChanged;
+        public event Action<CellNode, CellType> CellNodeTypeChanged;
 
 
         [Inject]
-        public void Construct(CellsGridGenerator generator, IGridNeighboursProvider<CellNode> neighboursProvider, LinksProvider<CellNode> linker, CellView cellviewPrefab)
+        public void Construct(CellsGridGenerator generator, IGridNeighboursProvider<CellNode> gridNeighboursProvider, LinksProvider<CellNode> linksProvider, CellView cellViewPrefab)
         {
             _generator = generator;
-            _neighboursProvider = neighboursProvider;
-            _linksProvider = linker;
-            _viewPrefab = cellviewPrefab;
+            _gridNeighboursProvider = gridNeighboursProvider;
+            _linksProvider = linksProvider;
+            _viewPrefab = cellViewPrefab;
         }
 
         protected override void Init()
@@ -33,29 +31,31 @@ namespace Core.Implementations.Cells
             _generator.PopulateField(this, transform, _scaleFactor, _grid);
         }
 
-        public void SetData(CellNode[,] nodes, CellView[,] views)
+        public void NotifyNodeTypeChanged(CellNode node, CellType cellType)
         {
-            _nodes = nodes;
-            _views = views;
+            CellNodeTypeChanged?.Invoke(node, cellType);
         }
 
-        public CellView GetViewByIndex(int i, int j)
+        public CellNode GetNodeForView(CellView view)
         {
-            if (_views.IsWithinBounds(i, j))
-                return _views[i, j];
+            var index = view.Index;
+            var node = GetNodeByIndex(index.x, index.y);
 
-            return null;
+            return node;
         }
 
-        public void NotifyNodeChanged(CellNode node)
+        public CellView GetViewForNode(CellNode node)
         {
-            CellNodeChanged?.Invoke(node);
+            var index = node.Index;
+            var view = GetViewByIndex(index.x, index.y);
+
+            return view;
         }
 
         public override IEnumerable<ILink<CellNode>> GetLinksForNode(CellNode node)
         {
             var index = node.Index;
-            var neighbours = _neighboursProvider.GetNeighbours(index.x, index.y, _nodes);
+            var neighbours = _gridNeighboursProvider.GetNeighbours(index.x, index.y, _nodes);
 
             return _linksProvider.GetLinks(node, neighbours);
         }

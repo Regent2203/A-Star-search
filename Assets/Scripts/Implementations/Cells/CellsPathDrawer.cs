@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Core.Implementations.Cells
 {
     /// <summary>
-    /// Works with class CellView, draws path by calling method "ShowPathMarker" on cells
+    /// Works with class CellView, draws nodePath by calling method "ShowPathMarker" on cells
     /// </summary>
     public class CellsPathDrawer : IPathDrawer
     {
@@ -13,6 +13,18 @@ namespace Core.Implementations.Cells
         public void SetPath(IList<CellView> path)
         {
             _path = path;
+        }
+
+        public void SetPath(IList<CellNode> nodePath, CellsGridField field)
+        {
+            var viewPath = new List<CellView>(nodePath.Count);
+
+            foreach (var node in nodePath)
+            {
+                viewPath.Add(field.GetViewForNode(node));
+            }
+
+            _path = viewPath;
         }
 
         public void ShowPath(bool show)

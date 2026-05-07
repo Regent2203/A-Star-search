@@ -14,7 +14,7 @@ namespace Core.PathFinders
         private T _startNode;
         private T _finishNode;
 
-        public event Action NodeChanged;
+        public event Action<bool> AnyNodeChanged;
         public event Action<T, bool> StartNodeChanged;  //false is called when cleared, true is called when assigned
         public event Action<T, bool> FinishNodeChanged; //false is called when cleared, true is called when assigned
         public bool IsReady => _startNode != null && _finishNode != null;
@@ -49,7 +49,7 @@ namespace Core.PathFinders
                 var oldDesiredNode = desiredNode;
                 desiredNode = null;
                 desiredNodeChanged?.Invoke(oldDesiredNode, false);
-                NodeChanged?.Invoke();
+                AnyNodeChanged?.Invoke(IsReady);
                 return;
             }
 
@@ -60,7 +60,7 @@ namespace Core.PathFinders
             desiredNode = node;
             desiredNodeChanged?.Invoke(desiredNode, true);
 
-            NodeChanged?.Invoke();
+            AnyNodeChanged?.Invoke(IsReady);
         }
 
         public IList<T> GetPath()

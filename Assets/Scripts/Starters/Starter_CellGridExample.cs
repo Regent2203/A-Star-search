@@ -6,7 +6,6 @@ using Core.Implementations.Cells.UI;
 using Core.PathFinders;
 using Core.SearchAlgorithms;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -53,24 +52,22 @@ namespace Core.Starters
         {
             _fieldInputHandler.CellNodeClicked += _painter.TryChangeCellType;
             _fieldInputHandler.CellNodeClicked += _pathSetter.TryUseCell;
-            _field.CellNodeChanged += (_) => _pathDrawer.ShowPath(false);
-            _field.CellNodeChanged += (_) => TryRun();
+            _field.CellNodeTypeChanged += (_, _) => _pathDrawer.ShowPath(false);
+            _field.CellNodeTypeChanged += (_, _) => TryRun(_pathFinder.IsReady);
             
-            _pathFinder.NodeChanged += () => _pathDrawer.ShowPath(false);
+            _pathFinder.AnyNodeChanged += (b) => _pathDrawer.ShowPath(false);
             _pathFinder.StartNodeChanged += (node, b) =>
             {
-                var index = node.Index;
-                var view = _field.GetViewByIndex(index.x, index.y);
+                var view = _field.GetViewForNode(node);
                 view?.ShowStartMarker(b);
             };
             _pathFinder.FinishNodeChanged += (node, b) =>
             {
-                var index = node.Index;
-                var view = _field.GetViewByIndex(index.x, index.y);
+                var view = _field.GetViewForNode(node);
                 view?.ShowFinishMarker(b); 
             };
             
-            _pathFinder.NodeChanged += TryRun;
+            _pathFinder.AnyNodeChanged += TryRun;
 
             _painter.LMBTypeSet += (cellType) => _hotkeyInfoPanel.SetLMBText(cellType.Name);
             _painter.RMBTypeSet += (cellType) => _hotkeyInfoPanel.SetRMBText(cellType.Name);
@@ -87,22 +84,14 @@ namespace Core.Starters
             _painter.SetRMBType(_config.DefaultCellType);
         }
 
-        private void TryRun()
+        private void TryRun(bool isReady)
         {
-            if (_pathFinder.IsReady)
+            if (isReady)
             {
                 var nodePath = _pathFinder.GetPath();
-
                 if (nodePath != null)
                 {
-                    var viewPath = new List<CellView>(nodePath.Count);
-
-                    foreach (var node in nodePath)
-                    {
-                        viewPath.Add(_field.GetViewByIndex(node.Index.x, node.Index.y));
-                    }
-                    
-                    _pathDrawer.SetPath(viewPath);
+                    _pathDrawer.SetPath(nodePath, _field);
                     _pathDrawer.ShowPath(true);
                 }
             }

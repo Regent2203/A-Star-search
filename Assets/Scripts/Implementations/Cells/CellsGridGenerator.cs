@@ -1,3 +1,4 @@
+using Core.Fields;
 using Core.Implementations.Cells;
 using UnityEngine;
 
@@ -35,8 +36,11 @@ namespace Core.Implementations.Cells
                     var node = _nodesFactory.Create(view.GetCenterCoords() / scale, index, _config.DefaultCellType);
 
                     //todo unsubscribe if ever needed
-                    node.CellTypeChanged += (type) => view.UpdateSprite(type.Sprite);
-                    node.CellTypeChanged += (_) => field.NotifyNodeChanged(node);
+                    field.CellNodeTypeChanged += (node, type) =>
+                    {
+                        var view = field.GetViewForNode(node);
+                        view.UpdateSprite(type.Sprite);
+                    };
 
                     nodes[i, j] = node;
                     views[i, j] = view;

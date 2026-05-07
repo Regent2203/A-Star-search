@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 
 namespace Core.Implementations.Cells
 {
@@ -17,16 +15,10 @@ namespace Core.Implementations.Cells
 
         private Vector2Int _index;
         public Vector2Int Index => _index;
-        //private Vector2 _viewSize;
-        //private Vector3 _viewCenter;
-
 
 
         private void Awake()
         {
-            //_viewSize = _spriteRenderer.size;
-            //_viewCenter = _spriteRenderer.bounds.center;
-
             ShowPathMarker(false);
             ShowStartMarker(false);
             ShowFinishMarker(false);
