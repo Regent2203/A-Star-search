@@ -3,6 +3,7 @@ using Core.Links;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Zenject;
 
 namespace Core.Implementations.Cells
@@ -37,21 +38,9 @@ namespace Core.Implementations.Cells
             CellNodeTypeChanged?.Invoke(node, cellType);
         }
 
-        public CellNode GetNodeForView(CellView view)
-        {
-            var index = view.Index;
-            var node = GetNodeByIndex(index.x, index.y);
+        public CellNode GetNodeForView(CellView view) => GetNodeById(view.Index);
 
-            return node;
-        }
-
-        public CellView GetViewForNode(CellNode node)
-        {
-            var index = node.Index;
-            var view = GetViewByIndex(index.x, index.y);
-
-            return view;
-        }
+        public CellView GetViewForNode(CellNode node) => GetViewById(node.Index);
 
         public override IEnumerable<ILink<CellNode>> GetLinksForNode(CellNode node)
         {
@@ -61,16 +50,6 @@ namespace Core.Implementations.Cells
             return _linksProvider.GetLinks(node, neighbours);
         }
 
-        public IList<CellView> GetViewsForNodes(IList<CellNode> nodePath)
-        {
-            var viewPath = new List<CellView>(nodePath.Count);
-
-            foreach (var node in nodePath)
-            {
-                viewPath.Add(GetViewForNode(node));
-            }
-
-            return viewPath;
-        }
+        public IReadOnlyList<CellView> GetViewsForNodes(IList<CellNode> nodePath) => nodePath.Select(GetViewForNode).ToList();
     }
 }

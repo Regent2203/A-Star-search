@@ -22,7 +22,7 @@ namespace Core.Fields.Grids
             int x = Mathf.FloorToInt(localPos.x / _grid.cellSize.x);
             int y = Mathf.FloorToInt(localPos.y / _grid.cellSize.y);
 
-            var node = _field.GetNodeByIndex(x, y);
+            var node = _field.GetNodeById(new Vector2Int(x, y));
             if (node != null)
             {
                 CellNodeClicked?.Invoke(node, eventData.button);

@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Core.Fields.Grids
 {
-    public abstract class AbstractGridField<T, V> : MonoBehaviour, IInitializable, IField<T> where T : class, INode<T> where V : class, IView
+    public abstract class AbstractGridField<T, V> : MonoBehaviour, IInitializable, IGraph<T, Vector2Int> where T : class, INode<T> where V : class, IView
     {
         [SerializeField]
         protected Grid _grid;
@@ -57,22 +57,22 @@ namespace Core.Fields.Grids
             _views = views;
         }
 
+        public T GetNodeById(Vector2Int id)
+        {
+            if (_nodes.IsWithinBounds(id.x, id.y))
+                return _nodes[id.x, id.y];
+
+            return null;
+        }
+
+        public V GetViewById(Vector2Int id)
+        {
+            if (_views.IsWithinBounds(id.x, id.y))
+                return _views[id.x, id.y];
+
+            return null;
+        }
+
         public abstract IEnumerable<ILink<T>> GetLinksForNode(T node);
-
-        public T GetNodeByIndex(int i, int j)
-        {
-            if (_nodes.IsWithinBounds(i, j))
-                return _nodes[i, j];
-
-            return null;
-        }
-
-        public V GetViewByIndex(int i, int j)
-        {
-            if (_views.IsWithinBounds(i, j))
-                return _views[i, j];
-
-            return null;
-        }
     }
 }

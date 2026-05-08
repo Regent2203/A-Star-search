@@ -6,11 +6,11 @@ namespace Core.Implementations.Cells
     /// <summary>
     /// Works with class CellView, draws nodePath by calling method "ShowPathMarker" on cells
     /// </summary>
-    public class CellsPathDrawer : IPathDrawer
+    public class CellsPathDrawer : IPathDrawer<CellView>
     {
-        private IList<CellView> _path;
+        private IReadOnlyList<CellView> _path;
 
-        public void SetPath(IList<CellView> path)
+        public void SetPath(IReadOnlyList<CellView> path)
         {
             _path = path;
         }

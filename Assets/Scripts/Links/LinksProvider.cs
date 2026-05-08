@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace Core.Fields.Grids
 {
+    /// <summary>
+    /// Used to create links in for cells in grid during search algorithm work (not beforehand)
+    /// </summary>
     public class LinksProvider<T> : ILinksProvider<T> where T: class, INode<T>
     {
         private readonly ICostProvider<T> _costProvider;
