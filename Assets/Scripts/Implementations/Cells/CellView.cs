@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Core.Views;
+using UnityEngine;
 
 namespace Core.Implementations.Cells
 {

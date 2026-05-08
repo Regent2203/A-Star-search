@@ -12,7 +12,7 @@ using Zenject;
 
 namespace Core.Starters
 {
-    public class Starter_CellGridExample : MonoBehaviour
+    public class Starter_CellGridExample1 : MonoBehaviour
     {
         private CellsConfig _config;
         private CellsGridField _field;
@@ -91,7 +91,7 @@ namespace Core.Starters
                 var nodePath = _pathFinder.GetPath();
                 if (nodePath != null)
                 {
-                    _pathDrawer.SetPath(nodePath, _field);
+                    _pathDrawer.SetPath(_field.GetViewsForNodes(nodePath));
                     _pathDrawer.ShowPath(true);
                 }
             }

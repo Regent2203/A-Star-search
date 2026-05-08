@@ -1,4 +1,5 @@
 ﻿using Core.Nodes;
+using UnityEngine;
 
 namespace Core.CostProviders
 {
@@ -6,7 +7,10 @@ namespace Core.CostProviders
     {
         public float GetCost(T from, T to)
         {
-            return from.Weight;
+            float baseWeight = from.Weight;
+            float distance = Vector2.Distance(from.Position, to.Position);
+
+            return baseWeight * distance;
         }
     }
 }

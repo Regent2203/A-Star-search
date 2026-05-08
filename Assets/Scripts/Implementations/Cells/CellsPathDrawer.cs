@@ -15,18 +15,6 @@ namespace Core.Implementations.Cells
             _path = path;
         }
 
-        public void SetPath(IList<CellNode> nodePath, CellsGridField field)
-        {
-            var viewPath = new List<CellView>(nodePath.Count);
-
-            foreach (var node in nodePath)
-            {
-                viewPath.Add(field.GetViewForNode(node));
-            }
-
-            _path = viewPath;
-        }
-
         public void ShowPath(bool show)
         {
             if (_path == null)

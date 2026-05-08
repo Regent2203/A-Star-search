@@ -3,6 +3,7 @@ using Core.Fields.Grids;
 using Core.Heuristic;
 using Core.Implementations.Cells;
 using Core.Implementations.Cells.UI;
+using Core.PathDrawers;
 using Core.PathFinders;
 using Core.SearchAlgorithms;
 using UnityEngine;
@@ -10,7 +11,7 @@ using Zenject;
 
 namespace Core.Installers
 {
-    public class SceneInstaller_CellGridExample : MonoInstaller
+    public class SceneInstaller_CellGridExample2 : MonoInstaller
     {
         [SerializeField]
         private CellsGridField _field;
@@ -25,6 +26,8 @@ namespace Core.Installers
         [SerializeField]
         private UICellsPaletteHotkeyInfoPanel _hotkeyInfoPanel;
         [SerializeField]
+        private LineRenderer _pathLineRenderer;
+        [SerializeField]
         private KeyCode _markingKeyCode = KeyCode.LeftShift;
 
         public override void InstallBindings()
@@ -37,18 +40,19 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksProvider<CellNode>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<FourSideGridNeighbours<CellNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EightSideGridNeighbours<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
+            Container.BindInterfacesAndSelfTo<OctileDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<AverageCostProvider<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<CellNode>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsPathDrawer>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinePathDrawer>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPainter>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPathSetter>().AsSingle(); 
             Container.BindInterfacesAndSelfTo<UICellsPalette>().FromInstance(_palette).AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsPaletteChoicePanel>().FromInstance(_paletteChoice).AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsPaletteHotkeyInfoPanel>().FromInstance(_hotkeyInfoPanel).AsSingle();
+            Container.BindInterfacesAndSelfTo<LineRenderer>().FromInstance(_pathLineRenderer).AsSingle();
             Container.BindInstance(_markingKeyCode).WithId("MarkingKey").AsSingle();
         }
     }

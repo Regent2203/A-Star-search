@@ -2,6 +2,7 @@
 using Core.Links;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Zenject;
 
 namespace Core.Implementations.Cells
@@ -58,6 +59,18 @@ namespace Core.Implementations.Cells
             var neighbours = _gridNeighboursProvider.GetNeighbours(index.x, index.y, _nodes);
 
             return _linksProvider.GetLinks(node, neighbours);
+        }
+
+        public IList<CellView> GetViewsForNodes(IList<CellNode> nodePath)
+        {
+            var viewPath = new List<CellView>(nodePath.Count);
+
+            foreach (var node in nodePath)
+            {
+                viewPath.Add(GetViewForNode(node));
+            }
+
+            return viewPath;
         }
     }
 }
