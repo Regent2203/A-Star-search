@@ -1,5 +1,6 @@
 using Core.CostProviders;
 using Core.Fields.Grids;
+using Core.Fields.Grids.Neighbours;
 using Core.Heuristic;
 using Core.Implementations.Cells;
 using Core.Implementations.Cells.UI;
@@ -37,7 +38,7 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksProvider<CellNode, Vector2Int>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<FourSideGridNeighbours<CellNode, Vector2Int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<FourSideGridNeighbours<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellNode, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
