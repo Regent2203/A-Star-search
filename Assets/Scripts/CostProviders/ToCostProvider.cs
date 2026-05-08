@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Core.CostProviders
 {
-    public class ToCostProvider<T> : ICostProvider<T> where T: INode<T>
+    public class ToCostProvider<T, TId> : ICostProvider<T, TId> where T : class, INode<T, TId>
     {
         public float GetCost(T from, T to)
         {

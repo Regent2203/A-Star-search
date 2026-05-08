@@ -5,10 +5,11 @@ using UnityEngine;
 
 namespace Core.Nodes
 {
-    public interface INode<T> : IWeightable where T : INode<T>
+    public interface INode<T, TId> : IWeightable where T: class, INode<T, TId>
     {
+        public TId Id { get; }
         public Vector2 Position { get; }
-        public IEnumerable<ILink<T>> GetLinks();
+        public IEnumerable<ILink<T, TId>> GetLinks();
         public bool IsBlocked { get; }
     }
 }

@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace Core.SearchAlgorithms
 {
-    public class AStarSearchAlgorithm<T> : ISearchAlgorithm<T> where T : class, INode<T>
+    public class AStarSearchAlgorithm<T, TId> : ISearchAlgorithm<T, TId> where T : class, INode<T, TId>
     {
         private Dictionary<T, T> _cameFrom;
         private Dictionary<T, float> _costSoFar;
 
 
-        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider<T> heuristicsController)
+        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider<T, TId> heuristicsController)
         {
             if (startNode.Equals(finishNode))
                 return null;

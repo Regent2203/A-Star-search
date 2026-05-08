@@ -6,10 +6,10 @@ using Core.SearchAlgorithms;
 
 namespace Core.PathFinders
 {
-    public class PathFinder<T> : IPathFinder<T> where T : class, INode<T>
+    public class PathFinder<T, TId> : IPathFinder<T, TId> where T : class, INode<T, TId>
     {
-        private readonly IHeuristicsProvider<T> _heuristicsProvider;
-        private readonly ISearchAlgorithm<T> _searchAlgorithm;
+        private readonly IHeuristicsProvider<T, TId> _heuristicsProvider;
+        private readonly ISearchAlgorithm<T, TId> _searchAlgorithm;
 
         private T _startNode;
         private T _finishNode;
@@ -20,7 +20,7 @@ namespace Core.PathFinders
         public bool IsReady => _startNode != null && _finishNode != null;
 
 
-        public PathFinder(IHeuristicsProvider<T> heuristicFunction, ISearchAlgorithm<T> searchAlgorithm)
+        public PathFinder(IHeuristicsProvider<T, TId> heuristicFunction, ISearchAlgorithm<T, TId> searchAlgorithm)
         {
             _heuristicsProvider = heuristicFunction;
             _searchAlgorithm = searchAlgorithm;

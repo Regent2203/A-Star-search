@@ -7,14 +7,12 @@ namespace Core.Implementations.Cells
 {
     public class CellsPathSetter
     {
-        private CellsGridField _field;
-        private readonly IPathFinder<CellNode> _pathFinder;
+        private readonly IPathFinder<CellNode, Vector2Int> _pathFinder;
         private readonly KeyCode _markingKeyCode = KeyCode.LeftShift;
         
 
-        public CellsPathSetter(CellsGridField field, IPathFinder<CellNode> pathFinder, [Inject(Id = "MarkingKey")] KeyCode markingKeyCode)
+        public CellsPathSetter(IPathFinder<CellNode, Vector2Int> pathFinder, [Inject(Id = "MarkingKey")] KeyCode markingKeyCode)
         {
-            _field = field;
             _pathFinder = pathFinder;
             _markingKeyCode = markingKeyCode;
         }

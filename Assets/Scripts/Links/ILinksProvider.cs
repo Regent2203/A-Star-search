@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace Core.Links
 {
-    public interface ILinksProvider<T> where T: INode<T>
+    public interface ILinksProvider<T, TId> where T : class, INode<T, TId>
     {
-        public IEnumerable<ILink<T>> GetLinks(T from, IEnumerable<T> neighbours);
+        public IEnumerable<ILink<T, TId>> GetLinks(T from, IEnumerable<T> neighbours);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Core.Heuristic
 {
-    public abstract class HeuristicsProvider<T> : IHeuristicsProvider<T> where T : INode<T>
+    public abstract class HeuristicsProvider<T, TId> : IHeuristicsProvider<T, TId> where T : class, INode<T, TId>
     {
         private readonly IHeuristicFunction _heuristicFunction;        
         private readonly float _minStepCost;

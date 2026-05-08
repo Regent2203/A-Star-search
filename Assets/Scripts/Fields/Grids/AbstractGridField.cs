@@ -2,12 +2,15 @@
 using Core.Nodes;
 using Core.Views;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
 namespace Core.Fields.Grids
 {
-    public abstract class AbstractGridField<T, V> : MonoBehaviour, IInitializable, IGraph<T, Vector2Int> where T : class, INode<T> where V : class, IView
+    public abstract class AbstractGridField<T, V> : MonoBehaviour, IInitializable, IGraph<T, Vector2Int> 
+        where T : class, INode<T, Vector2Int> 
+        where V : class, IView
     {
         [SerializeField]
         protected Grid _grid;
@@ -24,9 +27,20 @@ namespace Core.Fields.Grids
         protected T[,] _nodes;
         protected V[,] _views;
 
+        protected IGridNeighboursProvider<T, Vector2Int> _gridNeighboursProvider;
+        protected LinksProvider<T, Vector2Int> _linksProvider;
+
         public Vector2Int CellsNumber => _cellsNumber;
 
 
+        [Inject]
+        public void Construct(IGridNeighboursProvider<T, Vector2Int> gridNeighboursProvider, LinksProvider<T, Vector2Int> linksProvider, V cellViewPrefab)
+        {
+            _gridNeighboursProvider = gridNeighboursProvider;
+            _linksProvider = linksProvider;
+            _viewPrefab = cellViewPrefab;
+        }
+        
         public void Initialize() //zenject
         {
             SetupGridPhysics();
@@ -73,6 +87,16 @@ namespace Core.Fields.Grids
             return null;
         }
 
-        public abstract IEnumerable<ILink<T>> GetLinksForNode(T node);
+        public V GetViewForNode(T node) => GetViewById(node.Id);
+
+        public IReadOnlyList<V> GetViewsForNodes(IList<T> nodePath) => nodePath.Select(GetViewForNode).ToList();
+
+        public IEnumerable<ILink<T, Vector2Int>> GetLinksForNode(T node)
+        {
+            var index = node.Id;
+            var neighbours = _gridNeighboursProvider.GetNeighbours(index.x, index.y, _nodes);
+
+            return _linksProvider.GetLinks(node, neighbours);
+        }
     }
 }

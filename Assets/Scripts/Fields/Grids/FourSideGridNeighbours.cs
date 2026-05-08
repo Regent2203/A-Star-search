@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Core.Fields.Grids
 {
-    public class FourSideGridNeighbours<T> : IGridNeighboursProvider<T> where T: INode<T> //up, right, down, left, no diagonal
+    public class FourSideGridNeighbours<T, TId> : IGridNeighboursProvider<T, TId> where T : class, INode<T, TId>//up, right, down, left, no diagonal
     {
         private readonly List<T> _neighboursList = new List<T>(4);
 

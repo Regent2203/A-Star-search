@@ -2,8 +2,8 @@
 
 namespace Core.Fields
 {
-    public interface IGraph<T, I> where T : INode<T>
+    public interface IGraph<T, TId> where T : class, INode<T, TId>
     {
-        public T GetNodeById(I id);
+        public T GetNodeById(TId id);
     }
 }

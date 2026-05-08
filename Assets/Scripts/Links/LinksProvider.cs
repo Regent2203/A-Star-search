@@ -8,17 +8,17 @@ namespace Core.Fields.Grids
     /// <summary>
     /// Used to create links in for cells in grid during search algorithm work (not beforehand)
     /// </summary>
-    public class LinksProvider<T> : ILinksProvider<T> where T: class, INode<T>
+    public class LinksProvider<T, TId> : ILinksProvider<T, TId> where T : class, INode<T, TId>
     {
-        private readonly ICostProvider<T> _costProvider;
+        private readonly ICostProvider<T, TId> _costProvider;
 
         
-        public LinksProvider(ICostProvider<T> costProvider)
+        public LinksProvider(ICostProvider<T, TId> costProvider)
         {
             _costProvider = costProvider;
         }
 
-        public IEnumerable<ILink<T>> GetLinks(T from, IEnumerable<T> neighbours)
+        public IEnumerable<ILink<T, TId>> GetLinks(T from, IEnumerable<T> neighbours)
         {
             if (from.IsBlocked)
                 yield break;
@@ -30,7 +30,7 @@ namespace Core.Fields.Grids
 
                 var cost = _costProvider.GetCost(from, to);
 
-                yield return new Link<T>(from, to, cost);
+                yield return new Link<T, TId>(from, to, cost);
             }
         }
     }

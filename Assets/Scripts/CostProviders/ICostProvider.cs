@@ -2,7 +2,7 @@
 
 namespace Core.CostProviders
 {
-    public interface ICostProvider<T> where T : INode<T>
+    public interface ICostProvider<T, TId> where T : class, INode<T, TId>
     {
         float GetCost(T from, T to);
     }

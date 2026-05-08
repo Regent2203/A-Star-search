@@ -5,15 +5,16 @@ using UnityEngine;
 
 namespace Core.Implementations.Cells
 {
-    public class CellNode : INode<CellNode>
+    public class CellNode : INode<CellNode, Vector2Int>
     {
-        private readonly Vector2 _position;
         private readonly Vector2Int _index;
+        private readonly Vector2 _position;
+        
         private CellType _cellType;
         private readonly CellsGridField _field;
 
         public Vector2 Position => _position;
-        public Vector2Int Index => _index;
+        public Vector2Int Id => _index;
         public CellType CellType => _cellType;
         public bool IsBlocked => float.IsPositiveInfinity(_cellType.Weight);
         public float Weight => _cellType.Weight;
@@ -36,7 +37,7 @@ namespace Core.Implementations.Cells
             _field.NotifyNodeTypeChanged(this, cellType);
         }
 
-        public IEnumerable<ILink<CellNode>> GetLinks()
+        public IEnumerable<ILink<CellNode, Vector2Int>> GetLinks()
         {
             return _field.GetLinksForNode(this);
         }
