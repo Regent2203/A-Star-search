@@ -1,12 +1,8 @@
-﻿using Core.CostProviders;
-using Core.Fields.Grids;
-using Core.Heuristic;
+﻿using Core.Fields.Grids;
 using Core.Implementations.Cells;
 using Core.Implementations.Cells.UI;
-using Core.Nodes;
+
 using Core.PathFinders;
-using Core.SearchAlgorithms;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;

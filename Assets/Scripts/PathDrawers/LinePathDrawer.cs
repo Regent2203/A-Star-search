@@ -1,4 +1,3 @@
-using Core.Implementations.Cells;
 using Core.Views;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,9 +26,10 @@ namespace Core.PathDrawers
             else
             {
                 _lineRenderer.positionCount = _path.Count;
+
                 for (int i = 0; i < _path.Count; i++)
                 {
-                    _lineRenderer.SetPosition(i, _path[i].GetCenterCoords());
+                    _lineRenderer.SetPosition(i, _path[i].GetCenterCoords() - _lineRenderer.transform.position);
                 }
             }
         }
