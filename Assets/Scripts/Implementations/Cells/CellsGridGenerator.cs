@@ -1,5 +1,6 @@
 using Core.Fields;
 using Core.Implementations.Cells;
+using System;
 using UnityEngine;
 
 namespace Core.Implementations.Cells
@@ -17,13 +18,14 @@ namespace Core.Implementations.Cells
             _config = config;
         }
 
-        public void PopulateField(CellsGridField field, Transform container, Vector2 scale, Grid grid)
+        public void PopulateField(CellsGridField field, Transform container, Vector2 scale, Grid grid, Action<CellNode, CellType> callback)
         {
             var size = field.CellsNumber;
             var nodes = new CellNode[size.x, size.y];
             var views = new CellView[size.x, size.y];
 
             _viewsFactory.SetConfiguration(scale, container);
+            _nodesFactory.SetConfiguration(callback);
 
             for (int i = 0; i < size.x; i++)
             {

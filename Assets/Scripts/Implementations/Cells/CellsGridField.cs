@@ -20,7 +20,7 @@ namespace Core.Implementations.Cells
         protected override void Init()
         {
             //todo: change if we want to call this method not at scene start (instead: after we change grid size or else)
-            _generator.PopulateField(this, transform, _scaleFactor, _grid);
+            _generator.PopulateField(this, transform, _scaleFactor, _grid, NotifyNodeTypeChanged);
         }
 
         public void NotifyNodeTypeChanged(CellNode node, CellType cellType)
