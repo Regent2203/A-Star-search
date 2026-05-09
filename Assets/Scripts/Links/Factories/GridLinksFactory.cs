@@ -1,24 +1,26 @@
-using Core.CostProviders;
+﻿using Core.CostProviders;
 using Core.Links;
 using Core.Nodes;
 using System.Collections.Generic;
+using UnityEngine;
 
-namespace Core.Fields.Grids
+namespace Core.Links.Factories
 {
     /// <summary>
     /// Used to create links for cells in grid during search algorithm work (not beforehand)
     /// </summary>
-    public class LinksProvider<T, TId> : ILinksProvider<T, TId> where T : class, INode<T, TId>
+    public class GridLinksFactory<T> : LinksFactory<T, Vector2Int> where T : class, INode<T, Vector2Int>
     {
-        private readonly ICostProvider<T, TId> _costProvider;
+        private readonly ICostProvider<T, Vector2Int> _costProvider;
 
-        
-        public LinksProvider(ICostProvider<T, TId> costProvider)
+
+        public GridLinksFactory(ICostProvider<T, Vector2Int> costProvider)
         {
             _costProvider = costProvider;
         }
-
-        public IEnumerable<ILink<T, TId>> GetLinks(T from, IEnumerable<T> neighbours)
+        
+        //todo: rework
+        public IEnumerable<ILink<T, Vector2Int>> CreateNeighbourLinksForNode(T from, IEnumerable<T> neighbours)
         {
             if (from.IsBlocked)
                 yield break;
@@ -30,7 +32,7 @@ namespace Core.Fields.Grids
 
                 var cost = _costProvider.GetCost(from, to);
 
-                yield return new Link<T, TId>(from, to, cost);
+                yield return CreateLink(from, to, cost);
             }
         }
     }

@@ -1,16 +1,15 @@
 ﻿using Core.Nodes;
-using UnityEngine;
 
 namespace Core.CostProviders
 {
-    public class FromCostProvider<T, TId> : ICostProvider<T, TId> where T : class, INode<T, TId>
+    public class FromCostProvider<T, TId> : BaseCostProvider<T, TId> where T : class, INode<T, TId>
     {
-        public float GetCost(T from, T to)
-        {
-            float baseWeight = from.Weight;
-            float distance = Vector2.Distance(from.Position, to.Position);
+        public FromCostProvider(IWeightGetter<T, TId> weightGetter) : base(weightGetter)
+        { }
 
-            return baseWeight * distance;
+        protected override float GetWeight(T from, T to)
+        {
+            return _weightGetter.GetWeight(from);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Core.Heuristic
 
         public float EstimateCost(T node1, T node2)
         {
-            return _heuristicFunction.Estimate(node1.Position, node2.Position) * _minStepCost;
+            return _heuristicFunction.Estimate(node1.NodePosition, node2.NodePosition) * _minStepCost;
         }
     }
 }

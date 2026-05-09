@@ -13,11 +13,11 @@ namespace Core.Implementations.Cells
         private CellType _cellType;
         private readonly CellsGridField _field;
 
-        public Vector2 Position => _position;
+        public Vector2 NodePosition => _position;
         public Vector2Int Id => _index;
         public CellType CellType => _cellType;
         public bool IsBlocked => float.IsPositiveInfinity(_cellType.Weight);
-        public float Weight => _cellType.Weight;
+        public float MoveCost => _cellType.Weight;
 
 
         public CellNode(Vector2 position, Vector2Int index, CellType cellType, CellsGridField field)
@@ -35,11 +35,6 @@ namespace Core.Implementations.Cells
 
             _cellType = cellType;
             _field.NotifyNodeTypeChanged(this, cellType);
-        }
-
-        public IEnumerable<ILink<CellNode, Vector2Int>> GetLinks()
-        {
-            return _field.GetLinksForNode(this);
         }
     }
 }

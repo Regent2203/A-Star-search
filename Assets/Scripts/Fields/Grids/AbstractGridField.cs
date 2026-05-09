@@ -1,5 +1,7 @@
 ﻿using Core.Fields.Grids.Neighbours;
 using Core.Links;
+using Core.Links.Factories;
+using Core.Links.Providers;
 using Core.Nodes;
 using Core.Views;
 using System.Collections.Generic;
@@ -28,17 +30,14 @@ namespace Core.Fields.Grids
         protected T[,] _nodes;
         protected V[,] _views;
 
-        protected IGridNeighboursProvider<T> _gridNeighboursProvider;
-        protected LinksProvider<T, Vector2Int> _linksProvider;
-
+        protected GridLinksProvider<T> _gridLinksProvider;
         public Vector2Int CellsNumber => _cellsNumber;
 
 
         [Inject]
-        public void Construct(IGridNeighboursProvider<T> gridNeighboursProvider, LinksProvider<T, Vector2Int> linksProvider, V cellViewPrefab)
+        public void Construct(GridLinksProvider<T> gridLinksProvider, V cellViewPrefab)
         {
-            _gridNeighboursProvider = gridNeighboursProvider;
-            _linksProvider = linksProvider;
+            _gridLinksProvider = gridLinksProvider;
             _viewPrefab = cellViewPrefab;
         }
         
@@ -70,6 +69,8 @@ namespace Core.Fields.Grids
         {
             _nodes = nodes;
             _views = views;
+
+            _gridLinksProvider.InitGrid(_nodes);
         }
 
         public T GetNodeById(Vector2Int id)
@@ -91,12 +92,5 @@ namespace Core.Fields.Grids
         public V GetViewForNode(T node) => GetViewById(node.Id);
 
         public IReadOnlyList<V> GetViewsForNodes(IList<T> nodePath) => nodePath.Select(GetViewForNode).ToList();
-
-        public IEnumerable<ILink<T, Vector2Int>> GetLinksForNode(T node)
-        {
-            var neighbours = _gridNeighboursProvider.GetNeighbours(node.Id, _nodes);
-
-            return _linksProvider.GetLinks(node, neighbours);
-        }
     }
 }

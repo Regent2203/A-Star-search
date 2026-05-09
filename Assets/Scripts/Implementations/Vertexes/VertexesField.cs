@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Core.Implementations.Vertexes
 {
-    public class VertexesField : IGraph<VertexNode, int>
+    public class VertexesField //: IGraph<VertexNode, int>
     {
         //private CellsGridGenerator _generator;
 

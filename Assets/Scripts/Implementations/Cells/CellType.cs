@@ -1,5 +1,4 @@
-﻿using Core.Weightables;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Core.Implementations.Cells
 {

@@ -4,7 +4,8 @@ using Core.Fields.Grids.Neighbours;
 using Core.Heuristic;
 using Core.Implementations.Cells;
 using Core.Implementations.Cells.UI;
-
+using Core.Links.Factories;
+using Core.Links.Providers;
 using Core.PathFinders;
 using Core.SearchAlgorithms;
 using UnityEngine;
@@ -38,11 +39,13 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<CellsGridInputHandler>().FromInstance(_fieldInputHandler).AsSingle();
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LinksProvider<CellNode, Vector2Int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GridLinksProvider<CellNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GridLinksFactory<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<FourSideGridNeighbours<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellNode, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellNodeWeightGetter>().AsSingle();
             Container.BindInterfacesAndSelfTo<AverageCostProvider<CellNode, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<CellNode, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPathDrawer>().AsSingle();

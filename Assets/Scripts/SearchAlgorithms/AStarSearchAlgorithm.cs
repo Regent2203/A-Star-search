@@ -1,4 +1,7 @@
-﻿using Core.Heuristic;
+﻿using Core.Fields;
+using Core.Heuristic;
+using Core.Links;
+using Core.Links.Providers;
 using Core.Nodes;
 using System.Collections.Generic;
 
@@ -9,6 +12,13 @@ namespace Core.SearchAlgorithms
         private Dictionary<T, T> _cameFrom;
         private Dictionary<T, float> _costSoFar;
 
+        private readonly ILinksProvider<T, TId> _linksProvider;
+
+
+        public AStarSearchAlgorithm(ILinksProvider<T, TId> linksProvider)
+        {
+            _linksProvider = linksProvider;
+        }
 
         public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider<T, TId> heuristicsController)
         {
@@ -33,7 +43,7 @@ namespace Core.SearchAlgorithms
                     return RetracePath(startNode, finishNode);
                 }
 
-                foreach (var link in current.GetLinks())
+                foreach (var link in _linksProvider.GetLinksForNode(current))
                 {
                     var newCost = _costSoFar[current] + link.Cost;
 

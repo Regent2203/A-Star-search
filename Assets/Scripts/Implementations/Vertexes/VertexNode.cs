@@ -15,9 +15,9 @@ namespace Core.Implementations.Vertexes
         private readonly VertexesField _field;
 
         public int Id => _id;
-        public Vector2 Position => _position;
+        public Vector2 NodePosition => _position;
         public bool IsBlocked => _isBlocked;
-        public float Weight => 0;
+        public float MoveCost => 0;
 
 
         public VertexNode(Vector2 position, int id, VertexesField field)
