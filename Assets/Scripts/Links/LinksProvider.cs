@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Core.Fields.Grids
 {
     /// <summary>
-    /// Used to create links in for cells in grid during search algorithm work (not beforehand)
+    /// Used to create links for cells in grid during search algorithm work (not beforehand)
     /// </summary>
     public class LinksProvider<T, TId> : ILinksProvider<T, TId> where T : class, INode<T, TId>
     {

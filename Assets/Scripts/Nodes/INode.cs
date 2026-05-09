@@ -9,7 +9,7 @@ namespace Core.Nodes
     {
         public TId Id { get; }
         public Vector2 Position { get; }
-        public IEnumerable<ILink<T, TId>> GetLinks();
         public bool IsBlocked { get; }
+        public IEnumerable<ILink<T, TId>> GetLinks();
     }
 }
