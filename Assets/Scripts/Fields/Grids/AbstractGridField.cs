@@ -1,8 +1,4 @@
-﻿using Core.Fields.Grids.Neighbours;
-using Core.Links;
-using Core.Links.Factories;
-using Core.Links.Providers;
-using Core.Nodes;
+﻿using Core.Nodes;
 using Core.Views;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,15 +25,13 @@ namespace Core.Fields.Grids
 
         protected T[,] _nodes;
         protected V[,] _views;
-
-        protected GridLinksProvider<T> _gridLinksProvider;
+        
         public Vector2Int CellsNumber => _cellsNumber;
 
 
         [Inject]
-        public void Construct(GridLinksProvider<T> gridLinksProvider, V cellViewPrefab)
+        public void Construct(V cellViewPrefab)
         {
-            _gridLinksProvider = gridLinksProvider;
             _viewPrefab = cellViewPrefab;
         }
         
@@ -69,8 +63,6 @@ namespace Core.Fields.Grids
         {
             _nodes = nodes;
             _views = views;
-
-            _gridLinksProvider.InitGrid(_nodes);
         }
 
         public T GetNodeById(Vector2Int id)

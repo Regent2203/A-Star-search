@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Heuristic
+namespace Core.Heuristic.Functions
 {
     public class ChebyshevDistance : IHeuristicFunction
     {

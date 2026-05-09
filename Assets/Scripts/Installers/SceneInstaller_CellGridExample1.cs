@@ -1,7 +1,7 @@
 using Core.CostProviders;
 using Core.Fields.Grids;
 using Core.Fields.Grids.Neighbours;
-using Core.Heuristic;
+using Core.Heuristic.Functions;
 using Core.Implementations.Cells;
 using Core.Implementations.Cells.UI;
 using Core.Links.Factories;

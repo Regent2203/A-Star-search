@@ -1,5 +1,4 @@
 ﻿using Core.CostProviders;
-using Core.Links;
 using Core.Nodes;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,7 +21,7 @@ namespace Core.Links.Factories
         //todo: rework
         public IEnumerable<ILink<T, Vector2Int>> CreateNeighbourLinksForNode(T from, IEnumerable<T> neighbours)
         {
-            if (from.IsBlocked)
+            if (from.IsBlocked) //todo: move IsBlocked to search algorithm (skipping)
                 yield break;
 
             foreach (var to in neighbours)

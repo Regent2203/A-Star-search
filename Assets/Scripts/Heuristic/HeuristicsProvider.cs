@@ -1,10 +1,11 @@
-﻿using Core.Nodes;
+﻿using Core.Heuristic.Functions;
+using Core.Nodes;
 
 namespace Core.Heuristic
 {
     public abstract class HeuristicsProvider<T, TId> : IHeuristicsProvider<T, TId> where T : class, INode<T, TId>
     {
-        private readonly IHeuristicFunction _heuristicFunction;        
+        private readonly IHeuristicFunction _heuristicFunction;
         private readonly float _minStepCost;
 
 

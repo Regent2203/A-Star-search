@@ -1,5 +1,4 @@
-using Core.Fields;
-using Core.Implementations.Cells;
+using Core.Links.Providers;
 using System;
 using UnityEngine;
 
@@ -7,12 +6,14 @@ namespace Core.Implementations.Cells
 {
     public class CellsGridGenerator
     {
+        private readonly GridLinksProvider<CellNode> _gridLinksProvider;
         private readonly CellViewFactory _viewsFactory;
         private readonly CellNodeFactory _nodesFactory;
         private readonly CellsConfig _config;
 
-        public CellsGridGenerator(CellViewFactory viewFactory, CellNodeFactory nodeFactory, CellsConfig config)
+        public CellsGridGenerator(GridLinksProvider<CellNode> gridLinksProvider, CellViewFactory viewFactory, CellNodeFactory nodeFactory, CellsConfig config)
         {
+            _gridLinksProvider = gridLinksProvider;
             _viewsFactory = viewFactory;
             _nodesFactory = nodeFactory;
             _config = config;
@@ -49,6 +50,7 @@ namespace Core.Implementations.Cells
                 }
             }
 
+            _gridLinksProvider.InitGrid(nodes);
             field.SetData(nodes, views);
         }
     }

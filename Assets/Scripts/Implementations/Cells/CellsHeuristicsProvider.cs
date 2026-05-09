@@ -1,7 +1,8 @@
-﻿using Core.Implementations.Cells;
+﻿using Core.Heuristic;
+using Core.Heuristic.Functions;
 using UnityEngine;
 
-namespace Core.Heuristic
+namespace Core.Implementations.Cells
 {
     public class CellsHeuristicsProvider : HeuristicsProvider<CellNode, Vector2Int>
     {
