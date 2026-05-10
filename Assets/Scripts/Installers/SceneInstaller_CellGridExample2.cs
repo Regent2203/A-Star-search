@@ -45,12 +45,12 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<GridLinksProvider<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridLinksFactory<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<EightSideGridNeighbours<CellNode>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellNode, Vector2Int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<OctileDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeWeightGetter>().AsSingle();
-            Container.BindInterfacesAndSelfTo<AverageCostProvider<CellNode, Vector2Int>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<PathFinder<CellNode, Vector2Int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AverageCostProvider<CellNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PathFinder<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinePathDrawer>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPainter>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPathSetter>().AsSingle(); 

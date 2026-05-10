@@ -2,11 +2,11 @@
 
 namespace Core.Links.Factories
 {
-    public class LinksFactory<T, TId> : ILinksFactory<T, TId> where T : class, INode<TId>
+    public class LinksFactory<T> : ILinksFactory<T> where T : class, INode
     {
-        public ILink<T, TId> CreateLink(T from, T to, float cost)
+        public ILink<T> CreateLink(T from, T to, float cost)
         {
-            return new Link<T, TId>(from, to, cost);
+            return new Link<T>(from, to, cost);
         }
     }
 }

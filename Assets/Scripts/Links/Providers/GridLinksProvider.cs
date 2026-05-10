@@ -1,5 +1,4 @@
 using Core.Fields.Grids.Neighbours;
-using Core.Links;
 using Core.Links.Factories;
 using Core.Nodes;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using UnityEngine;
 
 namespace Core.Links.Providers
 {
-    public class GridLinksProvider<T> : ILinksProvider<T, Vector2Int> where T : class, INode<Vector2Int>
+    public class GridLinksProvider<T> : ILinksProvider<T> where T : class, INode<Vector2Int>
     {
         private T[,] _gridNodes;
 
@@ -26,7 +25,7 @@ namespace Core.Links.Providers
             _gridNodes = gridNodes;
         }
 
-        public IEnumerable<ILink<T, Vector2Int>> GetLinksForNode(T node)
+        public IEnumerable<ILink<T>> GetLinksForNode(T node)
         {
             var neighbours = _neighboursProvider.GetNeighbours(node.Id, _gridNodes);
 

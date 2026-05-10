@@ -8,18 +8,18 @@ namespace Core.Links.Factories
     /// <summary>
     /// Used to create links for cells in grid during search algorithm work (not beforehand)
     /// </summary>
-    public class GridLinksFactory<T> : LinksFactory<T, Vector2Int> where T : class, INode<Vector2Int>
+    public class GridLinksFactory<T> : LinksFactory<T> where T : class, INode
     {
-        private readonly ICostProvider<T, Vector2Int> _costProvider;
+        private readonly ICostProvider<T> _costProvider;
 
 
-        public GridLinksFactory(ICostProvider<T, Vector2Int> costProvider)
+        public GridLinksFactory(ICostProvider<T> costProvider)
         {
             _costProvider = costProvider;
         }
         
         //todo: rework
-        public IEnumerable<ILink<T, Vector2Int>> CreateNeighbourLinksForNode(T from, IEnumerable<T> neighbours)
+        public IEnumerable<ILink<T>> CreateNeighbourLinksForNode(T from, IEnumerable<T> neighbours)
         {
             if (from.IsBlocked) //todo: move IsBlocked to search algorithm (skipping)
                 yield break;

@@ -13,7 +13,7 @@ namespace Core.Starters
         private CellsConfig _config;
         private CellsGridField _field;
         private CellsGridInputHandler _fieldInputHandler;
-        private PathFinder<CellNode, Vector2Int> _pathFinder;
+        private PathFinder<CellNode> _pathFinder;
         private CellsPathDrawer _pathDrawer;
         private CellsPainter _painter;
         private CellsPathSetter _pathSetter;
@@ -24,7 +24,7 @@ namespace Core.Starters
 
         [Inject]
         public void Construct(CellsConfig config, CellsGridField field, CellsGridInputHandler fieldInputHandler,
-            PathFinder<CellNode, Vector2Int> pathFinder, CellsPathDrawer pathDrawer, CellsPainter painter, CellsPathSetter pathSetter,
+            PathFinder<CellNode> pathFinder, CellsPathDrawer pathDrawer, CellsPainter painter, CellsPathSetter pathSetter,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)
         {
             _config = config;

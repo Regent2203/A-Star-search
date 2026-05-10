@@ -2,8 +2,8 @@
 
 namespace Core.Links.Factories
 {
-    public interface ILinksFactory<T, TId> where T : class, INode<TId>
+    public interface ILinksFactory<T> where T : class, INode
     {
-        public ILink<T, TId> CreateLink(T from, T to, float cost);
+        public ILink<T> CreateLink(T from, T to, float cost);
     }
 }

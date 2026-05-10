@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Core.CostProviders
 {
-    public abstract class BaseCostProvider<T, TId> : ICostProvider<T, TId> where T : class, INode<TId>
+    public abstract class BaseCostProvider<T> : ICostProvider<T> where T : class, INode
     {
         protected readonly IWeightGetter<T> _weightGetter;
 

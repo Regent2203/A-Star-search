@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace Core.SearchAlgorithms
 {
-    public class AStarSearchAlgorithm<T, TId> : ISearchAlgorithm<T, TId> where T : class, INode<TId>
+    public class AStarSearchAlgorithm<T> : ISearchAlgorithm<T> where T : class, INode
     {
         private Dictionary<T, T> _cameFrom;
         private Dictionary<T, float> _costSoFar;
 
-        private readonly ILinksProvider<T, TId> _linksProvider;
+        private readonly ILinksProvider<T> _linksProvider;
 
 
-        public AStarSearchAlgorithm(ILinksProvider<T, TId> linksProvider)
+        public AStarSearchAlgorithm(ILinksProvider<T> linksProvider)
         {
             _linksProvider = linksProvider;
         }
 
-        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider<T, TId> heuristicsController)
+        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider<T> heuristicsController)
         {
             if (startNode.Equals(finishNode))
                 return null;
