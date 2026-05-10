@@ -4,7 +4,7 @@ namespace Core.CostProviders
 {
     public class AverageCostProvider<T, TId> : BaseCostProvider<T, TId> where T : class, INode<TId>
     {
-        public AverageCostProvider(IWeightGetter<T, TId> weightGetter) : base(weightGetter) 
+        public AverageCostProvider(IWeightGetter<T> weightGetter) : base(weightGetter) 
         { }
 
         protected override float GetWeight(T from, T to)

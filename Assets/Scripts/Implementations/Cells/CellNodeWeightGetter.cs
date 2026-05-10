@@ -1,9 +1,8 @@
 ﻿using Core.CostProviders;
-using UnityEngine;
 
 namespace Core.Implementations.Cells
 {
-    public class CellNodeWeightGetter : IWeightGetter<CellNode, Vector2Int>
+    public class CellNodeWeightGetter : IWeightGetter<CellNode>
     {
         public float GetWeight(CellNode node)
         {

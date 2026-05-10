@@ -1,9 +1,7 @@
-﻿using Core.Nodes;
-
-namespace Core.CostProviders
+﻿namespace Core.CostProviders
 {
-    public interface IWeightGetter<T, TId> where T : class, INode<TId>
+    public interface IWeightGetter<T>
     {
-        public float GetWeight(T node);
+        public float GetWeight(T source);
     }    
 }

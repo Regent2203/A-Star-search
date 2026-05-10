@@ -5,9 +5,9 @@ namespace Core.CostProviders
 {
     public abstract class BaseCostProvider<T, TId> : ICostProvider<T, TId> where T : class, INode<TId>
     {
-        protected readonly IWeightGetter<T, TId> _weightGetter;
+        protected readonly IWeightGetter<T> _weightGetter;
 
-        public BaseCostProvider(IWeightGetter<T, TId> weightGetter)
+        public BaseCostProvider(IWeightGetter<T> weightGetter)
         {
             _weightGetter = weightGetter;
         }
