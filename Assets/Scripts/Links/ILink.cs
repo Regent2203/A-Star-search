@@ -2,7 +2,7 @@
 
 namespace Core.Links
 {
-    public interface ILink<T, TId> where T : class, INode<T, TId>
+    public interface ILink<T, TId> where T : class, INode<TId>
     {
         public T From { get; }
         public T To { get; }

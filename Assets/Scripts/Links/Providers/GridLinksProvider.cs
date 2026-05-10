@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Core.Links.Providers
 {
-    public class GridLinksProvider<T> : ILinksProvider<T, Vector2Int> where T : class, INode<T, Vector2Int>
+    public class GridLinksProvider<T> : ILinksProvider<T, Vector2Int> where T : class, INode<Vector2Int>
     {
         private T[,] _gridNodes;
 

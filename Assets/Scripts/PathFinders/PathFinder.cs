@@ -6,7 +6,7 @@ using Core.SearchAlgorithms;
 
 namespace Core.PathFinders
 {
-    public class PathFinder<T, TId> : IPathFinder<T, TId> where T : class, INode<T, TId>
+    public class PathFinder<T, TId> : IPathFinder<T, TId> where T : class, INode<TId>
     {
         private readonly IHeuristicsProvider<T, TId> _heuristicsProvider;
         private readonly ISearchAlgorithm<T, TId> _searchAlgorithm;

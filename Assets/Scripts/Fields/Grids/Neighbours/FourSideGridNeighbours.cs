@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core.Fields.Grids.Neighbours
 {
-    public class FourSideGridNeighbours<T> : GridNeighboursProviderBase<T> where T : class, INode<T, Vector2Int> //up, right, down, left, no diagonal
+    public class FourSideGridNeighbours<T> : GridNeighboursProviderBase<T> where T : class, INode<Vector2Int> //up, right, down, left, no diagonal
     {
         private readonly List<T> _neighboursList = new List<T>(4);
 

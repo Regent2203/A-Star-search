@@ -2,7 +2,7 @@
 
 namespace Core.Links
 {
-    public struct Link<T, TId> : ILink<T, TId> where T : class, INode<T, TId>
+    public struct Link<T, TId> : ILink<T, TId> where T : class, INode<TId>
     {
         private T _from;
         private T _to;

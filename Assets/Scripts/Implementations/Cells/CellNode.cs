@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core.Implementations.Cells
 {
-    public class CellNode : INode<CellNode, Vector2Int>
+    public class CellNode : INode<Vector2Int>
     {
         private readonly Vector2Int _index;
         private readonly Vector2 _position;        

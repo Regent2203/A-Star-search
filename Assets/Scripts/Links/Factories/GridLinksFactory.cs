@@ -8,7 +8,7 @@ namespace Core.Links.Factories
     /// <summary>
     /// Used to create links for cells in grid during search algorithm work (not beforehand)
     /// </summary>
-    public class GridLinksFactory<T> : LinksFactory<T, Vector2Int> where T : class, INode<T, Vector2Int>
+    public class GridLinksFactory<T> : LinksFactory<T, Vector2Int> where T : class, INode<Vector2Int>
     {
         private readonly ICostProvider<T, Vector2Int> _costProvider;
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Core.Links.Providers
 {
-    public class StoredLinksProvider<T, TId> : ILinksProvider<T, TId> where T : class, INode<T, TId>
+    public class StoredLinksProvider<T, TId> : ILinksProvider<T, TId> where T : class, INode<TId>
     {
         private readonly Dictionary<T, List<ILink<T, TId>>> _links = new Dictionary<T, List<ILink<T, TId>>>();
         /*

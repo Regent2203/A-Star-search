@@ -2,7 +2,7 @@
 
 namespace Core.CostProviders
 {
-    public class ToCostProvider<T, TId> : BaseCostProvider<T, TId> where T : class, INode<T, TId>
+    public class ToCostProvider<T, TId> : BaseCostProvider<T, TId> where T : class, INode<TId>
     {
         public ToCostProvider(IWeightGetter<T, TId> weightGetter) : base(weightGetter)
         { }

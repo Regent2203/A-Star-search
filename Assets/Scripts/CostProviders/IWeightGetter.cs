@@ -2,7 +2,7 @@
 
 namespace Core.CostProviders
 {
-    public interface IWeightGetter<T, TId> where T : class, INode<T, TId>
+    public interface IWeightGetter<T, TId> where T : class, INode<TId>
     {
         public float GetWeight(T node);
     }    

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Core.SearchAlgorithms
 {
-    public class AStarSearchAlgorithm<T, TId> : ISearchAlgorithm<T, TId> where T : class, INode<T, TId>
+    public class AStarSearchAlgorithm<T, TId> : ISearchAlgorithm<T, TId> where T : class, INode<TId>
     {
         private Dictionary<T, T> _cameFrom;
         private Dictionary<T, float> _costSoFar;

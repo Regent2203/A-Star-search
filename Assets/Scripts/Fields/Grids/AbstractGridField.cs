@@ -8,7 +8,7 @@ using Zenject;
 namespace Core.Fields.Grids
 {
     public abstract class AbstractGridField<T, V> : MonoBehaviour, IInitializable, IGraph<T, Vector2Int> 
-        where T : class, INode<T, Vector2Int> 
+        where T : class, INode<Vector2Int> 
         where V : class, IView
     {
         [SerializeField]

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core.Fields.Grids.Neighbours
 {
-    public class EightSideGridNeighbours<T> : GridNeighboursProviderBase<T> where T : class, INode<T, Vector2Int> //all eight directions
+    public class EightSideGridNeighbours<T> : GridNeighboursProviderBase<T> where T : class, INode<Vector2Int> //all eight directions
     {
         private readonly List<T> _neighboursList = new List<T>(8);
 

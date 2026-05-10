@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Core.Fields.Grids.Neighbours
 {
     public abstract class GridNeighboursProviderBase<T> : IGridNeighboursProvider<T>
-        where T : class, INode<T, Vector2Int>
+        where T : class, INode<Vector2Int>
     {
         protected void TryAddCell(List<T> list, T[,] grid, int i, int j)
         {
