@@ -16,7 +16,7 @@ namespace Core.Starters
         private PathFinder<CellNode> _pathFinder;
         private CellsPathDrawer _pathDrawer;
         private CellsPainter _painter;
-        private CellsPathSetter _pathSetter;
+        private PathSetter<CellNode> _pathSetter;
         private UICellsPalette _palette;
         private UICellsPaletteChoicePanel _paletteChoice;
         private UICellsPaletteHotkeyInfoPanel _hotkeyInfoPanel;
@@ -24,7 +24,7 @@ namespace Core.Starters
 
         [Inject]
         public void Construct(CellsConfig config, CellsGridField field, CellsGridInputHandler fieldInputHandler,
-            PathFinder<CellNode> pathFinder, CellsPathDrawer pathDrawer, CellsPainter painter, CellsPathSetter pathSetter,
+            PathFinder<CellNode> pathFinder, CellsPathDrawer pathDrawer, CellsPainter painter, PathSetter<CellNode> pathSetter,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)
         {
             _config = config;
@@ -47,7 +47,7 @@ namespace Core.Starters
         private void Init()
         {
             _fieldInputHandler.CellNodeClicked += _painter.TryChangeCellType;
-            _fieldInputHandler.CellNodeClicked += _pathSetter.TryUseCell;
+            _fieldInputHandler.CellNodeClicked += _pathSetter.TryUseNode;
             _field.CellNodeTypeChanged += (_, _) => _pathDrawer.ShowPath(false);
             _field.CellNodeTypeChanged += (_, _) => TryRun(_pathFinder.IsReady);
             

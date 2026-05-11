@@ -3,9 +3,6 @@ using System.Collections.Generic;
 
 namespace Core.Implementations.Cells
 {
-    /// <summary>
-    /// Works with class CellView, draws nodePath by calling method "ShowPathMarker" on cells
-    /// </summary>
     public class CellsPathDrawer : IPathDrawer<CellView>
     {
         private IReadOnlyList<CellView> _path;

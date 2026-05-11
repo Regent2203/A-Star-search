@@ -1,23 +1,23 @@
-using Core.PathFinders;
+using Core.Nodes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace Core.Implementations.Cells
+namespace Core.PathFinders
 {
-    public class CellsPathSetter
+    public class PathSetter<T> where T : class, INode
     {
-        private readonly IPathFinder<CellNode> _pathFinder;
+        private readonly IPathFinder<T> _pathFinder;
         private readonly KeyCode _markingKeyCode = KeyCode.LeftShift;
         
 
-        public CellsPathSetter(IPathFinder<CellNode> pathFinder, [Inject(Id = "MarkingKey")] KeyCode markingKeyCode)
+        public PathSetter(IPathFinder<T> pathFinder, [Inject(Id = "MarkingKey")] KeyCode markingKeyCode)
         {
             _pathFinder = pathFinder;
             _markingKeyCode = markingKeyCode;
         }
 
-        public void TryUseCell(CellNode node, PointerEventData.InputButton btn)
+        public void TryUseNode(T node, PointerEventData.InputButton btn)
         {
             bool isMarkingMode = Input.GetKey(_markingKeyCode);
 
