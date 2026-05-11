@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Core.Implementations.Cells
 {
-    public class CellsGridField : AbstractGridField<CellNode, CellView>
+    public class CellsGridField : GridField<CellNode, CellView>
     {
         private CellsGridGenerator _generator;
 
@@ -19,6 +19,8 @@ namespace Core.Implementations.Cells
 
         protected override void Init()
         {
+            base.Init();
+
             //todo: change if we want to call this method not at scene start (instead: after we change grid size or else)
             _generator.PopulateField(this, transform, _scaleFactor, _grid, NotifyNodeTypeChanged);
         }
