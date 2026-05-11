@@ -43,6 +43,9 @@ namespace Core.SearchAlgorithms
 
                 foreach (var link in _linksProvider.GetLinksForNode(current))
                 {
+                    if (link.From.IsBlocked || link.To.IsBlocked)
+                        continue;
+
                     var newCost = _costSoFar[current] + link.Cost;
 
                     if (!_costSoFar.ContainsKey(link.To) || newCost < _costSoFar[link.To])

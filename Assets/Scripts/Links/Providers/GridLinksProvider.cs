@@ -6,15 +6,20 @@ using UnityEngine;
 
 namespace Core.Links.Providers
 {
+    /// <summary>
+    /// Creates links during search algorithm work - not beforehand
+    /// </summary>
     public class GridLinksProvider<T> : ILinksProvider<T> where T : class, INode<Vector2Int>
     {
         private T[,] _gridNodes;
 
-        private readonly GridLinksFactory<T> _factory;
+        private readonly LinksFactory<T> _factory;
         private readonly IGridNeighboursProvider<T> _neighboursProvider;
+        
+        //todo: add cache dictionary
 
 
-        public GridLinksProvider(GridLinksFactory<T> factory, IGridNeighboursProvider<T> neighboursProvider)
+        public GridLinksProvider(LinksFactory<T> factory, IGridNeighboursProvider<T> neighboursProvider)
         {
             _factory = factory;
             _neighboursProvider = neighboursProvider;
@@ -29,7 +34,7 @@ namespace Core.Links.Providers
         {
             var neighbours = _neighboursProvider.GetNeighbours(node.Id, _gridNodes);
 
-            return _factory.CreateNeighbourLinksForNode(node, neighbours);
+            return _factory.CreateLinks(node, neighbours);
         }
     }
 }

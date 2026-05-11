@@ -40,7 +40,7 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridLinksProvider<CellNode>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<GridLinksFactory<CellNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinksFactory<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<FourSideGridNeighbours<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
