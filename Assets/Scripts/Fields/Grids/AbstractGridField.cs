@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Core.Fields.Grids
 {
-    public abstract class AbstractGridField<T, V> : MonoBehaviour, IInitializable, IGraph<T, Vector2Int> 
+    public abstract class AbstractGridField<T, V> : MonoBehaviour, IGraph<T, Vector2Int> 
         where T : class, INode<Vector2Int> 
         where V : class, IView
     {
@@ -35,7 +35,7 @@ namespace Core.Fields.Grids
             _viewPrefab = cellViewPrefab;
         }
         
-        public void Initialize() //zenject
+        private void Awake()
         {
             SetupGridPhysics();
             Init();

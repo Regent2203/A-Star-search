@@ -17,6 +17,9 @@ namespace Core.Implementations.Cells
         private Vector2Int _index;
         public Vector2Int Index => _index;
 
+        private Vector2? _size;
+        private Vector3? _center;
+
 
         private void Awake()
         {
@@ -49,7 +52,16 @@ namespace Core.Implementations.Cells
             _spriteRenderer.sprite = sprite;
         }
 
-        public Vector2 GetSize() => _spriteRenderer.size;
-        public Vector3 GetCenterCoords() => _spriteRenderer.bounds.center;
+        public Vector2 GetSize()
+        {
+            _size ??= _spriteRenderer.size;
+            return _size.Value;
+        }
+
+        public Vector3 GetCenterCoords()
+        {
+            _center ??= _spriteRenderer.bounds.center;
+            return _center.Value;
+        }
     }
 }
