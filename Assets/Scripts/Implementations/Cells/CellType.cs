@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Core.Implementations.Cells
 {
@@ -21,15 +22,16 @@ namespace Core.Implementations.Cells
         private string _name;
         [SerializeField]
         private Sprite _sprite;
+        [FormerlySerializedAs("_weight")]
         [SerializeField]
-        private float _weight = float.PositiveInfinity;
+        private float _moveCost = float.PositiveInfinity;
         [SerializeField]
         private KeyCode _paletteHotkey;
 
         public CellId Id => _id;
         public string Name => _name;
         public Sprite Sprite => _sprite;
-        public float Weight => _weight;
+        public float MoveCost => _moveCost;
         public KeyCode PaletteHotkey => _paletteHotkey;
     }
 }

@@ -24,7 +24,7 @@ namespace Core.Implementations.Cells
 
         public float GetMinimumCellTypeWeight()
         {
-            return _cellTypes.Min(cellType => cellType.Weight);
+            return _cellTypes.Min(cellType => cellType.MoveCost);
         }
     }
 }

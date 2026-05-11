@@ -15,7 +15,7 @@ namespace Core.Implementations.Cells
         public Vector2 NodePosition => _position;
         public Vector2Int Id => _index;
         public CellType CellType => _cellType;
-        public bool IsBlocked => float.IsPositiveInfinity(_cellType.Weight);
+        public bool IsBlocked => float.IsPositiveInfinity(_cellType.MoveCost);
 
 
         public CellNode(Vector2 position, Vector2Int index, CellType cellType, Action<CellNode, CellType> typeChangedCallback)

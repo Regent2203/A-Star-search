@@ -6,7 +6,7 @@ namespace Core.Implementations.Cells
     {
         public float GetWeight(CellNode node)
         {
-            return node.CellType.Weight;
+            return node.CellType.MoveCost;
         }
     }
 }

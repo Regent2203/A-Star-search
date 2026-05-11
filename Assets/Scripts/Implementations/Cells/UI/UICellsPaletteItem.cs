@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,7 +19,7 @@ namespace Core.Implementations.Cells.UI
 
         public event Action<CellType, PointerEventData.InputButton> ItemClicked;
 
-        private string _textFormat = "{0}\n({1})";
+        private string _textFormat = "{0}\n({1})\n[{2}]";
         private KeyCode _markingKeyCode = KeyCode.LeftShift;
 
 
@@ -32,7 +33,10 @@ namespace Core.Implementations.Cells.UI
         {
             _cellType = cellType;
             _icon.sprite = _cellType.Sprite;
-            _hotkeyText.text = string.Format(_textFormat, _cellType.Name, _cellType.PaletteHotkey.ToString());
+
+            string moveCost = float.IsInfinity(_cellType.MoveCost) ? "∞" : _cellType.MoveCost.ToString("0.00", CultureInfo.InvariantCulture);
+
+            _hotkeyText.text = string.Format(_textFormat, _cellType.Name, moveCost, _cellType.PaletteHotkey.ToString());
         }
 
         private void Update()
