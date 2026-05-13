@@ -1,10 +1,8 @@
 using Core.Links;
 using Core.Nodes;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Core.Implementations
+namespace Core.Implementations.VisualLinks
 {
     public class VisualLink<T> : MonoBehaviour where T : class, INode
     {

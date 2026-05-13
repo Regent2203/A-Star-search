@@ -1,22 +1,31 @@
-﻿using Core.Implementations;
+﻿using Core.Implementations.VisualLinks;
+using Core.Links.Providers;
 using Core.Nodes;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 
 namespace Core
 {
-    public class VisualLinksCreator
+    public class VisualLinksCreator<T> : MonoBehaviour where T: class, INode
     {
-        private VisualLink<INode> _visualLinkPrefab;
+        private VisualLink<INode> _prefab;
 
         private enum Mode { None, CreateLink, RemoveLink }
 
         private KeyCode _linkingKey;
         private Mode _mode;
-
         private INode _firstNode;
 
+        private StoredLinksProvider<T> _linksProvider;
 
+
+        [Inject]
+        public void Construct(StoredLinksProvider<T> linksProvider)
+        {
+            _linksProvider = linksProvider;
+        }
+        
         public void TryUseNode(INode node)
         {
 

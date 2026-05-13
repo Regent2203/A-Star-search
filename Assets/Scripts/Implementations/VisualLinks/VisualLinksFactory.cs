@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace Core.Implementations
+namespace Core.Implementations.VisualLinks
 {
     public class VisualLinksFactory<T> where T : class, INode
     {
