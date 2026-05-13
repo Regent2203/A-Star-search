@@ -7,20 +7,22 @@ namespace Core.Implementations.Cells
     public class CellNode : INode<Vector2Int>
     {
         private readonly Vector2Int _index;
-        private readonly Vector2 _position;        
+        private readonly Vector2 _nodePosition;        
         private CellType _cellType;
-
         private readonly Action<CellNode, CellType> _typeChangedCallback;
 
-        public Vector2 NodePosition => _position;
+
         public Vector2Int Id => _index;
-        public CellType CellType => _cellType;
+        public Vector2 NodePosition => _nodePosition;
         public bool IsBlocked => float.IsPositiveInfinity(_cellType.MoveCost);
+        public CellType CellType => _cellType;
+
+        public event Action<Vector2> NodePositionChanged;
 
 
-        public CellNode(Vector2 position, Vector2Int index, CellType cellType, Action<CellNode, CellType> typeChangedCallback)
+        public CellNode(Vector2 nodePosition, Vector2Int index, CellType cellType, Action<CellNode, CellType> typeChangedCallback)
         {
-            _position = position;
+            _nodePosition = nodePosition;
             _index = index;
             _cellType = cellType;
             _typeChangedCallback = typeChangedCallback;

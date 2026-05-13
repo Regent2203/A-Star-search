@@ -1,6 +1,5 @@
-using Core.Links;
 using Core.Nodes;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace Core.Implementations.Vertexes
@@ -11,21 +10,20 @@ namespace Core.Implementations.Vertexes
         private readonly Vector2 _position;
         private bool _isBlocked;
 
-        private readonly VertexesField _field;
-
         public int Id => _id;
         public Vector2 NodePosition => _position;
         public bool IsBlocked => _isBlocked;
 
+        public event Action<Vector2> NodePositionChanged;
+        public event Action<bool> NodeBlockedChanged;
 
-        public VertexNode(Vector2 position, int id, VertexesField field)
+
+        public VertexNode(Vector2 position, int id)
         {
             _position = position;
             _id = id;
-            _field = field;
 
-            //_field.NotifyNodePosition(this);
-            //_field.NotifyNodeWeightChanged(this);
+            //_field.NotifyNodePositionChanged(this);
             //isDragged
         }
 
