@@ -19,7 +19,7 @@ namespace Core.Installers
         [SerializeField]
         private CellsGridField _field;
         [SerializeField]
-        private CellsGridInputHandler _fieldInputHandler;
+        private GridInputHandler<CellNode> _fieldInputHandler;
         [SerializeField]
         private CellView _cellViewPrefab;
         [SerializeField]
@@ -39,10 +39,10 @@ namespace Core.Installers
 
             Container.BindInterfacesAndSelfTo<CellsGridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<CellsGridGenerator>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsGridInputHandler>().FromInstance(_fieldInputHandler).AsSingle();
+            Container.BindInterfacesAndSelfTo<GridInputHandler<CellNode>>().FromInstance(_fieldInputHandler).AsSingle();
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<GridLinksProvider<CellNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<RuntimeLinksProvider<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<EightSideGridNeighbours<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellNode>>().AsSingle();

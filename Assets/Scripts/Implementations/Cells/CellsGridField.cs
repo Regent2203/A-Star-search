@@ -25,7 +25,7 @@ namespace Core.Implementations.Cells
             _generator.PopulateField(this, transform, _scaleFactor, _grid, NotifyNodeTypeChanged);
         }
 
-        public void NotifyNodeTypeChanged(CellNode node, CellType cellType)
+        private void NotifyNodeTypeChanged(CellNode node, CellType cellType)
         {
             CellNodeTypeChanged?.Invoke(node, cellType);
         }

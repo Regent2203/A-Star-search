@@ -9,10 +9,11 @@ using Zenject;
 
 namespace Core.Starters
 {
-    public class Starter_CellGridExample2 : MonoBehaviour
+    public class Starter_VertexFieldExample1 : MonoBehaviour
     {
         private CellsConfig _config;
         private CellsGridField _field;
+        private GridInputHandler<CellNode> _fieldInputHandler;
         private PathFinder<CellNode> _pathFinder;
         private LinePathDrawer _pathDrawer;
         private CellsPainter _painter;
@@ -23,12 +24,13 @@ namespace Core.Starters
 
 
         [Inject]
-        public void Construct(CellsConfig config, CellsGridField field, PathFinder<CellNode> pathFinder, 
-            LinePathDrawer pathDrawer, CellsPainter painter, PathSetter<CellNode> pathSetter,
+        public void Construct(CellsConfig config, CellsGridField field, GridInputHandler<CellNode> fieldInputHandler,
+            PathFinder<CellNode> pathFinder, LinePathDrawer pathDrawer, CellsPainter painter, PathSetter<CellNode> pathSetter,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)
         {
             _config = config;
             _field = field;
+            _fieldInputHandler = fieldInputHandler;
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
             _painter = painter;
@@ -45,10 +47,10 @@ namespace Core.Starters
 
         private void Init()
         {
-            _field.NodeClicked += _painter.TryChangeCellType;
-            _field.NodeClicked += _pathSetter.TryUseNode;
-            _field.CellNodeTypeChanged += (_, _) => _pathDrawer.ShowPath(false);
-            _field.CellNodeTypeChanged += (_, _) => TryRun(_pathFinder.IsReady);
+            //NodeClicked += //change blocked state
+            //NodeClicked += _pathSetter.TryUseNode;
+            //NodePositionChanged -> _pathDrawer.ShowPath(false); TryRun(_pathFinder.IsReady);
+            //NodeBlockStateChanged -> _pathDrawer.ShowPath(false); TryRun(_pathFinder.IsReady);            
             
             _pathFinder.AnyNodeChanged += (b) => _pathDrawer.ShowPath(false);
             _pathFinder.StartNodeChanged += (node, b) =>
@@ -64,19 +66,8 @@ namespace Core.Starters
             
             _pathFinder.AnyNodeChanged += TryRun;
 
-            _painter.LMBTypeSet += (cellType) => _hotkeyInfoPanel.SetLMBText(cellType.Name);
-            _painter.RMBTypeSet += (cellType) => _hotkeyInfoPanel.SetRMBText(cellType.Name);
-
-            _painter.LMBTypeSet += (cellType) => _paletteChoice.SetLMBChoice(cellType);
-            _painter.RMBTypeSet += (cellType) => _paletteChoice.SetRMBChoice(cellType);
-
-            foreach (var item in _palette.AllItems)
-            {
-                item.ItemClicked += OnPaletteItemClicked;
-            }
-
-            _painter.SetLMBType(_config.DefaultCellType);
-            _painter.SetRMBType(_config.DefaultCellType);
+            //NodeClicked += -> LinksCreator.TryUseFirstNode
+            //mouseScroll -> ChangeLinkCost
         }
 
         private void TryRun(bool isReady)

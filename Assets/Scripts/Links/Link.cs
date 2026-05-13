@@ -19,5 +19,10 @@ namespace Core.Links
             _to = to;
             _cost = cost;
         }
+
+        public void ChangeCost(float value)
+        {
+            _cost += value; 
+        }
     }
 }

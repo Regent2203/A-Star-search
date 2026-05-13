@@ -6,14 +6,14 @@ namespace Core.Implementations.Cells
 {
     public class CellsGridGenerator
     {
-        private readonly GridLinksProvider<CellNode> _gridLinksProvider;
+        private readonly RuntimeLinksProvider<CellNode> _linksProvider;
         private readonly CellViewFactory _viewsFactory;
         private readonly CellNodeFactory _nodesFactory;
         private readonly CellsConfig _config;
 
-        public CellsGridGenerator(GridLinksProvider<CellNode> gridLinksProvider, CellViewFactory viewFactory, CellNodeFactory nodeFactory, CellsConfig config)
+        public CellsGridGenerator(RuntimeLinksProvider<CellNode> linksProvider, CellViewFactory viewFactory, CellNodeFactory nodeFactory, CellsConfig config)
         {
-            _gridLinksProvider = gridLinksProvider;
+            _linksProvider = linksProvider;
             _viewsFactory = viewFactory;
             _nodesFactory = nodeFactory;
             _config = config;
@@ -50,7 +50,7 @@ namespace Core.Implementations.Cells
                 }
             }
 
-            _gridLinksProvider.InitGrid(nodes);
+            _linksProvider.InitGrid(nodes);
             field.SetData(nodes, views);
         }
     }

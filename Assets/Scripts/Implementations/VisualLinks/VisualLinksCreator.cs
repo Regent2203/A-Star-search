@@ -1,5 +1,6 @@
 ﻿using Core.Nodes;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Core
 {
@@ -13,7 +14,12 @@ namespace Core
         private INode _firstNode;
 
 
-        public void UseFirstNode(INode node)
+        public void TryUseNode(INode node)
+        {
+
+        }
+
+        public void UseFirstNode(INode node, PointerEventData.InputButton btn)
         {
             if (!Input.GetKeyDown(_linkingKey)) 
                 return;

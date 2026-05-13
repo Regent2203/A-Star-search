@@ -7,5 +7,7 @@ namespace Core.Links
         public T From { get; }
         public T To { get; }
         public float Cost { get; }
+
+        public void ChangeCost(float value);
     }
 }

@@ -9,7 +9,7 @@ namespace Core.Links.Providers
     /// <summary>
     /// Creates links during search algorithm work - not beforehand
     /// </summary>
-    public class GridLinksProvider<T> : ILinksProvider<T> where T : class, INode<Vector2Int>
+    public class RuntimeLinksProvider<T> : ILinksProvider<T> where T : class, INode<Vector2Int>
     {
         private T[,] _gridNodes;
 
@@ -19,7 +19,7 @@ namespace Core.Links.Providers
         //todo: add cache dictionary
 
 
-        public GridLinksProvider(LinksFactory<T> factory, IGridNeighboursProvider<T> neighboursProvider)
+        public RuntimeLinksProvider(LinksFactory<T> factory, IGridNeighboursProvider<T> neighboursProvider)
         {
             _factory = factory;
             _neighboursProvider = neighboursProvider;

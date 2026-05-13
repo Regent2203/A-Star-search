@@ -18,8 +18,6 @@ namespace Core.Installers
         [SerializeField]
         private CellsGridField _field;
         [SerializeField]
-        private CellsGridInputHandler _fieldInputHandler;
-        [SerializeField]
         private CellView _cellViewPrefab;
         [SerializeField]
         private UICellsPalette _palette;
@@ -36,10 +34,9 @@ namespace Core.Installers
 
             Container.BindInterfacesAndSelfTo<CellsGridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<CellsGridGenerator>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsGridInputHandler>().FromInstance(_fieldInputHandler).AsSingle();
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<GridLinksProvider<CellNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<RuntimeLinksProvider<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<FourSideGridNeighbours<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellNode>>().AsSingle();

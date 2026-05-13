@@ -23,13 +23,14 @@ namespace Core.Links.Factories
         }
 
         public ILink<T> CreateLink(T from, T to)
-        {
-            var cost = _costProvider.GetCost(from, to);
-            return CreateLinkInternal(from, to, cost);
+        {            
+            return CreateLinkInternal(from, to);
         }
 
-        private ILink<T> CreateLinkInternal(T from, T to, float cost)
+        private ILink<T> CreateLinkInternal(T from, T to)
         {
+            var cost = _costProvider.GetCost(from, to);
+
             return new Link<T>(from, to, cost);
         }
     }
