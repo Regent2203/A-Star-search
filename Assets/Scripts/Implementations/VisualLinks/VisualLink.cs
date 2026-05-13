@@ -17,6 +17,8 @@ namespace Core.Implementations.VisualLinks
             _link = link;
             _link.From.NodePositionChanged += (_) => UpdatePositions();
             _link.To.NodePositionChanged += (_) => UpdatePositions();
+
+            UpdatePositions();
         }
 
         private void UpdatePositions()

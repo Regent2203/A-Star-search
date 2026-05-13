@@ -1,82 +1,135 @@
 ﻿using Core.Implementations.VisualLinks;
+using Core.Links;
+using Core.Links.Factories;
 using Core.Links.Providers;
 using Core.Nodes;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Pool;
 using Zenject;
 
 namespace Core
 {
     public class VisualLinksCreator<T> : MonoBehaviour where T: class, INode
     {
-        private VisualLink<INode> _prefab;
-
         private enum Mode { None, CreateLink, RemoveLink }
 
-        private KeyCode _linkingKey;
-        private Mode _mode;
-        private INode _firstNode;
+        private KeyCode _linkingKeyCode = KeyCode.LeftAlt;
+        private Mode _mode = Mode.None;
+        private T _firstNode;
+        private readonly Dictionary<ILink<T>, VisualLink<T>> _activeVisualLinks = new Dictionary<ILink<T>, VisualLink<T>>();
 
+        private LinksFactory<T> _linksFactory;
+        private VisualLinksPool<T> _visualLinksPool;
         private StoredLinksProvider<T> _linksProvider;
 
 
         [Inject]
-        public void Construct(StoredLinksProvider<T> linksProvider)
+        public void Construct(LinksFactory<T> linksFactory, VisualLinksPool<T> visualLinksPool, StoredLinksProvider<T> linksProvider, [Inject(Id = "LinkingKey")] KeyCode linkingKeyCode)
         {
+            _linksFactory = linksFactory;
+            _visualLinksPool = visualLinksPool;
             _linksProvider = linksProvider;
-        }
-        
-        public void TryUseNode(INode node)
-        {
-
+            _linkingKeyCode = linkingKeyCode;
         }
 
-        public void UseFirstNode(INode node, PointerEventData.InputButton btn)
+        public void TryUseNode(T node, PointerEventData.InputButton btn)
         {
-            if (!Input.GetKeyDown(_linkingKey)) 
+            bool isLinkingMode = Input.GetKey(_linkingKeyCode);
+
+            if (!isLinkingMode)
+                Cancel();
+            else
+            switch (_mode)
+            //[alt + lmb] twice -> CreateLink
+            //[alt + rmb] twice -> DeleteLink
+            {
+                case Mode.None:
+                    {
+                        if (btn == PointerEventData.InputButton.Left) //lmb
+                        {
+                            _firstNode = node;
+                            _mode = Mode.CreateLink;
+                        }
+                        else if (btn == PointerEventData.InputButton.Right) //rmb
+                        {
+                            _firstNode = node;
+                            _mode = Mode.RemoveLink;
+                        }
+                    }
+                    break;
+                case Mode.CreateLink:
+                    {
+                        if (btn == PointerEventData.InputButton.Left) //lmb
+                        {
+                            TryCreateLink(_firstNode, node);
+                            Cancel();
+                        }
+                        else if (btn == PointerEventData.InputButton.Right) //rmb
+                        {
+                            Cancel();
+                        }
+                    }
+                    break;
+                case Mode.RemoveLink:
+                    {
+                        if (btn == PointerEventData.InputButton.Right) //rmb
+                        {
+                            TryDeleteLink(_firstNode, node);
+                            Cancel();
+                        }
+                        else if (btn == PointerEventData.InputButton.Left) //lmb
+                        {
+                            Cancel();
+                        }
+                    }
+                    break;
+            }
+        }
+
+        private void TryCreateLink(T from, T to)
+        {
+            if (from == to) 
                 return;
 
-            if (Input.GetMouseButtonDown(0)) //lmb
+            var link = _linksFactory.CreateLink(from, to);
+            if (_linksProvider.TryAddLink(link))
             {
-                _mode = Mode.CreateLink;
-                _firstNode = node;
-            }
-            else if (Input.GetMouseButtonDown(1)) //rmb
-            {
-                _mode = Mode.RemoveLink;
-                _firstNode= node;
+                var visualLink = _visualLinksPool.Get();
+                visualLink.Bind(link);
+
+                _activeVisualLinks[link] = visualLink;
             }
         }
 
-        public void UseSecondNode(INode node)
+        private void TryDeleteLink(T from, T to)
         {
-            if (!Input.GetKeyDown(_linkingKey))
-                return;
+            if (_linksProvider.TryRemoveLink(from, to))
+            {
+                ILink<T> targetKey = null;
 
-            if (Input.GetMouseButtonDown(0)) //lmb
-            {
-                if (_mode == Mode.CreateLink)
+                foreach (var key in _activeVisualLinks.Keys)
                 {
-                    _firstNode = node;
-                    //create
+                    if (key.From == from && key.To == to)
+                    {
+                        targetKey = key;
+                        break;
+                    }
+                }
+
+                if (targetKey != null && _activeVisualLinks.TryGetValue(targetKey, out var visualLink))
+                {
+                    _visualLinksPool.Release(visualLink);
+                    _activeVisualLinks.Remove(targetKey);
                 }
             }
-            else if (Input.GetMouseButtonDown(1)) //rmb
-            {
-                if (_mode == Mode.RemoveLink)
-                {
-                    //_firstNode = node;
-                    //remove
-                }
-            }
-            //todo add key cancel
-            Cancel();
         }
 
-        public void Cancel()
+        private void Cancel()
         {
             _mode = Mode.None; 
             _firstNode = null;
-        }
+        }        
     }
 }

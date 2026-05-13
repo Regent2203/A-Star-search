@@ -5,45 +5,45 @@ namespace Core.Links.Providers
 {
     public class StoredLinksProvider<T> : ILinksProvider<T> where T : class, INode
     {
-        private readonly Dictionary<T, List<ILink<T>>> _links = new Dictionary<T, List<ILink<T>>>();
+        //_links[From][To]
+        private readonly Dictionary<T, Dictionary<T, ILink<T>>> _links = new Dictionary<T, Dictionary<T, ILink<T>>>();
 
-        public bool AddLink(ILink<T> link)
+        public bool TryAddLink(ILink<T> link)
         {
             if (link == null) 
                 return false;
 
             var fromNode = link.From;
+            var toNode = link.To;
 
-            if (!_links.TryGetValue(fromNode, out var linksList))
+            if (!_links.TryGetValue(fromNode, out var linksFrom))
             {
-                linksList = new List<ILink<T>>();
-                _links[fromNode] = linksList;
+                linksFrom = new Dictionary<T, ILink<T>>();
+                _links[fromNode] = linksFrom;
             }
 
-            if (!linksList.Contains(link)) //only one link between two nodes is allowed
+            if (!linksFrom.ContainsKey(toNode)) //only one link between two nodes is allowed
             {
-                linksList.Add(link);
+                linksFrom[toNode] = link;
                 return true;
             }
             else
                 return false;
         }
 
-        public bool RemoveLink(ILink<T> link)
+        public bool TryRemoveLink(T from, T to)
         {
-            if (link == null) 
+            if (from == null || to == null) 
                 return false;
 
-            var fromNode = link.From;
-
-            if (!_links.TryGetValue(fromNode, out var linksList))
+            if (!_links.TryGetValue(from, out var linksFrom))
                 return false;
 
-            bool removed = linksList.Remove(link);
+            bool removed = linksFrom.Remove(to);
 
-            if (linksList.Count == 0)
+            if (linksFrom.Count == 0)
             {
-                _links.Remove(fromNode);
+                _links.Remove(from);
             }
 
             return removed;
@@ -51,8 +51,8 @@ namespace Core.Links.Providers
 
         public IEnumerable<ILink<T>> GetLinksForNode(T node)
         {
-            if (_links.TryGetValue(node, out var links))
-                return links;
+            if (_links.TryGetValue(node, out var fromLinks))
+                 return fromLinks.Values;
             else
                 return null;
         }

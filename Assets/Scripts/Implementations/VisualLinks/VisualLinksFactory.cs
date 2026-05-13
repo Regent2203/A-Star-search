@@ -6,18 +6,20 @@ namespace Core.Implementations.VisualLinks
 {
     public class VisualLinksFactory<T> where T : class, INode
     {
-        private VisualLink<T> _prefab;
-        private IInstantiator _instantiator;
+        private readonly VisualLink<T> _prefab;
+        private readonly IInstantiator _instantiator;
 
-        public VisualLinksFactory(IInstantiator instantiator) 
+        public VisualLinksFactory(VisualLink<T> prefab, IInstantiator instantiator) 
         {
+            _prefab = prefab;
             _instantiator = instantiator;
         }
 
-        public void Create()
+        public VisualLink<T> Create()
         {
-            var link = _instantiator.InstantiatePrefabForComponent<VisualLink<T>>(_prefab, Vector2.zero, Quaternion.identity, null);
-            //link.Bind()
+            var visualLink = _instantiator.InstantiatePrefabForComponent<VisualLink<T>>(_prefab, Vector2.zero, Quaternion.identity, null);
+
+            return visualLink;
         }
     }
 }
