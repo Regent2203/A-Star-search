@@ -21,9 +21,9 @@ namespace Core.Implementations.Cells
             _typeChangedCallback = typeChangedCallback;
         }
 
-        public CellNode Create(Vector2 position, Vector2Int index, CellType cellType)
+        public CellNode Create(Vector2 nodePosition, Vector2Int index, CellType cellType)
         {
-            var cellNode = _instantiator.Instantiate<CellNode>(new object[] { position, index, cellType, _typeChangedCallback });
+            var cellNode = _instantiator.Instantiate<CellNode>(new object[] { nodePosition, index, cellType, _typeChangedCallback });
 
             return cellNode;
         }

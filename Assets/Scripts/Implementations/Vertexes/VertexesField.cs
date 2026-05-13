@@ -1,6 +1,7 @@
 ﻿using Core.Fields;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -40,5 +41,15 @@ namespace Core.Implementations.Vertexes
 
             return null;
         }
+
+        public VertexView GetViewForNode(VertexNode node)
+        {
+            if (_views.ContainsKey(node.Id))
+                return _views[node.Id];
+
+            return null;
+        }
+
+        public IReadOnlyList<VertexView> GetViewsForNodes(IList<VertexNode> nodePath) => nodePath.Select(GetViewForNode).ToList();
     }
 }

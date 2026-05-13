@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Core.CostProviders
 {
-    public abstract class BaseCostProvider<T> : ICostProvider<T> where T : class, INode
+    public abstract class WeightedCostProvider<T> : ICostProvider<T> where T : class, INode
     {
         protected readonly IWeightGetter<T> _weightGetter;
 
-        public BaseCostProvider(IWeightGetter<T> weightGetter)
+        public WeightedCostProvider(IWeightGetter<T> weightGetter)
         {
             _weightGetter = weightGetter;
         }

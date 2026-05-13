@@ -1,4 +1,5 @@
-﻿using Core.Nodes;
+﻿using Core.Implementations;
+using Core.Nodes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -6,6 +7,8 @@ namespace Core
 {
     public class VisualLinksCreator
     {
+        private VisualLink<INode> _visualLinkPrefab;
+
         private enum Mode { None, CreateLink, RemoveLink }
 
         private KeyCode _linkingKey;

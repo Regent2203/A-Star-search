@@ -1,9 +1,7 @@
 using Core.CostProviders;
-using Core.Fields.Grids;
-using Core.Fields.Grids.Neighbours;
 using Core.Heuristic.Functions;
 using Core.Implementations.Cells;
-using Core.Implementations.Cells.UI;
+using Core.Implementations.Vertexes;
 using Core.Links.Factories;
 using Core.Links.Providers;
 using Core.PathDrawers;
@@ -17,17 +15,11 @@ namespace Core.Installers
     public class SceneInstaller_VertexFieldExample1 : MonoInstaller
     {
         [SerializeField]
-        private CellsGridField _field;
+        private VertexesField _field;
         [SerializeField]
-        private GridInputHandler<CellNode> _fieldInputHandler;
-        [SerializeField]
-        private CellView _cellViewPrefab;
-        [SerializeField]
-        private UICellsPalette _palette;
-        [SerializeField]
-        private UICellsPaletteChoicePanel _paletteChoice;
-        [SerializeField]
-        private UICellsPaletteHotkeyInfoPanel _hotkeyInfoPanel;
+        private VertexView _vertexViewPrefab;
+        //[SerializeField]
+        //private UIHotkeyInfoPanel_Vertexes _hotkeyInfoPanel;
         [SerializeField]
         private LineRenderer _pathLineRenderer;
         [SerializeField]
@@ -39,32 +31,23 @@ namespace Core.Installers
 
         public override void InstallBindings()
         {
-            Container.BindInstance(_cellViewPrefab).AsSingle();
+            Container.BindInstance(_vertexViewPrefab).AsSingle();
 
-            Container.BindInterfacesAndSelfTo<CellsGridField>().FromInstance(_field).AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsGridGenerator>().AsSingle();
-            Container.BindInterfacesAndSelfTo<GridInputHandler<CellNode>>().FromInstance(_fieldInputHandler).AsSingle();
-            Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<RuntimeLinksProvider<CellNode>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LinksFactory<CellNode>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<EightSideGridNeighbours<CellNode>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellNode>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
-            Container.BindInterfacesAndSelfTo<OctileDistance>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellNodeWeightGetter>().AsSingle();
-            Container.BindInterfacesAndSelfTo<AverageCostProvider<CellNode>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<PathFinder<CellNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexesField>().FromInstance(_field).AsSingle();
+            Container.BindInterfacesAndSelfTo<StoredLinksProvider<VertexNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinksFactory<VertexNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<VertexNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexesHeuristicsProvider>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EuclideanDistance>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ConstantCostProvider<VertexNode>>().AsSingle().WithArguments(0.0f);
+            Container.BindInterfacesAndSelfTo<PathFinder<VertexNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinePathDrawer>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsPainter>().AsSingle();
-            Container.BindInterfacesAndSelfTo<PathSetter<CellNode>>().AsSingle(); 
-            Container.BindInterfacesAndSelfTo<UICellsPalette>().FromInstance(_palette).AsSingle();
-            Container.BindInterfacesAndSelfTo<UICellsPaletteChoicePanel>().FromInstance(_paletteChoice).AsSingle();
-            Container.BindInterfacesAndSelfTo<UICellsPaletteHotkeyInfoPanel>().FromInstance(_hotkeyInfoPanel).AsSingle();
+            Container.BindInterfacesAndSelfTo<PathSetter<VertexNode>>().AsSingle(); 
+            //Container.BindInterfacesAndSelfTo<UIHotkeyInfoPanel_Vertexes>().FromInstance(_hotkeyInfoPanel).AsSingle();
             Container.BindInterfacesAndSelfTo<LineRenderer>().FromInstance(_pathLineRenderer).AsSingle();
-            Container.BindInstance(_markingKeyCode).WithId("CreatingKey").AsSingle();
-            Container.BindInstance(_markingKeyCode).WithId("LinkingKey").AsSingle();
-            Container.BindInstance(_markingKeyCode).WithId("MarkingKey").AsSingle();
+            Container.BindInstance(_creatingKeyCode).WithId("CreatingKey");
+            Container.BindInstance(_linkingKeyCode).WithId("LinkingKey");
+            Container.BindInstance(_markingKeyCode).WithId("MarkingKey");
         }
     }
 }

@@ -4,7 +4,7 @@ namespace Core.CostProviders
 {
     public class ConstantCostProvider<T> : ICostProvider<T> where T : class, INode
     {
-        private float _cost;
+        private readonly float _cost;
 
         public ConstantCostProvider(float cost)
         {
