@@ -1,4 +1,4 @@
-using Core.CostProviders;
+using Core.Links.Factories.CostProviders;
 using Core.Fields.Grids;
 using Core.Fields.Grids.Neighbours;
 using Core.Heuristic.Functions;

@@ -1,6 +1,6 @@
 ﻿using Core.Nodes;
 
-namespace Core.CostProviders
+namespace Core.Links.Factories.CostProviders
 {
     public class ConstantCostProvider<T> : ICostProvider<T> where T : class, INode
     {

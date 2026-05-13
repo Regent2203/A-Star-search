@@ -1,4 +1,4 @@
-using Core.CostProviders;
+using Core.Links.Factories.CostProviders;
 using Core.Heuristic.Functions;
 using Core.Implementations.Cells;
 using Core.Implementations.Vertexes;

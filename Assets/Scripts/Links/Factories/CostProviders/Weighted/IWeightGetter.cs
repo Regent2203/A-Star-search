@@ -1,4 +1,4 @@
-﻿namespace Core.CostProviders
+﻿namespace Core.Links.Factories.CostProviders
 {
     public interface IWeightGetter<T>
     {
