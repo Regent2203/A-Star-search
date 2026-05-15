@@ -1,7 +1,5 @@
 using System;
-using UnityEngine;
 using UnityEngine.EventSystems;
-using Zenject;
 
 namespace Core.Implementations.Cells
 {
@@ -10,16 +8,8 @@ namespace Core.Implementations.Cells
         private CellType _lmbType;
         private CellType _rmbType;
 
-        private readonly KeyCode _markingKeyCode = KeyCode.LeftShift;
-
         public event Action<CellType> LMBTypeSet;
         public event Action<CellType> RMBTypeSet;
-
-
-        public CellsPainter([Inject(Id = "MarkingKey")] KeyCode markingKeyCode)
-        {
-            _markingKeyCode = markingKeyCode;
-        }
 
         public void SetLMBType(CellType cellType)
         {
@@ -35,24 +25,19 @@ namespace Core.Implementations.Cells
 
         public void TryChangeCellType(CellNode node, PointerEventData.InputButton btn)
         {
-            bool isMarkingMode = Input.GetKey(_markingKeyCode);
+            CellType cellType = null;
 
-            if (!isMarkingMode)
+            if (btn == PointerEventData.InputButton.Left) //lmb
             {
-                CellType cellType = null;
-
-                if (btn == PointerEventData.InputButton.Left) //lmb
-                {
-                    cellType = _lmbType;
-                }
-                else if (btn == PointerEventData.InputButton.Right) //rmb
-                {
-                    cellType = _rmbType;
-                }
-
-                if (cellType != null)
-                    node.ChangeType(cellType);
+                cellType = _lmbType;
             }
+            else if (btn == PointerEventData.InputButton.Right) //rmb
+            {
+                cellType = _rmbType;
+            }
+
+            if (cellType != null)
+                node.ChangeType(cellType);
         }
     }
 }

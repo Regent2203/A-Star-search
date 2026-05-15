@@ -2,6 +2,7 @@
 using Core.Implementations.Cells;
 using Core.Implementations.Cells.UI;
 using Core.PathFinders;
+using Core.Signals;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -10,6 +11,8 @@ namespace Core.Starters
 {
     public class Starter_Scene1a : MonoBehaviour
     {
+        private SignalBus _signalBus;
+
         private CellsConfig _config;
         private CellsGridField _field;
         private PathFinder<CellNode> _pathFinder;
@@ -22,10 +25,11 @@ namespace Core.Starters
 
 
         [Inject]
-        public void Construct(CellsConfig config, CellsGridField field, PathFinder<CellNode> pathFinder, 
+        public void Construct(SignalBus signalBus, CellsConfig config, CellsGridField field, PathFinder<CellNode> pathFinder, 
             CellsPathDrawer pathDrawer, CellsPainter painter, PathSetter<CellNode> pathSetter,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)
         {
+            _signalBus = signalBus;
             _config = config;
             _field = field;
             _pathFinder = pathFinder;
@@ -44,12 +48,13 @@ namespace Core.Starters
 
         private void Init()
         {
-            _field.NodeClicked += _painter.TryChangeCellType;
-            _field.NodeClicked += _pathSetter.TryUseNode;
+            _signalBus.Subscribe<NodeClickedSignal<CellNode>>(OnNodeClickedSignal);
+            _signalBus.Subscribe<PaletteItemClickedSignal>(OnPaletteItemClickedSignal);
+
             _field.CellNodeTypeChanged += (_, _) => _pathDrawer.ShowPath(false);
             _field.CellNodeTypeChanged += (_, _) => TryRun(_pathFinder.IsReady);
             
-            _pathFinder.AnyNodeChanged += (b) => _pathDrawer.ShowPath(false);
+            _pathFinder.AnyNodeChanged += (_) => _pathDrawer.ShowPath(false);
             _pathFinder.StartNodeChanged += (node, b) =>
             {
                 var view = _field.GetViewForNode(node);
@@ -69,13 +74,36 @@ namespace Core.Starters
             _painter.LMBTypeSet += (cellType) => _paletteChoice.SetLMBChoice(cellType);
             _painter.RMBTypeSet += (cellType) => _paletteChoice.SetRMBChoice(cellType);
 
-            foreach (var item in _palette.AllItems)
-            {
-                item.ItemClicked += OnPaletteItemClicked;
-            }
-
             _painter.SetLMBType(_config.DefaultCellType);
             _painter.SetRMBType(_config.DefaultCellType);
+        }
+
+        private void OnNodeClickedSignal(NodeClickedSignal<CellNode> signal)
+        {
+            var input = signal.Input;
+            
+            if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
+            {
+                _painter.TryChangeCellType(signal.Node, signal.Button);
+            }
+
+            if (input.IsMarkingMode)
+            {
+                _pathSetter.TryUseNode(signal.Node, signal.Button);
+            }
+        }
+
+        private void OnPaletteItemClickedSignal(PaletteItemClickedSignal signal)
+        {
+            switch (signal.Button)
+            {
+                case PointerEventData.InputButton.Left:
+                    _painter.SetLMBType(signal.CellType);
+                    break;
+                case PointerEventData.InputButton.Right:
+                    _painter.SetRMBType(signal.CellType);
+                    break;
+            }
         }
 
         private void TryRun(bool isReady)
@@ -88,19 +116,6 @@ namespace Core.Starters
                     _pathDrawer.SetPath(_field.GetViewsForNodes(nodePath));
                     _pathDrawer.ShowPath(true);
                 }
-            }
-        }
-
-        private void OnPaletteItemClicked(CellType cellType, PointerEventData.InputButton btn)
-        {
-            if (btn == PointerEventData.InputButton.Left) //lmb
-            {
-                _painter.SetLMBType(cellType);
-
-            }
-            else if (btn == PointerEventData.InputButton.Right) //rmb
-            {
-                _painter.SetRMBType(cellType);
             }
         }
     }

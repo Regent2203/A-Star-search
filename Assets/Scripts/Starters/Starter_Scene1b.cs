@@ -50,7 +50,7 @@ namespace Core.Starters
             _field.CellNodeTypeChanged += (_, _) => _pathDrawer.ShowPath(false);
             _field.CellNodeTypeChanged += (_, _) => TryRun(_pathFinder.IsReady);
             
-            _pathFinder.AnyNodeChanged += (b) => _pathDrawer.ShowPath(false);
+            _pathFinder.AnyNodeChanged += (_) => _pathDrawer.ShowPath(false);
             _pathFinder.StartNodeChanged += (node, b) =>
             {
                 var view = _field.GetViewForNode(node);
@@ -70,7 +70,7 @@ namespace Core.Starters
             _painter.LMBTypeSet += (cellType) => _paletteChoice.SetLMBChoice(cellType);
             _painter.RMBTypeSet += (cellType) => _paletteChoice.SetRMBChoice(cellType);
 
-            foreach (var item in _palette.AllItems)
+            foreach (var item in _palette.Items)
             {
                 item.ItemClicked += OnPaletteItemClicked;
             }

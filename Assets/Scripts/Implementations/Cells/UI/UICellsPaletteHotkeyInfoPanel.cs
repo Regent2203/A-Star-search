@@ -1,3 +1,4 @@
+using Core.Inputs;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -19,10 +20,10 @@ namespace Core.Implementations.Cells.UI
         private const string CellMarkFormat = "{0} + {1} - {2}";
 
         [Inject]
-        public void Construct([Inject(Id = "MarkingKey")] KeyCode markingKeyCode)
+        public void Construct(InputSettings inputSettings)
         {
-            SetMarkStartText(markingKeyCode.ToString());
-            SetMarkFinishText(markingKeyCode.ToString());
+            SetMarkStartText(inputSettings.MarkingKey.ToString());
+            SetMarkFinishText(inputSettings.MarkingKey.ToString());
         }
 
         public void SetLMBText(string cellTypeArg)

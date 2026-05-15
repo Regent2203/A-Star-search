@@ -10,11 +10,15 @@ using Core.PathFinders;
 using Core.SearchAlgorithms;
 using UnityEngine;
 using Zenject;
+using Core.Signals;
+using Core.Inputs;
 
 namespace Core.Installers
 {
     public class SceneInstaller_Scene1a : MonoInstaller
     {
+        [SerializeField]
+        private InputSettings _inputSettings;
         [SerializeField]
         private CellView _cellViewPrefab;
         [SerializeField]
@@ -25,16 +29,18 @@ namespace Core.Installers
         private UICellsPaletteChoicePanel _paletteChoice;
         [SerializeField]
         private UICellsPaletteHotkeyInfoPanel _hotkeyInfoPanel;
-        [SerializeField]
-        private KeyCode _markingKeyCode = KeyCode.LeftShift;
+        
 
         public override void InstallBindings()
         {
+            Container.BindInstance(_inputSettings).AsSingle();
+            Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
             Container.BindInstance(_cellViewPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<CellsGridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<CellsGridFieldGenerator>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GridClickHandler<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<RuntimeLinksProvider<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<FourSideGridNeighbours<CellNode>>().AsSingle();
@@ -50,7 +56,10 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<UICellsPalette>().FromInstance(_palette).AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsPaletteChoicePanel>().FromInstance(_paletteChoice).AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsPaletteHotkeyInfoPanel>().FromInstance(_hotkeyInfoPanel).AsSingle();
-            Container.BindInstance(_markingKeyCode).WithId("MarkingKey").AsSingle();
+
+            SignalBusInstaller.Install(Container);
+            Container.DeclareSignal<NodeClickedSignal<CellNode>>();
+            Container.DeclareSignal<PaletteItemClickedSignal>();
         }
     }
 }

@@ -1,36 +1,27 @@
 using Core.Nodes;
-using UnityEngine;
 using UnityEngine.EventSystems;
-using Zenject;
 
 namespace Core.PathFinders
 {
     public class PathSetter<T> where T : class, INode
     {
         private readonly IPathFinder<T> _pathFinder;
-        private readonly KeyCode _markingKeyCode = KeyCode.LeftShift;
         
 
-        public PathSetter(IPathFinder<T> pathFinder, [Inject(Id = "MarkingKey")] KeyCode markingKeyCode)
+        public PathSetter(IPathFinder<T> pathFinder)
         {
             _pathFinder = pathFinder;
-            _markingKeyCode = markingKeyCode;
         }
 
         public void TryUseNode(T node, PointerEventData.InputButton btn)
-        {
-            bool isMarkingMode = Input.GetKey(_markingKeyCode);
-
-            if (isMarkingMode)
+        {            
+            if (btn == PointerEventData.InputButton.Left) //lmb
             {
-                if (btn == PointerEventData.InputButton.Left) //lmb
-                {
-                    _pathFinder.UpdateStartNode(node);
-                }
-                else if (btn == PointerEventData.InputButton.Right) //rmb
-                {
-                    _pathFinder.UpdateFinishNode(node);
-                }
+                _pathFinder.UpdateStartNode(node);
+            }
+            else if (btn == PointerEventData.InputButton.Right) //rmb
+            {
+                _pathFinder.UpdateFinishNode(node);
             }
         }
     }
