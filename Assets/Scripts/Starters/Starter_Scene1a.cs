@@ -1,15 +1,14 @@
-﻿using Core.Fields.Grids;
-using Core.Implementations.Cells;
+﻿using Core.Implementations.Cells;
 using Core.Implementations.Cells.UI;
 using Core.Inputs;
 using Core.PathFinders;
-using UnityEngine;
+using System;
 using UnityEngine.EventSystems;
 using Zenject;
 
 namespace Core.Starters
 {
-    public class Starter_Scene1a : MonoBehaviour
+    public class Starter_Scene1a : IInitializable, IDisposable
     {
         private CellsConfig _config;
         private CellsGridField _field;
@@ -38,12 +37,7 @@ namespace Core.Starters
             _hotkeyInfoPanel = hotkeyInfoPanel;
         }
 
-        private void Start()
-        {
-            Init();
-        }
-
-        private void Init()
+        public void Initialize()
         {
             _field.NodeClicked += OnNodeClicked;
             _field.CellNodeTypeChanged += OnCellNodeTypeChanged;
@@ -62,6 +56,21 @@ namespace Core.Starters
             _painter.SetRMBType(_config.DefaultCellType);
         }
 
+        public void Dispose()
+        {
+            _field.NodeClicked -= OnNodeClicked;
+            _field.CellNodeTypeChanged -= OnCellNodeTypeChanged;
+
+            _pathFinder.StartNodeChanged -= OnStartNodeChanged;
+            _pathFinder.FinishNodeChanged -= OnFinishNodeChanged;
+            _pathFinder.AnyNodeChanged -= ClearPath;
+            _pathFinder.AnyNodeChanged -= TryRun;
+
+            _palette.ItemClicked -= OnPaletteItemClicked;
+
+            _painter.LMBBrushSet -= OnLMBBrushChanged;
+            _painter.RMBBrushSet -= OnRMBBrushChanged;
+        }
 
         private void OnNodeClicked(CellNode node, PointerEventData.InputButton button, InputSnapshot input)
         {

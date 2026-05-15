@@ -1,16 +1,16 @@
-﻿using Core.Fields.Grids;
-using Core.Implementations.Cells;
+﻿using Core.Implementations.Cells;
 using Core.Implementations.Cells.UI;
+using Core.Inputs;
 using Core.PathDrawers;
 using Core.PathFinders;
-using UnityEngine;
+using System;
 using UnityEngine.EventSystems;
 using Zenject;
 
 namespace Core.Starters
 {
-    public class Starter_Scene1b : MonoBehaviour
-    {/*
+    public class Starter_Scene1b : IInitializable, IDisposable
+    {
         private CellsConfig _config;
         private CellsGridField _field;
         private PathFinder<CellNode> _pathFinder;
@@ -38,45 +38,75 @@ namespace Core.Starters
             _hotkeyInfoPanel = hotkeyInfoPanel;
         }
 
-        private void Start()
+        public void Initialize()
         {
-            Init();
-        }
+            _field.NodeClicked += OnNodeClicked;
+            _field.CellNodeTypeChanged += OnCellNodeTypeChanged;
 
-        private void Init()
-        {
-            _field.NodeClicked += _painter.TryChangeCellType;
-            _field.NodeClicked += _pathSetter.TryUseNode;
-            _field.CellNodeTypeChanged += (_, _) => _pathDrawer.ShowPath(false);
-            _field.CellNodeTypeChanged += (_, _) => TryRun(_pathFinder.IsReady);
-            
-            _pathFinder.AnyNodeChanged += (_) => _pathDrawer.ShowPath(false);
-            _pathFinder.StartNodeChanged += (node, b) =>
-            {
-                var view = _field.GetViewForNode(node);
-                view?.ShowStartMarker(b);
-            };
-            _pathFinder.FinishNodeChanged += (node, b) =>
-            {
-                var view = _field.GetViewForNode(node);
-                view?.ShowFinishMarker(b); 
-            };
-            
+            _pathFinder.StartNodeChanged += OnStartNodeChanged;
+            _pathFinder.FinishNodeChanged += OnFinishNodeChanged;
+            _pathFinder.AnyNodeChanged += ClearPath;
             _pathFinder.AnyNodeChanged += TryRun;
 
-            _painter.LMBBrushSet += (cellType) => _hotkeyInfoPanel.SetLMBText(cellType.Name);
-            _painter.RMBBrushSet += (cellType) => _hotkeyInfoPanel.SetRMBText(cellType.Name);
+            _palette.ItemClicked += OnPaletteItemClicked;
 
-            _painter.LMBBrushSet += (cellType) => _paletteChoice.SetLMBChoice(cellType);
-            _painter.RMBBrushSet += (cellType) => _paletteChoice.SetRMBChoice(cellType);
-
-            foreach (var item in _palette.Items)
-            {
-                item.ItemClicked += OnItemClicked;
-            }
+            _painter.LMBBrushSet += OnLMBBrushChanged;
+            _painter.RMBBrushSet += OnRMBBrushChanged;
 
             _painter.SetLMBType(_config.DefaultCellType);
             _painter.SetRMBType(_config.DefaultCellType);
+        }
+
+        public void Dispose()
+        {
+            _field.NodeClicked -= OnNodeClicked;
+            _field.CellNodeTypeChanged -= OnCellNodeTypeChanged;
+
+            _pathFinder.StartNodeChanged -= OnStartNodeChanged;
+            _pathFinder.FinishNodeChanged -= OnFinishNodeChanged;
+            _pathFinder.AnyNodeChanged -= ClearPath;
+            _pathFinder.AnyNodeChanged -= TryRun;
+
+            _palette.ItemClicked -= OnPaletteItemClicked;
+
+            _painter.LMBBrushSet -= OnLMBBrushChanged;
+            _painter.RMBBrushSet -= OnRMBBrushChanged;
+        }
+
+        private void OnNodeClicked(CellNode node, PointerEventData.InputButton button, InputSnapshot input)
+        {
+            if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
+            {
+                _painter.TryChangeCellType(node, button);
+            }
+
+            if (input.IsMarkingMode)
+            {
+                _pathSetter.TryUseNode(node, button);
+            }
+        }
+
+        private void OnCellNodeTypeChanged(CellNode node, CellType cellType)
+        {
+            _pathDrawer.ShowPath(false);
+            TryRun(_pathFinder.IsReady);
+        }
+
+        private void OnStartNodeChanged(CellNode node, bool b)
+        {
+            var view = _field.GetViewForNode(node);
+            view?.ShowStartMarker(b);
+        }
+
+        private void OnFinishNodeChanged(CellNode node, bool b)
+        {
+            var view = _field.GetViewForNode(node);
+            view?.ShowFinishMarker(b);
+        }
+
+        private void ClearPath(bool b)
+        {
+            _pathDrawer.ShowPath(false);
         }
 
         private void TryRun(bool isReady)
@@ -86,24 +116,35 @@ namespace Core.Starters
                 var nodePath = _pathFinder.GetPath();
                 if (nodePath != null)
                 {
-                    var viewPath = _field.GetViewsForNodes(nodePath);
-                    _pathDrawer.SetPath(viewPath);
+                    _pathDrawer.SetPath(_field.GetViewsForNodes(nodePath));
                     _pathDrawer.ShowPath(true);
                 }
             }
         }
 
-        private void OnItemClicked(CellType cellType, PointerEventData.InputButton btn)
+        private void OnPaletteItemClicked(CellType cellType, PointerEventData.InputButton button)
         {
-            if (btn == PointerEventData.InputButton.Left) //lmb
+            switch (button)
             {
-                _painter.SetLMBType(cellType);
+                case PointerEventData.InputButton.Left:
+                    _painter.SetLMBType(cellType);
+                    break;
+                case PointerEventData.InputButton.Right:
+                    _painter.SetRMBType(cellType);
+                    break;
+            }
+        }
 
-            }
-            else if (btn == PointerEventData.InputButton.Right) //rmb
-            {
-                _painter.SetRMBType(cellType);
-            }
-        }*/
+        private void OnLMBBrushChanged(CellType cellType)
+        {
+            _hotkeyInfoPanel.SetLMBText(cellType.Name);
+            _paletteChoice.SetLMBChoice(cellType);
+        }
+
+        private void OnRMBBrushChanged(CellType cellType)
+        {
+            _hotkeyInfoPanel.SetRMBText(cellType.Name);
+            _paletteChoice.SetRMBChoice(cellType);
+        }
     }
 }

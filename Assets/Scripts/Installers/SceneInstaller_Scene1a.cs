@@ -11,6 +11,7 @@ using Core.SearchAlgorithms;
 using UnityEngine;
 using Zenject;
 using Core.Inputs;
+using Core.Starters;
 
 namespace Core.Installers
 {
@@ -55,6 +56,8 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<UICellsPalette>().FromInstance(_palette).AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsPaletteChoicePanel>().FromInstance(_paletteChoice).AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsPaletteHotkeyInfoPanel>().FromInstance(_hotkeyInfoPanel).AsSingle();
+
+            Container.BindInterfacesTo<Starter_Scene1a>().AsSingle();
         }
     }
 }
