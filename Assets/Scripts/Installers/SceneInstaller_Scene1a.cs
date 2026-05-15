@@ -10,7 +10,6 @@ using Core.PathFinders;
 using Core.SearchAlgorithms;
 using UnityEngine;
 using Zenject;
-using Core.Signals;
 using Core.Inputs;
 
 namespace Core.Installers
@@ -56,10 +55,6 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<UICellsPalette>().FromInstance(_palette).AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsPaletteChoicePanel>().FromInstance(_paletteChoice).AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsPaletteHotkeyInfoPanel>().FromInstance(_hotkeyInfoPanel).AsSingle();
-
-            SignalBusInstaller.Install(Container);
-            Container.DeclareSignal<NodeClickedSignal<CellNode>>();
-            Container.DeclareSignal<PaletteItemClickedSignal>();
         }
     }
 }

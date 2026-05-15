@@ -1,5 +1,5 @@
 using Core.Inputs;
-using Core.Signals;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,21 +14,20 @@ namespace Core.Implementations.Cells.UI
         [SerializeField] 
         private Transform _container;
 
-        private List<UICellsPaletteItem> _items = new List<UICellsPaletteItem>();
+        private readonly List<UICellsPaletteItem> _items = new List<UICellsPaletteItem>();
 
-        public IReadOnlyList<UICellsPaletteItem> Items => _items;
-
-        private IInstantiator _instantiator;        
-        private SignalBus _signalBus;
+        private IInstantiator _instantiator;
         private IInputService _inputService;
         private CellsConfig _cellsConfig;
 
+        public IReadOnlyList<UICellsPaletteItem> Items => _items;
+        public event Action<CellType, PointerEventData.InputButton> ItemClicked;
+
 
         [Inject]
-        public void Construct(IInstantiator instantiator, SignalBus signalBus, IInputService inputService, CellsConfig cellsConfig)
+        public void Construct(IInstantiator instantiator, IInputService inputService, CellsConfig cellsConfig)
         {
             _instantiator = instantiator;
-            _signalBus = signalBus;
             _inputService = inputService;
             _cellsConfig = cellsConfig;
         }
@@ -38,9 +37,8 @@ namespace Core.Implementations.Cells.UI
             foreach (var cellType in _cellsConfig.CellTypes)
             {
                 var item = _instantiator.InstantiatePrefabForComponent<UICellsPaletteItem>(_itemPrefab, _container);
-                item.Init(cellType);
+                item.Init(cellType, OnItemClicked);
                 _items.Add(item);
-                item.ItemClicked += OnItemClicked;
             }
         }
 
@@ -54,19 +52,14 @@ namespace Core.Implementations.Cells.UI
                         ? PointerEventData.InputButton.Right
                         : PointerEventData.InputButton.Left;
 
-                    _signalBus.Fire(new PaletteItemClickedSignal(item.CellType, button));
+                    ItemClicked?.Invoke(item.CellType, button);
                 }
             }
         }
 
         private void OnItemClicked(CellType cellType, PointerEventData.InputButton button)
         {
-            _signalBus.Fire(new PaletteItemClickedSignal(cellType, button));
-        }
-
-        private void OnDestroy()
-        {
-            foreach (var item in _items) item.ItemClicked -= OnItemClicked;
+            ItemClicked?.Invoke(cellType, button);
         }
     }
 }

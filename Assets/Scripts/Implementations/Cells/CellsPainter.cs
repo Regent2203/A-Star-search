@@ -8,19 +8,19 @@ namespace Core.Implementations.Cells
         private CellType _lmbType;
         private CellType _rmbType;
 
-        public event Action<CellType> LMBTypeSet;
-        public event Action<CellType> RMBTypeSet;
+        public event Action<CellType> LMBBrushSet;
+        public event Action<CellType> RMBBrushSet;
 
         public void SetLMBType(CellType cellType)
         {
             _lmbType = cellType;
-            LMBTypeSet?.Invoke(cellType);
+            LMBBrushSet?.Invoke(cellType);
         }
 
         public void SetRMBType(CellType cellType)
         {
             _rmbType = cellType;
-            RMBTypeSet?.Invoke(cellType);
+            RMBBrushSet?.Invoke(cellType);
         }
 
         public void TryChangeCellType(CellNode node, PointerEventData.InputButton btn)

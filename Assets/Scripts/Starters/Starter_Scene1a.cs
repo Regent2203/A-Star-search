@@ -1,8 +1,8 @@
 ﻿using Core.Fields.Grids;
 using Core.Implementations.Cells;
 using Core.Implementations.Cells.UI;
+using Core.Inputs;
 using Core.PathFinders;
-using Core.Signals;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -11,8 +11,6 @@ namespace Core.Starters
 {
     public class Starter_Scene1a : MonoBehaviour
     {
-        private SignalBus _signalBus;
-
         private CellsConfig _config;
         private CellsGridField _field;
         private PathFinder<CellNode> _pathFinder;
@@ -25,11 +23,10 @@ namespace Core.Starters
 
 
         [Inject]
-        public void Construct(SignalBus signalBus, CellsConfig config, CellsGridField field, PathFinder<CellNode> pathFinder, 
+        public void Construct(CellsConfig config, CellsGridField field, PathFinder<CellNode> pathFinder, 
             CellsPathDrawer pathDrawer, CellsPainter painter, PathSetter<CellNode> pathSetter,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)
         {
-            _signalBus = signalBus;
             _config = config;
             _field = field;
             _pathFinder = pathFinder;
@@ -48,62 +45,58 @@ namespace Core.Starters
 
         private void Init()
         {
-            _signalBus.Subscribe<NodeClickedSignal<CellNode>>(OnNodeClickedSignal);
-            _signalBus.Subscribe<PaletteItemClickedSignal>(OnPaletteItemClickedSignal);
+            _field.NodeClicked += OnNodeClicked;
+            _field.CellNodeTypeChanged += OnCellNodeTypeChanged;
 
-            _field.CellNodeTypeChanged += (_, _) => _pathDrawer.ShowPath(false);
-            _field.CellNodeTypeChanged += (_, _) => TryRun(_pathFinder.IsReady);
-            
-            _pathFinder.AnyNodeChanged += (_) => _pathDrawer.ShowPath(false);
-            _pathFinder.StartNodeChanged += (node, b) =>
-            {
-                var view = _field.GetViewForNode(node);
-                view?.ShowStartMarker(b);
-            };
-            _pathFinder.FinishNodeChanged += (node, b) =>
-            {
-                var view = _field.GetViewForNode(node);
-                view?.ShowFinishMarker(b); 
-            };
-            
+            _pathFinder.StartNodeChanged += OnStartNodeChanged;
+            _pathFinder.FinishNodeChanged += OnFinishNodeChanged;
+            _pathFinder.AnyNodeChanged += ClearPath;
             _pathFinder.AnyNodeChanged += TryRun;
 
-            _painter.LMBTypeSet += (cellType) => _hotkeyInfoPanel.SetLMBText(cellType.Name);
-            _painter.RMBTypeSet += (cellType) => _hotkeyInfoPanel.SetRMBText(cellType.Name);
+            _palette.ItemClicked += OnPaletteItemClicked;
 
-            _painter.LMBTypeSet += (cellType) => _paletteChoice.SetLMBChoice(cellType);
-            _painter.RMBTypeSet += (cellType) => _paletteChoice.SetRMBChoice(cellType);
+            _painter.LMBBrushSet += OnLMBBrushChanged;
+            _painter.RMBBrushSet += OnRMBBrushChanged;
 
             _painter.SetLMBType(_config.DefaultCellType);
             _painter.SetRMBType(_config.DefaultCellType);
         }
 
-        private void OnNodeClickedSignal(NodeClickedSignal<CellNode> signal)
+
+        private void OnNodeClicked(CellNode node, PointerEventData.InputButton button, InputSnapshot input)
         {
-            var input = signal.Input;
-            
             if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
             {
-                _painter.TryChangeCellType(signal.Node, signal.Button);
+                _painter.TryChangeCellType(node, button);
             }
 
             if (input.IsMarkingMode)
             {
-                _pathSetter.TryUseNode(signal.Node, signal.Button);
+                _pathSetter.TryUseNode(node, button);
             }
         }
 
-        private void OnPaletteItemClickedSignal(PaletteItemClickedSignal signal)
+        private void OnCellNodeTypeChanged(CellNode node, CellType cellType)
         {
-            switch (signal.Button)
-            {
-                case PointerEventData.InputButton.Left:
-                    _painter.SetLMBType(signal.CellType);
-                    break;
-                case PointerEventData.InputButton.Right:
-                    _painter.SetRMBType(signal.CellType);
-                    break;
-            }
+            _pathDrawer.ShowPath(false);
+            TryRun(_pathFinder.IsReady);
+        }
+
+        private void OnStartNodeChanged(CellNode node, bool b)
+        {
+            var view = _field.GetViewForNode(node);
+            view?.ShowStartMarker(b);
+        }
+
+        private void OnFinishNodeChanged(CellNode node, bool b)
+        {
+            var view = _field.GetViewForNode(node);
+            view?.ShowFinishMarker(b);
+        }
+
+        private void ClearPath(bool b)
+        {
+            _pathDrawer.ShowPath(false);
         }
 
         private void TryRun(bool isReady)
@@ -117,6 +110,31 @@ namespace Core.Starters
                     _pathDrawer.ShowPath(true);
                 }
             }
+        }
+
+        private void OnPaletteItemClicked(CellType cellType, PointerEventData.InputButton button)
+        {
+            switch (button)
+            {
+                case PointerEventData.InputButton.Left:
+                    _painter.SetLMBType(cellType);
+                    break;
+                case PointerEventData.InputButton.Right:
+                    _painter.SetRMBType(cellType);
+                    break;
+            }
+        }
+
+        private void OnLMBBrushChanged(CellType cellType)
+        {
+            _hotkeyInfoPanel.SetLMBText(cellType.Name);
+            _paletteChoice.SetLMBChoice(cellType);
+        }
+
+        private void OnRMBBrushChanged(CellType cellType)
+        {
+            _hotkeyInfoPanel.SetRMBText(cellType.Name);
+            _paletteChoice.SetRMBChoice(cellType);
         }
     }
 }

@@ -10,7 +10,7 @@ using Zenject;
 namespace Core.Starters
 {
     public class Starter_Scene1b : MonoBehaviour
-    {
+    {/*
         private CellsConfig _config;
         private CellsGridField _field;
         private PathFinder<CellNode> _pathFinder;
@@ -64,15 +64,15 @@ namespace Core.Starters
             
             _pathFinder.AnyNodeChanged += TryRun;
 
-            _painter.LMBTypeSet += (cellType) => _hotkeyInfoPanel.SetLMBText(cellType.Name);
-            _painter.RMBTypeSet += (cellType) => _hotkeyInfoPanel.SetRMBText(cellType.Name);
+            _painter.LMBBrushSet += (cellType) => _hotkeyInfoPanel.SetLMBText(cellType.Name);
+            _painter.RMBBrushSet += (cellType) => _hotkeyInfoPanel.SetRMBText(cellType.Name);
 
-            _painter.LMBTypeSet += (cellType) => _paletteChoice.SetLMBChoice(cellType);
-            _painter.RMBTypeSet += (cellType) => _paletteChoice.SetRMBChoice(cellType);
+            _painter.LMBBrushSet += (cellType) => _paletteChoice.SetLMBChoice(cellType);
+            _painter.RMBBrushSet += (cellType) => _paletteChoice.SetRMBChoice(cellType);
 
             foreach (var item in _palette.Items)
             {
-                item.ItemClicked += OnPaletteItemClicked;
+                item.ItemClicked += OnItemClicked;
             }
 
             _painter.SetLMBType(_config.DefaultCellType);
@@ -93,7 +93,7 @@ namespace Core.Starters
             }
         }
 
-        private void OnPaletteItemClicked(CellType cellType, PointerEventData.InputButton btn)
+        private void OnItemClicked(CellType cellType, PointerEventData.InputButton btn)
         {
             if (btn == PointerEventData.InputButton.Left) //lmb
             {
@@ -104,6 +104,6 @@ namespace Core.Starters
             {
                 _painter.SetRMBType(cellType);
             }
-        }
+        }*/
     }
 }

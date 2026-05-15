@@ -1,9 +1,8 @@
 using Core.Inputs;
 using Core.Nodes;
-using Core.Signals;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Zenject;
 
 namespace Core.Fields.Grids
 {
@@ -11,21 +10,21 @@ namespace Core.Fields.Grids
     {
         private GridFieldBase<T> _field;
         private Grid _grid;
+        private Action<T, PointerEventData.InputButton, InputSnapshot> _onClickCallback;
 
-        private readonly SignalBus _signalBus;
         private readonly IInputService _inputService;
 
 
-        public GridClickHandler(SignalBus signalBus, IInputService inputService)
+        public GridClickHandler(IInputService inputService)
         {
-            _signalBus = signalBus;
             _inputService = inputService;
         }
 
-        public void SetConfiguration(GridFieldBase<T> field, Grid grid)
+        public void SetConfiguration(GridFieldBase<T> field, Grid grid, Action<T, PointerEventData.InputButton, InputSnapshot> onClickCallback)
         {
             _field = field;
             _grid = grid;
+            _onClickCallback = onClickCallback;
         }
 
         public void ProcessClick(PointerEventData eventData)
@@ -38,7 +37,7 @@ namespace Core.Fields.Grids
             var node = _field.GetNodeById(new Vector2Int(x, y));
             if (node != null)
             {
-                _signalBus.Fire(new NodeClickedSignal<T>(node, eventData.button, _inputService.CreateSnapshot()));
+                _onClickCallback?.Invoke(node, eventData.button, _inputService.CreateSnapshot());
             }
         }
     }

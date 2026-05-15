@@ -1,4 +1,5 @@
 ﻿using Core.Implementations.Cells;
+using Core.Inputs;
 using Core.Nodes;
 using System;
 using UnityEngine;
@@ -23,7 +24,7 @@ namespace Core.Fields.Grids
         protected GridClickHandler<T> _clickHandler;
         
         public Vector2Int CellsNumber => _cellsNumber;
-        public event Action<T, PointerEventData.InputButton> NodeClicked;
+        public event Action<T, PointerEventData.InputButton, InputSnapshot> NodeClicked;
 
 
         [Inject]
@@ -39,7 +40,7 @@ namespace Core.Fields.Grids
 
         protected virtual void Init()
         {
-            _clickHandler.SetConfiguration(this, _grid);
+            _clickHandler.SetConfiguration(this, _grid, NotifyNodeClicked);
 
             _collider.size = (Vector2)_grid.cellSize * _cellsNumber;
             _collider.offset = _collider.size * 0.5f;
@@ -69,6 +70,11 @@ namespace Core.Fields.Grids
         public void OnPointerDown(PointerEventData eventData)
         {
             _clickHandler.ProcessClick(eventData);
+        }
+
+        private void NotifyNodeClicked(T node, PointerEventData.InputButton btn, InputSnapshot input)
+        {
+            NodeClicked?.Invoke(node, btn, input);
         }
     }
 }

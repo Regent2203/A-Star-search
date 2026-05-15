@@ -38,17 +38,17 @@ namespace Core.Implementations.Cells
                     var view = _viewsFactory.Create(worldPos, index);
                     var node = _nodesFactory.Create(view.GetCenterCoords() / scale, index, _config.DefaultCellType);
 
-                    //todo unsubscribe if ever needed
-                    field.CellNodeTypeChanged += (node, type) =>
-                    {
-                        var view = field.GetViewForNode(node);
-                        view.UpdateSprite(type.Sprite);
-                    };
-
                     views[i, j] = view;
                     nodes[i, j] = node;
                 }
             }
+
+            //todo unsubscribe if ever needed
+            field.CellNodeTypeChanged += (node, type) =>
+            {
+                var view = field.GetViewForNode(node);
+                view.UpdateSprite(type.Sprite);
+            };
 
             _linksProvider.InitGrid(nodes);
             field.SetFieldData(nodes, views);
