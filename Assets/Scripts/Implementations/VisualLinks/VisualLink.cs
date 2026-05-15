@@ -1,9 +1,14 @@
+using Core.Implementations.Vertexes;
 using Core.Links;
 using Core.Nodes;
 using UnityEngine;
 
 namespace Core.Implementations.VisualLinks
 {
+    public class VisualLink : VisualLink<VertexNode>
+    {
+    }
+
     public class VisualLink<T> : MonoBehaviour where T : class, INode
     {
         [SerializeField]

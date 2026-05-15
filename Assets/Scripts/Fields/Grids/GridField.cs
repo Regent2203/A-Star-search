@@ -30,7 +30,7 @@ namespace Core.Fields.Grids
             _scaleFactor = _grid.cellSize / _viewPrefab.GetSize();
         }
 
-        public void SetData(T[,] nodes, V[,] views)
+        public void SetFieldData(T[,] nodes, V[,] views)
         {
             _nodes = nodes;
             _views = views;

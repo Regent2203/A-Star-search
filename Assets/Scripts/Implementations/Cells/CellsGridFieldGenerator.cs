@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace Core.Implementations.Cells
 {
-    public class CellsGridGenerator
+    public class CellsGridFieldGenerator
     {
         private readonly RuntimeLinksProvider<CellNode> _linksProvider;
         private readonly CellViewFactory _viewsFactory;
         private readonly CellNodeFactory _nodesFactory;
         private readonly CellsConfig _config;
 
-        public CellsGridGenerator(RuntimeLinksProvider<CellNode> linksProvider, CellViewFactory viewFactory, CellNodeFactory nodeFactory, CellsConfig config)
+        public CellsGridFieldGenerator(RuntimeLinksProvider<CellNode> linksProvider, CellViewFactory viewFactory, CellNodeFactory nodeFactory, CellsConfig config)
         {
             _linksProvider = linksProvider;
             _viewsFactory = viewFactory;
@@ -22,8 +22,8 @@ namespace Core.Implementations.Cells
         public void PopulateField(CellsGridField field, Transform container, Vector2 scale, Grid grid, Action<CellNode, CellType> callback)
         {
             var size = field.CellsNumber;
-            var nodes = new CellNode[size.x, size.y];
             var views = new CellView[size.x, size.y];
+            var nodes = new CellNode[size.x, size.y];
 
             _viewsFactory.SetConfiguration(scale, container);
             _nodesFactory.SetConfiguration(callback);
@@ -45,13 +45,13 @@ namespace Core.Implementations.Cells
                         view.UpdateSprite(type.Sprite);
                     };
 
-                    nodes[i, j] = node;
                     views[i, j] = view;
+                    nodes[i, j] = node;
                 }
             }
 
             _linksProvider.InitGrid(nodes);
-            field.SetData(nodes, views);
+            field.SetFieldData(nodes, views);
         }
     }
 }

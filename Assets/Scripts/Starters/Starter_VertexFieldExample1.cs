@@ -11,6 +11,7 @@ namespace Core.Starters
         //private CellsConfig _config;
         private VertexesField _field;
         //private GridInputHandler<CellNode> _fieldInputHandler;
+        VertexesVisualLinksCreator _visualLinksManager;
         private PathFinder<VertexNode> _pathFinder;
         private LinePathDrawer _pathDrawer;
         private PathSetter<VertexNode> _pathSetter;
@@ -21,10 +22,12 @@ namespace Core.Starters
         /*
         public void Construct(CellsConfig config, CellsGridField field, GridInputHandler<CellNode> fieldInputHandler,
             palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)*/
-        public void Construct(VertexesField field,
+        public void Construct(VertexesField field,VertexesVisualLinksCreator visualLinksManager,
             PathFinder<VertexNode> pathFinder, LinePathDrawer pathDrawer, PathSetter<VertexNode> pathSetter)
         {
             _field = field;
+            _visualLinksManager = visualLinksManager;
+
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
             _pathSetter = pathSetter;
@@ -62,6 +65,10 @@ namespace Core.Starters
 
             //NodeClicked += -> LinksCreator.TryUseFirstNode
             //mouseScroll -> ChangeLinkCost
+
+            //temp
+            //_visualLinksManager.TryUseNode(_field.Node1);
+            //_visualLinksManager.TryUseNode(_field.Node2);
         }
 
         private void TryRun(bool isReady)

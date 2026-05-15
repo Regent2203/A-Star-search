@@ -1,6 +1,5 @@
 using Core.Links.Factories.CostProviders;
 using Core.Heuristic.Functions;
-using Core.Implementations.Cells;
 using Core.Implementations.Vertexes;
 using Core.Links.Factories;
 using Core.Links.Providers;
@@ -9,15 +8,21 @@ using Core.PathFinders;
 using Core.SearchAlgorithms;
 using UnityEngine;
 using Zenject;
+using Core.Implementations.VisualLinks;
+using Core.Implementations.Cells;
 
 namespace Core.Installers
 {
     public class SceneInstaller_VertexFieldExample1 : MonoInstaller
     {
         [SerializeField]
+        private VertexView _vertexViewPrefab;
+        [SerializeField]
         private VertexesField _field;
         [SerializeField]
-        private VertexView _vertexViewPrefab;
+        private VisualLink<VertexNode> _visualLinkPrefab;
+        [SerializeField]
+        private VertexesVisualLinksCreator _visualLinksManager;
         //[SerializeField]
         //private UIHotkeyInfoPanel_Vertexes _hotkeyInfoPanel;
         [SerializeField]
@@ -32,8 +37,14 @@ namespace Core.Installers
         public override void InstallBindings()
         {
             Container.BindInstance(_vertexViewPrefab).AsSingle();
-
             Container.BindInterfacesAndSelfTo<VertexesField>().FromInstance(_field).AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexesFieldGenerator>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexViewFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexNodeFactory>().AsSingle();
+            Container.BindInstance(_visualLinkPrefab).AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexesVisualLinksCreator>().FromInstance(_visualLinksManager).AsSingle();
+            Container.BindInterfacesAndSelfTo<VisualLinksFactory<VertexNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VisualLinksPool<VertexNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<StoredLinksProvider<VertexNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<VertexNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<VertexNode>>().AsSingle();

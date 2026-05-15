@@ -1,4 +1,5 @@
 ﻿using Core.Fields;
+using Core.Implementations.Cells;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,11 @@ namespace Core.Implementations.Vertexes
         
         protected VertexView _viewPrefab;
 
-        protected Dictionary<int, VertexNode> _nodes;
-        protected Dictionary<int, VertexView> _views;
+        protected Dictionary<int, VertexNode> _nodes = new Dictionary<int, VertexNode>();
+        protected Dictionary<int, VertexView> _views = new Dictionary<int, VertexView>();
+
+        private VertexesFieldGenerator _generator;
+
 
         /*
         [Inject]
@@ -23,6 +27,11 @@ namespace Core.Implementations.Vertexes
         {
             _viewPrefab = vertexViewPrefab;
         }*/
+        [Inject]
+        public void Construct(VertexesFieldGenerator generator)
+        {
+            _generator = generator;
+        }
 
         private void Awake()
         {
@@ -32,6 +41,13 @@ namespace Core.Implementations.Vertexes
         protected virtual void Init()
         {
             //
+            _generator.Test(this, transform);
+        }
+
+        public void AddFieldData(VertexNode node, VertexView view)
+        {
+            _nodes.Add(node.Id, node);
+            _views.Add(view.Id, view);
         }
 
         public VertexNode GetNodeById(int id)

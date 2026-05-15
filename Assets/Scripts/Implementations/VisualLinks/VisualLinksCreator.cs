@@ -1,15 +1,13 @@
-﻿using Core.Implementations.VisualLinks;
-using Core.Links;
+﻿using Core.Links;
 using Core.Links.Factories;
 using Core.Links.Providers;
 using Core.Nodes;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Pool;
 using Zenject;
 
-namespace Core
+namespace Core.Implementations.VisualLinks
 {
     public class VisualLinksCreator<T> : MonoBehaviour where T: class, INode
     {

@@ -16,9 +16,9 @@ namespace Core.Installers
     public class SceneInstaller_CellGridExample1 : MonoInstaller
     {
         [SerializeField]
-        private CellsGridField _field;
-        [SerializeField]
         private CellView _cellViewPrefab;
+        [SerializeField]
+        private CellsGridField _field;
         [SerializeField]
         private UICellsPalette _palette;
         [SerializeField]
@@ -31,9 +31,8 @@ namespace Core.Installers
         public override void InstallBindings()
         {
             Container.BindInstance(_cellViewPrefab).AsSingle();
-
             Container.BindInterfacesAndSelfTo<CellsGridField>().FromInstance(_field).AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsGridGenerator>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsGridFieldGenerator>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<RuntimeLinksProvider<CellNode>>().AsSingle();

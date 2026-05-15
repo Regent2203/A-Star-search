@@ -6,13 +6,13 @@ namespace Core.Implementations.Cells
 {
     public class CellsGridField : GridField<CellNode, CellView>
     {
-        private CellsGridGenerator _generator;
+        private CellsGridFieldGenerator _generator;
 
         public event Action<CellNode, CellType> CellNodeTypeChanged;
 
 
         [Inject]
-        public void Construct(CellsGridGenerator generator)
+        public void Construct(CellsGridFieldGenerator generator)
         {
             _generator = generator;
         }

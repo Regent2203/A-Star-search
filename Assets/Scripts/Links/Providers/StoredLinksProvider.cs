@@ -5,8 +5,7 @@ namespace Core.Links.Providers
 {
     public class StoredLinksProvider<T> : ILinksProvider<T> where T : class, INode
     {
-        //_links[From][To]
-        private readonly Dictionary<T, Dictionary<T, ILink<T>>> _links = new Dictionary<T, Dictionary<T, ILink<T>>>();
+        private readonly Dictionary<T, Dictionary<T, ILink<T>>> _links = new Dictionary<T, Dictionary<T, ILink<T>>>(); //_links[From][To]
 
         public bool TryAddLink(ILink<T> link)
         {

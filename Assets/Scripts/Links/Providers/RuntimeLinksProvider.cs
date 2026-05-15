@@ -13,13 +13,13 @@ namespace Core.Links.Providers
     {
         private T[,] _gridNodes;
 
-        private readonly LinksFactory<T> _factory;
+        private readonly ILinksFactory<T> _factory;
         private readonly IGridNeighboursProvider<T> _neighboursProvider;
         
         //todo: add cache dictionary
 
 
-        public RuntimeLinksProvider(LinksFactory<T> factory, IGridNeighboursProvider<T> neighboursProvider)
+        public RuntimeLinksProvider(ILinksFactory<T> factory, IGridNeighboursProvider<T> neighboursProvider)
         {
             _factory = factory;
             _neighboursProvider = neighboursProvider;
