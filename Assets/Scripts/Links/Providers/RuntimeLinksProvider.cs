@@ -27,7 +27,7 @@ namespace Core.Links.Providers
 
         public void InitGrid(T[,] gridNodes)
         {
-            _gridNodes = gridNodes;
+            _gridNodes = gridNodes; //todo move init to neighb provider
         }
 
         public IEnumerable<ILink<T>> GetLinksForNode(T node)
