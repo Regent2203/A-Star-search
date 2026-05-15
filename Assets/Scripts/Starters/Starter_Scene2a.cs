@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Core.Starters
 {
-    public class Starter_VertexFieldExample1 : MonoBehaviour
+    public class Starter_Scene2a : MonoBehaviour
     {
         //private CellsConfig _config;
         private VertexesField _field;

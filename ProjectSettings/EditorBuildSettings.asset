@@ -9,12 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenuScene.unity
     guid: 75d04195f2338234784d815d0202e189
   - enabled: 1
-    path: Assets/Scenes/Scene1.1_CellsGridField.unity
+    path: Assets/Scenes/Scene1a_CellsGridField.unity
     guid: ba47872206dcacb47a93ed12c1c3da26
   - enabled: 1
-    path: Assets/Scenes/Scene1.2_CellsGridField.unity
+    path: Assets/Scenes/Scene1b_CellsGridField.unity
     guid: c918875a47b9fd04a80726740a52e86b
   - enabled: 1
-    path: Assets/Scenes/Scene2.1_VertexesField.unity
+    path: Assets/Scenes/Scene2a_VertexesField.unity
     guid: fa887a235aa1ba1428cb0c026a8cdcfd
   m_configObjects: {}

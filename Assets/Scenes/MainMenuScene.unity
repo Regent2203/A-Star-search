@@ -403,14 +403,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 953047228407168596, guid: 6adb4a704c1068a40baf6b88e49e67db,
-        type: 3}
-      propertyPath: m_text
-      value: 'Scene 2.1: Graph with Nodes. Weights of links can be modified.
-
-        [work
-        in progress]'
-      objectReference: {fileID: 0}
     - target: {fileID: 1918448847858689742, guid: 6adb4a704c1068a40baf6b88e49e67db,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -436,11 +428,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5870155071367696746, guid: 6adb4a704c1068a40baf6b88e49e67db,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6790077622725679259, guid: 6adb4a704c1068a40baf6b88e49e67db,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -462,31 +449,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6790077622725679259, guid: 6adb4a704c1068a40baf6b88e49e67db,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7650737246938494306, guid: 6adb4a704c1068a40baf6b88e49e67db,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7650737246938494306, guid: 6adb4a704c1068a40baf6b88e49e67db,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7650737246938494306, guid: 6adb4a704c1068a40baf6b88e49e67db,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7650737246938494306, guid: 6adb4a704c1068a40baf6b88e49e67db,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7650737246938494306, guid: 6adb4a704c1068a40baf6b88e49e67db,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
@@ -495,31 +457,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UICanvas_MainMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 8705053072128881193, guid: 6adb4a704c1068a40baf6b88e49e67db,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8705053072128881193, guid: 6adb4a704c1068a40baf6b88e49e67db,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8705053072128881193, guid: 6adb4a704c1068a40baf6b88e49e67db,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8705053072128881193, guid: 6adb4a704c1068a40baf6b88e49e67db,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8705053072128881193, guid: 6adb4a704c1068a40baf6b88e49e67db,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9022579682945723726, guid: 6adb4a704c1068a40baf6b88e49e67db,
         type: 3}

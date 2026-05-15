@@ -9,7 +9,7 @@ using Zenject;
 
 namespace Core.Starters
 {
-    public class Starter_CellGridExample2 : MonoBehaviour
+    public class Starter_Scene1b : MonoBehaviour
     {
         private CellsConfig _config;
         private CellsGridField _field;

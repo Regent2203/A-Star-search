@@ -13,7 +13,7 @@ using Core.Implementations.Cells;
 
 namespace Core.Installers
 {
-    public class SceneInstaller_VertexFieldExample1 : MonoInstaller
+    public class SceneInstaller_Scene2a : MonoInstaller
     {
         [SerializeField]
         private VertexView _vertexViewPrefab;
