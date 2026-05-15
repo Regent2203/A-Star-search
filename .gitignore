@@ -2,8 +2,9 @@
 /[Pp]ackages/
 /[Oo]bj/
 /[Ll]ogs/
+/[Tt]emp/
+/[Uu]serSettings/
 *.csproj
 *.sln
 *.userprefs
 /.vs
-/[Tt]emp
