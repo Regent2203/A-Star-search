@@ -8,7 +8,7 @@ namespace Core.Implementations.Cells
     {
         private CellsGridFieldGenerator _generator;
 
-        public event Action<CellNode, CellType> CellNodeTypeChanged;
+        public event Action GridTopologyChanged;
 
 
         [Inject]
@@ -22,12 +22,15 @@ namespace Core.Implementations.Cells
             base.Init();
 
             //todo: change if we want to call this method not at scene start (instead: after we change grid size or else)
-            _generator.PopulateField(this, transform, _scaleFactor, _grid, NotifyNodeTypeChanged);
+            _generator.PopulateField(this, transform, _scaleFactor, _grid, OnNodeTypeChanged);
         }
 
-        private void NotifyNodeTypeChanged(CellNode node, CellType cellType)
+        private void OnNodeTypeChanged(CellNode node, CellType cellType)
         {
-            CellNodeTypeChanged?.Invoke(node, cellType);
+            var view = GetViewForNode(node);
+            view.UpdateSprite(cellType.Sprite);
+
+            GridTopologyChanged?.Invoke();
         }
     }
 }

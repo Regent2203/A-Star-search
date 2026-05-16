@@ -20,10 +20,10 @@ namespace Core.Implementations.Cells
         public event Action<Vector2> NodePositionChanged;
 
 
-        public CellNode(Vector2 nodePosition, Vector2Int index, CellType cellType, Action<CellNode, CellType> typeChangedCallback)
+        public CellNode(Vector2Int index, Vector2 nodePosition, CellType cellType, Action<CellNode, CellType> typeChangedCallback)
         {
-            _nodePosition = nodePosition;
             _index = index;
+            _nodePosition = nodePosition;
             _cellType = cellType;
             _typeChangedCallback = typeChangedCallback;
         }

@@ -24,7 +24,7 @@ namespace Core.Implementations.Cells
             _container = container;
         }
 
-        public CellView Create(Vector3 position, Vector2Int index)
+        public CellView Create(Vector2Int index, Vector3 position)
         {
             var cellView = _instantiator.InstantiatePrefabForComponent<CellView>(_cellPrefab, position, Quaternion.identity, _container);
             cellView.Init(index, _scaleFactor);

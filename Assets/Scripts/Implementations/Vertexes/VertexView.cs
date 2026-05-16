@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Core.Implementations.Vertexes
 {
-    public class VertexView : MonoBehaviour, IView, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class VertexView : MonoBehaviour, IView//, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         [SerializeField]
         private GameObject _startMarker;

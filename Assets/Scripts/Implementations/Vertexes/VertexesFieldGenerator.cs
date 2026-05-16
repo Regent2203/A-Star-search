@@ -28,8 +28,9 @@ namespace Core.Implementations.Cells
             {
                 var id = _newId++;
 
-                var view = _viewsFactory.Create(Vector2.zero + UnityEngine.Random.Range(0, 1) * Vector2.one, id);
-                var node = _nodesFactory.Create(Vector2.zero + UnityEngine.Random.Range(0, 1) * Vector2.one, id);
+                var pos = new Vector3(UnityEngine.Random.value * 40 - 20, UnityEngine.Random.value * 40 - 20, 0);
+                var view = _viewsFactory.Create(id, pos);
+                var node = _nodesFactory.Create(id, pos);
 
                 field.AddFieldData(node, view);
             }
@@ -49,7 +50,7 @@ namespace Core.Implementations.Cells
 
             //todo unsubscribe if ever needed
             /*
-            field.CellNodeTypeChanged += (node, type) =>
+            field.GridTopologyChanged += (node, type) =>
             {
                 var view = field.GetViewForNode(node);
                 view.UpdateSprite(type.Sprite);

@@ -35,20 +35,13 @@ namespace Core.Implementations.Cells
                     var worldPos = grid.CellToWorld(new Vector3Int(i, j, 0));
                     var index = new Vector2Int(i, j);
 
-                    var view = _viewsFactory.Create(worldPos, index);
-                    var node = _nodesFactory.Create(view.GetCenterCoords() / scale, index, _config.DefaultCellType);
+                    var view = _viewsFactory.Create(index, worldPos);
+                    var node = _nodesFactory.Create(index, view.GetCenterCoords() / scale, _config.DefaultCellType);
 
                     views[i, j] = view;
                     nodes[i, j] = node;
                 }
             }
-
-            //todo unsubscribe if ever needed
-            field.CellNodeTypeChanged += (node, type) =>
-            {
-                var view = field.GetViewForNode(node);
-                view.UpdateSprite(type.Sprite);
-            };
 
             _linksProvider.InitGrid(nodes);
             field.SetFieldData(nodes, views);

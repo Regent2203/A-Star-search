@@ -24,8 +24,9 @@ namespace Core.Implementations.Vertexes
             _container = container;
         }
 
-        public VertexView Create(Vector3 position, int id)
+        public VertexView Create(int id, Vector3 position)
         {
+            Debug.Log(position);
             var vertexView = _instantiator.InstantiatePrefabForComponent<VertexView>(_vertexPrefab, position, Quaternion.identity, _container);
             vertexView.Init(id, position);
 

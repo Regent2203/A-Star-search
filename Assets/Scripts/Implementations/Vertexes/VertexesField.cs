@@ -1,14 +1,16 @@
 ﻿using Core.Fields;
 using Core.Implementations.Cells;
+using Core.Inputs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace Core.Implementations.Vertexes
 {
-    public class VertexesField : MonoBehaviour, IGraph<VertexNode, int>
+    public class VertexesField : MonoBehaviour, IPointerDownHandler, IGraph<VertexNode, int>
     {
         [SerializeField]
         protected BoxCollider2D _collider;
@@ -19,6 +21,10 @@ namespace Core.Implementations.Vertexes
         protected Dictionary<int, VertexView> _views = new Dictionary<int, VertexView>();
 
         private VertexesFieldGenerator _generator;
+        private IInputService _inputService;
+
+        public event Action<VertexNode, PointerEventData.InputButton, InputSnapshot> NodeClicked;
+        public event Action<VertexesField, PointerEventData.InputButton, InputSnapshot> FieldClicked;
 
 
         /*
@@ -28,8 +34,9 @@ namespace Core.Implementations.Vertexes
             _viewPrefab = vertexViewPrefab;
         }*/
         [Inject]
-        public void Construct(VertexesFieldGenerator generator)
+        public void Construct(VertexesFieldGenerator generator, IInputService inputService)
         {
+            _inputService = inputService;
             _generator = generator;
         }
 
@@ -67,5 +74,10 @@ namespace Core.Implementations.Vertexes
         }
 
         public IReadOnlyList<VertexView> GetViewsForNodes(IList<VertexNode> nodePath) => nodePath.Select(GetViewForNode).ToList();
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            FieldClicked?.Invoke(this, eventData.button, _inputService.CreateSnapshot());
+        }
     }
 }

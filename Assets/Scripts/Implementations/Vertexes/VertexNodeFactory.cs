@@ -21,10 +21,9 @@ namespace Core.Implementations.Vertexes
             _typeChangedCallback = typeChangedCallback;
         }
         */
-        public VertexNode Create(Vector2 nodePosition, int id)
+        public VertexNode Create(int id, Vector2 nodePosition)
         {
-            var vertexNode = _instantiator.Instantiate<VertexNode>(new object[] { nodePosition, id });
-            //var vertexNode = _instantiator.Instantiate<VertexNode>(new object[] { nodePosition, index, cellType, _typeChangedCallback });
+            var vertexNode = _instantiator.Instantiate<VertexNode>(new object[] { id, nodePosition });
 
             return vertexNode;
         }

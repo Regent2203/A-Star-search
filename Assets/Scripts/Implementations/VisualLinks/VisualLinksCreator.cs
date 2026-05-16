@@ -1,4 +1,5 @@
-﻿using Core.Links;
+﻿using Core.Inputs;
+using Core.Links;
 using Core.Links.Factories;
 using Core.Links.Providers;
 using Core.Nodes;
@@ -24,12 +25,12 @@ namespace Core.Implementations.VisualLinks
 
 
         [Inject]
-        public void Construct(LinksFactory<T> linksFactory, VisualLinksPool<T> visualLinksPool, StoredLinksProvider<T> linksProvider, [Inject(Id = "LinkingKey")] KeyCode linkingKeyCode)
+        public void Construct(LinksFactory<T> linksFactory, VisualLinksPool<T> visualLinksPool, StoredLinksProvider<T> linksProvider, InputSettings inputSettings)
         {
             _linksFactory = linksFactory;
             _visualLinksPool = visualLinksPool;
             _linksProvider = linksProvider;
-            _linkingKeyCode = linkingKeyCode;
+            _linkingKeyCode = inputSettings.LinkingKey; //todo
         }
 
         public void TryUseNode(T node, PointerEventData.InputButton btn)

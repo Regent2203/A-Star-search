@@ -10,7 +10,7 @@ namespace Core.Fields.Grids
     {
         private GridFieldBase<T> _field;
         private Grid _grid;
-        private Action<T, PointerEventData.InputButton, InputSnapshot> _onClickCallback;
+        private Action<T, PointerEventData.InputButton, InputSnapshot> _nodeClickCallback;
 
         private readonly IInputService _inputService;
 
@@ -20,11 +20,11 @@ namespace Core.Fields.Grids
             _inputService = inputService;
         }
 
-        public void SetConfiguration(GridFieldBase<T> field, Grid grid, Action<T, PointerEventData.InputButton, InputSnapshot> onClickCallback)
+        public void SetConfiguration(GridFieldBase<T> field, Grid grid, Action<T, PointerEventData.InputButton, InputSnapshot> nodeClickCallback)
         {
             _field = field;
             _grid = grid;
-            _onClickCallback = onClickCallback;
+            _nodeClickCallback = nodeClickCallback;
         }
 
         public void ProcessClick(PointerEventData eventData)
@@ -37,7 +37,7 @@ namespace Core.Fields.Grids
             var node = _field.GetNodeById(new Vector2Int(x, y));
             if (node != null)
             {
-                _onClickCallback?.Invoke(node, eventData.button, _inputService.CreateSnapshot());
+                _nodeClickCallback?.Invoke(node, eventData.button, _inputService.CreateSnapshot());
             }
         }
     }

@@ -10,11 +10,15 @@ using UnityEngine;
 using Zenject;
 using Core.Implementations.VisualLinks;
 using Core.Implementations.Cells;
+using Core.Starters;
+using Core.Inputs;
 
 namespace Core.Installers
 {
     public class SceneInstaller_Scene2a : MonoInstaller
     {
+        [SerializeField]
+        private InputSettings _inputSettings;
         [SerializeField]
         private VertexView _vertexViewPrefab;
         [SerializeField]
@@ -27,15 +31,11 @@ namespace Core.Installers
         //private UIHotkeyInfoPanel_Vertexes _hotkeyInfoPanel;
         [SerializeField]
         private LineRenderer _pathLineRenderer;
-        [SerializeField]
-        private KeyCode _creatingKeyCode = KeyCode.LeftControl;
-        [SerializeField]
-        private KeyCode _linkingKeyCode = KeyCode.LeftAlt;
-        [SerializeField]
-        private KeyCode _markingKeyCode = KeyCode.LeftShift;
 
         public override void InstallBindings()
         {
+            Container.BindInstance(_inputSettings).AsSingle();
+            Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
             Container.BindInstance(_vertexViewPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesFieldGenerator>().AsSingle();
@@ -56,9 +56,8 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<PathSetter<VertexNode>>().AsSingle(); 
             //Container.BindInterfacesAndSelfTo<UIHotkeyInfoPanel_Vertexes>().FromInstance(_hotkeyInfoPanel).AsSingle();
             Container.BindInterfacesAndSelfTo<LineRenderer>().FromInstance(_pathLineRenderer).AsSingle();
-            Container.BindInstance(_creatingKeyCode).WithId("CreatingKey");
-            Container.BindInstance(_linkingKeyCode).WithId("LinkingKey");
-            Container.BindInstance(_markingKeyCode).WithId("MarkingKey");
+
+            Container.BindInterfacesTo<Starter_Scene2a>().AsSingle();
         }
     }
 }

@@ -41,12 +41,11 @@ namespace Core.Starters
         public void Initialize()
         {
             _field.NodeClicked += OnNodeClicked;
-            _field.CellNodeTypeChanged += OnCellNodeTypeChanged;
+            _field.GridTopologyChanged += OnGridTopologyChanged;
 
             _pathFinder.StartNodeChanged += OnStartNodeChanged;
             _pathFinder.FinishNodeChanged += OnFinishNodeChanged;
-            _pathFinder.AnyNodeChanged += ClearPath;
-            _pathFinder.AnyNodeChanged += TryRun;
+            _pathFinder.AnyNodeChanged += OnPathChanged;
 
             _palette.ItemClicked += OnPaletteItemClicked;
 
@@ -60,12 +59,11 @@ namespace Core.Starters
         public void Dispose()
         {
             _field.NodeClicked -= OnNodeClicked;
-            _field.CellNodeTypeChanged -= OnCellNodeTypeChanged;
+            _field.GridTopologyChanged -= OnGridTopologyChanged;
 
             _pathFinder.StartNodeChanged -= OnStartNodeChanged;
             _pathFinder.FinishNodeChanged -= OnFinishNodeChanged;
-            _pathFinder.AnyNodeChanged -= ClearPath;
-            _pathFinder.AnyNodeChanged -= TryRun;
+            _pathFinder.AnyNodeChanged -= OnPathChanged;
 
             _palette.ItemClicked -= OnPaletteItemClicked;
 
@@ -86,10 +84,9 @@ namespace Core.Starters
             }
         }
 
-        private void OnCellNodeTypeChanged(CellNode node, CellType cellType)
+        private void OnGridTopologyChanged()
         {
-            _pathDrawer.ShowPath(false);
-            TryRun(_pathFinder.IsReady);
+            OnPathChanged(_pathFinder.IsReady);
         }
 
         private void OnStartNodeChanged(CellNode node, bool b)
@@ -104,9 +101,10 @@ namespace Core.Starters
             view?.ShowFinishMarker(b);
         }
 
-        private void ClearPath(bool b)
+        private void OnPathChanged(bool isReady)
         {
             _pathDrawer.ShowPath(false);
+            TryRun(isReady);
         }
 
         private void TryRun(bool isReady)
