@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core.Heuristic;
+using Core.Links.Providers;
 using Core.Nodes;
 using Core.SearchAlgorithms;
 
@@ -9,6 +10,7 @@ namespace Core.PathFinders
     public class PathFinder<T> : IPathFinder<T> where T : class, INode
     {
         private readonly IHeuristicsProvider<T> _heuristicsProvider;
+        private readonly ILinksProvider<T> _linksProvider;
         private readonly ISearchAlgorithm<T> _searchAlgorithm;
 
         private T _startNode;
@@ -20,9 +22,10 @@ namespace Core.PathFinders
         public bool IsReady => _startNode != null && _finishNode != null;
 
 
-        public PathFinder(IHeuristicsProvider<T> heuristicFunction, ISearchAlgorithm<T> searchAlgorithm)
+        public PathFinder(IHeuristicsProvider<T> heuristicFunction, ILinksProvider<T> linksProvider, ISearchAlgorithm<T> searchAlgorithm)
         {
             _heuristicsProvider = heuristicFunction;
+            _linksProvider = linksProvider;
             _searchAlgorithm = searchAlgorithm;
         }
 
@@ -68,7 +71,7 @@ namespace Core.PathFinders
             if (_startNode == null || _finishNode == null) 
                 return null;
 
-            return _searchAlgorithm.CalculateWay(_startNode, _finishNode, _heuristicsProvider);
+            return _searchAlgorithm.CalculateWay(_startNode, _finishNode, _heuristicsProvider, _linksProvider);
         }
     }
 }

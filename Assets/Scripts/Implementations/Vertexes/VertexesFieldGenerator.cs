@@ -1,12 +1,15 @@
 ﻿using Core.Implementations.Vertexes;
 using Core.Links.Providers;
 using System;
+using System.ComponentModel;
 using UnityEngine;
 
 namespace Core.Implementations.Cells
 {
     public class VertexesFieldGenerator
     {
+        private VertexesField _field;
+
         private int _newId = 0;
 
         private readonly VertexViewFactory _viewsFactory;
@@ -16,14 +19,20 @@ namespace Core.Implementations.Cells
         {
             _viewsFactory = viewFactory;
             _nodesFactory = nodeFactory;
-            //_config = config;
+        }
+
+        public void SetConfiguration(VertexesField field, Transform container,
+            Action<int, Vector2> nodeDragBeginCallback, Action<int, Vector2> nodeDragEndCallback)
+        {
+            _field = field;
+
+            _viewsFactory.SetConfiguration(Vector2.one, container, nodeDragBeginCallback, nodeDragEndCallback);
+            _nodesFactory.SetConfiguration(nodeDragEndCallback);
         }
 
         //temp
-        public void Test(VertexesField field, Transform container)
+        public void TestPopulate()
         {
-            _viewsFactory.SetConfiguration(Vector2.one, container);
-
             for (int i = 0; i < 4; i++)
             {
                 var id = _newId++;
@@ -32,17 +41,12 @@ namespace Core.Implementations.Cells
                 var view = _viewsFactory.Create(id, pos);
                 var node = _nodesFactory.Create(id, pos);
 
-                field.AddFieldData(node, view);
+                _field.AddFieldData(node, view);
             }
         }
 
         public void BuildNodeForField(VertexesField field, Vector3 position, Transform container, Vector2 scale, Action<CellNode, CellType> callback)
         {
-            //_viewsFactory.SetConfiguration(scale, container);
-            //_nodesFactory.SetConfiguration(callback);
-
-            
-                    
             var id = _newId++;
 
             //var view = _viewsFactory.Create(id, position);

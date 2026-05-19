@@ -21,14 +21,15 @@ namespace Core.Fields.Grids
         protected bool _doCentering = true;
 
         protected T[,] _nodes;
-        protected GridClickHandler<T> _clickHandler;
+        protected GridFieldClickHandler<T> _clickHandler;
         
+        public Grid Grid => _grid;
         public Vector2Int CellsNumber => _cellsNumber;
         public event Action<T, PointerEventData.InputButton, InputSnapshot> NodeClicked;
 
 
         [Inject]
-        public void Construct(GridClickHandler<T> clickHandler)
+        public void Construct(GridFieldClickHandler<T> clickHandler)
         {
             _clickHandler = clickHandler;
         }
@@ -40,7 +41,7 @@ namespace Core.Fields.Grids
 
         protected virtual void Init()
         {
-            _clickHandler.SetConfiguration(this, _grid, NotifyNodeClicked);
+            _clickHandler.SetConfiguration(this, NotifyNodeClicked);
 
             _collider.size = (Vector2)_grid.cellSize * _cellsNumber;
             _collider.offset = _collider.size * 0.5f;

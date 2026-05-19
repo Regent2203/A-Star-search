@@ -6,7 +6,7 @@ namespace Core.Implementations.Cells
 {
     public class CellNodeFactory
     {
-        private Action<CellNode, CellType> _typeChangedCallback;
+        private Action<CellNode, CellType> _nodeTypeChangedCallback;
 
         private readonly IInstantiator _instantiator;
 
@@ -16,14 +16,14 @@ namespace Core.Implementations.Cells
             _instantiator = instantiator;
         }
 
-        public void SetConfiguration(Action<CellNode, CellType> typeChangedCallback)
+        public void SetConfiguration(Action<CellNode, CellType> nodeTypeChangedCallback)
         {
-            _typeChangedCallback = typeChangedCallback;
+            _nodeTypeChangedCallback = nodeTypeChangedCallback;
         }
 
         public CellNode Create(Vector2Int index, Vector2 nodePosition, CellType cellType)
         {
-            var cellNode = _instantiator.Instantiate<CellNode>(new object[] { index, nodePosition, cellType, _typeChangedCallback });
+            var cellNode = _instantiator.Instantiate<CellNode>(new object[] { index, nodePosition, cellType, _nodeTypeChangedCallback });
 
             return cellNode;
         }

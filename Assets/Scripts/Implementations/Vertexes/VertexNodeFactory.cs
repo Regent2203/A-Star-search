@@ -6,7 +6,7 @@ namespace Core.Implementations.Vertexes
 {
     public class VertexNodeFactory
     {
-        //private Action<CellNode, CellType> _typeChangedCallback;
+        private Action<int, Vector2> _nodePositionChangedCallback;
 
         private readonly IInstantiator _instantiator;
 
@@ -15,17 +15,20 @@ namespace Core.Implementations.Vertexes
         {
             _instantiator = instantiator;
         }
-        /*
-        public void SetConfiguration(Action<CellNode, CellType> typeChangedCallback)
+        
+        public void SetConfiguration(Action<int, Vector2> nodePositionChangedCallback)
         {
-            _typeChangedCallback = typeChangedCallback;
+            _nodePositionChangedCallback = nodePositionChangedCallback;
         }
-        */
+        
         public VertexNode Create(int id, Vector2 nodePosition)
         {
             var vertexNode = _instantiator.Instantiate<VertexNode>(new object[] { id, nodePosition });
+            //vertexNode.NodePositionChanged += (v) => _nodePositionChangedCallback(vertexNode.Id, v); //todo
 
             return vertexNode;
         }
+
+
     }
 }

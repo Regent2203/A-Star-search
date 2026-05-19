@@ -5,7 +5,6 @@ namespace Core.Implementations.Cells
 {
     public class CellViewFactory
     {
-        private Vector2 _scaleFactor;
         private Transform _container;
 
         private readonly IInstantiator _instantiator;
@@ -18,16 +17,15 @@ namespace Core.Implementations.Cells
             _cellPrefab = prefab;
         }
 
-        public void SetConfiguration(Vector2 scaleFactor, Transform container)
+        public void SetConfiguration(Transform container)
         {
-            _scaleFactor = scaleFactor;
             _container = container;
         }
 
-        public CellView Create(Vector2Int index, Vector3 position)
+        public CellView Create(Vector2Int index, Vector3 position, Vector2 scaleFactor)
         {
             var cellView = _instantiator.InstantiatePrefabForComponent<CellView>(_cellPrefab, position, Quaternion.identity, _container);
-            cellView.Init(index, _scaleFactor);
+            cellView.Init(index, scaleFactor);
 
             return cellView;
         }        

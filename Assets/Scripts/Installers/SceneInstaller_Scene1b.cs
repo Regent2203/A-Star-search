@@ -42,7 +42,7 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<CellsGridFieldGenerator>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<GridClickHandler<CellNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GridFieldClickHandler<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<RuntimeLinksProvider<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<EightSideGridNeighbours<CellNode>>().AsSingle();

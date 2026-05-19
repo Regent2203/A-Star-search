@@ -10,15 +10,8 @@ namespace Core.SearchAlgorithms
         private Dictionary<T, T> _cameFrom;
         private Dictionary<T, float> _costSoFar;
 
-        private readonly ILinksProvider<T> _linksProvider;
 
-
-        public AStarSearchAlgorithm(ILinksProvider<T> linksProvider)
-        {
-            _linksProvider = linksProvider;
-        }
-
-        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider<T> heuristicsController)
+        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider<T> heuristicsController, ILinksProvider<T> linksProvider)
         {
             if (startNode.Equals(finishNode))
                 return null;
@@ -41,7 +34,7 @@ namespace Core.SearchAlgorithms
                     return RetracePath(startNode, finishNode);
                 }
 
-                foreach (var link in _linksProvider.GetLinksForNode(current))
+                foreach (var link in linksProvider.GetLinksForNode(current))
                 {
                     if (link.From.IsBlocked || link.To.IsBlocked)
                         continue;

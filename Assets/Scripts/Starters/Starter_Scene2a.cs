@@ -15,7 +15,7 @@ namespace Core.Starters
     {
         //private CellsConfig _config;
         private VertexesField _field;
-        //private GridClickHandler<CellNode> _fieldInputHandler;
+        //private GridFieldClickHandler<CellNode> _fieldInputHandler;
         private VertexesVisualLinksCreator _visualLinksCreator;
         private PathFinder<VertexNode> _pathFinder;
         private LinePathDrawer _pathDrawer;
@@ -25,7 +25,7 @@ namespace Core.Starters
 
         [Inject]
         /*
-        public void Construct(CellsConfig config, CellsGridField field, GridClickHandler<CellNode> fieldInputHandler,
+        public void Construct(CellsConfig config, CellsGridField field, GridFieldClickHandler<CellNode> fieldInputHandler,
             palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)*/
         public void Construct(VertexesField field,VertexesVisualLinksCreator visualLinksCreator,
             PathFinder<VertexNode> pathFinder, LinePathDrawer pathDrawer, PathSetter<VertexNode> pathSetter)

@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Core.Implementations.Vertexes
 {
-    public class VertexView : MonoBehaviour, IView//, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class VertexView : MonoBehaviour, IView, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         [SerializeField]
         private GameObject _startMarker;
@@ -20,8 +20,8 @@ namespace Core.Implementations.Vertexes
         private Vector2? _size;
         private Vector3? _center;
 
-        public event Action OnDragBegin;
-        public event Action OnDragEnd;
+        private Action<int, Vector2> _onDragBeginCallback;
+        private Action<int, Vector2> _onDragEndCallback;
 
 
         private void Awake()
@@ -29,11 +29,14 @@ namespace Core.Implementations.Vertexes
             //todo
         }
 
-        public void Init(int id, Vector2 position)
+        public void Init(int id, Vector2 position, Action<int, Vector2> onDragBeginCallback, Action<int, Vector2> onDragEndCallback)
         {
             _id = id;
             name = $"Vertex {id}";
             transform.position = position;
+
+            _onDragBeginCallback = onDragBeginCallback;
+            _onDragEndCallback = onDragEndCallback;
         }
 
         public void ShowStartMarker(bool show)
@@ -62,8 +65,8 @@ namespace Core.Implementations.Vertexes
             return _center.Value;
         }
 
-        private Vector3 _oldPosition;
-        private Vector3 _dragOffset;
+        private Vector3? _oldPosition;
+        private Vector3? _dragOffset;
 
         public void OnBeginDrag(PointerEventData eventData)
         {
@@ -73,20 +76,23 @@ namespace Core.Implementations.Vertexes
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(eventData.position);
             _dragOffset = transform.position - new Vector3(mousePos.x, mousePos.y, transform.position.z);
 
-            OnDragBegin?.Invoke(); //todo: hide visual links
+            _onDragBeginCallback?.Invoke(Id, (Vector2)_oldPosition); //todo: hide visual links
         }
 
         public void OnDrag(PointerEventData eventData)
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(eventData.position);
-            transform.position = new Vector3(mousePos.x, mousePos.y, transform.position.z) + _dragOffset;
+            transform.position = new Vector3(mousePos.x, mousePos.y, transform.position.z) + (Vector3)_dragOffset;
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
             //if not too close to another node and inside field borders - success
             //else use _oldPosition
-            OnDragEnd?.Invoke();
+            _oldPosition = null;
+            _dragOffset = null;
+
+            _onDragEndCallback?.Invoke(Id, transform.position);
         }
     }
 }

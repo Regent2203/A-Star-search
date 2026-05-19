@@ -1,9 +1,11 @@
 ﻿using Core.Fields;
+using Core.Fields.Grids;
 using Core.Implementations.Cells;
 using Core.Inputs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -11,7 +13,7 @@ using Zenject;
 namespace Core.Implementations.Vertexes
 {
     public class VertexesField : MonoBehaviour, IPointerDownHandler, IGraph<VertexNode, int>
-    {
+    { 
         [SerializeField]
         protected BoxCollider2D _collider;
         
@@ -20,11 +22,15 @@ namespace Core.Implementations.Vertexes
         protected Dictionary<int, VertexNode> _nodes = new Dictionary<int, VertexNode>();
         protected Dictionary<int, VertexView> _views = new Dictionary<int, VertexView>();
 
+        protected FieldClickHandler<VertexNode> _clickHandler; //todo
+
         private VertexesFieldGenerator _generator;
         private IInputService _inputService;
 
-        public event Action<VertexNode, PointerEventData.InputButton, InputSnapshot> NodeClicked;
         public event Action<VertexesField, PointerEventData.InputButton, InputSnapshot> FieldClicked;
+        public event Action<VertexNode, PointerEventData.InputButton, InputSnapshot> NodeClicked;
+        public event Action<int, Vector2> NodeDragBegin;
+        public event Action<int, Vector2> NodeDragEnd;
 
 
         /*
@@ -34,8 +40,9 @@ namespace Core.Implementations.Vertexes
             _viewPrefab = vertexViewPrefab;
         }*/
         [Inject]
-        public void Construct(VertexesFieldGenerator generator, IInputService inputService)
+        public void Construct(FieldClickHandler<VertexNode> clickHandler, VertexesFieldGenerator generator, IInputService inputService)
         {
+            _clickHandler = clickHandler;
             _inputService = inputService;
             _generator = generator;
         }
@@ -47,8 +54,10 @@ namespace Core.Implementations.Vertexes
 
         protected virtual void Init()
         {
-            //
-            _generator.Test(this, transform);
+            _clickHandler.SetConfiguration(this, NotifyNodeClicked);
+            //todo
+            _generator.SetConfiguration(this, transform, NotifyNodeDragBegin, NotifyNodeDragEnd);
+            _generator.TestPopulate();
         }
 
         public void AddFieldData(VertexNode node, VertexView view)
@@ -59,25 +68,44 @@ namespace Core.Implementations.Vertexes
 
         public VertexNode GetNodeById(int id)
         {
-            if (_nodes.ContainsKey(id))
-                return _nodes[id];
+            if (_nodes.TryGetValue(id, out var node)) 
+                return node;
 
             return null;
         }
 
         public VertexView GetViewForNode(VertexNode node)
         {
-            if (_views.ContainsKey(node.Id))
-                return _views[node.Id];
+            if (_views.TryGetValue(node.Id, out var view))
+                return view;
 
             return null;
         }
 
         public IReadOnlyList<VertexView> GetViewsForNodes(IList<VertexNode> nodePath) => nodePath.Select(GetViewForNode).ToList();
 
+        //input handler
         public void OnPointerDown(PointerEventData eventData)
         {
-            FieldClicked?.Invoke(this, eventData.button, _inputService.CreateSnapshot());
+            if (!_clickHandler.ProcessClick(eventData))
+                ;
+            //FieldClicked?.Invoke(this, eventData.button, _inputService.CreateSnapshot()); //todo
+        }
+
+        //
+        private void NotifyNodeClicked(VertexNode node, PointerEventData.InputButton btn, InputSnapshot input)
+        {
+            NodeClicked?.Invoke(node, btn, input);
+        }
+
+        private void NotifyNodeDragBegin(int id, Vector2 oldNodePosition)
+        {
+            NodeDragBegin?.Invoke(id, oldNodePosition);
+        }
+        private void NotifyNodeDragEnd(int id, Vector2 newNodePosition)
+        {
+            GetNodeById(id).MoveNode(newNodePosition);
+            NodeDragEnd?.Invoke(id, newNodePosition);
         }
     }
 }

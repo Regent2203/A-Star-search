@@ -7,7 +7,7 @@ namespace Core.Implementations.Vertexes
     public class VertexNode : INode<int>
     {
         private readonly int _id;
-        private readonly Vector2 _position;
+        private Vector2 _position;
         private bool _isBlocked;
 
         public int Id => _id;
@@ -29,7 +29,17 @@ namespace Core.Implementations.Vertexes
 
         public void SetBlocked(bool blocked)
         {
+            if (blocked == _isBlocked)
+                return;
+
             _isBlocked = blocked;
+            NodeBlockedChanged?.Invoke(_isBlocked);
+        }
+
+        public void MoveNode(Vector2 position)
+        {
+            _position = position;
+            NodePositionChanged?.Invoke(_position);
         }
     }
 }

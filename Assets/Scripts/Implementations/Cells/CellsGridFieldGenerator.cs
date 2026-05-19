@@ -6,6 +6,9 @@ namespace Core.Implementations.Cells
 {
     public class CellsGridFieldGenerator
     {
+        private CellsGridField _field;
+        private Vector2 _scaleFactor;
+
         private readonly RuntimeLinksProvider<CellNode> _linksProvider;
         private readonly CellViewFactory _viewsFactory;
         private readonly CellNodeFactory _nodesFactory;
@@ -19,24 +22,30 @@ namespace Core.Implementations.Cells
             _config = config;
         }
 
-        public void PopulateField(CellsGridField field, Transform container, Vector2 scale, Grid grid, Action<CellNode, CellType> callback)
+        public void SetConfiguration(CellsGridField field, Transform container, Vector2 scaleFactor, Action<CellNode, CellType> nodeTypeChangedCallback)
         {
-            var size = field.CellsNumber;
+            _field = field;
+            _scaleFactor = scaleFactor;
+
+            _viewsFactory.SetConfiguration(container);
+            _nodesFactory.SetConfiguration(nodeTypeChangedCallback);
+        }
+
+        public void PopulateField()
+        {
+            var size = _field.CellsNumber;
             var views = new CellView[size.x, size.y];
             var nodes = new CellNode[size.x, size.y];
-
-            _viewsFactory.SetConfiguration(scale, container);
-            _nodesFactory.SetConfiguration(callback);
 
             for (int i = 0; i < size.x; i++)
             {
                 for (int j = 0; j < size.y; j++)
                 {
-                    var worldPos = grid.CellToWorld(new Vector3Int(i, j, 0));
+                    var worldPos = _field.Grid.CellToWorld(new Vector3Int(i, j, 0));
                     var index = new Vector2Int(i, j);
 
-                    var view = _viewsFactory.Create(index, worldPos);
-                    var node = _nodesFactory.Create(index, view.GetCenterCoords() / scale, _config.DefaultCellType);
+                    var view = _viewsFactory.Create(index, worldPos, _scaleFactor);
+                    var node = _nodesFactory.Create(index, view.GetCenterCoords() / _scaleFactor, _config.DefaultCellType);
 
                     views[i, j] = view;
                     nodes[i, j] = node;
@@ -44,7 +53,7 @@ namespace Core.Implementations.Cells
             }
 
             _linksProvider.InitGrid(nodes);
-            field.SetFieldData(nodes, views);
+            _field.SetFieldData(nodes, views);
         }
     }
 }

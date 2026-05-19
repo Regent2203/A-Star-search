@@ -12,6 +12,8 @@ using Core.Implementations.VisualLinks;
 using Core.Implementations.Cells;
 using Core.Starters;
 using Core.Inputs;
+using Core.Fields.Grids;
+using Core.Fields;
 
 namespace Core.Installers
 {
@@ -41,6 +43,7 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<VertexesFieldGenerator>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexNodeFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<FieldClickHandler<VertexNode>>().AsSingle(); 
             Container.BindInstance(_visualLinkPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesVisualLinksCreator>().FromInstance(_visualLinksManager).AsSingle();
             Container.BindInterfacesAndSelfTo<VisualLinksFactory<VertexNode>>().AsSingle();
