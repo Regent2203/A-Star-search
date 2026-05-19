@@ -17,15 +17,19 @@ namespace Core.MainMenu
         [SerializeField]
         private Button _btn;
 
+        [HideInInspector]
+        [SerializeField]
+        private string _sceneName;
+
 
         private void Start()
         {
-            _btn.onClick.AddListener(() => LoadScene(_sceneToLoad.asset.name));
+            _btn.onClick.AddListener(LoadScene);
         }
 
-        private void LoadScene(string scene)
+        private void LoadScene()
         {
-            SceneManager.LoadScene(scene);
+            SceneManager.LoadScene(_sceneName);
         }
 
         #if UNITY_EDITOR
@@ -39,15 +43,24 @@ namespace Core.MainMenu
             if (_sceneToLoad.asset.GetType() != typeof(SceneAsset))
             {
                 Debug.LogError($"You can only assign Scene to the field '{nameof(_sceneToLoad)}'", this);
-                _sceneToLoad = null;
+                ClearAssetReference();
+                return;
             }
+
+            _sceneName = _sceneToLoad.asset.name;
         }
 
         private void Reset()
         {
-            _sceneToLoad.asset = null;
             _btn = GetComponent<Button>();
+            ClearAssetReference();
         }
         #endif
+
+        private void ClearAssetReference()
+        {
+            _sceneToLoad = null;
+            _sceneName = string.Empty;
+        }
     }
 }

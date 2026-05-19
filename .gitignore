@@ -4,6 +4,7 @@
 /[Ll]ogs/
 /[Tt]emp/
 /[Uu]serSettings/
+/Windows Build (exe)
 *.csproj
 *.sln
 *.userprefs
