@@ -104,8 +104,8 @@ namespace Core.Implementations.Vertexes
         }
         private void NotifyNodeDragEnd(int id, Vector2 newNodePosition)
         {
-            GetNodeById(id).MoveNode(newNodePosition);
             NodeDragEnd?.Invoke(id, newNodePosition);
+            GetNodeById(id).Move(newNodePosition);
         }
     }
 }

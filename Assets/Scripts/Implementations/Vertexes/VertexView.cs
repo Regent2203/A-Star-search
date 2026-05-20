@@ -17,9 +17,6 @@ namespace Core.Implementations.Vertexes
         private int _id;
         public int Id => _id;
 
-        private Vector2? _size;
-        private Vector3? _center;
-
         private Action<int, Vector2> _onDragBeginCallback;
         private Action<int, Vector2> _onDragEndCallback;
 
@@ -55,14 +52,12 @@ namespace Core.Implementations.Vertexes
 
         public Vector2 GetSize()
         {
-            _size ??= _spriteRenderer.size;
-            return _size.Value;
+            return _spriteRenderer.size;
         }
 
         public Vector3 GetCenterCoords()
         {
-            _center ??= _spriteRenderer.bounds.center;
-            return _center.Value;
+            return _spriteRenderer.bounds.center;
         }
 
         private Vector3? _oldPosition;

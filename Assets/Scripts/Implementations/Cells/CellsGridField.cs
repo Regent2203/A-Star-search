@@ -1,5 +1,6 @@
 ﻿using Core.Fields.Grids;
 using System;
+using UnityEngine;
 using Zenject;
 
 namespace Core.Implementations.Cells
@@ -22,8 +23,13 @@ namespace Core.Implementations.Cells
             base.Init();
 
             //todo: change if we want to call this method not at scene start (instead: after we change grid size or else)
-            _generator.SetConfiguration(this, transform, _scaleFactor, OnNodeTypeChanged);
+            _generator.SetConfiguration(this, transform, _scaleFactor, OnNodePositionChanged, OnNodeTypeChanged);
             _generator.PopulateField();
+        }
+
+        private void OnNodePositionChanged(Vector2 pos)
+        {
+            //todo
         }
 
         private void OnNodeTypeChanged(CellNode node, CellType cellType)

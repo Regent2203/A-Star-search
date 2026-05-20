@@ -22,13 +22,14 @@ namespace Core.Implementations.Cells
             _config = config;
         }
 
-        public void SetConfiguration(CellsGridField field, Transform container, Vector2 scaleFactor, Action<CellNode, CellType> nodeTypeChangedCallback)
+        public void SetConfiguration(CellsGridField field, Transform container, Vector2 scaleFactor,
+            Action<Vector2> nodePositionChangedCallback, Action<CellNode, CellType> nodeTypeChangedCallback)
         {
             _field = field;
             _scaleFactor = scaleFactor;
 
             _viewsFactory.SetConfiguration(container);
-            _nodesFactory.SetConfiguration(nodeTypeChangedCallback);
+            _nodesFactory.SetConfiguration(nodePositionChangedCallback, nodeTypeChangedCallback);
         }
 
         public void PopulateField()

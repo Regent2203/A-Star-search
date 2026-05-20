@@ -13,6 +13,7 @@ namespace Core.PathFinders
             _pathFinder = pathFinder;
         }
 
+        //todo: remove, also add enum to painter (left-right)
         public void TryUseNode(T node, PointerEventData.InputButton btn)
         {            
             if (btn == PointerEventData.InputButton.Left) //lmb

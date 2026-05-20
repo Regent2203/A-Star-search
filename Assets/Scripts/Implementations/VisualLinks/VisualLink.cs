@@ -20,9 +20,14 @@ namespace Core.Implementations.VisualLinks
         public void Bind(ILink<T> link)
         {
             _link = link;
-            _link.From.NodePositionChanged += (_) => UpdatePositions();
-            _link.To.NodePositionChanged += (_) => UpdatePositions();
+            _link.From.NodePositionChanged += OnNodePositionChanged;
+            _link.To.NodePositionChanged += OnNodePositionChanged;
 
+            UpdatePositions();
+        }
+
+        private void OnNodePositionChanged(Vector2 pos)
+        {
             UpdatePositions();
         }
 

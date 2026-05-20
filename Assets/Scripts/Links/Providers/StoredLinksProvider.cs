@@ -53,7 +53,7 @@ namespace Core.Links.Providers
             if (_links.TryGetValue(node, out var fromLinks))
                  return fromLinks.Values;
             else
-                return null;
+                return new List<ILink<T>>();
         }
     }
 }
