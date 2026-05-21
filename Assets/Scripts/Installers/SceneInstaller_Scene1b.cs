@@ -39,7 +39,7 @@ namespace Core.Installers
             Container.BindInstance(_inputSettings).AsSingle();
             Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
             Container.BindInstance(_cellViewPrefab).AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsGridField>().FromInstance(_field).AsSingle();
+            Container.Bind(typeof(CellsGridField), typeof(GridFieldBase<CellNode>)).FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<GridTypeStorage<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridTypeStorage<CellView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsGridFieldGenerator>().AsSingle();

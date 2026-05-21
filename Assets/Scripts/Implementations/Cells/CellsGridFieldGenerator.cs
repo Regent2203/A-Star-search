@@ -9,14 +9,12 @@ namespace Core.Implementations.Cells
         private CellsGridField _field;
         private Vector2 _scaleFactor;
 
-        private readonly RuntimeLinksProvider<CellNode> _linksProvider;
         private readonly CellViewFactory _viewsFactory;
         private readonly CellNodeFactory _nodesFactory;
         private readonly CellsConfig _config;
 
-        public CellsGridFieldGenerator(RuntimeLinksProvider<CellNode> linksProvider, CellViewFactory viewFactory, CellNodeFactory nodeFactory, CellsConfig config)
+        public CellsGridFieldGenerator(CellViewFactory viewFactory, CellNodeFactory nodeFactory, CellsConfig config)
         {
-            _linksProvider = linksProvider;
             _viewsFactory = viewFactory;
             _nodesFactory = nodeFactory;
             _config = config;
@@ -53,7 +51,6 @@ namespace Core.Implementations.Cells
                 }
             }
 
-            _linksProvider.InitGrid(nodes);
             _field.SetFieldData(nodes, views);
         }
     }

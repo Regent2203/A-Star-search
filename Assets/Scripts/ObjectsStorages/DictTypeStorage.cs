@@ -4,7 +4,8 @@ namespace Core.ObjectsStorages
 {
     public class DictTypeStorage<T> : IObjectsStorage<T, int> where T : class
     {
-        protected Dictionary<int, T> _data;
+        private Dictionary<int, T> _data;
+
 
         public T GetById(int id)
         {

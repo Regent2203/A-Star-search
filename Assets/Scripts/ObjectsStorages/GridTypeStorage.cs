@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using Core.Fields.Grids.Neighbours;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Core.ObjectsStorages
 {
     public class GridTypeStorage<T> : IObjectsStorage<T, Vector2Int> where T : class
     {
-        protected T[,] _data;
+        private T[,] _data;
+
 
         public T GetById(Vector2Int id)
         {
@@ -17,6 +20,11 @@ namespace Core.ObjectsStorages
         public void SetData(T[,] data)
         {
             _data = data;
+        }
+
+        public IReadOnlyList<T> GetNeighbourObjects(Vector2Int index, IGridNeighboursProvider<T> neighboursProvider)
+        {
+            return neighboursProvider.GetNeighbours(index, _data);
         }
     }
 }

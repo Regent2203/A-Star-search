@@ -8,20 +8,20 @@ namespace Core.Fields.Grids
 {
     public class GridFieldClickHandler<T> where T : class, INode<Vector2Int> //todo type + TId
     {
-        private GridFieldBase<T> _field;
         private Action<T, PointerEventData.InputButton, InputSnapshot> _nodeClickedCallback;
 
+        private readonly GridFieldBase<T> _field;
         private readonly IInputService _inputService;
 
 
-        public GridFieldClickHandler(IInputService inputService)
+        public GridFieldClickHandler(GridFieldBase<T> field, IInputService inputService)
         {
+            _field = field;
             _inputService = inputService;
         }
 
-        public void SetConfiguration(GridFieldBase<T> field, Action<T, PointerEventData.InputButton, InputSnapshot> nodeClickedCallback)
+        public void SetConfiguration(Action<T, PointerEventData.InputButton, InputSnapshot> nodeClickedCallback)
         {
-            _field = field;
             _nodeClickedCallback = nodeClickedCallback;
         }
 

@@ -1,6 +1,7 @@
 using Core.Fields.Grids.Neighbours;
 using Core.Links.Factories;
 using Core.Nodes;
+using Core.ObjectsStorages;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,28 +12,21 @@ namespace Core.Links.Providers
     /// </summary>
     public class RuntimeLinksProvider<T> : ILinksProvider<T> where T : class, INode<Vector2Int>
     {
-        private T[,] _gridNodes;
-
         private readonly ILinksFactory<T> _factory;
         private readonly IGridNeighboursProvider<T> _neighboursProvider;
-        
-        //todo: add cache dictionary
+        private readonly GridTypeStorage<T> _gridNodes;
 
 
-        public RuntimeLinksProvider(ILinksFactory<T> factory, IGridNeighboursProvider<T> neighboursProvider)
+        public RuntimeLinksProvider(ILinksFactory<T> factory, IGridNeighboursProvider<T> neighboursProvider, GridTypeStorage<T> gridNodes)
         {
             _factory = factory;
             _neighboursProvider = neighboursProvider;
-        }
-
-        public void InitGrid(T[,] gridNodes)
-        {
-            _gridNodes = gridNodes; //todo move init to neighb provider
+            _gridNodes = gridNodes;
         }
 
         public IEnumerable<ILink<T>> GetLinksForNode(T node)
         {
-            var neighbours = _neighboursProvider.GetNeighbours(node.Id, _gridNodes);
+            var neighbours = _gridNodes.GetNeighbourObjects(node.Id, _neighboursProvider);
 
             return _factory.CreateLinks(node, neighbours);
         }

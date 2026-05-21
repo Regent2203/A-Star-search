@@ -43,7 +43,7 @@ namespace Core.Fields.Grids
 
         protected virtual void Init()
         {
-            _clickHandler.SetConfiguration(this, NotifyNodeClicked);
+            _clickHandler.SetConfiguration(NotifyNodeClicked);
 
             _collider.size = (Vector2)_grid.cellSize * _cellsNumber;
             _collider.offset = _collider.size * 0.5f;

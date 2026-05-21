@@ -4,7 +4,6 @@ using UnityEngine.EventSystems;
 using Core.ObjectsStorages;
 using Core.Views;
 using Core.Nodes;
-using UnityEngine;
 
 namespace Core.Fields
 {
@@ -35,10 +34,8 @@ namespace Core.Fields
         {
             var hitObject = eventData.pointerCurrentRaycast.gameObject;
 
-            if (hitObject != null && hitObject.TryGetComponent<V>(out var view)) //todo type
+            if (hitObject != null && hitObject.TryGetComponent<V>(out var view))
             {
-                Debug.Log(view);
-                Debug.Log(view.Id);
                 var node = _nodes.GetById(view.Id);
                 if (node != null)
                 {
