@@ -1,43 +1,36 @@
 using System;
-using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 namespace Core.Implementations.Cells
 {
+    public enum BrushType
+    {
+        Primary,
+        Secondary,
+    }
+
     public class CellsPainter
     {
-        private CellType _lmbType;
-        private CellType _rmbType;
+        private readonly Dictionary<BrushType, CellType> _brushes = new Dictionary<BrushType, CellType>();
 
-        public event Action<CellType> LMBBrushSet;
-        public event Action<CellType> RMBBrushSet;
+        public event Action<BrushType, CellType> BrushChanged;
 
-        public void SetLMBType(CellType cellType)
+
+        public void SetBrush(BrushType brush, CellType cellType)
         {
-            _lmbType = cellType;
-            LMBBrushSet?.Invoke(cellType);
+            _brushes[brush] = cellType;
+            BrushChanged?.Invoke(brush, cellType);
         }
 
-        public void SetRMBType(CellType cellType)
+        public void TryChangeCellType(CellNode node, BrushType brush)
         {
-            _rmbType = cellType;
-            RMBBrushSet?.Invoke(cellType);
-        }
-
-        public void TryChangeCellType(CellNode node, PointerEventData.InputButton btn)
-        {
-            CellType cellType = null;
-
-            if (btn == PointerEventData.InputButton.Left) //lmb
+            if (_brushes.TryGetValue(brush, out CellType cellType))
             {
-                cellType = _lmbType;
+                if (cellType != null)
+                {
+                    node.ChangeType(cellType);
+                }
             }
-            else if (btn == PointerEventData.InputButton.Right) //rmb
-            {
-                cellType = _rmbType;
-            }
-
-            if (cellType != null)
-                node.ChangeType(cellType);
         }
     }
 }

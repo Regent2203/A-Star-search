@@ -56,7 +56,6 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<ConstantCostProvider<VertexNode>>().AsSingle().WithArguments(0.0f);
             Container.BindInterfacesAndSelfTo<PathFinder<VertexNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinePathDrawer>().AsSingle();
-            Container.BindInterfacesAndSelfTo<PathSetter<VertexNode>>().AsSingle(); 
             //Container.BindInterfacesAndSelfTo<UIHotkeyInfoPanel_Vertexes>().FromInstance(_hotkeyInfoPanel).AsSingle();
             Container.BindInterfacesAndSelfTo<LineRenderer>().FromInstance(_pathLineRenderer).AsSingle();
 

@@ -19,7 +19,6 @@ namespace Core.Starters
         private VertexesVisualLinksCreator _visualLinksCreator;
         private PathFinder<VertexNode> _pathFinder;
         private LinePathDrawer _pathDrawer;
-        private PathSetter<VertexNode> _pathSetter;
         //private UIHotkeyInfoPanel_Vertexes _hotkeyInfoPanel;
 
 
@@ -28,14 +27,13 @@ namespace Core.Starters
         public void Construct(CellsConfig config, CellsGridField field, GridFieldClickHandler<CellNode> fieldInputHandler,
             palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)*/
         public void Construct(VertexesField field,VertexesVisualLinksCreator visualLinksCreator,
-            PathFinder<VertexNode> pathFinder, LinePathDrawer pathDrawer, PathSetter<VertexNode> pathSetter)
+            PathFinder<VertexNode> pathFinder, LinePathDrawer pathDrawer)
         {
             _field = field;
             _visualLinksCreator = visualLinksCreator;
 
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
-            _pathSetter = pathSetter;
             /*
             _config = config;
             _fieldInputHandler = fieldInputHandler;
@@ -92,7 +90,14 @@ namespace Core.Starters
 
             if (input.IsMarkingMode)
             {
-                _pathSetter.TryUseNode(node, button);
+                if (button == PointerEventData.InputButton.Left) //lmb
+                {
+                    _pathFinder.UpdateStartNode(node);
+                }
+                else if (button == PointerEventData.InputButton.Right) //rmb
+                {
+                    _pathFinder.UpdateFinishNode(node);
+                }
             }
 
             if (input.IsLinkingMode)

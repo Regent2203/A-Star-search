@@ -54,7 +54,6 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<PathFinder<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinePathDrawer>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPainter>().AsSingle();
-            Container.BindInterfacesAndSelfTo<PathSetter<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LineRenderer>().FromInstance(_pathLineRenderer).AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsPalette>().FromInstance(_palette).AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsPaletteChoicePanel>().FromInstance(_paletteChoice).AsSingle();

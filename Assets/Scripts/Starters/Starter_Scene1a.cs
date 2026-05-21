@@ -3,6 +3,7 @@ using Core.Implementations.Cells.UI;
 using Core.Inputs;
 using Core.PathFinders;
 using System;
+using UnityEditorInternal;
 using UnityEngine.EventSystems;
 using Zenject;
 
@@ -15,7 +16,6 @@ namespace Core.Starters
         private PathFinder<CellNode> _pathFinder;
         private CellsPathDrawer _pathDrawer;
         private CellsPainter _painter;
-        private PathSetter<CellNode> _pathSetter;
         private UICellsPalette _palette;
         private UICellsPaletteChoicePanel _paletteChoice;
         private UICellsPaletteHotkeyInfoPanel _hotkeyInfoPanel;
@@ -23,7 +23,7 @@ namespace Core.Starters
 
         [Inject]
         public void Construct(CellsConfig config, CellsGridField field, PathFinder<CellNode> pathFinder, 
-            CellsPathDrawer pathDrawer, CellsPainter painter, PathSetter<CellNode> pathSetter,
+            CellsPathDrawer pathDrawer, CellsPainter painter,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)
         {
             _config = config;
@@ -31,7 +31,6 @@ namespace Core.Starters
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
             _painter = painter;
-            _pathSetter = pathSetter;
             _palette = palette;
             _paletteChoice = paletteChoice;
             _hotkeyInfoPanel = hotkeyInfoPanel;
@@ -47,12 +46,10 @@ namespace Core.Starters
             _pathFinder.AnyNodeChanged += OnPathChanged;
 
             _palette.ItemClicked += OnPaletteItemClicked;
+            _painter.BrushChanged += OnBrushChanged;
 
-            _painter.LMBBrushSet += OnLMBBrushChanged;
-            _painter.RMBBrushSet += OnRMBBrushChanged;
-
-            _painter.SetLMBType(_config.DefaultCellType);
-            _painter.SetRMBType(_config.DefaultCellType);
+            _painter.SetBrush(BrushType.Primary, _config.DefaultCellType);
+            _painter.SetBrush(BrushType.Secondary, _config.DefaultCellType);
         }
 
         public void Dispose()
@@ -65,21 +62,35 @@ namespace Core.Starters
             _pathFinder.AnyNodeChanged -= OnPathChanged;
 
             _palette.ItemClicked -= OnPaletteItemClicked;
-
-            _painter.LMBBrushSet -= OnLMBBrushChanged;
-            _painter.RMBBrushSet -= OnRMBBrushChanged;
+            _painter.BrushChanged -= OnBrushChanged;
         }
 
         private void OnNodeClicked(CellNode node, PointerEventData.InputButton button, InputSnapshot input)
         {
             if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
             {
-                _painter.TryChangeCellType(node, button);
+                switch (button)
+                {
+                    case PointerEventData.InputButton.Left:
+                        _painter.TryChangeCellType(node, BrushType.Primary);
+                        break;
+                    case PointerEventData.InputButton.Right:
+                        _painter.TryChangeCellType(node, BrushType.Secondary);
+                        break;
+                }
             }
 
             if (input.IsMarkingMode)
             {
-                _pathSetter.TryUseNode(node, button);
+                switch (button)
+                {
+                    case PointerEventData.InputButton.Left:
+                        _pathFinder.UpdateStartNode(node);
+                        break;
+                    case PointerEventData.InputButton.Right:
+                        _pathFinder.UpdateFinishNode(node);
+                        break;
+                }
             }
         }
 
@@ -124,24 +135,27 @@ namespace Core.Starters
             switch (button)
             {
                 case PointerEventData.InputButton.Left:
-                    _painter.SetLMBType(cellType);
+                    _painter.SetBrush(BrushType.Primary, cellType);
                     break;
                 case PointerEventData.InputButton.Right:
-                    _painter.SetRMBType(cellType);
+                    _painter.SetBrush(BrushType.Secondary, cellType);
                     break;
             }
         }
 
-        private void OnLMBBrushChanged(CellType cellType)
+        private void OnBrushChanged(BrushType brush, CellType cellType)
         {
-            _hotkeyInfoPanel.SetLMBText(cellType.Name);
-            _paletteChoice.SetLMBChoice(cellType);
-        }
-
-        private void OnRMBBrushChanged(CellType cellType)
-        {
-            _hotkeyInfoPanel.SetRMBText(cellType.Name);
-            _paletteChoice.SetRMBChoice(cellType);
+            switch (brush)
+            {
+                case BrushType.Primary:
+                    _hotkeyInfoPanel.SetLMBText(cellType.Name);
+                    _paletteChoice.SetLMBChoice(cellType);
+                    break;
+                case BrushType.Secondary:
+                    _hotkeyInfoPanel.SetRMBText(cellType.Name);
+                    _paletteChoice.SetRMBChoice(cellType);
+                    break;
+            }
         }
     }
 }
