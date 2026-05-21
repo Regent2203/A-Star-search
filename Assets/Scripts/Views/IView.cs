@@ -7,4 +7,9 @@ namespace Core.Views
         public Vector2 GetSize();
         public Vector3 GetCenterCoords();
     }
+
+    public interface IView<out TId> : IView
+    {
+        TId Id { get; }
+    }
 }

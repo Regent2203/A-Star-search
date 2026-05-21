@@ -43,7 +43,7 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<VertexesFieldGenerator>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexNodeFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<FieldClickHandler<VertexNode>>().AsSingle(); 
+            Container.BindInterfacesAndSelfTo<FieldClickHandler<VertexNode, VertexView, int>>().AsSingle(); 
             Container.BindInstance(_visualLinkPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesVisualLinksCreator>().FromInstance(_visualLinksManager).AsSingle();
             Container.BindInterfacesAndSelfTo<VisualLinksFactory<VertexNode>>().AsSingle();

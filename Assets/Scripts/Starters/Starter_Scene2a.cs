@@ -43,7 +43,7 @@ namespace Core.Starters
         public void Initialize()
         {
             _field.NodeClicked += OnNodeClicked;
-            //_field.GridTopologyChanged += OnGridTopologyChanged;
+            //_views.GridTopologyChanged += OnGridTopologyChanged;
 
             _pathFinder.StartNodeChanged += OnStartNodeChanged;
             _pathFinder.FinishNodeChanged += OnFinishNodeChanged;
@@ -71,8 +71,8 @@ namespace Core.Starters
             //mouseScroll -> ChangeLinkCost
 
             //temp
-            //_visualLinksCreator.TryUseNode(_field.Node1);
-            //_visualLinksCreator.TryUseNode(_field.Node2);
+            //_visualLinksCreator.TryUseNode(_views.Node1);
+            //_visualLinksCreator.TryUseNode(_views.Node2);
         }
 
         public void Dispose()

@@ -7,6 +7,7 @@ namespace Core.Nodes
     {
         public Vector2 NodePosition { get; }
         public bool IsBlocked { get; }
+
         public event Action<Vector2> NodePositionChanged;
     }
 

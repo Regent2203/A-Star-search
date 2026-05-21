@@ -13,6 +13,7 @@ using UnityEngine;
 using Zenject;
 using Core.Inputs;
 using Core.Starters;
+using Core.ObjectsStorages;
 
 namespace Core.Installers
 {
@@ -39,6 +40,8 @@ namespace Core.Installers
             Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
             Container.BindInstance(_cellViewPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<CellsGridField>().FromInstance(_field).AsSingle();
+            Container.BindInterfacesAndSelfTo<GridTypeStorage<CellNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GridTypeStorage<CellView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsGridFieldGenerator>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();

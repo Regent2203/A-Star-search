@@ -1,14 +1,17 @@
 ﻿using Core.Inputs;
-using Core.Nodes;
 using System;
 using UnityEngine.EventSystems;
-using Core.Implementations.Vertexes;
+using Core.ObjectsStorages;
+using Core.Views;
+using Core.Nodes;
+using UnityEngine;
 
 namespace Core.Fields
 {
-    public class FieldClickHandler<T> where T : class, INode<int>
+    public class FieldClickHandler<T, V, TId> where T: class, INode<TId> where V : class, IView<TId>
     {
-        private IGraph<T, int> _field;
+        private IObjectsStorage<T, TId> _nodes;
+        private IObjectsStorage<V, TId> _views;
         private Action<T, PointerEventData.InputButton, InputSnapshot> _nodeClickedCallback;
 
 
@@ -20,9 +23,10 @@ namespace Core.Fields
             _inputService = inputService;
         }
 
-        public void SetConfiguration(IGraph<T, int> field, Action<T, PointerEventData.InputButton, InputSnapshot> nodeClickedCallback)
+        public void SetConfiguration(IObjectsStorage<T, TId> nodes, IObjectsStorage<V, TId> views, Action<T, PointerEventData.InputButton, InputSnapshot> nodeClickedCallback)
         {
-            _field = field;
+            _nodes = nodes;
+            _views = views;
             _nodeClickedCallback = nodeClickedCallback;
         }
 
@@ -31,9 +35,11 @@ namespace Core.Fields
         {
             var hitObject = eventData.pointerCurrentRaycast.gameObject;
 
-            if (hitObject != null && hitObject.TryGetComponent<VertexView>(out var view)) //todo type
+            if (hitObject != null && hitObject.TryGetComponent<V>(out var view)) //todo type
             {
-                var node = _field.GetNodeById(view.Id);
+                Debug.Log(view);
+                Debug.Log(view.Id);
+                var node = _nodes.GetById(view.Id);
                 if (node != null)
                 {
                     _nodeClickedCallback?.Invoke(node, eventData.button, _inputService.CreateSnapshot());

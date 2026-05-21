@@ -1,6 +1,6 @@
-﻿using Core.Implementations.Cells;
-using Core.Inputs;
+﻿using Core.Inputs;
 using Core.Nodes;
+using Core.ObjectsStorages;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Core.Fields.Grids
 {
-    public class GridFieldBase<T> : MonoBehaviour, IGraph<T, Vector2Int>, IPointerDownHandler
+    public class GridFieldBase<T> : MonoBehaviour, IPointerDownHandler
         where T : class, INode<Vector2Int>
     {
         [SerializeField]
@@ -20,17 +20,19 @@ namespace Core.Fields.Grids
         [SerializeField]
         protected bool _doCentering = true;
 
-        protected T[,] _nodes;
+        protected GridTypeStorage<T> _nodes;
         protected GridFieldClickHandler<T> _clickHandler;
         
         public Grid Grid => _grid;
         public Vector2Int CellsNumber => _cellsNumber;
+        public GridTypeStorage<T> Nodes => _nodes;
         public event Action<T, PointerEventData.InputButton, InputSnapshot> NodeClicked;
 
 
         [Inject]
-        public void Construct(GridFieldClickHandler<T> clickHandler)
+        public void Construct(GridTypeStorage<T> nodes, GridFieldClickHandler<T> clickHandler)
         {
+            _nodes = nodes;
             _clickHandler = clickHandler;
         }
 
@@ -53,19 +55,6 @@ namespace Core.Fields.Grids
         private void DoCentering()
         {
             transform.position -= 0.5f * Vector3.Scale(_grid.cellSize, new Vector3(_cellsNumber.x, _cellsNumber.y, 0));
-        }
-
-        public void SetData(T[,] nodes)
-        {
-            _nodes = nodes;
-        }
-
-        public T GetNodeById(Vector2Int id)
-        {
-            if (_nodes.IsWithinBounds(id.x, id.y))
-                return _nodes[id.x, id.y];
-
-            return null;
         }
 
         public void OnPointerDown(PointerEventData eventData)

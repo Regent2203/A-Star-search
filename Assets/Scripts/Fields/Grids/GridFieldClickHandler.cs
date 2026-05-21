@@ -32,7 +32,7 @@ namespace Core.Fields.Grids
             int x = Mathf.FloorToInt(localPos.x / _field.Grid.cellSize.x);
             int y = Mathf.FloorToInt(localPos.y / _field.Grid.cellSize.y);
 
-            var node = _field.GetNodeById(new Vector2Int(x, y));
+            var node = _field.Nodes.GetById(new Vector2Int(x, y));
             if (node != null)
             {
                 _nodeClickedCallback?.Invoke(node, eventData.button, _inputService.CreateSnapshot());

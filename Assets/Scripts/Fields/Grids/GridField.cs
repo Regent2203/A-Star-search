@@ -1,4 +1,5 @@
 ﻿using Core.Nodes;
+using Core.ObjectsStorages;
 using Core.Views;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,15 @@ namespace Core.Fields.Grids
         protected V _viewPrefab;
         protected Vector2 _scaleFactor;
 
-        protected V[,] _views;
+        protected GridTypeStorage<V> _views;
+
+        public GridTypeStorage<V> Views => _views;
 
 
         [Inject]
-        public void Construct(V cellViewPrefab)
+        public void Construct(GridTypeStorage<V> views, V cellViewPrefab)
         {
+            _views = views;
             _viewPrefab = cellViewPrefab;
         }
 
@@ -32,16 +36,13 @@ namespace Core.Fields.Grids
 
         public void SetFieldData(T[,] nodes, V[,] views)
         {
-            _nodes = nodes;
-            _views = views;
+            _nodes.SetData(nodes);
+            _views.SetData(views);
         }
 
         public V GetViewById(Vector2Int id)
         {
-            if (_views.IsWithinBounds(id.x, id.y))
-                return _views[id.x, id.y];
-
-            return null;
+            return _views.GetById(id);
         }
 
         public V GetViewForNode(T node) => GetViewById(node.Id);
