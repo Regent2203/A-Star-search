@@ -11,7 +11,7 @@ namespace Core.SearchAlgorithms
         private Dictionary<T, float> _costSoFar;
 
 
-        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider<T> heuristicsController, ILinksProvider<T> linksProvider)
+        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider<T> heuristicsProvider, ILinksProvider<T> linksProvider)
         {
             if (startNode.Equals(finishNode))
                 return null;
@@ -46,7 +46,7 @@ namespace Core.SearchAlgorithms
                         _costSoFar[link.To] = newCost;
                         _cameFrom[link.To] = current;
 
-                        var newPriority = newCost + heuristicsController.EstimateCost(link.To, finishNode);
+                        var newPriority = newCost + heuristicsProvider.EstimateCost(link.To, finishNode);
                         needToCheck.Enqueue(link.To, newPriority);
                     }
                 }

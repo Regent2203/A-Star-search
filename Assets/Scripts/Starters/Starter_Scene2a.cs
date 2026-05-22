@@ -4,6 +4,7 @@ using Core.Inputs;
 using Core.PathDrawers;
 using Core.PathFinders;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -43,7 +44,7 @@ namespace Core.Starters
         public void Initialize()
         {
             _field.NodeClicked += OnNodeClicked;
-            //_views.GridTopologyChanged += OnGridTopologyChanged;
+            //_views.FieldChanged += OnGridTopologyChanged;
 
             _pathFinder.StartNodeChanged += OnStartNodeChanged;
             _pathFinder.FinishNodeChanged += OnFinishNodeChanged;
@@ -56,12 +57,12 @@ namespace Core.Starters
             _pathFinder.AnyNodeChanged += (b) => _pathDrawer.ShowPath(false);
             _pathFinder.StartNodeChanged += (node, b) =>
             {
-                var view = _field.GetViewForNode(node);
+                var view = _field.Views.GetById(node.Id);
                 view?.ShowStartMarker(b);
             };
             _pathFinder.FinishNodeChanged += (node, b) =>
             {
-                var view = _field.GetViewForNode(node);
+                var view = _field.Views.GetById(node.Id);
                 view?.ShowFinishMarker(b); 
             };
             
@@ -114,13 +115,13 @@ namespace Core.Starters
 
         private void OnStartNodeChanged(VertexNode node, bool b)
         {
-            var view = _field.GetViewForNode(node);
+            var view = _field.Views.GetById(node.Id);
             view?.ShowStartMarker(b);
         }
 
         private void OnFinishNodeChanged(VertexNode node, bool b)
         {
-            var view = _field.GetViewForNode(node);
+            var view = _field.Views.GetById(node.Id);
             view?.ShowFinishMarker(b);
         }
 
@@ -129,14 +130,17 @@ namespace Core.Starters
             _pathDrawer.ShowPath(false);
         }
 
+        private List<VertexView> _viewsPath = new List<VertexView>();
+
         private void TryRun(bool isReady)
         {
             if (isReady)
             {
-                var nodePath = _pathFinder.GetPath();
-                if (nodePath != null)
+                var nodesPath = _pathFinder.GetPath();
+                if (nodesPath != null)
                 {
-                    _pathDrawer.SetPath(_field.GetViewsForNodes(nodePath));
+                    _field.NodesToViewsNonAlloc(nodesPath, _viewsPath);
+                    _pathDrawer.SetPath(_viewsPath);
                     _pathDrawer.ShowPath(true);
                 }
             }

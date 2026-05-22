@@ -4,6 +4,7 @@ using Core.Inputs;
 using Core.PathDrawers;
 using Core.PathFinders;
 using System;
+using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using Zenject;
 
@@ -39,7 +40,7 @@ namespace Core.Starters
         public void Initialize()
         {
             _field.NodeClicked += OnNodeClicked;
-            _field.GridTopologyChanged += OnGridTopologyChanged;
+            _field.FieldChanged += OnGridTopologyChanged;
 
             _pathFinder.StartNodeChanged += OnStartNodeChanged;
             _pathFinder.FinishNodeChanged += OnFinishNodeChanged;
@@ -55,7 +56,7 @@ namespace Core.Starters
         public void Dispose()
         {
             _field.NodeClicked -= OnNodeClicked;
-            _field.GridTopologyChanged -= OnGridTopologyChanged;
+            _field.FieldChanged -= OnGridTopologyChanged;
 
             _pathFinder.StartNodeChanged -= OnStartNodeChanged;
             _pathFinder.FinishNodeChanged -= OnFinishNodeChanged;
@@ -101,13 +102,13 @@ namespace Core.Starters
 
         private void OnStartNodeChanged(CellNode node, bool b)
         {
-            var view = _field.GetViewForNode(node);
+            var view = _field.GetViewById(node.Id);
             view?.ShowStartMarker(b);
         }
 
         private void OnFinishNodeChanged(CellNode node, bool b)
         {
-            var view = _field.GetViewForNode(node);
+            var view = _field.GetViewById(node.Id);
             view?.ShowFinishMarker(b);
         }
 
@@ -117,14 +118,17 @@ namespace Core.Starters
             TryRun(isReady);
         }
 
+        private List<CellView> _viewsPath = new List<CellView>();
+
         private void TryRun(bool isReady)
         {
             if (isReady)
             {
-                var nodePath = _pathFinder.GetPath();
-                if (nodePath != null)
+                var nodesPath = _pathFinder.GetPath();
+                if (nodesPath != null)
                 {
-                    _pathDrawer.SetPath(_field.GetViewsForNodes(nodePath));
+                    _field.NodesToViewsNonAlloc(nodesPath, _viewsPath);
+                    _pathDrawer.SetPath(_viewsPath);
                     _pathDrawer.ShowPath(true);
                 }
             }

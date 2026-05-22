@@ -1,42 +1,78 @@
-﻿using Core.Nodes;
+﻿using Core.Inputs;
+using Core.Nodes;
 using Core.ObjectsStorages;
 using Core.Views;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace Core.Fields.Grids
 {
-    public class GridField<T, V> : GridFieldBase<T>
+    public class GridField<T, V> : MonoBehaviour, IPointerDownHandler, IVisualField<T, V, Vector2Int>
         where T : class, INode<Vector2Int>
         where V : class, IView
     {
+        [SerializeField]
+        protected Grid _grid;
+        [SerializeField]
+        protected BoxCollider2D _collider;
+        [SerializeField]
+        protected Vector2Int _cellsNumber = new Vector2Int(10, 10);
+        [SerializeField]
+        protected bool _doCentering = true;
+
+        protected GridFieldCore<T> _core;
+
         protected V _viewPrefab;
         protected Vector2 _scaleFactor;
 
         protected GridTypeStorage<V> _views;
+        public IObjectsStorage<V, Vector2Int> Views => _views;
 
-        public GridTypeStorage<V> Views => _views;
+        protected GridFieldClickHandler<T, V> _clickHandler;
 
+        public Grid Grid => _grid;
+        public Vector2Int CellsNumber => _cellsNumber;
+
+        public IObjectsStorage<T, Vector2Int> Nodes => _core.Nodes;
+
+        public event Action<T, PointerEventData.InputButton, InputSnapshot> NodeClicked;
+        public event Action FieldChanged; //todo _core
 
         [Inject]
-        public void Construct(GridTypeStorage<V> views, V cellViewPrefab)
+        public void Construct(GridTypeStorage<V> views, GridFieldCore<T> core, GridFieldClickHandler<T, V> clickHandler, V cellViewPrefab)
         {
             _views = views;
+            _core = core;
+            _clickHandler = clickHandler;
             _viewPrefab = cellViewPrefab;
         }
 
-        protected override void Init()
+        protected void Awake()
         {
-            base.Init();
+            Init();
+        }
+
+        protected virtual void Init()
+        {
+            _clickHandler.SetConfiguration(NotifyNodeClicked);
+
+            _collider.size = (Vector2)_grid.cellSize * _cellsNumber;
+            _collider.offset = _collider.size * 0.5f;
+
+            if (_doCentering)
+            {
+                transform.position -= 0.5f * Vector3.Scale(_grid.cellSize, new Vector3(_cellsNumber.x, _cellsNumber.y, 0));
+            }
 
             _scaleFactor = _grid.cellSize / _viewPrefab.GetSize();
         }
 
         public void SetFieldData(T[,] nodes, V[,] views)
         {
-            _nodes.SetData(nodes);
+            _core.SetNodesData(nodes);
             _views.SetData(views);
         }
 
@@ -45,8 +81,14 @@ namespace Core.Fields.Grids
             return _views.GetById(id);
         }
 
-        public V GetViewForNode(T node) => GetViewById(node.Id);
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            _clickHandler.ProcessClick(eventData);
+        }
 
-        public IReadOnlyList<V> GetViewsForNodes(IList<T> nodePath) => nodePath.Select(GetViewForNode).ToList();
+        private void NotifyNodeClicked(T node, PointerEventData.InputButton btn, InputSnapshot input)
+        {
+            NodeClicked?.Invoke(node, btn, input);
+        }
     }
 }

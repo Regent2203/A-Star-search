@@ -9,7 +9,7 @@ namespace Core.Implementations.Cells
     {
         private CellsGridFieldGenerator _generator;
 
-        public event Action GridTopologyChanged;
+        public event Action FieldChanged; //todo
 
 
         [Inject]
@@ -34,10 +34,10 @@ namespace Core.Implementations.Cells
 
         private void OnNodeTypeChanged(CellNode node, CellType cellType)
         {
-            var view = GetViewForNode(node);
+            var view = GetViewById(node.Id);
             view.UpdateSprite(cellType.Sprite);
 
-            GridTopologyChanged?.Invoke();
+            FieldChanged?.Invoke();
         }
     }
 }

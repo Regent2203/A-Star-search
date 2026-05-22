@@ -7,7 +7,9 @@ using Core.Nodes;
 
 namespace Core.Fields
 {
-    public class FieldClickHandler<T, V, TId> where T: class, INode<TId> where V : class, IView<TId>
+    public class FieldClickHandler<T, V, TId> 
+        where T : class, INode<TId> 
+        where V : class, IView<TId>
     {
         private IObjectsStorage<T, TId> _nodes;
         private IObjectsStorage<V, TId> _views;

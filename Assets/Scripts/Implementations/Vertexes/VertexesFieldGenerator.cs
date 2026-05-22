@@ -54,9 +54,9 @@ namespace Core.Implementations.Cells
 
             //todo unsubscribe if ever needed
             /*
-            field.GridTopologyChanged += (node, type) =>
+            field.FieldChanged += (node, type) =>
             {
-                var view = field.GetViewForNode(node);
+                var view = field.GetViewById(node);
                 view.UpdateSprite(type.Sprite);
             };*/
 

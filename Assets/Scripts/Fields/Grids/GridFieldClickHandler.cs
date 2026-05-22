@@ -1,20 +1,23 @@
 using Core.Inputs;
 using Core.Nodes;
+using Core.Views;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Core.Fields.Grids
 {
-    public class GridFieldClickHandler<T> where T : class, INode<Vector2Int> //todo type + TId
+    public class GridFieldClickHandler<T, V> 
+        where T : class, INode<Vector2Int>
+        where V : class, IView
     {
         private Action<T, PointerEventData.InputButton, InputSnapshot> _nodeClickedCallback;
 
-        private readonly GridFieldBase<T> _field;
+        private readonly GridField<T, V> _field;
         private readonly IInputService _inputService;
 
 
-        public GridFieldClickHandler(GridFieldBase<T> field, IInputService inputService)
+        public GridFieldClickHandler(GridField<T, V> field, IInputService inputService)
         {
             _field = field;
             _inputService = inputService;
