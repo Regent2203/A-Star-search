@@ -64,12 +64,20 @@ namespace Core.Fields.Spatials
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            _clickHandler.ProcessClick(eventData);
+            if (!_clickHandler.ProcessClick(eventData))
+            {
+                //FieldClicked?.Invoke(this, eventData.button, _inputService.CreateSnapshot()); //todo
+            }
         }
 
-        private void NotifyNodeClicked(T node, PointerEventData.InputButton btn, InputSnapshot input)
+        protected void NotifyNodeClicked(T node, PointerEventData.InputButton btn, InputSnapshot input)
         {
             NodeClicked?.Invoke(node, btn, input);
+        }
+
+        public T GetNodeById(int id)
+        {
+            return _core.GetNodeById(id);
         }
     }
 }

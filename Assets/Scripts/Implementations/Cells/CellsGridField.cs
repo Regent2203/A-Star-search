@@ -9,8 +9,6 @@ namespace Core.Implementations.Cells
     {
         private CellsGridFieldGenerator _generator;
 
-        public event Action FieldChanged; //todo
-
 
         [Inject]
         public void Construct(CellsGridFieldGenerator generator)
@@ -37,7 +35,7 @@ namespace Core.Implementations.Cells
             var view = GetViewById(node.Id);
             view.UpdateSprite(cellType.Sprite);
 
-            FieldChanged?.Invoke();
+            //FieldChanged?.Invoke();
         }
     }
 }

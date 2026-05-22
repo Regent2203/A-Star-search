@@ -83,12 +83,20 @@ namespace Core.Fields.Grids
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            _clickHandler.ProcessClick(eventData);
+            if (!_clickHandler.ProcessClick(eventData))
+            {
+                //FieldClicked?.Invoke(this, eventData.button, _inputService.CreateSnapshot()); //todo
+            }
         }
 
-        private void NotifyNodeClicked(T node, PointerEventData.InputButton btn, InputSnapshot input)
+        protected void NotifyNodeClicked(T node, PointerEventData.InputButton btn, InputSnapshot input)
         {
             NodeClicked?.Invoke(node, btn, input);
+        }
+
+        public T GetNodeById(Vector2Int id)
+        {
+            return _core.GetNodeById(id);
         }
     }
 }
