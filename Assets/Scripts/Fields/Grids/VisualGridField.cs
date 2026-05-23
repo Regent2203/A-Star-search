@@ -10,9 +10,9 @@ using Zenject;
 
 namespace Core.Fields.Grids
 {
-    public class GridField<T, V> : MonoBehaviour, IPointerDownHandler, IVisualField<T, V, Vector2Int>
+    public class VisualGridField<T, V> : VisualField<T, V, Vector2Int>
         where T : class, INode<Vector2Int>
-        where V : class, IView
+        where V : class, IView<Vector2Int>
     {
         [SerializeField]
         protected Grid _grid;
@@ -23,23 +23,19 @@ namespace Core.Fields.Grids
         [SerializeField]
         protected bool _doCentering = true;
 
-        protected GridFieldCore<T> _core;
-
-        protected V _viewPrefab;
         protected Vector2 _scaleFactor;
 
-        protected GridTypeStorage<V> _views;
-        public IObjectsStorage<V, Vector2Int> Views => _views;
-
+        protected GridFieldCore<T> _core;
         protected GridFieldClickHandler<T, V> _clickHandler;
+        protected GridTypeStorage<V> _views;
+
+        protected override IField<T, Vector2Int> Core => _core;
+        protected override IClickHandler ClickHandler => _clickHandler;
+        public override IObjectsStorage<V, Vector2Int> Views => _views;
 
         public Grid Grid => _grid;
         public Vector2Int CellsNumber => _cellsNumber;
 
-        public IObjectsStorage<T, Vector2Int> Nodes => _core.Nodes;
-
-        public event Action<T, PointerEventData.InputButton, InputSnapshot> NodeClicked;
-        public event Action FieldChanged; //todo _core
 
         [Inject]
         public void Construct(GridTypeStorage<V> views, GridFieldCore<T> core, GridFieldClickHandler<T, V> clickHandler, V cellViewPrefab)
@@ -57,7 +53,7 @@ namespace Core.Fields.Grids
 
         protected virtual void Init()
         {
-            _clickHandler.SetConfiguration(NotifyNodeClicked);
+            _clickHandler.SetConfiguration(NotifyNodeClicked, NotifyFieldClicked);
 
             _collider.size = (Vector2)_grid.cellSize * _cellsNumber;
             _collider.offset = _collider.size * 0.5f;
@@ -76,27 +72,9 @@ namespace Core.Fields.Grids
             _views.SetData(views);
         }
 
-        public V GetViewById(Vector2Int id)
+        protected void OnNodePositionChanged(Vector2 pos)
         {
-            return _views.GetById(id);
-        }
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            if (!_clickHandler.ProcessClick(eventData))
-            {
-                //FieldClicked?.Invoke(this, eventData.button, _inputService.CreateSnapshot()); //todo
-            }
-        }
-
-        protected void NotifyNodeClicked(T node, PointerEventData.InputButton btn, InputSnapshot input)
-        {
-            NodeClicked?.Invoke(node, btn, input);
-        }
-
-        public T GetNodeById(Vector2Int id)
-        {
-            return _core.GetNodeById(id);
+            //todo
         }
     }
 }

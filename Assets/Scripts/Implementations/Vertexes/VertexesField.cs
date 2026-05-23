@@ -9,11 +9,10 @@ using Zenject;
 
 namespace Core.Implementations.Vertexes
 {
-    public class VertexesField : SpatialField<VertexNode, VertexView>
+    public class VertexesField : VisualSpatialField<VertexNode, VertexView>
     {
         private VertexesFieldGenerator _generator;
 
-        public event Action<VertexesField, PointerEventData.InputButton, InputSnapshot> FieldClicked;
         public event Action<int, Vector2> NodeDragBegin;
         public event Action<int, Vector2> NodeDragEnd;
 
@@ -25,16 +24,10 @@ namespace Core.Implementations.Vertexes
             _generator = generator;
         }
 
-        private void Awake()
-        {
-            Init();
-        }
-
-        protected virtual void Init()
+        protected override void Init()
         {
             base.Init();
-
-            _clickHandler.SetConfiguration(Nodes, _views, NotifyNodeClicked);
+            
             //todo
             _generator.SetConfiguration(this, transform, NotifyNodeDragBegin, NotifyNodeDragEnd);
             _generator.TestPopulate();

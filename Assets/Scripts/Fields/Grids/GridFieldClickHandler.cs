@@ -7,28 +7,31 @@ using UnityEngine.EventSystems;
 
 namespace Core.Fields.Grids
 {
-    public class GridFieldClickHandler<T, V> 
+    public class GridFieldClickHandler<T, V> : IClickHandler
         where T : class, INode<Vector2Int>
-        where V : class, IView
+        where V : class, IView<Vector2Int>
     {
         private Action<T, PointerEventData.InputButton, InputSnapshot> _nodeClickedCallback;
+        private Action<PointerEventData.InputButton, InputSnapshot> _fieldClickedCallback;
 
-        private readonly GridField<T, V> _field;
+        private readonly VisualGridField<T, V> _field;
         private readonly IInputService _inputService;
 
 
-        public GridFieldClickHandler(GridField<T, V> field, IInputService inputService)
+        public GridFieldClickHandler(VisualGridField<T, V> field, IInputService inputService)
         {
             _field = field;
             _inputService = inputService;
         }
 
-        public void SetConfiguration(Action<T, PointerEventData.InputButton, InputSnapshot> nodeClickedCallback)
+        public void SetConfiguration(Action<T, PointerEventData.InputButton, InputSnapshot> nodeClickedCallback,
+             Action<PointerEventData.InputButton, InputSnapshot> fieldClickedCallback)
         {
             _nodeClickedCallback = nodeClickedCallback;
+            _fieldClickedCallback = fieldClickedCallback;
         }
 
-        public bool ProcessClick(PointerEventData eventData)
+        public void ProcessClick(PointerEventData eventData)
         {
             Vector3 localPos = _field.transform.InverseTransformPoint(eventData.pointerCurrentRaycast.worldPosition);
 
@@ -39,10 +42,10 @@ namespace Core.Fields.Grids
             if (node != null)
             {
                 _nodeClickedCallback?.Invoke(node, eventData.button, _inputService.CreateSnapshot());
-                return true;
+                return;
             }
 
-            return false;
+            _fieldClickedCallback.Invoke(eventData.button, _inputService.CreateSnapshot());
         }
     }
 }

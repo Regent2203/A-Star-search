@@ -14,7 +14,7 @@ public static class Extensions
 
     public static void NodesToViewsNonAlloc<T, V, TId>(this IVisualField<T, V, TId> field, IList<T> nodesList, List<V> viewsList)
         where T : class, INode<TId>
-        where V : class, IView
+        where V : class, IView<TId>
     {
         viewsList.Clear();
 

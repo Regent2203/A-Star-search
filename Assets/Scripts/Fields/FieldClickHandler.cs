@@ -1,21 +1,19 @@
 ﻿using Core.Inputs;
+using Core.Nodes;
+using Core.Views;
 using System;
 using UnityEngine.EventSystems;
-using Core.ObjectsStorages;
-using Core.Views;
-using Core.Nodes;
 
 namespace Core.Fields
 {
-    public class FieldClickHandler<T, V, TId> 
+    public class FieldClickHandler<T, V, TId> : IClickHandler
         where T : class, INode<TId> 
         where V : class, IView<TId>
     {
-        private IObjectsStorage<T, TId> _nodes;
-        private IObjectsStorage<V, TId> _views;
         private Action<T, PointerEventData.InputButton, InputSnapshot> _nodeClickedCallback;
+        private Action<PointerEventData.InputButton, InputSnapshot> _fieldClickedCallback;
 
-
+        private readonly IVisualField<T, V, TId> _field;
         private readonly IInputService _inputService;
 
 
@@ -24,29 +22,29 @@ namespace Core.Fields
             _inputService = inputService;
         }
 
-        public void SetConfiguration(IObjectsStorage<T, TId> nodes, IObjectsStorage<V, TId> views, Action<T, PointerEventData.InputButton, InputSnapshot> nodeClickedCallback)
+        public void SetConfiguration(Action<T, PointerEventData.InputButton, InputSnapshot> nodeClickedCallback,
+            Action<PointerEventData.InputButton, InputSnapshot> fieldClickedCallback)
         {
-            _nodes = nodes;
-            _views = views;
             _nodeClickedCallback = nodeClickedCallback;
+            _fieldClickedCallback = fieldClickedCallback;
         }
 
-        
-        public bool ProcessClick(PointerEventData eventData)
+
+        public void ProcessClick(PointerEventData eventData)
         {
             var hitObject = eventData.pointerCurrentRaycast.gameObject;
 
             if (hitObject != null && hitObject.TryGetComponent<V>(out var view))
             {
-                var node = _nodes.GetById(view.Id);
+                var node = _field.Nodes.GetById(view.Id);
                 if (node != null)
                 {
                     _nodeClickedCallback?.Invoke(node, eventData.button, _inputService.CreateSnapshot());
-                    return true;
+                    return;
                 }
             }
-
-            return false;
+            
+            _fieldClickedCallback.Invoke(eventData.button, _inputService.CreateSnapshot());
         }
     }
 }

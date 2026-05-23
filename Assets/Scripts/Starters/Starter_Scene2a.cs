@@ -44,7 +44,7 @@ namespace Core.Starters
         public void Initialize()
         {
             _field.NodeClicked += OnNodeClicked;
-            //_views.FieldChanged += OnGridTopologyChanged;
+            //_views.FieldChanged += OnFieldChanged;
 
             _pathFinder.StartNodeChanged += OnStartNodeChanged;
             _pathFinder.FinishNodeChanged += OnFinishNodeChanged;

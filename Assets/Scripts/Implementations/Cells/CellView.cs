@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Core.Implementations.Cells
 {
-    public class CellView : MonoBehaviour, IView
+    public class CellView : MonoBehaviour, IView<Vector2Int>
     {
         [SerializeField]
         private GameObject _pathMarker;
@@ -15,7 +15,7 @@ namespace Core.Implementations.Cells
         private SpriteRenderer _spriteRenderer;
 
         private Vector2Int _index;
-        public Vector2Int Index => _index;
+        public Vector2Int Id => _index;
 
         private Vector2? _size;
         private Vector3? _center;

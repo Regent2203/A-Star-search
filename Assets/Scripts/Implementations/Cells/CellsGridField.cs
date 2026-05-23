@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Core.Implementations.Cells
 {
-    public class CellsGridField : GridField<CellNode, CellView>
+    public class CellsGridField : VisualGridField<CellNode, CellView>
     {
         private CellsGridFieldGenerator _generator;
 
@@ -25,16 +25,14 @@ namespace Core.Implementations.Cells
             _generator.PopulateField();
         }
 
-        private void OnNodePositionChanged(Vector2 pos)
-        {
-            //todo
-        }
+        
 
         private void OnNodeTypeChanged(CellNode node, CellType cellType)
         {
             var view = GetViewById(node.Id);
             view.UpdateSprite(cellType.Sprite);
 
+            _core.NotifyFieldChanged();
             //FieldChanged?.Invoke();
         }
     }

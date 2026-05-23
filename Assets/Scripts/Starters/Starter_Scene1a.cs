@@ -40,7 +40,7 @@ namespace Core.Starters
         public void Initialize()
         {
             _field.NodeClicked += OnNodeClicked;
-            _field.FieldChanged += OnGridTopologyChanged;
+            _field.FieldChanged += OnFieldChanged;
 
             _pathFinder.StartNodeChanged += OnStartNodeChanged;
             _pathFinder.FinishNodeChanged += OnFinishNodeChanged;
@@ -56,7 +56,7 @@ namespace Core.Starters
         public void Dispose()
         {
             _field.NodeClicked -= OnNodeClicked;
-            _field.FieldChanged -= OnGridTopologyChanged;
+            _field.FieldChanged -= OnFieldChanged;
 
             _pathFinder.StartNodeChanged -= OnStartNodeChanged;
             _pathFinder.FinishNodeChanged -= OnFinishNodeChanged;
@@ -95,7 +95,7 @@ namespace Core.Starters
             }
         }
 
-        private void OnGridTopologyChanged()
+        private void OnFieldChanged()
         {
             OnPathChanged(_pathFinder.IsReady);
         }
