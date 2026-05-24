@@ -1,9 +1,9 @@
-using Core.Inputs;
+using ThisProject.Inputs;
 using TMPro;
 using UnityEngine;
 using Zenject;
 
-namespace Core.Implementations.Cells.UI
+namespace ThisProject.Implementations.Cells.UI
 {
     public class UICellsPaletteHotkeyInfoPanel : MonoBehaviour
     {

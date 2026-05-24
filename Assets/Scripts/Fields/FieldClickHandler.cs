@@ -1,10 +1,10 @@
-﻿using Core.Inputs;
-using Core.Nodes;
-using Core.Views;
+﻿using ThisProject.Inputs;
+using ThisProject.Nodes;
+using ThisProject.Views;
 using System;
 using UnityEngine.EventSystems;
 
-namespace Core.Fields
+namespace ThisProject.Fields
 {
     public class FieldClickHandler<T, V, TId> : IClickHandler
         where T : class, INode<TId> 

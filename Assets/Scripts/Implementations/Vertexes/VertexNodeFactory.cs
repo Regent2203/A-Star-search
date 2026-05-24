@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace Core.Implementations.Vertexes
+namespace ThisProject.Implementations.Vertexes
 {
     public class VertexNodeFactory
     {

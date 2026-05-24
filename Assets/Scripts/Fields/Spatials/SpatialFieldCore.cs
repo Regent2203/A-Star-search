@@ -1,11 +1,11 @@
-﻿using Core.Fields.Grids;
-using Core.Nodes;
-using Core.ObjectsStorages;
+﻿using ThisProject.Fields.Grids;
+using ThisProject.Nodes;
+using ThisProject.ObjectsStorages;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Core.Fields.Spatials
+namespace ThisProject.Fields.Spatials
 {
     public class SpatialFieldCore<T> : FieldCore<T, int> where T : class, INode<int>
     {

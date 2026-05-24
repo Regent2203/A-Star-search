@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Views
+namespace ThisProject.Views
 {
     public interface IView
     {

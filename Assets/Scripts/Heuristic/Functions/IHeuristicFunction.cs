@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Heuristic.Functions
+namespace ThisProject.Heuristic.Functions
 {
     public interface IHeuristicFunction
     {

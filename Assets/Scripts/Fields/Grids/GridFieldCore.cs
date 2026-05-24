@@ -1,8 +1,8 @@
-﻿using Core.Nodes;
-using Core.ObjectsStorages;
+﻿using ThisProject.Nodes;
+using ThisProject.ObjectsStorages;
 using UnityEngine;
 
-namespace Core.Fields.Grids
+namespace ThisProject.Fields.Grids
 {
     public class GridFieldCore<T> : FieldCore<T, Vector2Int> where T : class, INode<Vector2Int>
     {

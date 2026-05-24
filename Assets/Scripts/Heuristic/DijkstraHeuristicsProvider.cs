@@ -1,6 +1,6 @@
-﻿using Core.Nodes;
+﻿using ThisProject.Nodes;
 
-namespace Core.Heuristic
+namespace ThisProject.Heuristic
 {
     public class DijkstraHeuristicsProvider<T> : IHeuristicsProvider<T> where T : class, INode
     {

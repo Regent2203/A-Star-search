@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Core.Inputs
+namespace ThisProject.Inputs
 {
     [Serializable]
     public class InputSettings

@@ -1,7 +1,7 @@
-﻿using Core.Views;
+﻿using ThisProject.Views;
 using System.Collections.Generic;
 
-namespace Core.PathDrawers
+namespace ThisProject.PathDrawers
 {
     public interface IPathDrawer<V> where V : IView
     {

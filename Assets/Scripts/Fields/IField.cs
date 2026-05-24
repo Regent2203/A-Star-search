@@ -1,8 +1,8 @@
-﻿using Core.Nodes;
-using Core.ObjectsStorages;
+﻿using ThisProject.Nodes;
+using ThisProject.ObjectsStorages;
 using System;
 
-namespace Core.Fields
+namespace ThisProject.Fields
 {
     public interface IField<T, TId> 
         where T : class, INode<TId>

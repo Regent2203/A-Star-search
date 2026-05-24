@@ -1,13 +1,13 @@
-﻿using Core.Inputs;
-using Core.Nodes;
-using Core.ObjectsStorages;
-using Core.Views;
+﻿using ThisProject.Inputs;
+using ThisProject.Nodes;
+using ThisProject.ObjectsStorages;
+using ThisProject.Views;
 using System;
 using UnityEngine.EventSystems;
 using UnityEngine;
 
 
-namespace Core.Fields
+namespace ThisProject.Fields
 {
     public abstract class VisualField<T, V, TId> : MonoBehaviour, IPointerDownHandler, IVisualField<T, V, TId>
         where T : class, INode<TId>

@@ -1,6 +1,6 @@
-﻿using Core.Links.Factories.CostProviders;
+﻿using ThisProject.Links.Factories.CostProviders;
 
-namespace Core.Implementations.Cells
+namespace ThisProject.Implementations.Cells
 {
     public class CellNodeWeightGetter : IWeightGetter<CellNode>
     {

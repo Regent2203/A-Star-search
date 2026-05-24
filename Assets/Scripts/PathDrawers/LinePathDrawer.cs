@@ -1,8 +1,8 @@
-using Core.Views;
+using ThisProject.Views;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Core.PathDrawers
+namespace ThisProject.PathDrawers
 {
     public class LinePathDrawer : IPathDrawer<IView>
     {

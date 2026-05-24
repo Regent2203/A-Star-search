@@ -1,11 +1,11 @@
-using Core.Inputs;
-using Core.Nodes;
-using Core.Views;
+using ThisProject.Inputs;
+using ThisProject.Nodes;
+using ThisProject.Views;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Core.Fields.Grids
+namespace ThisProject.Fields.Grids
 {
     public class GridFieldClickHandler<T, V> : IClickHandler
         where T : class, INode<Vector2Int>

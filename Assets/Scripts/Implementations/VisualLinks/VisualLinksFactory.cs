@@ -1,8 +1,8 @@
-﻿using Core.Nodes;
+﻿using ThisProject.Nodes;
 using UnityEngine;
 using Zenject;
 
-namespace Core.Implementations.VisualLinks
+namespace ThisProject.Implementations.VisualLinks
 {
     public class VisualLinksFactory<T> where T : class, INode
     {

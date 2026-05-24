@@ -1,9 +1,9 @@
-using Core.Implementations.Vertexes;
-using Core.Links;
-using Core.Nodes;
+using ThisProject.Implementations.Vertexes;
+using ThisProject.Links;
+using ThisProject.Nodes;
 using UnityEngine;
 
-namespace Core.Implementations.VisualLinks
+namespace ThisProject.Implementations.VisualLinks
 {
     public class VisualLink : VisualLink<VertexNode>
     {

@@ -1,8 +1,8 @@
-using Core.Nodes;
+using ThisProject.Nodes;
 using System;
 using UnityEngine;
 
-namespace Core.Implementations.Vertexes
+namespace ThisProject.Implementations.Vertexes
 {
     public class VertexNode : INode<int>
     {

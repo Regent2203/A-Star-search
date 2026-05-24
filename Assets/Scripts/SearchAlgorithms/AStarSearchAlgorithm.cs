@@ -1,9 +1,9 @@
-﻿using Core.Heuristic;
-using Core.Links.Providers;
-using Core.Nodes;
+﻿using ThisProject.Heuristic;
+using ThisProject.Links.Providers;
+using ThisProject.Nodes;
 using System.Collections.Generic;
 
-namespace Core.SearchAlgorithms
+namespace ThisProject.SearchAlgorithms
 {
     public class AStarSearchAlgorithm<T> : ISearchAlgorithm<T> where T : class, INode
     {

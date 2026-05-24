@@ -1,11 +1,11 @@
-using Core.Fields.Grids.Neighbours;
-using Core.Links.Factories;
-using Core.Nodes;
-using Core.ObjectsStorages;
+using ThisProject.Fields.Grids.Neighbours;
+using ThisProject.Links.Factories;
+using ThisProject.Nodes;
+using ThisProject.ObjectsStorages;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Core.Links.Providers
+namespace ThisProject.Links.Providers
 {
     /// <summary>
     /// Creates links during search algorithm work - not beforehand

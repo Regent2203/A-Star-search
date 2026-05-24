@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Core.SearchAlgorithms
+namespace ThisProject.SearchAlgorithms
 {
     public class PriorityQueue<T> //AI-generated
     {

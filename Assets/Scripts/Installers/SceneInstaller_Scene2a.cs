@@ -1,21 +1,21 @@
-using Core.Links.Factories.CostProviders;
-using Core.Heuristic.Functions;
-using Core.Implementations.Vertexes;
-using Core.Links.Factories;
-using Core.Links.Providers;
-using Core.PathDrawers;
-using Core.PathFinders;
-using Core.SearchAlgorithms;
+using ThisProject.Links.Factories.CostProviders;
+using ThisProject.Heuristic.Functions;
+using ThisProject.Implementations.Vertexes;
+using ThisProject.Links.Factories;
+using ThisProject.Links.Providers;
+using ThisProject.PathDrawers;
+using ThisProject.PathFinders;
+using ThisProject.SearchAlgorithms;
 using UnityEngine;
 using Zenject;
-using Core.Implementations.VisualLinks;
-using Core.Implementations.Cells;
-using Core.Starters;
-using Core.Inputs;
-using Core.Fields.Grids;
-using Core.Fields;
+using ThisProject.Implementations.VisualLinks;
+using ThisProject.Implementations.Cells;
+using ThisProject.Starters;
+using ThisProject.Inputs;
+using ThisProject.Fields.Grids;
+using ThisProject.Fields;
 
-namespace Core.Installers
+namespace ThisProject.Installers
 {
     public class SceneInstaller_Scene2a : MonoInstaller
     {

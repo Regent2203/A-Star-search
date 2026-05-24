@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Core.ObjectsStorages
+namespace ThisProject.ObjectsStorages
 {
     public class DictTypeStorage<T> : IObjectsStorage<T, int> where T : class
     {

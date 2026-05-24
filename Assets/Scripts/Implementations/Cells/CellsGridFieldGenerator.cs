@@ -1,8 +1,8 @@
-using Core.Links.Providers;
+using ThisProject.Links.Providers;
 using System;
 using UnityEngine;
 
-namespace Core.Implementations.Cells
+namespace ThisProject.Implementations.Cells
 {
     public class CellsGridFieldGenerator
     {

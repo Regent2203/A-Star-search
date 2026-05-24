@@ -1,11 +1,11 @@
-using Core.Inputs;
+using ThisProject.Inputs;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace Core.Implementations.Cells.UI
+namespace ThisProject.Implementations.Cells.UI
 {
     public class UICellsPalette : MonoBehaviour
     {

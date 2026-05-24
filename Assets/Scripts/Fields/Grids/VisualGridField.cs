@@ -1,14 +1,14 @@
-﻿using Core.Inputs;
-using Core.Nodes;
-using Core.ObjectsStorages;
-using Core.Views;
+﻿using ThisProject.Inputs;
+using ThisProject.Nodes;
+using ThisProject.ObjectsStorages;
+using ThisProject.Views;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace Core.Fields.Grids
+namespace ThisProject.Fields.Grids
 {
     public class VisualGridField<T, V> : VisualField<T, V, Vector2Int>
         where T : class, INode<Vector2Int>

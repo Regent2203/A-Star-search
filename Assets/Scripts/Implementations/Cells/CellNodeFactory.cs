@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace Core.Implementations.Cells
+namespace ThisProject.Implementations.Cells
 {
     public class CellNodeFactory
     {

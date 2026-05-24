@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Core.Nodes
+namespace ThisProject.Nodes
 {
     public interface INode
     {

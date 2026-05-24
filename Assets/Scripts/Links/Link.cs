@@ -1,6 +1,6 @@
-﻿using Core.Nodes;
+﻿using ThisProject.Nodes;
 
-namespace Core.Links
+namespace ThisProject.Links
 {
     public struct Link<T> : ILink<T> where T : class, INode
     {

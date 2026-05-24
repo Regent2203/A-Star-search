@@ -1,4 +1,4 @@
-﻿namespace Core.Inputs
+﻿namespace ThisProject.Inputs
 {
     public interface IInputService
     {

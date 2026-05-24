@@ -1,6 +1,6 @@
-﻿using Core.Implementations.VisualLinks;
+﻿using ThisProject.Implementations.VisualLinks;
 
-namespace Core.Implementations.Vertexes
+namespace ThisProject.Implementations.Vertexes
 {
     public class VertexesVisualLinksCreator : VisualLinksCreator<VertexNode>
     { }

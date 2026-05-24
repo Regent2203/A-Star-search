@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.Heuristic;
-using Core.Links.Providers;
-using Core.Nodes;
-using Core.SearchAlgorithms;
+using ThisProject.Heuristic;
+using ThisProject.Links.Providers;
+using ThisProject.Nodes;
+using ThisProject.SearchAlgorithms;
 
-namespace Core.PathFinders
+namespace ThisProject.PathFinders
 {
     public class PathFinder<T> : IPathFinder<T> where T : class, INode
     {

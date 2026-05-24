@@ -1,8 +1,8 @@
-﻿using Core.Fields.Grids.Neighbours;
+﻿using ThisProject.Fields.Grids.Neighbours;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Core.ObjectsStorages
+namespace ThisProject.ObjectsStorages
 {
     public class GridTypeStorage<T> : IObjectsStorage<T, Vector2Int> where T : class
     {

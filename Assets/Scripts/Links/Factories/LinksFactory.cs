@@ -1,8 +1,8 @@
-﻿using Core.Links.Factories.CostProviders;
-using Core.Nodes;
+﻿using ThisProject.Links.Factories.CostProviders;
+using ThisProject.Nodes;
 using System.Collections.Generic;
 
-namespace Core.Links.Factories
+namespace ThisProject.Links.Factories
 {
     public class LinksFactory<T> : ILinksFactory<T> where T : class, INode
     {

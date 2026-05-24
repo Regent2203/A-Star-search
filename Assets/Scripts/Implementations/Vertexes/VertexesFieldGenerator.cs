@@ -1,10 +1,10 @@
-﻿using Core.Implementations.Vertexes;
-using Core.Links.Providers;
+﻿using ThisProject.Implementations.Vertexes;
+using ThisProject.Links.Providers;
 using System;
 using System.ComponentModel;
 using UnityEngine;
 
-namespace Core.Implementations.Cells
+namespace ThisProject.Implementations.Cells
 {
     public class VertexesFieldGenerator
     {

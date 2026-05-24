@@ -1,9 +1,9 @@
-﻿using Core.Fields.Grids;
+﻿using ThisProject.Fields.Grids;
 using System;
 using UnityEngine;
 using Zenject;
 
-namespace Core.Implementations.Cells
+namespace ThisProject.Implementations.Cells
 {
     public class CellsGridField : VisualGridField<CellNode, CellView>
     {

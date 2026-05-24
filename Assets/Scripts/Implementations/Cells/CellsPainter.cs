@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Core.Implementations.Cells
+namespace ThisProject.Implementations.Cells
 {
     public enum BrushType
     {

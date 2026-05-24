@@ -1,4 +1,4 @@
-﻿namespace Core.ObjectsStorages
+﻿namespace ThisProject.ObjectsStorages
 {
     public interface IObjectsStorage<out T, in TId>
     {

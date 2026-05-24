@@ -1,13 +1,13 @@
-﻿using Core.Fields;
-using Core.Fields.Spatials;
-using Core.Implementations.Cells;
-using Core.Inputs;
+﻿using ThisProject.Fields;
+using ThisProject.Fields.Spatials;
+using ThisProject.Implementations.Cells;
+using ThisProject.Inputs;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace Core.Implementations.Vertexes
+namespace ThisProject.Implementations.Vertexes
 {
     public class VertexesField : VisualSpatialField<VertexNode, VertexView>
     {

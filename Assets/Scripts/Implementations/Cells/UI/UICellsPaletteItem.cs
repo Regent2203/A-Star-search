@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Core.Implementations.Cells.UI
+namespace ThisProject.Implementations.Cells.UI
 {
     public class UICellsPaletteItem : MonoBehaviour, IPointerDownHandler
     {

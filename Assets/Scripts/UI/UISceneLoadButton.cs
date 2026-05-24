@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Core.MainMenu
+namespace ThisProject.MainMenu
 {
     public class UISceneLoadButton : MonoBehaviour
     {

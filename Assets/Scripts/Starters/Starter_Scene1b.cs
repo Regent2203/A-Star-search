@@ -1,14 +1,14 @@
-﻿using Core.Implementations.Cells;
-using Core.Implementations.Cells.UI;
-using Core.Inputs;
-using Core.PathDrawers;
-using Core.PathFinders;
+﻿using ThisProject.Implementations.Cells;
+using ThisProject.Implementations.Cells.UI;
+using ThisProject.Inputs;
+using ThisProject.PathDrawers;
+using ThisProject.PathFinders;
 using System;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace Core.Starters
+namespace ThisProject.Starters
 {
     public class Starter_Scene1b : IInitializable, IDisposable
     {

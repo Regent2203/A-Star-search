@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Core.Fields.Grids.Neighbours
+namespace ThisProject.Fields.Grids.Neighbours
 {
     public class EightSideGridNeighbours<T> : GridNeighboursProviderBase<T> //all eight directions
     {

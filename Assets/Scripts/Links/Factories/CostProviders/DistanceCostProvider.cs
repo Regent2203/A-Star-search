@@ -1,7 +1,7 @@
-﻿using Core.Nodes;
+﻿using ThisProject.Nodes;
 using UnityEngine;
 
-namespace Core.Links.Factories.CostProviders
+namespace ThisProject.Links.Factories.CostProviders
 {
     public class DistanceCostProvider<T> : ICostProvider<T> where T : class, INode
     {

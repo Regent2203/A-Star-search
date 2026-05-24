@@ -1,7 +1,7 @@
-﻿using Core.Heuristic.Functions;
-using Core.Nodes;
+﻿using ThisProject.Heuristic.Functions;
+using ThisProject.Nodes;
 
-namespace Core.Heuristic
+namespace ThisProject.Heuristic
 {
     public abstract class HeuristicsProvider<T> : IHeuristicsProvider<T> where T : class, INode
     {

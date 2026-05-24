@@ -1,11 +1,11 @@
-﻿using Core.Inputs;
-using Core.Nodes;
-using Core.ObjectsStorages;
-using Core.Views;
+﻿using ThisProject.Inputs;
+using ThisProject.Nodes;
+using ThisProject.ObjectsStorages;
+using ThisProject.Views;
 using UnityEngine;
 using Zenject;
 
-namespace Core.Fields.Spatials
+namespace ThisProject.Fields.Spatials
 {
     public class VisualSpatialField<T, V> : VisualField<T, V, int>
         where T : class, INode<int>

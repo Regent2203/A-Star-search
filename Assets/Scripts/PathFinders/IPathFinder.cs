@@ -1,7 +1,7 @@
-﻿using Core.Nodes;
+﻿using ThisProject.Nodes;
 using System.Collections.Generic;
 
-namespace Core.PathFinders
+namespace ThisProject.PathFinders
 {
     public interface IPathFinder<T> where T : class, INode
     {

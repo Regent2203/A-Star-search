@@ -1,7 +1,7 @@
-﻿using Core.Nodes;
+﻿using ThisProject.Nodes;
 using System.Collections.Generic;
 
-namespace Core.Links.Providers
+namespace ThisProject.Links.Providers
 {
     public interface ILinksProvider<T> where T : class, INode
     {

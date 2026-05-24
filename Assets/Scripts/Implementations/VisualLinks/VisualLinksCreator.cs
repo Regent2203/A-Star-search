@@ -1,14 +1,14 @@
-﻿using Core.Inputs;
-using Core.Links;
-using Core.Links.Factories;
-using Core.Links.Providers;
-using Core.Nodes;
+﻿using ThisProject.Inputs;
+using ThisProject.Links;
+using ThisProject.Links.Factories;
+using ThisProject.Links.Providers;
+using ThisProject.Nodes;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace Core.Implementations.VisualLinks
+namespace ThisProject.Implementations.VisualLinks
 {
     public class VisualLinksCreator<T> : MonoBehaviour where T: class, INode
     {

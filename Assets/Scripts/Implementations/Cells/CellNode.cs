@@ -1,8 +1,8 @@
-using Core.Nodes;
+using ThisProject.Nodes;
 using System;
 using UnityEngine;
 
-namespace Core.Implementations.Cells
+namespace ThisProject.Implementations.Cells
 {
     public class CellNode : INode<Vector2Int>
     {

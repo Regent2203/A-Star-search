@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-namespace Core.Implementations.Cells
+namespace ThisProject.Implementations.Cells
 {
     [CreateAssetMenu(fileName = "CellsConfig", menuName = "Core/CellsConfig")]
     public class CellsConfig : ScriptableObjectInstaller<CellsConfig>

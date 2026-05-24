@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Core.Implementations.Cells.UI
+namespace ThisProject.Implementations.Cells.UI
 {
     public class UICellsPaletteChoicePanel : MonoBehaviour
     {

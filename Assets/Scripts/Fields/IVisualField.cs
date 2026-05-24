@@ -1,11 +1,11 @@
-﻿using Core.Inputs;
-using Core.Nodes;
-using Core.ObjectsStorages;
-using Core.Views;
+﻿using ThisProject.Inputs;
+using ThisProject.Nodes;
+using ThisProject.ObjectsStorages;
+using ThisProject.Views;
 using System;
 using UnityEngine.EventSystems;
 
-namespace Core.Fields
+namespace ThisProject.Fields
 {
     public interface IVisualField<T, V, TId> : IField<T, TId> 
         where T : class, INode<TId> 

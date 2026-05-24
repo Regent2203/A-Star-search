@@ -1,9 +1,9 @@
-﻿using Core.Implementations.Cells;
+﻿using ThisProject.Implementations.Cells;
 using System;
 using UnityEngine;
 using Zenject;
 
-namespace Core.Implementations.Vertexes
+namespace ThisProject.Implementations.Vertexes
 {
     public class VertexViewFactory
     {

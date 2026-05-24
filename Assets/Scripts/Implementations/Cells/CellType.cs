@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Core.Implementations.Cells
+namespace ThisProject.Implementations.Cells
 {
     public enum CellId 
     {

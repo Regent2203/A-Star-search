@@ -1,9 +1,8 @@
-﻿using Core.Fields;
-using Core.Nodes;
-using Core.Views;
+﻿using ThisProject.Fields;
+using ThisProject.Nodes;
+using ThisProject.Views;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public static class Extensions
 {

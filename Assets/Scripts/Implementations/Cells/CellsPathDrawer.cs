@@ -1,7 +1,7 @@
-﻿using Core.PathDrawers;
+﻿using ThisProject.PathDrawers;
 using System.Collections.Generic;
 
-namespace Core.Implementations.Cells
+namespace ThisProject.Implementations.Cells
 {
     public class CellsPathDrawer : IPathDrawer<CellView>
     {

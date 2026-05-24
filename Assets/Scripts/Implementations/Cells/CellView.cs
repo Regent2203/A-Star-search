@@ -1,7 +1,7 @@
-﻿using Core.Views;
+﻿using ThisProject.Views;
 using UnityEngine;
 
-namespace Core.Implementations.Cells
+namespace ThisProject.Implementations.Cells
 {
     public class CellView : MonoBehaviour, IView<Vector2Int>
     {

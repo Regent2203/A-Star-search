@@ -1,8 +1,8 @@
-﻿using Core.Nodes;
+﻿using ThisProject.Nodes;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace Core.Implementations.VisualLinks
+namespace ThisProject.Implementations.VisualLinks
 {
     public class VisualLinksPool<T> where T : class, INode
     {

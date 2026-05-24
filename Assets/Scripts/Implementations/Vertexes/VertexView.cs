@@ -1,9 +1,9 @@
-using Core.Views;
+using ThisProject.Views;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Core.Implementations.Vertexes
+namespace ThisProject.Implementations.Vertexes
 {
     public class VertexView : MonoBehaviour, IView<int>, IBeginDragHandler, IDragHandler, IEndDragHandler
     {

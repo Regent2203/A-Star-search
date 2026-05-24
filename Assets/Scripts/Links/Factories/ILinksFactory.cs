@@ -1,7 +1,7 @@
-﻿using Core.Nodes;
+﻿using ThisProject.Nodes;
 using System.Collections.Generic;
 
-namespace Core.Links.Factories
+namespace ThisProject.Links.Factories
 {
     public interface ILinksFactory<T> where T : class, INode
     {

@@ -1,7 +1,7 @@
-﻿using Core.Heuristic;
-using Core.Heuristic.Functions;
+﻿using ThisProject.Heuristic;
+using ThisProject.Heuristic.Functions;
 
-namespace Core.Implementations.Vertexes
+namespace ThisProject.Implementations.Vertexes
 {
     public class VertexesHeuristicsProvider : HeuristicsProvider<VertexNode>
     {
