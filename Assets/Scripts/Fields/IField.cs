@@ -7,6 +7,7 @@ namespace ThisProject.Fields
         where T : class, INode<TId>
     {
         public abstract IFieldCore<T, TId> Core { get; }
+        public T GetNodeById(TId id);
 
         public event Action FieldChanged;
     }

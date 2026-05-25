@@ -29,11 +29,10 @@ namespace ThisProject.Implementations.Cells
 
         private void OnNodeTypeChanged(CellNode node, CellType cellType)
         {
-            var view = Visual.GetViewById(node.Id);
+            var view = GetViewById(node.Id);
             view.UpdateSprite(cellType.Sprite);
 
-            //_core.NotifyFieldChanged();
-            //FieldChanged?.Invoke();
+            NotifyFieldChanged();
         }
     }
 }

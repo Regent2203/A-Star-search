@@ -19,7 +19,7 @@ public static class Extensions
 
         for (int i = 0; i < nodesList.Count; i++)
         {
-            viewsList.Add(field.Visual.GetViewById(nodesList[i].Id));
+            viewsList.Add(field.GetViewById(nodesList[i].Id));
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace ThisProject.Fields
 {
-    public interface IClickableField<T, V, TId> : IPointerDownHandler, IVisibleField<T, V, TId>
+    public interface IClickableField<T, V, TId> : IPointerDownHandler
         where T : class, INode<TId>
         where V : class, IView<TId>
     {

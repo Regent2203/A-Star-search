@@ -36,7 +36,7 @@ namespace ThisProject.Fields
 
             if (hitObject != null && hitObject.TryGetComponent<V>(out var view))
             {
-                var node = _field.Core.GetNodeById(view.Id);
+                var node = _field.GetNodeById(view.Id);
                 if (node != null)
                 {
                     _nodeClickedCallback?.Invoke(node, eventData.button, _inputService.CreateSnapshot());

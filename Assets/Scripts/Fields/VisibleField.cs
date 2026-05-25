@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace ThisProject.Fields
 {
-    public abstract class VisibleField<T, V, TId> : MonoBehaviour, IClickableField<T,V, TId>
+    public abstract class VisibleField<T, V, TId> : MonoBehaviour, IVisibleField<T, V, TId>, IClickableField<T,V, TId>
         where T : class, INode<TId>
         where V : class, IView<TId>
     {
@@ -20,7 +20,10 @@ namespace ThisProject.Fields
         public event Action<IVisibleField<T, V, TId>, PointerEventData.InputButton, InputSnapshot> FieldClicked;
         public event Action FieldChanged;
 
-        
+        public V GetViewById(TId id) => Visual.Views.GetById(id);
+        public T GetNodeById(TId id) => Core.Nodes.GetById(id);
+
+
         public void OnPointerDown(PointerEventData eventData)
         {
             ClickHandler.ProcessClick(eventData);
@@ -34,6 +37,11 @@ namespace ThisProject.Fields
         protected void NotifyFieldClicked(PointerEventData.InputButton btn, InputSnapshot input)
         {
             FieldClicked?.Invoke(this, btn, input);
+        }
+
+        protected void NotifyFieldChanged()
+        {
+            FieldChanged?.Invoke();
         }
     }
 }

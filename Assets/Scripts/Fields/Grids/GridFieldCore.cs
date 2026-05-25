@@ -11,7 +11,7 @@ namespace ThisProject.Fields.Grids
 
 
         public GridFieldCore(GridTypeStorage<T> nodes) 
-        { 
+        {
             _nodes = nodes; 
         }
 

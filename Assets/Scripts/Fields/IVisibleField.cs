@@ -8,5 +8,6 @@ namespace ThisProject.Fields
         where V : class, IView<TId>
     {
         public abstract IFieldVisual<V, TId> Visual { get; }
+        public V GetViewById(TId id);
     }
 }

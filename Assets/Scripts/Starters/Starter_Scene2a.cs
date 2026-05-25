@@ -57,12 +57,12 @@ namespace ThisProject.Starters
             _pathFinder.AnyNodeChanged += (b) => _pathDrawer.ShowPath(false);
             _pathFinder.StartNodeChanged += (node, b) =>
             {
-                var view = _field.Visual.GetViewById(node.Id);
+                var view = _field.GetViewById(node.Id);
                 view?.ShowStartMarker(b);
             };
             _pathFinder.FinishNodeChanged += (node, b) =>
             {
-                var view = _field.Visual.GetViewById(node.Id);
+                var view = _field.GetViewById(node.Id);
                 view?.ShowFinishMarker(b); 
             };
             
@@ -115,13 +115,13 @@ namespace ThisProject.Starters
 
         private void OnStartNodeChanged(VertexNode node, bool b)
         {
-            var view = _field.Visual.GetViewById(node.Id);
+            var view = _field.GetViewById(node.Id);
             view?.ShowStartMarker(b);
         }
 
         private void OnFinishNodeChanged(VertexNode node, bool b)
         {
-            var view = _field.Visual.GetViewById(node.Id);
+            var view = _field.GetViewById(node.Id);
             view?.ShowFinishMarker(b);
         }
 
