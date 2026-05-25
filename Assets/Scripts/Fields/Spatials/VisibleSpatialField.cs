@@ -1,4 +1,5 @@
-﻿using ThisProject.Inputs;
+﻿using ThisProject.Fields.Grids;
+using ThisProject.Inputs;
 using ThisProject.Nodes;
 using ThisProject.ObjectsStorages;
 using ThisProject.Views;
@@ -7,7 +8,7 @@ using Zenject;
 
 namespace ThisProject.Fields.Spatials
 {
-    public class VisualSpatialField<T, V> : VisualField<T, V, int>
+    public class VisibleSpatialField<T, V> : VisibleField<T, V, int>
         where T : class, INode<int>
         where V : class, IView<int>
     {
@@ -15,21 +16,21 @@ namespace ThisProject.Fields.Spatials
         protected BoxCollider2D _collider;
 
         protected SpatialFieldCore<T> _core;
+        protected SpatialFieldVisual<V> _views;
         protected FieldClickHandler<T, V, int> _clickHandler;
-        protected DictTypeStorage<V> _views;
 
-        protected override IField<T, int> Core => _core;
-        protected override IClickHandler ClickHandler => _clickHandler;
-        public override IObjectsStorage<V, int> Views => _views;
+        public override IFieldCore<T, int> Core => _core;
+        public override IFieldVisual<V, int> Visual => _views;
+        public override IClickHandler ClickHandler => _clickHandler;
+        
 
 
         [Inject]
-        public void Construct(DictTypeStorage<V> views, SpatialFieldCore<T> core, FieldClickHandler<T, V, int> clickHandler, V cellViewPrefab)
+        public void Construct(SpatialFieldCore<T> core, SpatialFieldVisual<V> views, FieldClickHandler<T, V, int> clickHandler)
         {
             _views = views;
             _core = core;
             _clickHandler = clickHandler;
-            _viewPrefab = cellViewPrefab;
         }
 
         protected void Awake()

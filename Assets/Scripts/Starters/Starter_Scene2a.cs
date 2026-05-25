@@ -44,7 +44,7 @@ namespace ThisProject.Starters
         public void Initialize()
         {
             _field.NodeClicked += OnNodeClicked;
-            //_views.FieldChanged += OnFieldChanged;
+            //_visual.FieldChanged += OnFieldChanged;
 
             _pathFinder.StartNodeChanged += OnStartNodeChanged;
             _pathFinder.FinishNodeChanged += OnFinishNodeChanged;
@@ -57,12 +57,12 @@ namespace ThisProject.Starters
             _pathFinder.AnyNodeChanged += (b) => _pathDrawer.ShowPath(false);
             _pathFinder.StartNodeChanged += (node, b) =>
             {
-                var view = _field.Views.GetById(node.Id);
+                var view = _field.Visual.GetViewById(node.Id);
                 view?.ShowStartMarker(b);
             };
             _pathFinder.FinishNodeChanged += (node, b) =>
             {
-                var view = _field.Views.GetById(node.Id);
+                var view = _field.Visual.GetViewById(node.Id);
                 view?.ShowFinishMarker(b); 
             };
             
@@ -72,8 +72,8 @@ namespace ThisProject.Starters
             //mouseScroll -> ChangeLinkCost
 
             //temp
-            //_visualLinksCreator.TryUseNode(_views.Node1);
-            //_visualLinksCreator.TryUseNode(_views.Node2);
+            //_visualLinksCreator.TryUseNode(_visual.Node1);
+            //_visualLinksCreator.TryUseNode(_visual.Node2);
         }
 
         public void Dispose()
@@ -115,13 +115,13 @@ namespace ThisProject.Starters
 
         private void OnStartNodeChanged(VertexNode node, bool b)
         {
-            var view = _field.Views.GetById(node.Id);
+            var view = _field.Visual.GetViewById(node.Id);
             view?.ShowStartMarker(b);
         }
 
         private void OnFinishNodeChanged(VertexNode node, bool b)
         {
-            var view = _field.Views.GetById(node.Id);
+            var view = _field.Visual.GetViewById(node.Id);
             view?.ShowFinishMarker(b);
         }
 

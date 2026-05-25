@@ -102,13 +102,13 @@ namespace ThisProject.Starters
 
         private void OnStartNodeChanged(CellNode node, bool b)
         {
-            var view = _field.GetViewById(node.Id);
+            var view = _field.Visual.GetViewById(node.Id);
             view?.ShowStartMarker(b);
         }
 
         private void OnFinishNodeChanged(CellNode node, bool b)
         {
-            var view = _field.GetViewById(node.Id);
+            var view = _field.Visual.GetViewById(node.Id);
             view?.ShowFinishMarker(b);
         }
 

@@ -13,7 +13,7 @@ namespace ThisProject.Fields
         private Action<T, PointerEventData.InputButton, InputSnapshot> _nodeClickedCallback;
         private Action<PointerEventData.InputButton, InputSnapshot> _fieldClickedCallback;
 
-        private readonly IVisualField<T, V, TId> _field;
+        private readonly IVisibleField<T, V, TId> _field;
         private readonly IInputService _inputService;
 
 
@@ -36,7 +36,7 @@ namespace ThisProject.Fields
 
             if (hitObject != null && hitObject.TryGetComponent<V>(out var view))
             {
-                var node = _field.Nodes.GetById(view.Id);
+                var node = _field.Core.GetNodeById(view.Id);
                 if (node != null)
                 {
                     _nodeClickedCallback?.Invoke(node, eventData.button, _inputService.CreateSnapshot());

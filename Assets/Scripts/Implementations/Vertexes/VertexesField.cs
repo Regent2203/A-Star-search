@@ -9,7 +9,7 @@ using Zenject;
 
 namespace ThisProject.Implementations.Vertexes
 {
-    public class VertexesField : VisualSpatialField<VertexNode, VertexView>
+    public class VertexesField : VisibleSpatialField<VertexNode, VertexView>
     {
         private VertexesFieldGenerator _generator;
 
@@ -36,7 +36,7 @@ namespace ThisProject.Implementations.Vertexes
         public void AddFieldData(VertexNode node, VertexView view)
         {
             //_nodes.Add(node.Id, node);
-            //_views.Add(view.Id, view);
+            //_visual.Add(view.Id, view);
         }
 
         private void NotifyNodeDragBegin(int id, Vector2 oldNodePosition)
@@ -46,7 +46,7 @@ namespace ThisProject.Implementations.Vertexes
         private void NotifyNodeDragEnd(int id, Vector2 newNodePosition)
         {
             NodeDragEnd?.Invoke(id, newNodePosition);
-            Nodes.GetById(id).Move(newNodePosition);
+            Core.GetNodeById(id).Move(newNodePosition);
         }
     }
 }

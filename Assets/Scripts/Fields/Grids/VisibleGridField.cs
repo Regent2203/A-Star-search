@@ -10,7 +10,7 @@ using Zenject;
 
 namespace ThisProject.Fields.Grids
 {
-    public class VisualGridField<T, V> : VisualField<T, V, Vector2Int>
+    public class VisibleGridField<T, V> : VisibleField<T, V, Vector2Int>
         where T : class, INode<Vector2Int>
         where V : class, IView<Vector2Int>
     {
@@ -23,25 +23,26 @@ namespace ThisProject.Fields.Grids
         [SerializeField]
         protected bool _doCentering = true;
 
+        protected V _viewPrefab;
         protected Vector2 _scaleFactor;
 
         protected GridFieldCore<T> _core;
+        protected GridFieldVisual<V> _visual;
         protected GridFieldClickHandler<T, V> _clickHandler;
-        protected GridTypeStorage<V> _views;
 
-        protected override IField<T, Vector2Int> Core => _core;
-        protected override IClickHandler ClickHandler => _clickHandler;
-        public override IObjectsStorage<V, Vector2Int> Views => _views;
-
+        public override IFieldCore<T, Vector2Int> Core => _core;
+        public override IFieldVisual<V, Vector2Int> Visual => _visual;
+        public override IClickHandler ClickHandler => _clickHandler;
+        
         public Grid Grid => _grid;
         public Vector2Int CellsNumber => _cellsNumber;
 
 
         [Inject]
-        public void Construct(GridTypeStorage<V> views, GridFieldCore<T> core, GridFieldClickHandler<T, V> clickHandler, V cellViewPrefab)
+        public void Construct(GridFieldCore<T> core, GridFieldVisual<V> views, GridFieldClickHandler<T, V> clickHandler, V cellViewPrefab)
         {
-            _views = views;
             _core = core;
+            _visual = views;
             _clickHandler = clickHandler;
             _viewPrefab = cellViewPrefab;
         }
@@ -69,7 +70,7 @@ namespace ThisProject.Fields.Grids
         public void SetFieldData(T[,] nodes, V[,] views)
         {
             _core.SetNodesData(nodes);
-            _views.SetData(views);
+            _visual.SetViewsData(views);
         }
 
         protected void OnNodePositionChanged(Vector2 pos)

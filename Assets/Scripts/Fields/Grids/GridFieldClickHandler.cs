@@ -14,11 +14,11 @@ namespace ThisProject.Fields.Grids
         private Action<T, PointerEventData.InputButton, InputSnapshot> _nodeClickedCallback;
         private Action<PointerEventData.InputButton, InputSnapshot> _fieldClickedCallback;
 
-        private readonly VisualGridField<T, V> _field;
+        private readonly VisibleGridField<T, V> _field;
         private readonly IInputService _inputService;
 
 
-        public GridFieldClickHandler(VisualGridField<T, V> field, IInputService inputService)
+        public GridFieldClickHandler(VisibleGridField<T, V> field, IInputService inputService)
         {
             _field = field;
             _inputService = inputService;
@@ -38,7 +38,7 @@ namespace ThisProject.Fields.Grids
             int x = Mathf.FloorToInt(localPos.x / _field.Grid.cellSize.x);
             int y = Mathf.FloorToInt(localPos.y / _field.Grid.cellSize.y);
 
-            var node = _field.Nodes.GetById(new Vector2Int(x, y));
+            var node = _field.Core.GetNodeById(new Vector2Int(x, y));
             if (node != null)
             {
                 _nodeClickedCallback?.Invoke(node, eventData.button, _inputService.CreateSnapshot());

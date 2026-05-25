@@ -11,7 +11,7 @@ public static class Extensions
         return i >= 0 && i < grid.GetLength(0) && j >= 0 && j < grid.GetLength(1);
     }
 
-    public static void NodesToViewsNonAlloc<T, V, TId>(this IVisualField<T, V, TId> field, IList<T> nodesList, List<V> viewsList)
+    public static void NodesToViewsNonAlloc<T, V, TId>(this IVisibleField<T, V, TId> field, IList<T> nodesList, List<V> viewsList)
         where T : class, INode<TId>
         where V : class, IView<TId>
     {
@@ -19,7 +19,7 @@ public static class Extensions
 
         for (int i = 0; i < nodesList.Count; i++)
         {
-            viewsList.Add(field.GetViewById(nodesList[i].Id));
+            viewsList.Add(field.Visual.GetViewById(nodesList[i].Id));
         }
     }
 }

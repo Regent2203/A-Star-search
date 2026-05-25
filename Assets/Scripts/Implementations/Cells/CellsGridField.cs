@@ -5,7 +5,7 @@ using Zenject;
 
 namespace ThisProject.Implementations.Cells
 {
-    public class CellsGridField : VisualGridField<CellNode, CellView>
+    public class CellsGridField : VisibleGridField<CellNode, CellView>
     {
         private CellsGridFieldGenerator _generator;
 
@@ -29,10 +29,10 @@ namespace ThisProject.Implementations.Cells
 
         private void OnNodeTypeChanged(CellNode node, CellType cellType)
         {
-            var view = GetViewById(node.Id);
+            var view = Visual.GetViewById(node.Id);
             view.UpdateSprite(cellType.Sprite);
 
-            _core.NotifyFieldChanged();
+            //_core.NotifyFieldChanged();
             //FieldChanged?.Invoke();
         }
     }

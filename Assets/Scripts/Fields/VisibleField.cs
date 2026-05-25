@@ -1,6 +1,5 @@
 ﻿using ThisProject.Inputs;
 using ThisProject.Nodes;
-using ThisProject.ObjectsStorages;
 using ThisProject.Views;
 using System;
 using UnityEngine.EventSystems;
@@ -9,28 +8,17 @@ using UnityEngine;
 
 namespace ThisProject.Fields
 {
-    public abstract class VisualField<T, V, TId> : MonoBehaviour, IPointerDownHandler, IVisualField<T, V, TId>
+    public abstract class VisibleField<T, V, TId> : MonoBehaviour, IClickableField<T,V, TId>
         where T : class, INode<TId>
         where V : class, IView<TId>
     {
-        protected abstract IField<T, TId> Core { get; }
-        protected abstract IClickHandler ClickHandler { get; }
-        protected V _viewPrefab;
-
-        public IObjectsStorage<T, TId> Nodes => Core.Nodes;
-        public abstract IObjectsStorage<V, TId> Views { get; }
+        public abstract IFieldCore<T, TId> Core { get; }
+        public abstract IFieldVisual<V, TId> Visual { get; }
+        public abstract IClickHandler ClickHandler { get; }
 
         public event Action<T, PointerEventData.InputButton, InputSnapshot> NodeClicked;
-        public event Action<IVisualField<T, V, TId>, PointerEventData.InputButton, InputSnapshot> FieldClicked;
-        public event Action FieldChanged
-        {
-            add => Core.FieldChanged += value;
-            remove => Core.FieldChanged -= value;
-        }
-
-
-        public T GetNodeById(TId id) => Nodes.GetById(id);
-        public V GetViewById(TId id) => Views.GetById(id);
+        public event Action<IVisibleField<T, V, TId>, PointerEventData.InputButton, InputSnapshot> FieldClicked;
+        public event Action FieldChanged;
 
         
         public void OnPointerDown(PointerEventData eventData)
