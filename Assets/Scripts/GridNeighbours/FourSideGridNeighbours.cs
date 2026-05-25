@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace ThisProject.Fields.Grids.Neighbours
+namespace ThisProject.Fields.GridNeighbours
 {
     public class FourSideGridNeighbours<T> : GridNeighboursProviderBase<T> //up, right, down, left, no diagonal
     {

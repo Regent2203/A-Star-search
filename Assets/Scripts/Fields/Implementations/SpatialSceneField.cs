@@ -1,36 +1,34 @@
 ﻿using ThisProject.Fields.ClickHandlers;
-using ThisProject.Fields.Grids;
-using ThisProject.Inputs;
 using ThisProject.Nodes;
 using ThisProject.ObjectsStorages;
 using ThisProject.Views;
 using UnityEngine;
 using Zenject;
 
-namespace ThisProject.Fields.Spatials
+namespace ThisProject.Fields.Implementations
 {
-    public class VisibleSpatialField<T, V> : SceneField<T, V, int>
+    public class SpatialSceneField<T, V> : SceneField<T, V, int>
         where T : class, INode<int>
         where V : class, IView<int>
     {
         [SerializeField]
         protected BoxCollider2D _collider;
 
-        protected SpatialFieldCore<T> _core;
-        protected SpatialFieldVisual<V> _views;
+        protected DictTypeStorage<T> _nodes;
+        protected DictTypeStorage<V> _views;
         protected CommonClickHandler<T, V, int> _clickHandler;
 
-        public override IFieldCore<T, int> Core => _core;
-        public override IFieldVisual<V, int> Visual => _views;
+        public override IObjectsStorage<T, int> Nodes => _nodes;
+        public override IObjectsStorage<V, int> Views => _views;
         public override IClickHandler ClickHandler => _clickHandler;
         
 
 
         [Inject]
-        public void Construct(SpatialFieldCore<T> core, SpatialFieldVisual<V> views, CommonClickHandler<T, V, int> clickHandler)
+        public void Construct(DictTypeStorage<T> nodes, DictTypeStorage<V> views, CommonClickHandler<T, V, int> clickHandler)
         {
+            _nodes = nodes;
             _views = views;
-            _core = core;
             _clickHandler = clickHandler;
         }
 

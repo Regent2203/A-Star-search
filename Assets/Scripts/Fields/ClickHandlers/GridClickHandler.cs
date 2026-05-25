@@ -1,10 +1,10 @@
+using System;
+using ThisProject.Fields.Implementations;
 using ThisProject.Inputs;
 using ThisProject.Nodes;
 using ThisProject.Views;
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using ThisProject.Fields.Grids;
 
 namespace ThisProject.Fields.ClickHandlers
 {
@@ -15,11 +15,11 @@ namespace ThisProject.Fields.ClickHandlers
         private Action<T, PointerEventData.InputButton, InputSnapshot> _nodeClickedCallback;
         private Action<PointerEventData.InputButton, InputSnapshot> _fieldClickedCallback;
 
-        private readonly VisibleGridField<T, V> _field;
+        private readonly GridSceneField<T, V> _field;
         private readonly IInputService _inputService;
 
 
-        public GridClickHandler(VisibleGridField<T, V> field, IInputService inputService)
+        public GridClickHandler(GridSceneField<T, V> field, IInputService inputService)
         {
             _field = field;
             _inputService = inputService;

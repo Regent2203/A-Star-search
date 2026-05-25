@@ -1,4 +1,4 @@
-﻿using ThisProject.Fields.Grids.Neighbours;
+﻿using ThisProject.Fields.GridNeighbours;
 using System.Collections.Generic;
 using UnityEngine;
 

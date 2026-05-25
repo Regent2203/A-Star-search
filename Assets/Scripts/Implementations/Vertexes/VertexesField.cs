@@ -1,5 +1,5 @@
 ﻿using ThisProject.Fields;
-using ThisProject.Fields.Spatials;
+using ThisProject.Fields.Implementations;
 using ThisProject.Implementations.Cells;
 using ThisProject.Inputs;
 using System;
@@ -10,7 +10,7 @@ using ThisProject.Fields.ClickHandlers;
 
 namespace ThisProject.Implementations.Vertexes
 {
-    public class VertexesField : VisibleSpatialField<VertexNode, VertexView>
+    public class VertexesField : SpatialSceneField<VertexNode, VertexView>
     {
         private VertexesFieldGenerator _generator;
 
@@ -37,7 +37,7 @@ namespace ThisProject.Implementations.Vertexes
         public void AddFieldData(VertexNode node, VertexView view)
         {
             //_nodes.Add(node.Id, node);
-            //_visual.Add(view.Id, view);
+            //_views.Add(view.Id, view);
         }
 
         private void NotifyNodeDragBegin(int id, Vector2 oldNodePosition)

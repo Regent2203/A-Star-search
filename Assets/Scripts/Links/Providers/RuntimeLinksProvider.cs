@@ -1,4 +1,4 @@
-using ThisProject.Fields.Grids.Neighbours;
+using ThisProject.Fields.GridNeighbours;
 using ThisProject.Links.Factories;
 using ThisProject.Nodes;
 using ThisProject.ObjectsStorages;

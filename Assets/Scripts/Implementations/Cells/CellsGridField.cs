@@ -1,11 +1,11 @@
-﻿using ThisProject.Fields.Grids;
+﻿using ThisProject.Fields.Implementations;
 using System;
 using UnityEngine;
 using Zenject;
 
 namespace ThisProject.Implementations.Cells
 {
-    public class CellsGridField : VisibleGridField<CellNode, CellView>
+    public class CellsGridField : GridSceneField<CellNode, CellView>
     {
         private CellsGridFieldGenerator _generator;
 

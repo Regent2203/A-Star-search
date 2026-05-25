@@ -1,17 +1,13 @@
-﻿using ThisProject.Inputs;
+﻿using ThisProject.Fields.ClickHandlers;
 using ThisProject.Nodes;
 using ThisProject.ObjectsStorages;
 using ThisProject.Views;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Zenject;
-using ThisProject.Fields.ClickHandlers;
 
-namespace ThisProject.Fields.Grids
+namespace ThisProject.Fields.Implementations
 {
-    public class VisibleGridField<T, V> : SceneField<T, V, Vector2Int>
+    public class GridSceneField<T, V> : SceneField<T, V, Vector2Int>
         where T : class, INode<Vector2Int>
         where V : class, IView<Vector2Int>
     {
@@ -27,12 +23,12 @@ namespace ThisProject.Fields.Grids
         protected V _viewPrefab;
         protected Vector2 _scaleFactor;
 
-        protected GridFieldCore<T> _core;
-        protected GridFieldVisual<V> _visual;
+        protected GridTypeStorage<T> _nodes;
+        protected GridTypeStorage<V> _views;
         protected GridClickHandler<T, V> _clickHandler;
 
-        public override IFieldCore<T, Vector2Int> Core => _core;
-        public override IFieldVisual<V, Vector2Int> Visual => _visual;
+        public override IObjectsStorage<T, Vector2Int> Nodes => _nodes;
+        public override IObjectsStorage<V, Vector2Int> Views => _views;
         public override IClickHandler ClickHandler => _clickHandler;
         
         public Grid Grid => _grid;
@@ -40,10 +36,10 @@ namespace ThisProject.Fields.Grids
 
 
         [Inject]
-        public void Construct(GridFieldCore<T> core, GridFieldVisual<V> views, GridClickHandler<T, V> clickHandler, V cellViewPrefab)
+        public void Construct(GridTypeStorage<T> nodes, GridTypeStorage<V> views, GridClickHandler<T, V> clickHandler, V cellViewPrefab)
         {
-            _core = core;
-            _visual = views;
+            _nodes = nodes;
+            _views = views;
             _clickHandler = clickHandler;
             _viewPrefab = cellViewPrefab;
         }
@@ -70,8 +66,8 @@ namespace ThisProject.Fields.Grids
 
         public void SetFieldData(T[,] nodes, V[,] views)
         {
-            _core.SetNodesData(nodes);
-            _visual.SetViewsData(views);
+            _nodes.SetData(nodes);
+            _views.SetData(views);
         }
 
         protected void OnNodePositionChanged(Vector2 pos)

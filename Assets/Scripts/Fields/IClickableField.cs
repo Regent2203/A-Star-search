@@ -14,7 +14,7 @@ namespace ThisProject.Fields
         public abstract IClickHandler ClickHandler { get; }
 
         public event Action<T, PointerEventData.InputButton, InputSnapshot> NodeClicked;
-        public event Action<IVisibleField<T, V, TId>, PointerEventData.InputButton, InputSnapshot> FieldClicked;
+        public event Action<IClickableField<T, V, TId>, PointerEventData.InputButton, InputSnapshot> FieldClicked;
 
 
         void IPointerDownHandler.OnPointerDown(PointerEventData eventData)

@@ -1,7 +1,7 @@
-﻿using ThisProject.Inputs;
+﻿using System;
+using ThisProject.Inputs;
 using ThisProject.Nodes;
 using ThisProject.Views;
-using System;
 using UnityEngine.EventSystems;
 
 namespace ThisProject.Fields.ClickHandlers

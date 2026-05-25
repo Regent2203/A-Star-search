@@ -1,10 +1,11 @@
-﻿using ThisProject.Inputs;
-using ThisProject.Nodes;
-using ThisProject.Views;
-using System;
-using UnityEngine.EventSystems;
-using UnityEngine;
+﻿using System;
 using ThisProject.Fields.ClickHandlers;
+using ThisProject.Inputs;
+using ThisProject.Nodes;
+using ThisProject.ObjectsStorages;
+using ThisProject.Views;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace ThisProject.Fields
 {
@@ -12,16 +13,16 @@ namespace ThisProject.Fields
         where T : class, INode<TId>
         where V : class, IView<TId>
     {
-        public abstract IFieldCore<T, TId> Core { get; }
-        public abstract IFieldVisual<V, TId> Visual { get; }
+        public abstract IObjectsStorage<T, TId> Nodes { get; }
+        public abstract IObjectsStorage<V, TId> Views { get; }
         public abstract IClickHandler ClickHandler { get; }
 
         public event Action<T, PointerEventData.InputButton, InputSnapshot> NodeClicked;
-        public event Action<IVisibleField<T, V, TId>, PointerEventData.InputButton, InputSnapshot> FieldClicked;
+        public event Action<IClickableField<T, V, TId>, PointerEventData.InputButton, InputSnapshot> FieldClicked;
         public event Action FieldChanged;
 
-        public V GetViewById(TId id) => Visual.Views.GetById(id);
-        public T GetNodeById(TId id) => Core.Nodes.GetById(id);
+        public T GetNodeById(TId id) => Nodes.GetById(id);
+        public V GetViewById(TId id) => Views.GetById(id);
 
 
         protected void NotifyNodeClicked(T node, PointerEventData.InputButton btn, InputSnapshot input)

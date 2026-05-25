@@ -44,7 +44,7 @@ namespace ThisProject.Starters
         public void Initialize()
         {
             _field.NodeClicked += OnNodeClicked;
-            //_visual.FieldChanged += OnFieldChanged;
+            //_views.FieldChanged += OnFieldChanged;
 
             _pathFinder.StartNodeChanged += OnStartNodeChanged;
             _pathFinder.FinishNodeChanged += OnFinishNodeChanged;
@@ -72,8 +72,8 @@ namespace ThisProject.Starters
             //mouseScroll -> ChangeLinkCost
 
             //temp
-            //_visualLinksCreator.TryUseNode(_visual.Node1);
-            //_visualLinksCreator.TryUseNode(_visual.Node2);
+            //_visualLinksCreator.TryUseNode(_views.Node1);
+            //_visualLinksCreator.TryUseNode(_views.Node2);
         }
 
         public void Dispose()
