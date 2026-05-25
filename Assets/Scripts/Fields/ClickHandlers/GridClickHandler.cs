@@ -4,10 +4,11 @@ using ThisProject.Views;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using ThisProject.Fields.Grids;
 
-namespace ThisProject.Fields.Grids
+namespace ThisProject.Fields.ClickHandlers
 {
-    public class GridFieldClickHandler<T, V> : IClickHandler
+    public class GridClickHandler<T, V> : IClickHandler
         where T : class, INode<Vector2Int>
         where V : class, IView<Vector2Int>
     {
@@ -18,7 +19,7 @@ namespace ThisProject.Fields.Grids
         private readonly IInputService _inputService;
 
 
-        public GridFieldClickHandler(VisibleGridField<T, V> field, IInputService inputService)
+        public GridClickHandler(VisibleGridField<T, V> field, IInputService inputService)
         {
             _field = field;
             _inputService = inputService;

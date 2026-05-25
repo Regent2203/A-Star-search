@@ -1,6 +1,6 @@
 ﻿using UnityEngine.EventSystems;
 
-namespace ThisProject.Fields
+namespace ThisProject.Fields.ClickHandlers
 {
     public interface IClickHandler
     {

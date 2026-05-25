@@ -6,7 +6,7 @@ namespace ThisProject.Fields
     public interface IField<T, TId>
         where T : class, INode<TId>
     {
-        public abstract IFieldCore<T, TId> Core { get; }
+        public IFieldCore<T, TId> Core { get; }
         public T GetNodeById(TId id);
 
         public event Action FieldChanged;

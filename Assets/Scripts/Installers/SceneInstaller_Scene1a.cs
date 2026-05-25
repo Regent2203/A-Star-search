@@ -1,18 +1,19 @@
-using ThisProject.Links.Factories.CostProviders;
+using ThisProject.Fields.ClickHandlers;
 using ThisProject.Fields.Grids;
 using ThisProject.Fields.Grids.Neighbours;
 using ThisProject.Heuristic.Functions;
 using ThisProject.Implementations.Cells;
 using ThisProject.Implementations.Cells.UI;
+using ThisProject.Inputs;
 using ThisProject.Links.Factories;
+using ThisProject.Links.Factories.CostProviders;
 using ThisProject.Links.Providers;
+using ThisProject.ObjectsStorages;
 using ThisProject.PathFinders;
 using ThisProject.SearchAlgorithms;
+using ThisProject.Starters;
 using UnityEngine;
 using Zenject;
-using ThisProject.Inputs;
-using ThisProject.Starters;
-using ThisProject.ObjectsStorages;
 
 namespace ThisProject.Installers
 {
@@ -45,7 +46,7 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<CellsGridFieldGenerator>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<GridFieldClickHandler<CellNode, CellView>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GridClickHandler<CellNode, CellView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<RuntimeLinksProvider<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<FourSideGridNeighbours<CellNode>>().AsSingle();

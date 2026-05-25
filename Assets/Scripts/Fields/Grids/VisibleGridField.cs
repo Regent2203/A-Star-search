@@ -7,10 +7,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
+using ThisProject.Fields.ClickHandlers;
 
 namespace ThisProject.Fields.Grids
 {
-    public class VisibleGridField<T, V> : VisibleField<T, V, Vector2Int>
+    public class VisibleGridField<T, V> : SceneField<T, V, Vector2Int>
         where T : class, INode<Vector2Int>
         where V : class, IView<Vector2Int>
     {
@@ -28,7 +29,7 @@ namespace ThisProject.Fields.Grids
 
         protected GridFieldCore<T> _core;
         protected GridFieldVisual<V> _visual;
-        protected GridFieldClickHandler<T, V> _clickHandler;
+        protected GridClickHandler<T, V> _clickHandler;
 
         public override IFieldCore<T, Vector2Int> Core => _core;
         public override IFieldVisual<V, Vector2Int> Visual => _visual;
@@ -39,7 +40,7 @@ namespace ThisProject.Fields.Grids
 
 
         [Inject]
-        public void Construct(GridFieldCore<T> core, GridFieldVisual<V> views, GridFieldClickHandler<T, V> clickHandler, V cellViewPrefab)
+        public void Construct(GridFieldCore<T> core, GridFieldVisual<V> views, GridClickHandler<T, V> clickHandler, V cellViewPrefab)
         {
             _core = core;
             _visual = views;

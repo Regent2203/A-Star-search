@@ -1,4 +1,5 @@
-﻿using ThisProject.Fields.Grids;
+﻿using ThisProject.Fields.ClickHandlers;
+using ThisProject.Fields.Grids;
 using ThisProject.Inputs;
 using ThisProject.Nodes;
 using ThisProject.ObjectsStorages;
@@ -8,7 +9,7 @@ using Zenject;
 
 namespace ThisProject.Fields.Spatials
 {
-    public class VisibleSpatialField<T, V> : VisibleField<T, V, int>
+    public class VisibleSpatialField<T, V> : SceneField<T, V, int>
         where T : class, INode<int>
         where V : class, IView<int>
     {
@@ -17,7 +18,7 @@ namespace ThisProject.Fields.Spatials
 
         protected SpatialFieldCore<T> _core;
         protected SpatialFieldVisual<V> _views;
-        protected FieldClickHandler<T, V, int> _clickHandler;
+        protected CommonClickHandler<T, V, int> _clickHandler;
 
         public override IFieldCore<T, int> Core => _core;
         public override IFieldVisual<V, int> Visual => _views;
@@ -26,7 +27,7 @@ namespace ThisProject.Fields.Spatials
 
 
         [Inject]
-        public void Construct(SpatialFieldCore<T> core, SpatialFieldVisual<V> views, FieldClickHandler<T, V, int> clickHandler)
+        public void Construct(SpatialFieldCore<T> core, SpatialFieldVisual<V> views, CommonClickHandler<T, V, int> clickHandler)
         {
             _views = views;
             _core = core;

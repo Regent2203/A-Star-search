@@ -4,9 +4,9 @@ using ThisProject.Views;
 using System;
 using UnityEngine.EventSystems;
 
-namespace ThisProject.Fields
+namespace ThisProject.Fields.ClickHandlers
 {
-    public class FieldClickHandler<T, V, TId> : IClickHandler
+    public class CommonClickHandler<T, V, TId> : IClickHandler
         where T : class, INode<TId> 
         where V : class, IView<TId>
     {
@@ -17,7 +17,7 @@ namespace ThisProject.Fields
         private readonly IInputService _inputService;
 
 
-        public FieldClickHandler(IInputService inputService)
+        public CommonClickHandler(IInputService inputService)
         {
             _inputService = inputService;
         }

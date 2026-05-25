@@ -6,6 +6,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
+using ThisProject.Fields.ClickHandlers;
 
 namespace ThisProject.Implementations.Vertexes
 {
@@ -18,7 +19,7 @@ namespace ThisProject.Implementations.Vertexes
 
 
         [Inject]
-        public void Construct(FieldClickHandler<VertexNode, VertexView, int> clickHandler, VertexesFieldGenerator generator)
+        public void Construct(CommonClickHandler<VertexNode, VertexView, int> clickHandler, VertexesFieldGenerator generator)
         {
             _clickHandler = clickHandler;
             _generator = generator;

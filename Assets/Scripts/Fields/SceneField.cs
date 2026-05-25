@@ -4,11 +4,11 @@ using ThisProject.Views;
 using System;
 using UnityEngine.EventSystems;
 using UnityEngine;
-
+using ThisProject.Fields.ClickHandlers;
 
 namespace ThisProject.Fields
 {
-    public abstract class VisibleField<T, V, TId> : MonoBehaviour, IVisibleField<T, V, TId>, IClickableField<T,V, TId>
+    public abstract class SceneField<T, V, TId> : MonoBehaviour, IVisibleField<T, V, TId>, IClickableField<T, V, TId>
         where T : class, INode<TId>
         where V : class, IView<TId>
     {
@@ -23,11 +23,6 @@ namespace ThisProject.Fields
         public V GetViewById(TId id) => Visual.Views.GetById(id);
         public T GetNodeById(TId id) => Core.Nodes.GetById(id);
 
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            ClickHandler.ProcessClick(eventData);
-        }
 
         protected void NotifyNodeClicked(T node, PointerEventData.InputButton btn, InputSnapshot input)
         {

@@ -1,19 +1,18 @@
-using ThisProject.Links.Factories.CostProviders;
+using ThisProject.Fields.ClickHandlers;
 using ThisProject.Heuristic.Functions;
+using ThisProject.Implementations.Cells;
 using ThisProject.Implementations.Vertexes;
+using ThisProject.Implementations.VisualLinks;
+using ThisProject.Inputs;
 using ThisProject.Links.Factories;
+using ThisProject.Links.Factories.CostProviders;
 using ThisProject.Links.Providers;
 using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
 using ThisProject.SearchAlgorithms;
+using ThisProject.Starters;
 using UnityEngine;
 using Zenject;
-using ThisProject.Implementations.VisualLinks;
-using ThisProject.Implementations.Cells;
-using ThisProject.Starters;
-using ThisProject.Inputs;
-using ThisProject.Fields.Grids;
-using ThisProject.Fields;
 
 namespace ThisProject.Installers
 {
@@ -43,7 +42,7 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<VertexesFieldGenerator>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexNodeFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<FieldClickHandler<VertexNode, VertexView, int>>().AsSingle(); 
+            Container.BindInterfacesAndSelfTo<CommonClickHandler<VertexNode, VertexView, int>>().AsSingle(); 
             Container.BindInstance(_visualLinkPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesVisualLinksCreator>().FromInstance(_visualLinksManager).AsSingle();
             Container.BindInterfacesAndSelfTo<VisualLinksFactory<VertexNode>>().AsSingle();

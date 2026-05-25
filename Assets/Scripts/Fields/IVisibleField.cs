@@ -7,7 +7,7 @@ namespace ThisProject.Fields
         where T : class, INode<TId>
         where V : class, IView<TId>
     {
-        public abstract IFieldVisual<V, TId> Visual { get; }
+        public IFieldVisual<V, TId> Visual { get; }
         public V GetViewById(TId id);
     }
 }
