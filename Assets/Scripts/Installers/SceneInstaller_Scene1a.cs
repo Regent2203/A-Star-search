@@ -14,6 +14,7 @@ using ThisProject.SearchAlgorithms;
 using ThisProject.Starters;
 using UnityEngine;
 using Zenject;
+using ThisProject.Fields.NodeMovers;
 
 namespace ThisProject.Installers
 {
@@ -45,6 +46,7 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridClickHandler<CellNode, CellView>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<NullNodeMover>().AsSingle();
             Container.BindInterfacesAndSelfTo<RuntimeLinksProvider<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<FourSideGridNeighbours<CellNode>>().AsSingle();
