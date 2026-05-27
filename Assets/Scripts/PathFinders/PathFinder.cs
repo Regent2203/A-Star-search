@@ -47,7 +47,7 @@ namespace ThisProject.PathFinders
             if (node is null && desiredNode is null) //when trying to set null to null
                 return;
 
-            if (ReferenceEquals(desiredNode, node)) //if same node, we clear it instead
+            if (ReferenceEquals(desiredNode, node)) //when trying to set same value to same desyred node, we clear desyred value instead (it's a feature)
             {
                 var oldDesiredNode = desiredNode;
                 desiredNode = null;

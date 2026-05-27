@@ -7,19 +7,23 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 using ThisProject.Fields.ClickHandlers;
+using ThisProject.Fields.NodeMovers;
 
 namespace ThisProject.Implementations.Vertexes
 {
     public class VertexesField : SpatialSceneField<VertexNode, VertexView>
     {
         private VertexesFieldGenerator _generator;
+        private SpatialNodeMover _nodeMover;
+
+        public override INodeMover NodeMover => _nodeMover;
 
         public event Action<int, Vector2> NodeDragBegin;
         public event Action<int, Vector2> NodeDragEnd;
 
 
         [Inject]
-        public void Construct(CommonClickHandler<VertexNode, VertexView, int> clickHandler, VertexesFieldGenerator generator)
+        public void Construct(SpatialClickHandler<VertexNode, VertexView, int> clickHandler, VertexesFieldGenerator generator)
         {
             _clickHandler = clickHandler;
             _generator = generator;

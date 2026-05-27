@@ -7,7 +7,7 @@ using Zenject;
 
 namespace ThisProject.Fields.Implementations
 {
-    public class GridSceneField<T, V> : SceneField<T, V, Vector2Int>
+    public abstract class GridSceneField<T, V> : SceneField<T, V, Vector2Int>
         where T : class, INode<Vector2Int>
         where V : class, IView<Vector2Int>
     {
@@ -30,7 +30,8 @@ namespace ThisProject.Fields.Implementations
         public override IObjectsStorage<T, Vector2Int> Nodes => _nodes;
         public override IObjectsStorage<V, Vector2Int> Views => _views;
         public override IClickHandler ClickHandler => _clickHandler;
-        
+
+        public override BoxCollider2D Box => _collider;
         public Grid Grid => _grid;
         public Vector2Int CellsNumber => _cellsNumber;
 

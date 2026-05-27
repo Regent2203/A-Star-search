@@ -2,12 +2,16 @@
 using System;
 using UnityEngine;
 using Zenject;
+using ThisProject.Fields.NodeMovers;
 
 namespace ThisProject.Implementations.Cells
 {
     public class CellsGridField : GridSceneField<CellNode, CellView>
     {
         private CellsGridFieldGenerator _generator;
+        private NullNodeMover _nodeMover;
+
+        public override INodeMover NodeMover => _nodeMover;
 
 
         [Inject]

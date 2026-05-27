@@ -7,7 +7,7 @@ using Zenject;
 
 namespace ThisProject.Fields.Implementations
 {
-    public class SpatialSceneField<T, V> : SceneField<T, V, int>
+    public abstract class SpatialSceneField<T, V> : SceneField<T, V, int>
         where T : class, INode<int>
         where V : class, IView<int>
     {
@@ -16,16 +16,17 @@ namespace ThisProject.Fields.Implementations
 
         protected DictTypeStorage<T> _nodes;
         protected DictTypeStorage<V> _views;
-        protected CommonClickHandler<T, V, int> _clickHandler;
+        protected SpatialClickHandler<T, V, int> _clickHandler;
 
         public override IObjectsStorage<T, int> Nodes => _nodes;
         public override IObjectsStorage<V, int> Views => _views;
         public override IClickHandler ClickHandler => _clickHandler;
-        
+
+        public override BoxCollider2D Box => _collider;
 
 
         [Inject]
-        public void Construct(DictTypeStorage<T> nodes, DictTypeStorage<V> views, CommonClickHandler<T, V, int> clickHandler)
+        public void Construct(DictTypeStorage<T> nodes, DictTypeStorage<V> views, SpatialClickHandler<T, V, int> clickHandler)
         {
             _nodes = nodes;
             _views = views;

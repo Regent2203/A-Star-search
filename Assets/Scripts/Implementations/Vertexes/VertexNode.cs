@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ThisProject.Implementations.Vertexes
 {
-    public class VertexNode : INode<int>
+    public class VertexNode : IMovableNode<int>
     {
         private readonly int _id;
         private Vector2 _nodePosition;

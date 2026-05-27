@@ -51,7 +51,7 @@ namespace ThisProject.Starters
             _pathFinder.AnyNodeChanged += ClearPath;
             _pathFinder.AnyNodeChanged += TryRun;
 
-            //NodePositionChanged -> _pathDrawer.ShowPath(false); TryRun(_pathFinder.IsReady);
+            //NodeMoved -> _pathDrawer.ShowPath(false); TryRun(_pathFinder.IsReady);
             //NodeBlockStateChanged -> _pathDrawer.ShowPath(false); TryRun(_pathFinder.IsReady);            
 
             _pathFinder.AnyNodeChanged += (b) => _pathDrawer.ShowPath(false);

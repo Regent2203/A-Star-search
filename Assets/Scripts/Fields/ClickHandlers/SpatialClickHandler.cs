@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace ThisProject.Fields.ClickHandlers
 {
-    public class CommonClickHandler<T, V, TId> : IClickHandler
+    public class SpatialClickHandler<T, V, TId> : IClickHandler
         where T : class, INode<TId> 
         where V : class, IView<TId>
     {
@@ -17,7 +17,7 @@ namespace ThisProject.Fields.ClickHandlers
         private readonly IInputService _inputService;
 
 
-        public CommonClickHandler(IInputService inputService)
+        public SpatialClickHandler(IInputService inputService)
         {
             _inputService = inputService;
         }

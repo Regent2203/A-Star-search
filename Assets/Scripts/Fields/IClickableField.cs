@@ -2,19 +2,17 @@
 using ThisProject.Fields.ClickHandlers;
 using ThisProject.Inputs;
 using ThisProject.Nodes;
-using ThisProject.Views;
 using UnityEngine.EventSystems;
 
 namespace ThisProject.Fields
 {
-    public interface IClickableField<T, V, TId> : IPointerDownHandler
-        where T : class, INode<TId>
-        where V : class, IView<TId>
+    public interface IClickableField<T> : IPointerDownHandler
+        where T : class, INode
     {
-        public abstract IClickHandler ClickHandler { get; }
+        public IClickHandler ClickHandler { get; }
 
         public event Action<T, PointerEventData.InputButton, InputSnapshot> NodeClicked;
-        public event Action<IClickableField<T, V, TId>, PointerEventData.InputButton, InputSnapshot> FieldClicked;
+        public event Action<PointerEventData.InputButton, InputSnapshot> FieldClicked;
 
 
         void IPointerDownHandler.OnPointerDown(PointerEventData eventData)

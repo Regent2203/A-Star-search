@@ -1,18 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using ThisProject.Nodes;
 using UnityEngine;
 
-public class INodeMover : MonoBehaviour
+namespace ThisProject.Fields.NodeMovers
 {
-    // Start is called before the first frame update
-    void Start()
+    public interface INodeMover
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public bool MoveNode(IMovableNode node, Vector2 nodePosition);
     }
 }

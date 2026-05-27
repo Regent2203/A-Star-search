@@ -8,10 +8,10 @@ namespace ThisProject.Nodes
         public Vector2 NodePosition { get; }
         public bool IsBlocked { get; }
 
-        public event Action<Vector2> NodePositionChanged;
+        public event Action<Vector2> NodePositionChanged; //todo move?
     }
 
-    public interface INode<out TId> : INode
+    public interface INode<TId> : INode
     {
         TId Id { get; }
     }
