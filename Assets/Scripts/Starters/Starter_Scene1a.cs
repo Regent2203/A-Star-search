@@ -1,16 +1,14 @@
-﻿using ThisProject.Implementations.Cells;
+﻿using System.Collections.Generic;
+using ThisProject.Implementations.Cells;
 using ThisProject.Implementations.Cells.UI;
 using ThisProject.Inputs;
 using ThisProject.PathFinders;
-using System;
-using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine.EventSystems;
 using Zenject;
 
 namespace ThisProject.Starters
 {
-    public class Starter_Scene1a : IInitializable, IDisposable
+    public class Starter_Scene1a : StarterBase
     {
         private CellsConfig _config;
         private CellsGridField _field;
@@ -37,7 +35,7 @@ namespace ThisProject.Starters
             _hotkeyInfoPanel = hotkeyInfoPanel;
         }
 
-        public void Initialize()
+        protected override void SubscribeAll()
         {
             _field.NodeClicked += OnNodeClicked;
             _field.FieldChanged += OnFieldChanged;
@@ -48,12 +46,15 @@ namespace ThisProject.Starters
 
             _palette.ItemClicked += OnPaletteItemClicked;
             _painter.BrushChanged += OnBrushChanged;
+        }
 
+        protected override void InitDefaultStates()
+        {
             _painter.SetBrush(BrushType.Primary, _config.DefaultCellType);
             _painter.SetBrush(BrushType.Secondary, _config.DefaultCellType);
         }
 
-        public void Dispose()
+        protected override void UnsubscribeAll()
         {
             _field.NodeClicked -= OnNodeClicked;
             _field.FieldChanged -= OnFieldChanged;

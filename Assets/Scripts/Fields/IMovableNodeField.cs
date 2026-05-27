@@ -5,10 +5,11 @@ using UnityEngine;
 
 namespace ThisProject.Fields
 {
-    public interface IMovableNodeField
+    public interface IMovableNodeField<T>
+        where T : class, INode
     {
         public abstract INodeMover NodeMover { get; }
 
-        public event Action<INode, Vector2> NodeMoved;
+        public event Action<T, Vector2> NodeMoved;
     }
 }

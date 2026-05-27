@@ -1,10 +1,12 @@
 using ThisProject.Links.Providers;
 using System;
 using UnityEngine;
+using UnityEditor.Experimental.GraphView;
+using UnityEditorInternal;
 
 namespace ThisProject.Implementations.Cells
 {
-    public class CellsGridFieldGenerator
+    public class CellsFieldGenerator
     {
         private CellsGridField _field;
         private Vector2 _scaleFactor;
@@ -13,7 +15,7 @@ namespace ThisProject.Implementations.Cells
         private readonly CellNodeFactory _nodesFactory;
         private readonly CellsConfig _config;
 
-        public CellsGridFieldGenerator(CellViewFactory viewFactory, CellNodeFactory nodeFactory, CellsConfig config)
+        public CellsFieldGenerator(CellViewFactory viewFactory, CellNodeFactory nodeFactory, CellsConfig config)
         {
             _viewsFactory = viewFactory;
             _nodesFactory = nodeFactory;
@@ -21,13 +23,13 @@ namespace ThisProject.Implementations.Cells
         }
 
         public void SetConfiguration(CellsGridField field, Transform container, Vector2 scaleFactor,
-            Action<Vector2> nodePositionChangedCallback, Action<CellNode, CellType> nodeTypeChangedCallback)
+            Action<CellNode, Vector2> nodeMovedCallback, Action<CellNode, CellType> nodeTypeChangedCallback)
         {
             _field = field;
             _scaleFactor = scaleFactor;
 
             _viewsFactory.SetConfiguration(container);
-            _nodesFactory.SetConfiguration(nodePositionChangedCallback, nodeTypeChangedCallback);
+            _nodesFactory.SetConfiguration(nodeMovedCallback, nodeTypeChangedCallback);
         }
 
         public void PopulateField()

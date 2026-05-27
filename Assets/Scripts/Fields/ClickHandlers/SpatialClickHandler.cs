@@ -29,7 +29,6 @@ namespace ThisProject.Fields.ClickHandlers
             _fieldClickedCallback = fieldClickedCallback;
         }
 
-
         public void ProcessClick(PointerEventData eventData)
         {
             var hitObject = eventData.pointerCurrentRaycast.gameObject;

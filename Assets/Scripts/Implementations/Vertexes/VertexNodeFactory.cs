@@ -24,7 +24,7 @@ namespace ThisProject.Implementations.Vertexes
         public VertexNode Create(int id, Vector2 nodePosition)
         {
             var vertexNode = _instantiator.Instantiate<VertexNode>(new object[] { id, nodePosition });
-            //vertexNode.NodeMoved += (v) => _nodePositionChangedCallback(vertexNode.Id, v); //todo
+            //vertexNode.NodeMoved += (v) => _nodeMovedCallback(vertexNode.Id, v); //todo
 
             return vertexNode;
         }

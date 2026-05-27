@@ -34,12 +34,9 @@ namespace ThisProject.Fields.ClickHandlers
 
         public void ProcessClick(PointerEventData eventData)
         {
-            Vector3 localPos = _field.transform.InverseTransformPoint(eventData.pointerCurrentRaycast.worldPosition);
+            var index = _field.PositionToIndex(eventData.pointerCurrentRaycast.worldPosition);
 
-            int x = Mathf.FloorToInt(localPos.x / _field.Grid.cellSize.x);
-            int y = Mathf.FloorToInt(localPos.y / _field.Grid.cellSize.y);
-
-            var node = _field.GetNodeById(new Vector2Int(x, y));
+            var node = _field.GetNodeById(index);
             if (node != null)
             {
                 _nodeClickedCallback?.Invoke(node, eventData.button, _inputService.CreateSnapshot());

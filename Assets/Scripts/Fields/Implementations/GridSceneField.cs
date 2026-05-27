@@ -54,6 +54,17 @@ namespace ThisProject.Fields.Implementations
         {
             _clickHandler.SetConfiguration(NotifyNodeClicked, NotifyFieldClicked);
 
+            PrepareGrid();
+        }
+
+        public void SetFieldData(T[,] nodes, V[,] views)
+        {
+            _nodes.SetData(nodes);
+            _views.SetData(views);
+        }
+
+        private void PrepareGrid()
+        {
             _collider.size = (Vector2)_grid.cellSize * _cellsNumber;
             _collider.offset = _collider.size * 0.5f;
 
@@ -65,15 +76,14 @@ namespace ThisProject.Fields.Implementations
             _scaleFactor = _grid.cellSize / _viewPrefab.GetSize();
         }
 
-        public void SetFieldData(T[,] nodes, V[,] views)
+        public Vector2Int PositionToIndex(Vector2 coords)
         {
-            _nodes.SetData(nodes);
-            _views.SetData(views);
-        }
+            var localPos = transform.InverseTransformPoint(coords);
 
-        protected void OnNodePositionChanged(Vector2 pos)
-        {
-            //todo
+            int x = Mathf.FloorToInt(localPos.x / _grid.cellSize.x);
+            int y = Mathf.FloorToInt(localPos.y / _grid.cellSize.y);
+
+            return new Vector2Int(x, y);
         }
     }
 }

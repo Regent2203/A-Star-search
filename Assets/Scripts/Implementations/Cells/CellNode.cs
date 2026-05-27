@@ -10,27 +10,27 @@ namespace ThisProject.Implementations.Cells
         private Vector2 _nodePosition;        
         private CellType _cellType;
         private Action<CellNode, CellType> _nodeTypeChangedCallback;
-        private Action<Vector2> _nodePositionChangedCallback;
+        private Action<CellNode, Vector2> _nodeMovedCallback;
 
         public Vector2Int Id => _index;
         public Vector2 NodePosition => _nodePosition;
         public bool IsBlocked => float.IsPositiveInfinity(_cellType.MoveCost);
         public CellType CellType => _cellType;
 
-        public event Action<Vector2> NodePositionChanged
+        public event Action<INode, Vector2> NodePositionChanged
         {
-            add => _nodePositionChangedCallback += value;
-            remove => _nodePositionChangedCallback -= value;
+            add => _nodeMovedCallback += value;
+            remove => _nodeMovedCallback -= value;
         }
 
 
         public CellNode(Vector2Int index, Vector2 nodePosition, CellType cellType, 
-            Action<Vector2> nodePositionChangedCallback, Action<CellNode, CellType> nodeTypeChangedCallback)
+            Action<CellNode, Vector2> nodeMovedCallback, Action<CellNode, CellType> nodeTypeChangedCallback)
         {
             _index = index;
             _nodePosition = nodePosition;
             _cellType = cellType;
-            _nodePositionChangedCallback = nodePositionChangedCallback;
+            _nodeMovedCallback = nodeMovedCallback;
             _nodeTypeChangedCallback = nodeTypeChangedCallback;
         }
 
@@ -49,7 +49,7 @@ namespace ThisProject.Implementations.Cells
                 return;
 
             _nodePosition = position;
-            _nodePositionChangedCallback?.Invoke(_nodePosition);
+            _nodeMovedCallback?.Invoke(this, _nodePosition);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace ThisProject.Views
         public Vector3 GetCenterCoords();
     }
 
-    public interface IView<out TId> : IView
+    public interface IView<TId> : IView
     {
         TId Id { get; }
     }

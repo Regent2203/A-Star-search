@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 
 namespace ThisProject.Fields
 {
-    public abstract class SceneField<T, V, TId> : MonoBehaviour, IVisibleField<T, V, TId>, IClickableField<T>, IMovableNodeField
+    public abstract class SceneField<T, V, TId> : MonoBehaviour, IVisibleField<T, V, TId>, IClickableField<T>, IMovableNodeField<T>
         where T : class, INode<TId>
         where V : class, IView<TId>
     {
@@ -19,16 +19,12 @@ namespace ThisProject.Fields
         public abstract IClickHandler ClickHandler { get; }
         public abstract INodeMover NodeMover { get; }
 
-
         public event Action<T, PointerEventData.InputButton, InputSnapshot> NodeClicked;
         public event Action<PointerEventData.InputButton, InputSnapshot> FieldClicked;
-        public event Action<INode, Vector2> NodeMoved;
+        public event Action<T, Vector2> NodeMoved;
         public event Action FieldChanged;
-        
 
         public abstract BoxCollider2D Box { get; }
-
-        
 
         public T GetNodeById(TId id) => Nodes.GetById(id);
         public V GetViewById(TId id) => Views.GetById(id);
@@ -42,6 +38,12 @@ namespace ThisProject.Fields
         protected void NotifyFieldClicked(PointerEventData.InputButton btn, InputSnapshot input)
         {
             FieldClicked?.Invoke(btn, input);
+        }
+
+        protected void NotifyNodeMoved(T node, Vector2 pos)
+        {
+            NodeMoved?.Invoke(node, pos);
+            NotifyFieldChanged();
         }
 
         protected void NotifyFieldChanged()

@@ -6,7 +6,7 @@ namespace ThisProject.Implementations.Cells
 {
     public class CellNodeFactory
     {
-        private Action<Vector2> _nodePositionChangedCallback;
+        private Action<CellNode, Vector2> _nodeMovedCallback;
         private Action<CellNode, CellType> _nodeTypeChangedCallback;
 
         private readonly IInstantiator _instantiator;
@@ -17,15 +17,15 @@ namespace ThisProject.Implementations.Cells
             _instantiator = instantiator;
         }
 
-        public void SetConfiguration(Action<Vector2> nodePositionChangedCallback, Action<CellNode, CellType> nodeTypeChangedCallback)
+        public void SetConfiguration(Action<CellNode, Vector2> nodeMovedCallback, Action<CellNode, CellType> nodeTypeChangedCallback)
         {
-            _nodePositionChangedCallback = nodePositionChangedCallback;
+            _nodeMovedCallback = nodeMovedCallback;
             _nodeTypeChangedCallback = nodeTypeChangedCallback;
         }
 
         public CellNode Create(Vector2Int index, Vector2 nodePosition, CellType cellType)
         {
-            var cellNode = _instantiator.Instantiate<CellNode>(new object[] { index, nodePosition, cellType, _nodePositionChangedCallback, _nodeTypeChangedCallback });
+            var cellNode = _instantiator.Instantiate<CellNode>(new object[] { index, nodePosition, cellType, _nodeMovedCallback, _nodeTypeChangedCallback });
 
             return cellNode;
         }

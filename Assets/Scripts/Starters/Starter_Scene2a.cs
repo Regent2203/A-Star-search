@@ -1,18 +1,16 @@
-﻿using ThisProject.Implementations.Cells;
+﻿using System;
+using System.Collections.Generic;
+using ThisProject.Implementations.Cells;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Inputs;
 using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
 namespace ThisProject.Starters
 {
-    public class Starter_Scene2a : IInitializable, IDisposable
+    public class Starter_Scene2a : StarterBase
     {
         //private CellsConfig _config;
         private VertexesField _field;
@@ -41,7 +39,7 @@ namespace ThisProject.Starters
             _hotkeyInfoPanel = hotkeyInfoPanel;*/
         }
 
-        public void Initialize()
+        protected override void SubscribeAll()
         {
             _field.NodeClicked += OnNodeClicked;
             //_views.FieldChanged += OnFieldChanged;
@@ -63,9 +61,9 @@ namespace ThisProject.Starters
             _pathFinder.FinishNodeChanged += (node, b) =>
             {
                 var view = _field.GetViewById(node.Id);
-                view?.ShowFinishMarker(b); 
+                view?.ShowFinishMarker(b);
             };
-            
+
             _pathFinder.AnyNodeChanged += TryRun;
 
             //NodeClicked += -> LinksCreator.TryUseFirstNode
@@ -76,7 +74,12 @@ namespace ThisProject.Starters
             //_visualLinksCreator.TryUseNode(_views.Node2);
         }
 
-        public void Dispose()
+        protected override void InitDefaultStates()
+        {
+            //
+        }
+
+        protected override void UnsubscribeAll()
         {
             //
         }

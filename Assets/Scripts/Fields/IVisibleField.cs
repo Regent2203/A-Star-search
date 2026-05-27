@@ -10,7 +10,7 @@ namespace ThisProject.Fields
         where V : class, IView<TId>
     {
         public IObjectsStorage<V, TId> Views { get; }
-        public V GetViewById(TId id);
+        public V GetViewById(TId id) => Views.GetById(id);
     }
 
     public interface IVisibleField

@@ -43,7 +43,7 @@ namespace ThisProject.Installers
             Container.Bind(typeof(CellsGridField), typeof(GridSceneField<CellNode, CellView>)).FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<GridTypeStorage<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridTypeStorage<CellView>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsGridFieldGenerator>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsFieldGenerator>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridClickHandler<CellNode, CellView>>().AsSingle();
