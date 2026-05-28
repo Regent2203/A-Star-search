@@ -9,6 +9,7 @@ using ThisProject.Links.Factories.CostProviders;
 using ThisProject.Links.Providers;
 using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
+using ThisProject.PathSetters;
 using ThisProject.SearchAlgorithms;
 using ThisProject.Starters;
 using UnityEngine;
@@ -53,6 +54,7 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<VertexesHeuristicsProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<EuclideanDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<ConstantCostProvider<VertexNode>>().AsSingle().WithArguments(0.0f);
+            Container.BindInterfacesAndSelfTo<PathSetter<VertexNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<VertexNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinePathDrawer>().AsSingle();
             //Container.BindInterfacesAndSelfTo<UIHotkeyInfoPanel_Vertexes>().FromInstance(_hotkeyInfoPanel).AsSingle();

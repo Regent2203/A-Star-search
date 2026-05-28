@@ -5,6 +5,7 @@ using ThisProject.Implementations.Vertexes;
 using ThisProject.Inputs;
 using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
+using ThisProject.PathSetters;
 using UnityEngine.EventSystems;
 using Zenject;
 
@@ -16,6 +17,7 @@ namespace ThisProject.Starters
         private VertexesField _field;
         //private GridClickHandler<CellNode> _fieldInputHandler;
         private VertexesVisualLinksCreator _visualLinksCreator;
+        private PathSetter<VertexNode> _pathSetter;
         private PathFinder<VertexNode> _pathFinder;
         private LinePathDrawer _pathDrawer;
         //private UIHotkeyInfoPanel_Vertexes _hotkeyInfoPanel;
@@ -26,11 +28,12 @@ namespace ThisProject.Starters
         public void Construct(CellsConfig config, CellsGridField field, GridClickHandler<CellNode> fieldInputHandler,
             palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)*/
         public void Construct(VertexesField field,VertexesVisualLinksCreator visualLinksCreator,
-            PathFinder<VertexNode> pathFinder, LinePathDrawer pathDrawer)
+            PathSetter<VertexNode> pathSetter, PathFinder<VertexNode> pathFinder, LinePathDrawer pathDrawer)
         {
             _field = field;
             _visualLinksCreator = visualLinksCreator;
 
+            _pathSetter = pathSetter;
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
             /*
@@ -44,27 +47,27 @@ namespace ThisProject.Starters
             _field.NodeClicked += OnNodeClicked;
             //_views.FieldChanged += OnFieldChanged;
 
-            _pathFinder.StartNodeChanged += OnStartNodeChanged;
-            _pathFinder.FinishNodeChanged += OnFinishNodeChanged;
-            _pathFinder.AnyNodeChanged += ClearPath;
-            _pathFinder.AnyNodeChanged += TryRun;
+            _pathSetter.StartNodeChanged += OnStartNodeChanged;
+            _pathSetter.FinishNodeChanged += OnFinishNodeChanged;
+            _pathSetter.AnyNodeChanged += ClearPath;
+            _pathSetter.AnyNodeChanged += TryRun;
 
-            //NodeMoved -> _pathDrawer.ShowPath(false); TryRun(_pathFinder.IsReady);
-            //NodeBlockStateChanged -> _pathDrawer.ShowPath(false); TryRun(_pathFinder.IsReady);            
+            //NodeMoved -> _pathDrawer.ShowPath(false); TryRun(_pathSetter.IsReady);
+            //NodeBlockStateChanged -> _pathDrawer.ShowPath(false); TryRun(_pathSetter.IsReady);            
 
-            _pathFinder.AnyNodeChanged += (b) => _pathDrawer.ShowPath(false);
-            _pathFinder.StartNodeChanged += (node, b) =>
+            _pathSetter.AnyNodeChanged += (b) => _pathDrawer.ShowPath(false);
+            _pathSetter.StartNodeChanged += (node, b) =>
             {
                 var view = _field.GetViewById(node.Id);
                 view?.ShowStartMarker(b);
             };
-            _pathFinder.FinishNodeChanged += (node, b) =>
+            _pathSetter.FinishNodeChanged += (node, b) =>
             {
                 var view = _field.GetViewById(node.Id);
                 view?.ShowFinishMarker(b);
             };
 
-            _pathFinder.AnyNodeChanged += TryRun;
+            _pathSetter.AnyNodeChanged += TryRun;
 
             //NodeClicked += -> LinksCreator.TryUseFirstNode
             //mouseScroll -> ChangeLinkCost
@@ -96,11 +99,11 @@ namespace ThisProject.Starters
             {
                 if (button == PointerEventData.InputButton.Left) //lmb
                 {
-                    _pathFinder.UpdateStartNode(node);
+                    _pathSetter.UpdateStartNode(node);
                 }
                 else if (button == PointerEventData.InputButton.Right) //rmb
                 {
-                    _pathFinder.UpdateFinishNode(node);
+                    _pathSetter.UpdateFinishNode(node);
                 }
             }
 
@@ -113,7 +116,7 @@ namespace ThisProject.Starters
         private void OnCellNodeTypeChanged(CellNode node, CellType cellType)
         {
             _pathDrawer.ShowPath(false);
-            TryRun(_pathFinder.IsReady);
+            TryRun(_pathSetter.IsReady);
         }
 
         private void OnStartNodeChanged(VertexNode node, bool b)
@@ -139,7 +142,7 @@ namespace ThisProject.Starters
         {
             if (isReady)
             {
-                var nodesPath = _pathFinder.GetPath();
+                var nodesPath = _pathFinder.GetPath(_pathSetter.StartNode, _pathSetter.FinishNode);
                 if (nodesPath != null)
                 {
                     _field.NodesToViewsNonAlloc(nodesPath, _viewsPath);

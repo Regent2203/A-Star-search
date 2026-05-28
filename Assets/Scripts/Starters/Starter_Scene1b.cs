@@ -4,6 +4,7 @@ using ThisProject.Implementations.Cells.UI;
 using ThisProject.Inputs;
 using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
+using ThisProject.PathSetters;
 using UnityEngine.EventSystems;
 using Zenject;
 
@@ -13,6 +14,7 @@ namespace ThisProject.Starters
     {
         private CellsConfig _config;
         private CellsGridField _field;
+        private PathSetter<CellNode> _pathSetter;
         private PathFinder<CellNode> _pathFinder;
         private LinePathDrawer _pathDrawer;
         private CellsPainter _painter;
@@ -22,12 +24,13 @@ namespace ThisProject.Starters
 
 
         [Inject]
-        public void Construct(CellsConfig config, CellsGridField field, PathFinder<CellNode> pathFinder, 
+        public void Construct(CellsConfig config, CellsGridField field, PathSetter<CellNode> pathSetter, PathFinder<CellNode> pathFinder, 
             LinePathDrawer pathDrawer, CellsPainter painter,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)
         {
             _config = config;
             _field = field;
+            _pathSetter = pathSetter;
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
             _painter = painter;
@@ -42,9 +45,9 @@ namespace ThisProject.Starters
             _field.NodeClicked += OnNodeClicked;
             _field.FieldChanged += OnFieldChanged;
 
-            _pathFinder.StartNodeChanged += OnStartNodeChanged;
-            _pathFinder.FinishNodeChanged += OnFinishNodeChanged;
-            _pathFinder.AnyNodeChanged += OnPathChanged;
+            _pathSetter.StartNodeChanged += OnStartNodeChanged;
+            _pathSetter.FinishNodeChanged += OnFinishNodeChanged;
+            _pathSetter.AnyNodeChanged += OnPathChanged;
 
             _palette.ItemClicked += OnPaletteItemClicked;
             _painter.BrushChanged += OnBrushChanged;
@@ -61,9 +64,9 @@ namespace ThisProject.Starters
             _field.NodeClicked -= OnNodeClicked;
             _field.FieldChanged -= OnFieldChanged;
 
-            _pathFinder.StartNodeChanged -= OnStartNodeChanged;
-            _pathFinder.FinishNodeChanged -= OnFinishNodeChanged;
-            _pathFinder.AnyNodeChanged -= OnPathChanged;
+            _pathSetter.StartNodeChanged -= OnStartNodeChanged;
+            _pathSetter.FinishNodeChanged -= OnFinishNodeChanged;
+            _pathSetter.AnyNodeChanged -= OnPathChanged;
 
             _palette.ItemClicked -= OnPaletteItemClicked;
             _painter.BrushChanged -= OnBrushChanged;
@@ -89,10 +92,10 @@ namespace ThisProject.Starters
                 switch (button)
                 {
                     case PointerEventData.InputButton.Left:
-                        _pathFinder.UpdateStartNode(node);
+                        _pathSetter.UpdateStartNode(node);
                         break;
                     case PointerEventData.InputButton.Right:
-                        _pathFinder.UpdateFinishNode(node);
+                        _pathSetter.UpdateFinishNode(node);
                         break;
                 }
             }
@@ -100,7 +103,7 @@ namespace ThisProject.Starters
 
         private void OnFieldChanged()
         {
-            OnPathChanged(_pathFinder.IsReady);
+            OnPathChanged(_pathSetter.IsReady);
         }
 
         private void OnStartNodeChanged(CellNode node, bool b)
@@ -127,7 +130,7 @@ namespace ThisProject.Starters
         {
             if (isReady)
             {
-                var nodesPath = _pathFinder.GetPath();
+                var nodesPath = _pathFinder.GetPath(_pathSetter.StartNode, _pathSetter.FinishNode);
                 if (nodesPath != null)
                 {
                     _field.NodesToViewsNonAlloc(nodesPath, _viewsPath);

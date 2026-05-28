@@ -16,6 +16,7 @@ using ThisProject.Starters;
 using UnityEngine;
 using Zenject;
 using ThisProject.Fields.NodeMovers;
+using ThisProject.PathSetters;
 
 namespace ThisProject.Installers
 {
@@ -57,6 +58,7 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<OctileDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeWeightGetter>().AsSingle();
             Container.BindInterfacesAndSelfTo<AverageCostProvider<CellNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PathSetter<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinePathDrawer>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPainter>().AsSingle();
