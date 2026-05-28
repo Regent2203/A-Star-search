@@ -14,9 +14,17 @@ namespace ThisProject.Links.Factories
             _costProvider = costProvider;
         }
 
-        public IEnumerable<ILink<T>> CreateLinks(T from, IEnumerable<T> neighbours)
+        public IEnumerable<ILink<T>> CreateLinksFromNode(T from, IEnumerable<T> neighbours)
         {
             foreach (var to in neighbours)
+            {
+                yield return CreateLink(from, to);
+            }
+        }
+
+        public IEnumerable<ILink<T>> CreateLinksToNode(T to, IEnumerable<T> neighbours)
+        {
+            foreach (var from in neighbours)
             {
                 yield return CreateLink(from, to);
             }

@@ -34,7 +34,7 @@ namespace ThisProject.SearchAlgorithms
                     return RetracePath(startNode, finishNode);
                 }
 
-                foreach (var link in linksProvider.GetLinksForNode(current))
+                foreach (var link in linksProvider.GetLinksFromNode(current))
                 {
                     if (link.From.IsBlocked || link.To.IsBlocked)
                         continue;

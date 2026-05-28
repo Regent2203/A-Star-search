@@ -48,7 +48,7 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridClickHandler<CellNode, CellView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NullNodeMover>().AsSingle();
-            Container.BindInterfacesAndSelfTo<RuntimeLinksProvider<CellNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<FourSideGridNeighbours<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellNode>>().AsSingle();

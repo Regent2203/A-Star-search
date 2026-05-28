@@ -10,25 +10,32 @@ namespace ThisProject.Links.Providers
     /// <summary>
     /// Creates links during search algorithm work - not beforehand
     /// </summary>
-    public class RuntimeLinksProvider<T> : ILinksProvider<T> where T : class, INode<Vector2Int>
+    public class GridDynamicLinksProvider<T> : ILinksProvider<T> where T : class, INode<Vector2Int>
     {
         private readonly ILinksFactory<T> _factory;
         private readonly IGridNeighboursProvider<T> _neighboursProvider;
         private readonly GridTypeStorage<T> _gridNodes;
 
 
-        public RuntimeLinksProvider(ILinksFactory<T> factory, IGridNeighboursProvider<T> neighboursProvider, GridTypeStorage<T> gridNodes)
+        public GridDynamicLinksProvider(ILinksFactory<T> factory, IGridNeighboursProvider<T> neighboursProvider, GridTypeStorage<T> gridNodes)
         {
             _factory = factory;
             _neighboursProvider = neighboursProvider;
             _gridNodes = gridNodes;
         }
 
-        public IEnumerable<ILink<T>> GetLinksForNode(T node)
+        public IEnumerable<ILink<T>> GetLinksFromNode(T node)
         {
             var neighbours = _gridNodes.GetNeighbourObjects(node.Id, _neighboursProvider);
 
-            return _factory.CreateLinks(node, neighbours);
+            return _factory.CreateLinksFromNode(node, neighbours);
+        }
+
+        public IEnumerable<ILink<T>> GetLinksToNode(T node)
+        {
+            var neighbours = _gridNodes.GetNeighbourObjects(node.Id, _neighboursProvider);
+
+            return _factory.CreateLinksToNode(node, neighbours);
         }
     }
 }

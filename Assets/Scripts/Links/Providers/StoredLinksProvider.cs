@@ -1,11 +1,14 @@
 ﻿using ThisProject.Nodes;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ThisProject.Links.Providers
 {
     public class StoredLinksProvider<T> : ILinksProvider<T> where T : class, INode
     {
-        private readonly Dictionary<T, Dictionary<T, ILink<T>>> _links = new Dictionary<T, Dictionary<T, ILink<T>>>(); //_links[From][To]
+        private readonly Dictionary<T, Dictionary<T, ILink<T>>> _fromLinks = new Dictionary<T, Dictionary<T, ILink<T>>>();
+        private readonly Dictionary<T, Dictionary<T, ILink<T>>> _toLinks = new Dictionary<T, Dictionary<T, ILink<T>>>();
+
 
         public bool TryAddLink(ILink<T> link)
         {
@@ -15,45 +18,72 @@ namespace ThisProject.Links.Providers
             var fromNode = link.From;
             var toNode = link.To;
 
-            if (!_links.TryGetValue(fromNode, out var linksFrom))
+            if (_fromLinks.TryGetValue(fromNode, out var toNodes) && toNodes.ContainsKey(toNode))
             {
-                linksFrom = new Dictionary<T, ILink<T>>();
-                _links[fromNode] = linksFrom;
+                //if such link already exists (only one link between two nodes is allowed)
+                return false;
             }
 
-            if (!linksFrom.ContainsKey(toNode)) //only one link between two nodes is allowed
+            if (!_fromLinks.TryGetValue(fromNode, out var outgoing))
             {
-                linksFrom[toNode] = link;
-                return true;
+                outgoing = new Dictionary<T, ILink<T>>();
+                _fromLinks[fromNode] = outgoing;
             }
-            else
-                return false;
+            outgoing[toNode] = link;
+
+            if (!_toLinks.TryGetValue(toNode, out var incoming))
+            {
+                incoming = new Dictionary<T, ILink<T>>();
+                _toLinks[toNode] = incoming;
+            }
+            incoming[fromNode] = link;
+
+            return true;
         }
 
         public bool TryRemoveLink(T from, T to)
         {
-            if (from == null || to == null) 
+            if (from == null || to == null)
                 return false;
 
-            if (!_links.TryGetValue(from, out var linksFrom))
-                return false;
-
-            bool removed = linksFrom.Remove(to);
-
-            if (linksFrom.Count == 0)
+            if (!_fromLinks.TryGetValue(from, out var outgoing) || !outgoing.ContainsKey(to))
             {
-                _links.Remove(from);
+                //if such link doesn't exist
+                return false;
             }
 
-            return removed;
+            outgoing.Remove(to);
+            if (outgoing.Count == 0)
+            {
+                _fromLinks.Remove(from);
+            }
+
+            if (_toLinks.TryGetValue(to, out var incoming))
+            {
+                incoming.Remove(from);
+                if (incoming.Count == 0)
+                {
+                    _toLinks.Remove(to);
+                }
+            }
+
+            return true;
         }
 
-        public IEnumerable<ILink<T>> GetLinksForNode(T node)
+        public IEnumerable<ILink<T>> GetLinksFromNode(T node)
         {
-            if (_links.TryGetValue(node, out var fromLinks))
-                 return fromLinks.Values;
-            else
-                return new List<ILink<T>>();
+            if (node != null && _fromLinks.TryGetValue(node, out var links))
+                return links.Values;
+
+            return Enumerable.Empty<ILink<T>>();
+        }
+
+        public IEnumerable<ILink<T>> GetLinksToNode(T node)
+        {
+            if (node != null && _toLinks.TryGetValue(node, out var links))
+                return links.Values;
+
+            return Enumerable.Empty<ILink<T>>();
         }
     }
 }
