@@ -44,7 +44,7 @@ namespace ThisProject.Starters
 
         protected override void SubscribeAll()
         {
-            _field.NodeClicked += OnNodeClicked;
+            //_field.NodeClicked += OnNodeClicked;
             //_views.FieldChanged += OnFieldChanged;
 
             _pathSetter.StartNodeChanged += OnStartNodeChanged;

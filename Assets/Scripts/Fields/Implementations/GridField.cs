@@ -1,13 +1,12 @@
-﻿using ThisProject.Fields.ClickHandlers;
-using ThisProject.Nodes;
+﻿using ThisProject.Nodes;
 using ThisProject.ObjectsStorages;
 using ThisProject.Views;
 using UnityEngine;
 using Zenject;
 
-namespace ThisProject.Fields.Implementations
+namespace ThisProject.Fields
 {
-    public abstract class GridSceneField<T, V> : SceneField<T, V, Vector2Int>
+    public abstract class GridField<T, V> : VisibleField<T, V, Vector2Int>
         where T : class, INode<Vector2Int>
         where V : class, IView<Vector2Int>
     {
@@ -25,11 +24,9 @@ namespace ThisProject.Fields.Implementations
 
         protected GridTypeStorage<T> _nodes;
         protected GridTypeStorage<V> _views;
-        protected GridClickHandler<T, V> _clickHandler;
 
         public override IObjectsStorage<T, Vector2Int> Nodes => _nodes;
         public override IObjectsStorage<V, Vector2Int> Views => _views;
-        public override IClickHandler ClickHandler => _clickHandler;
 
         public override BoxCollider2D Box => _collider;
         public Grid Grid => _grid;
@@ -37,11 +34,10 @@ namespace ThisProject.Fields.Implementations
 
 
         [Inject]
-        public void Construct(GridTypeStorage<T> nodes, GridTypeStorage<V> views, GridClickHandler<T, V> clickHandler, V cellViewPrefab)
+        public void Construct(GridTypeStorage<T> nodes, GridTypeStorage<V> views, V cellViewPrefab)
         {
             _nodes = nodes;
             _views = views;
-            _clickHandler = clickHandler;
             _viewPrefab = cellViewPrefab;
         }
 
@@ -52,8 +48,6 @@ namespace ThisProject.Fields.Implementations
 
         protected virtual void Init()
         {
-            _clickHandler.SetConfiguration(NotifyNodeClicked, NotifyFieldClicked);
-
             PrepareGrid();
         }
 

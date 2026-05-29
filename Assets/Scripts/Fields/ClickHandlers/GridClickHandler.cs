@@ -1,5 +1,4 @@
 using System;
-using ThisProject.Fields.Implementations;
 using ThisProject.Inputs;
 using ThisProject.Nodes;
 using ThisProject.Views;
@@ -8,28 +7,21 @@ using UnityEngine.EventSystems;
 
 namespace ThisProject.Fields.ClickHandlers
 {
-    public class GridClickHandler<T, V> : IClickHandler
+    public class GridClickHandler<T, V> : IClickHandler<T>
         where T : class, INode<Vector2Int>
         where V : class, IView<Vector2Int>
     {
-        private Action<T, PointerEventData.InputButton, InputSnapshot> _nodeClickedCallback;
-        private Action<PointerEventData.InputButton, InputSnapshot> _fieldClickedCallback;
-
-        private readonly GridSceneField<T, V> _field;
+        private readonly GridField<T, V> _field;
         private readonly IInputService _inputService;
 
+        public event Action<T, PointerEventData.InputButton, InputSnapshot> NodeClicked;
+        public event Action<PointerEventData.InputButton, InputSnapshot> FieldClicked;
 
-        public GridClickHandler(GridSceneField<T, V> field, IInputService inputService)
+
+        public GridClickHandler(GridField<T, V> field, IInputService inputService)
         {
             _field = field;
             _inputService = inputService;
-        }
-
-        public void SetConfiguration(Action<T, PointerEventData.InputButton, InputSnapshot> nodeClickedCallback,
-             Action<PointerEventData.InputButton, InputSnapshot> fieldClickedCallback)
-        {
-            _nodeClickedCallback = nodeClickedCallback;
-            _fieldClickedCallback = fieldClickedCallback;
         }
 
         public void ProcessClick(PointerEventData eventData)
@@ -39,11 +31,11 @@ namespace ThisProject.Fields.ClickHandlers
             var node = _field.GetNodeById(index);
             if (node != null)
             {
-                _nodeClickedCallback?.Invoke(node, eventData.button, _inputService.CreateSnapshot());
+                NodeClicked?.Invoke(node, eventData.button, _inputService.CreateSnapshot());
                 return;
             }
 
-            _fieldClickedCallback.Invoke(eventData.button, _inputService.CreateSnapshot());
+            FieldClicked.Invoke(eventData.button, _inputService.CreateSnapshot());
         }
     }
 }

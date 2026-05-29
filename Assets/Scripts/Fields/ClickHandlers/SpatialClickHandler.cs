@@ -6,27 +6,20 @@ using UnityEngine.EventSystems;
 
 namespace ThisProject.Fields.ClickHandlers
 {
-    public class SpatialClickHandler<T, V, TId> : IClickHandler
+    public class SpatialClickHandler<T, V, TId> : IClickHandler<T>
         where T : class, INode<TId> 
         where V : class, IView<TId>
     {
-        private Action<T, PointerEventData.InputButton, InputSnapshot> _nodeClickedCallback;
-        private Action<PointerEventData.InputButton, InputSnapshot> _fieldClickedCallback;
-
         private readonly IVisibleField<T, V, TId> _field;
         private readonly IInputService _inputService;
+
+        public event Action<T, PointerEventData.InputButton, InputSnapshot> NodeClicked;
+        public event Action<PointerEventData.InputButton, InputSnapshot> FieldClicked;
 
 
         public SpatialClickHandler(IInputService inputService)
         {
             _inputService = inputService;
-        }
-
-        public void SetConfiguration(Action<T, PointerEventData.InputButton, InputSnapshot> nodeClickedCallback,
-            Action<PointerEventData.InputButton, InputSnapshot> fieldClickedCallback)
-        {
-            _nodeClickedCallback = nodeClickedCallback;
-            _fieldClickedCallback = fieldClickedCallback;
         }
 
         public void ProcessClick(PointerEventData eventData)
@@ -38,12 +31,12 @@ namespace ThisProject.Fields.ClickHandlers
                 var node = _field.GetNodeById(view.Id);
                 if (node != null)
                 {
-                    _nodeClickedCallback?.Invoke(node, eventData.button, _inputService.CreateSnapshot());
+                    NodeClicked?.Invoke(node, eventData.button, _inputService.CreateSnapshot());
                     return;
                 }
             }
-            
-            _fieldClickedCallback.Invoke(eventData.button, _inputService.CreateSnapshot());
+
+            FieldClicked.Invoke(eventData.button, _inputService.CreateSnapshot());
         }
     }
 }

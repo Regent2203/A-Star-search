@@ -1,5 +1,4 @@
-﻿using System;
-using ThisProject.Nodes;
+﻿using ThisProject.Nodes;
 using ThisProject.ObjectsStorages;
 
 namespace ThisProject.Fields
@@ -9,14 +8,6 @@ namespace ThisProject.Fields
     {
         public abstract IObjectsStorage<T, TId> Nodes { get; }
 
-        public event Action FieldChanged;
-
         public T GetNodeById(TId id) => Nodes.GetById(id);
-
-
-        protected void NotifyFieldChanged()
-        {
-            FieldChanged?.Invoke();
-        }
     }
 }

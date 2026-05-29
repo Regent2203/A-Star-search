@@ -1,8 +1,4 @@
-using ThisProject.Links.Providers;
-using System;
 using UnityEngine;
-using UnityEditor.Experimental.GraphView;
-using UnityEditorInternal;
 
 namespace ThisProject.Implementations.Cells
 {
@@ -22,14 +18,12 @@ namespace ThisProject.Implementations.Cells
             _config = config;
         }
 
-        public void SetConfiguration(CellsGridField field, Transform container, Vector2 scaleFactor,
-            Action<CellNode, Vector2> nodeMovedCallback, Action<CellNode, CellType> nodeTypeChangedCallback)
+        public void SetConfiguration(CellsGridField field, Transform container, Vector2 scaleFactor)
         {
             _field = field;
             _scaleFactor = scaleFactor;
 
             _viewsFactory.SetConfiguration(container);
-            _nodesFactory.SetConfiguration(nodeMovedCallback, nodeTypeChangedCallback);
         }
 
         public void PopulateField()

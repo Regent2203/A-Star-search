@@ -9,7 +9,5 @@ namespace ThisProject.Fields
     {
         public IObjectsStorage<T, TId> Nodes { get; }
         public T GetNodeById(TId id) => Nodes.GetById(id);
-
-        public event Action FieldChanged;
     }
 }

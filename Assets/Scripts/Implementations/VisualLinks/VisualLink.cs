@@ -20,8 +20,8 @@ namespace ThisProject.Implementations.VisualLinks
         public void Bind(ILink<T> link)
         {
             _link = link;
-            _link.From.NodePositionChanged += OnNodePositionChanged; //todo
-            _link.To.NodePositionChanged += OnNodePositionChanged; //todo
+            //_link.From.NodePositionChanged += OnNodePositionChanged; //todo
+            //_link.To.NodePositionChanged += OnNodePositionChanged; //todo
 
             UpdatePositions();
         }

@@ -1,31 +1,22 @@
-﻿using ThisProject.Fields;
-using ThisProject.Fields.Implementations;
+﻿using System;
+using ThisProject.Fields;
 using ThisProject.Implementations.Cells;
-using ThisProject.Inputs;
-using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Zenject;
-using ThisProject.Fields.ClickHandlers;
-using ThisProject.Fields.NodeMovers;
 
 namespace ThisProject.Implementations.Vertexes
 {
-    public class VertexesField : SpatialSceneField<VertexNode, VertexView>
+    public class VertexesField : SpatialField<VertexNode, VertexView>
     {
         private VertexesFieldGenerator _generator;
-        private SpatialNodeMover _nodeMover;
-
-        public override INodeMover NodeMover => _nodeMover;
 
         public event Action<int, Vector2> NodeDragBegin;
         public event Action<int, Vector2> NodeDragEnd;
 
 
         [Inject]
-        public void Construct(SpatialClickHandler<VertexNode, VertexView, int> clickHandler, VertexesFieldGenerator generator)
+        public void Construct(VertexesFieldGenerator generator)
         {
-            _clickHandler = clickHandler;
             _generator = generator;
         }
 

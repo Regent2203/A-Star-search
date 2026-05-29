@@ -5,9 +5,9 @@ using ThisProject.Views;
 using UnityEngine;
 using Zenject;
 
-namespace ThisProject.Fields.Implementations
+namespace ThisProject.Fields
 {
-    public abstract class SpatialSceneField<T, V> : SceneField<T, V, int>
+    public abstract class SpatialField<T, V> : VisibleField<T, V, int>
         where T : class, INode<int>
         where V : class, IView<int>
     {
@@ -16,11 +16,9 @@ namespace ThisProject.Fields.Implementations
 
         protected DictTypeStorage<T> _nodes;
         protected DictTypeStorage<V> _views;
-        protected SpatialClickHandler<T, V, int> _clickHandler;
 
         public override IObjectsStorage<T, int> Nodes => _nodes;
         public override IObjectsStorage<V, int> Views => _views;
-        public override IClickHandler ClickHandler => _clickHandler;
 
         public override BoxCollider2D Box => _collider;
 
@@ -30,7 +28,6 @@ namespace ThisProject.Fields.Implementations
         {
             _nodes = nodes;
             _views = views;
-            _clickHandler = clickHandler;
         }
 
         protected void Awake()
@@ -40,7 +37,7 @@ namespace ThisProject.Fields.Implementations
 
         protected virtual void Init()
         {
-            _clickHandler.SetConfiguration(NotifyNodeClicked, NotifyFieldClicked);
+            
         }
     }
 }

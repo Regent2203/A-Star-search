@@ -1,25 +1,17 @@
-﻿using System;
-using ThisProject.Fields.Implementations;
-using ThisProject.Fields.NodeMovers;
+﻿using ThisProject.Fields;
 using Zenject;
 
 namespace ThisProject.Implementations.Cells
 {
-    public class CellsGridField : GridSceneField<CellNode, CellView>
+    public class CellsGridField : GridField<CellNode, CellView>
     {
         private CellsFieldGenerator _generator;
-        private INodeMover _nodeMover;
-
-        public override INodeMover NodeMover => _nodeMover;
-
-        public event Action<CellNode, CellType> NodeTypeChanged;
 
 
         [Inject]
-        public void Construct(CellsFieldGenerator generator, INodeMover nodeMover)
+        public void Construct(CellsFieldGenerator generator)
         {
             _generator = generator;
-            _nodeMover = nodeMover;
         }
 
         protected override void Init()
@@ -29,16 +21,10 @@ namespace ThisProject.Implementations.Cells
 
 
             //todo: change if we want to call this method not at scene start (instead: after we change grid size or else)
-            _generator.SetConfiguration(this, transform, _scaleFactor, NotifyNodeMoved, NotifyNodeTypeChanged);
+            _generator.SetConfiguration(this, transform, _scaleFactor);
             _generator.PopulateField();
 
-            NodeTypeChanged += UpdateSpriteForCellType;
-        }
-
-        protected void NotifyNodeTypeChanged(CellNode node, CellType cellType)
-        {
-            NodeTypeChanged?.Invoke(node, cellType);
-            NotifyFieldChanged();
+            //NodeTypeChanged += UpdateSpriteForCellType; //todo
         }
 
         private void UpdateSpriteForCellType(CellNode node, CellType cellType)

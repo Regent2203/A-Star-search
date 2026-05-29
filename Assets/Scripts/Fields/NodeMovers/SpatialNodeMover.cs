@@ -1,4 +1,5 @@
-﻿using ThisProject.Nodes;
+﻿using System;
+using ThisProject.Nodes;
 using UnityEngine;
 
 namespace ThisProject.Fields.NodeMovers
@@ -6,6 +7,9 @@ namespace ThisProject.Fields.NodeMovers
     public class SpatialNodeMover : INodeMover
     {
         private readonly BoxCollider2D _box;
+
+        public event Action<IMovableNode, Vector2> NodeMoved;
+
 
         public SpatialNodeMover(IVisibleField field) 
         {

@@ -1,6 +1,7 @@
 using ThisProject.Nodes;
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace ThisProject.Implementations.Cells
 {
@@ -9,47 +10,38 @@ namespace ThisProject.Implementations.Cells
         private readonly Vector2Int _index;
         private Vector2 _nodePosition;        
         private CellType _cellType;
-        private Action<CellNode, CellType> _nodeTypeChangedCallback;
-        private Action<CellNode, Vector2> _nodeMovedCallback;
 
         public Vector2Int Id => _index;
         public Vector2 NodePosition => _nodePosition;
         public bool IsBlocked => float.IsPositiveInfinity(_cellType.MoveCost);
         public CellType CellType => _cellType;
 
-        public event Action<INode, Vector2> NodePositionChanged
-        {
-            add => _nodeMovedCallback += value;
-            remove => _nodeMovedCallback -= value;
-        }
 
-
-        public CellNode(Vector2Int index, Vector2 nodePosition, CellType cellType, 
-            Action<CellNode, Vector2> nodeMovedCallback, Action<CellNode, CellType> nodeTypeChangedCallback)
+        public CellNode(Vector2Int index, Vector2 nodePosition, CellType cellType)
         {
             _index = index;
             _nodePosition = nodePosition;
             _cellType = cellType;
-            _nodeMovedCallback = nodeMovedCallback;
-            _nodeTypeChangedCallback = nodeTypeChangedCallback;
         }
 
-        public void ChangeType(CellType cellType)
+        public bool ChangeType(CellType cellType)
         {
-            if (_cellType == cellType)
-                return;
-
-            _cellType = cellType;
-            _nodeTypeChangedCallback?.Invoke(this, cellType);
+            if (_cellType != cellType)
+            {
+                _cellType = cellType;
+                return true;
+            }
+            return false;
         }
 
-        public void Move(Vector2 position)
+        public bool Move(Vector2 position)
         {
-            if (position == _nodePosition)
-                return;
-
-            _nodePosition = position;
-            _nodeMovedCallback?.Invoke(this, _nodePosition);
+            if (position != _nodePosition)
+            {
+                _nodePosition = position;
+                return true;
+            }
+            return false;
         }
     }
 }

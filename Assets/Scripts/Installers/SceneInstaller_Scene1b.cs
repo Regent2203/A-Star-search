@@ -1,6 +1,7 @@
+using ThisProject.Fields;
 using ThisProject.Fields.ClickHandlers;
-using ThisProject.Fields.Implementations;
 using ThisProject.Fields.GridNeighbours;
+using ThisProject.Fields.NodeMovers;
 using ThisProject.Heuristic.Functions;
 using ThisProject.Implementations.Cells;
 using ThisProject.Implementations.Cells.UI;
@@ -11,12 +12,11 @@ using ThisProject.Links.Providers;
 using ThisProject.ObjectsStorages;
 using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
+using ThisProject.PathSetters;
 using ThisProject.SearchAlgorithms;
 using ThisProject.Starters;
 using UnityEngine;
 using Zenject;
-using ThisProject.Fields.NodeMovers;
-using ThisProject.PathSetters;
 
 namespace ThisProject.Installers
 {
@@ -42,14 +42,13 @@ namespace ThisProject.Installers
             Container.BindInstance(_inputSettings).AsSingle();
             Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
             Container.BindInstance(_cellViewPrefab).AsSingle();
-            Container.Bind(typeof(CellsGridField), typeof(GridSceneField<CellNode, CellView>)).FromInstance(_field).AsSingle();
+            Container.Bind(typeof(CellsGridField), typeof(GridField<CellNode, CellView>)).FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<GridTypeStorage<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridTypeStorage<CellView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsFieldGenerator>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridClickHandler<CellNode, CellView>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<NullNodeMover>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<EightSideGridNeighbours<CellNode>>().AsSingle();

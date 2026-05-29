@@ -7,8 +7,6 @@ namespace ThisProject.Nodes
     {
         public Vector2 NodePosition { get; }
         public bool IsBlocked { get; }
-
-        public event Action<INode, Vector2> NodePositionChanged; //todo move?
     }
 
     public interface INode<TId> : INode

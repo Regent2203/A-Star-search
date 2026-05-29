@@ -12,9 +12,16 @@ namespace ThisProject.Implementations.Cells
     public class CellsPainter
     {
         private readonly Dictionary<BrushType, CellType> _brushes = new Dictionary<BrushType, CellType>();
+        
+        private readonly ICellTypeChanger _cellTypeChanger;
 
         public event Action<BrushType, CellType> BrushChanged;
 
+
+        public CellsPainter(ICellTypeChanger cellChanger)
+        {
+            _cellTypeChanger = cellChanger;
+        }
 
         public void SetBrush(BrushType brush, CellType cellType)
         {
@@ -22,14 +29,11 @@ namespace ThisProject.Implementations.Cells
             BrushChanged?.Invoke(brush, cellType);
         }
 
-        public void TryChangeCellType(CellNode node, BrushType brush)
+        public void PaintCell(CellNode node, BrushType brush)
         {
             if (_brushes.TryGetValue(brush, out CellType cellType))
             {
-                if (cellType != null)
-                {
-                    node.ChangeType(cellType);
-                }
+                _cellTypeChanger.TryChangeCellType(node, cellType);
             }
         }
     }
