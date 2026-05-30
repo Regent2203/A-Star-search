@@ -16,11 +16,17 @@ namespace ThisProject.Fields.NodeMovers
             _box = field.Box;
         }
 
-        public bool MoveNode(IMovableNode node, Vector2 nodePosition)
+        public bool TryMoveNode(IMovableNode node, Vector2 nodePosition)
         {
-            if (IsInsideBorders(nodePosition))
+            if (node == null)
+                return false;
+
+            if (!IsInsideBorders(nodePosition))
+                return false;
+            
+            if (node.TryMove(nodePosition))
             {
-                node.Move(nodePosition);
+                NodeMoved?.Invoke(node, nodePosition);
                 return true;
             }
             return false;

@@ -42,7 +42,7 @@ namespace ThisProject.Implementations.Vertexes
         private void NotifyNodeDragEnd(int id, Vector2 newNodePosition)
         {
             NodeDragEnd?.Invoke(id, newNodePosition);
-            GetNodeById(id).Move(newNodePosition);
+            GetNodeById(id).TryMove(newNodePosition);
         }
     }
 }

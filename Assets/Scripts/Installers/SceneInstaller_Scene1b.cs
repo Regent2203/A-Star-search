@@ -1,7 +1,6 @@
 using ThisProject.Fields;
 using ThisProject.Fields.ClickHandlers;
 using ThisProject.Fields.GridNeighbours;
-using ThisProject.Fields.NodeMovers;
 using ThisProject.Heuristic.Functions;
 using ThisProject.Implementations.Cells;
 using ThisProject.Implementations.Cells.UI;
@@ -27,7 +26,9 @@ namespace ThisProject.Installers
         [SerializeField]
         private CellView _cellViewPrefab;
         [SerializeField]
-        private CellsGridField _field;        
+        private CellsField _field;
+        [SerializeField]
+        private CellsClickHandler _clickHandler;
         [SerializeField]
         private UICellsPalette _palette;
         [SerializeField]
@@ -42,12 +43,14 @@ namespace ThisProject.Installers
             Container.BindInstance(_inputSettings).AsSingle();
             Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
             Container.BindInstance(_cellViewPrefab).AsSingle();
-            Container.Bind(typeof(CellsGridField), typeof(GridField<CellNode, CellView>)).FromInstance(_field).AsSingle();
+            Container.Bind(typeof(CellsField), typeof(GridField<CellNode, CellView>)).FromInstance(_field).AsSingle();
+            Container.BindInstance(_clickHandler).AsSingle();
             Container.BindInterfacesAndSelfTo<GridTypeStorage<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridTypeStorage<CellView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsFieldGenerator>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellTypeChanger>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridClickHandler<CellNode, CellView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<CellNode>>().AsSingle();

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7494231154362246262}
   - component: {fileID: 2595981954521783922}
+  - component: {fileID: 3770780181028729904}
   - component: {fileID: 3024631908344665649}
   - component: {fileID: 6209780092771049174}
   m_Layer: 0
@@ -50,6 +51,18 @@ MonoBehaviour:
   _collider: {fileID: 6209780092771049174}
   _cellsNumber: {x: 12, y: 10}
   _doCentering: 1
+--- !u!114 &3770780181028729904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40272456039224674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10061482e88a947419f0d2635b2cfd61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!156049354 &3024631908344665649
 Grid:
   m_ObjectHideFlags: 0

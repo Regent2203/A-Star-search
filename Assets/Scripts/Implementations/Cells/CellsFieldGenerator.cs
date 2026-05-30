@@ -4,7 +4,7 @@ namespace ThisProject.Implementations.Cells
 {
     public class CellsFieldGenerator
     {
-        private CellsGridField _field;
+        private CellsField _field;
         private Vector2 _scaleFactor;
 
         private readonly CellViewFactory _viewsFactory;
@@ -18,7 +18,7 @@ namespace ThisProject.Implementations.Cells
             _config = config;
         }
 
-        public void SetConfiguration(CellsGridField field, Transform container, Vector2 scaleFactor)
+        public void SetConfiguration(CellsField field, Transform container, Vector2 scaleFactor)
         {
             _field = field;
             _scaleFactor = scaleFactor;

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using ThisProject.Fields.ClickHandlers;
 using ThisProject.Implementations.Cells;
 using ThisProject.Implementations.Cells.UI;
 using ThisProject.Inputs;
@@ -13,8 +12,9 @@ namespace ThisProject.Starters
     public class Starter_Scene1a : StarterBase
     {
         private CellsConfig _config;
-        private CellsGridField _field;
-        private GridClickHandler<CellNode, CellView> _clickHandler;
+        private CellsField _field;
+        private CellsClickHandler _clickHandler;
+        private CellTypeChanger _cellTypeChanger;
         private PathSetter<CellNode> _pathSetter;
         private PathFinder<CellNode> _pathFinder;
         private CellsPathDrawer _pathDrawer;
@@ -25,7 +25,7 @@ namespace ThisProject.Starters
 
 
         [Inject]
-        public void Construct(CellsConfig config, CellsGridField field, GridClickHandler<CellNode, CellView> clickHandler, 
+        public void Construct(CellsConfig config, CellsField field, CellsClickHandler clickHandler, CellTypeChanger cellTypeChanger,
             PathSetter<CellNode> pathSetter, PathFinder<CellNode> pathFinder, 
             CellsPathDrawer pathDrawer, CellsPainter painter,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)
@@ -33,6 +33,7 @@ namespace ThisProject.Starters
             _config = config;
             _field = field;
             _clickHandler = clickHandler;
+            _cellTypeChanger = cellTypeChanger;
             _pathSetter = pathSetter;
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
@@ -45,7 +46,7 @@ namespace ThisProject.Starters
         protected override void SubscribeAll()
         {
             _clickHandler.NodeClicked += OnNodeClicked;
-            //_field.FieldChanged += OnFieldChanged;
+            _cellTypeChanger.CellTypeChanged += OnCellTypeChanged;
 
             _pathSetter.StartNodeChanged += OnStartNodeChanged;
             _pathSetter.FinishNodeChanged += OnFinishNodeChanged;
@@ -64,7 +65,7 @@ namespace ThisProject.Starters
         protected override void UnsubscribeAll()
         {
             _clickHandler.NodeClicked -= OnNodeClicked;
-            //_field.FieldChanged -= OnFieldChanged;
+            _cellTypeChanger.CellTypeChanged -= OnCellTypeChanged;
 
             _pathSetter.StartNodeChanged -= OnStartNodeChanged;
             _pathSetter.FinishNodeChanged -= OnFinishNodeChanged;
@@ -72,6 +73,13 @@ namespace ThisProject.Starters
 
             _palette.ItemClicked -= OnPaletteItemClicked;
             _painter.BrushChanged -= OnBrushChanged;
+        }
+
+
+        private void UpdateView(CellNode node, CellType cellType)
+        {
+            var view = _field.GetViewById(node.Id);
+            view.UpdateSprite(cellType.Sprite);
         }
 
         private void OnNodeClicked(CellNode node, PointerEventData.InputButton button, InputSnapshot input)
@@ -101,6 +109,12 @@ namespace ThisProject.Starters
                         break;
                 }
             }
+        }
+
+        private void OnCellTypeChanged(CellNode node, CellType cellType)
+        {
+            UpdateView(node, cellType);
+            OnFieldChanged();
         }
 
         private void OnFieldChanged()

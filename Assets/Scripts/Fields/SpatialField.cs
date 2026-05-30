@@ -24,7 +24,7 @@ namespace ThisProject.Fields
 
 
         [Inject]
-        public void Construct(DictTypeStorage<T> nodes, DictTypeStorage<V> views, SpatialClickHandler<T, V, int> clickHandler)
+        public void Construct(DictTypeStorage<T> nodes, DictTypeStorage<V> views)
         {
             _nodes = nodes;
             _views = views;

@@ -43,13 +43,14 @@ namespace ThisProject.Implementations.Vertexes
             _nodeBlockedChangedCallback?.Invoke(_isBlocked);
         }
 
-        public void Move(Vector2 position)
+        public bool TryMove(Vector2 position)
         {
-            if (position == _nodePosition)
-                return;
-
-            _nodePosition = position;
-            _nodeMovedCallback?.Invoke(this, _nodePosition);
+            if (position != _nodePosition)
+            {
+                _nodePosition = position;
+                return true;
+            }
+            return false;
         }
     }
 }

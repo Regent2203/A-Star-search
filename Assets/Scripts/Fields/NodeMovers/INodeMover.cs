@@ -6,7 +6,7 @@ namespace ThisProject.Fields.NodeMovers
 {
     public interface INodeMover
     {
-        public bool MoveNode(IMovableNode node, Vector2 nodePosition);
+        public bool TryMoveNode(IMovableNode node, Vector2 nodePosition);
 
         public event Action<IMovableNode, Vector2> NodeMoved;
     }

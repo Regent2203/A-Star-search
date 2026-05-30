@@ -25,7 +25,7 @@ namespace ThisProject.Starters
 
         [Inject]
         /*
-        public void Construct(CellsConfig config, CellsGridField field, GridClickHandler<CellNode> fieldInputHandler,
+        public void Construct(CellsConfig config, CellsField field, GridClickHandler<CellNode> fieldInputHandler,
             palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)*/
         public void Construct(VertexesField field,VertexesVisualLinksCreator visualLinksCreator,
             PathSetter<VertexNode> pathSetter, PathFinder<VertexNode> pathFinder, LinePathDrawer pathDrawer)

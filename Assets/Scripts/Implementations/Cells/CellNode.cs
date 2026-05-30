@@ -1,11 +1,9 @@
 using ThisProject.Nodes;
-using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace ThisProject.Implementations.Cells
 {
-    public class CellNode : INode<Vector2Int>
+    public class CellNode : IMovableNode<Vector2Int>
     {
         private readonly Vector2Int _index;
         private Vector2 _nodePosition;        
@@ -24,7 +22,7 @@ namespace ThisProject.Implementations.Cells
             _cellType = cellType;
         }
 
-        public bool ChangeType(CellType cellType)
+        public bool TryChangeType(CellType cellType)
         {
             if (_cellType != cellType)
             {
@@ -34,7 +32,7 @@ namespace ThisProject.Implementations.Cells
             return false;
         }
 
-        public bool Move(Vector2 position)
+        public bool TryMove(Vector2 position)
         {
             if (position != _nodePosition)
             {

@@ -2,27 +2,31 @@
 using ThisProject.Inputs;
 using ThisProject.Nodes;
 using ThisProject.Views;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 
 namespace ThisProject.Fields.ClickHandlers
 {
-    public class SpatialClickHandler<T, V, TId> : IClickHandler<T>
-        where T : class, INode<TId> 
-        where V : class, IView<TId>
+    public class SpatialClickHandler<T, V> : MonoBehaviour, IClickHandler<T>
+        where T : class, INode<int> 
+        where V : class, IView<int>
     {
-        private readonly IVisibleField<T, V, TId> _field;
-        private readonly IInputService _inputService;
+        private SpatialField<T, V> _field;
+        private IInputService _inputService;
 
         public event Action<T, PointerEventData.InputButton, InputSnapshot> NodeClicked;
         public event Action<PointerEventData.InputButton, InputSnapshot> FieldClicked;
 
 
-        public SpatialClickHandler(IInputService inputService)
+        [Inject]
+        public void Construct(SpatialField<T, V> field, IInputService inputService)
         {
+            _field = field;
             _inputService = inputService;
         }
 
-        public void ProcessClick(PointerEventData eventData)
+        void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
         {
             var hitObject = eventData.pointerCurrentRaycast.gameObject;
 
@@ -36,7 +40,7 @@ namespace ThisProject.Fields.ClickHandlers
                 }
             }
 
-            FieldClicked.Invoke(eventData.button, _inputService.CreateSnapshot());
+            FieldClicked?.Invoke(eventData.button, _inputService.CreateSnapshot());
         }
     }
 }

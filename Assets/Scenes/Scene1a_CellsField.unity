@@ -410,6 +410,7 @@ MonoBehaviour:
   _cellViewPrefab: {fileID: 114955348567688574, guid: 4f308c0d114b35741af95ce9a758d700,
     type: 3}
   _field: {fileID: 1877987555}
+  _clickHandler: {fileID: 2635198116479183755}
   _palette: {fileID: 541786301}
   _paletteChoice: {fileID: 332002408}
   _hotkeyInfoPanel: {fileID: 1716994539}
@@ -773,6 +774,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 306ff04cdadf4504fbc2f87029fd23d4, type: 3}
+--- !u!114 &2635198116479183755 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3770780181028729904, guid: 306ff04cdadf4504fbc2f87029fd23d4,
+    type: 3}
+  m_PrefabInstance: {fileID: 2635198116479183754}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10061482e88a947419f0d2635b2cfd61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
