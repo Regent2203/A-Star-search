@@ -1,5 +1,5 @@
-using ThisProject.Views;
 using System;
+using ThisProject.Views;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

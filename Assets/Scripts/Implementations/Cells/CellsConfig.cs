@@ -5,7 +5,7 @@ using Zenject;
 
 namespace ThisProject.Implementations.Cells
 {
-    [CreateAssetMenu(fileName = "CellsConfig", menuName = "Core/CellsConfig")]
+    [CreateAssetMenu(fileName = "CellsConfig", menuName = "Core/CellsConfig")] //todo rename Core
     public class CellsConfig : ScriptableObjectInstaller<CellsConfig>
     {
         [SerializeField]

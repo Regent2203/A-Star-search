@@ -1,5 +1,5 @@
-using ThisProject.Nodes;
 using System;
+using ThisProject.Nodes;
 using UnityEngine;
 
 namespace ThisProject.Implementations.Vertexes
