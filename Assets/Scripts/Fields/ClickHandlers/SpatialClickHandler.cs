@@ -8,11 +8,11 @@ using Zenject;
 
 namespace ThisProject.Fields.ClickHandlers
 {
-    public class SpatialClickHandler<T, V> : MonoBehaviour, IClickHandler<T>
-        where T : class, INode<int> 
-        where V : class, IView<int>
+    public class SpatialClickHandler<T, V, TId> : MonoBehaviour, IClickHandler<T>
+        where T : class, INode<TId> 
+        where V : class, IView<TId>
     {
-        private SpatialField<T, V> _field;
+        private SpatialField<T, V, TId> _field;
         private IInputService _inputService;
 
         public event Action<T, PointerEventData.InputButton, InputSnapshot> NodeClicked;
@@ -20,7 +20,7 @@ namespace ThisProject.Fields.ClickHandlers
 
 
         [Inject]
-        public void Construct(SpatialField<T, V> field, IInputService inputService)
+        public void Construct(SpatialField<T, V, TId> field, IInputService inputService)
         {
             _field = field;
             _inputService = inputService;

@@ -91,8 +91,8 @@ namespace ThisProject.Starters
         {
             if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
             {
-                if (button == PointerEventData.InputButton.Right)
-                    node.SetBlocked(!node.IsBlocked);
+                //if (button == PointerEventData.InputButton.Right)
+                //    node.TrySetBlocked(!node.IsBlocked);
             }
 
             if (input.IsMarkingMode)

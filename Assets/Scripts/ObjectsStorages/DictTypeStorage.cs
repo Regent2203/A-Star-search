@@ -2,12 +2,12 @@
 
 namespace ThisProject.ObjectsStorages
 {
-    public class DictTypeStorage<T> : IObjectsStorage<T, int> where T : class
+    public class DictTypeStorage<T, TId> : IObjectsStorage<T, TId> where T : class
     {
-        private Dictionary<int, T> _data;
+        private Dictionary<TId, T> _data;
 
 
-        public T GetById(int id)
+        public T GetById(TId id)
         {
             if (_data.TryGetValue(id, out var node))
                 return node;
@@ -15,7 +15,7 @@ namespace ThisProject.ObjectsStorages
             return null;
         }
 
-        public void SetData(Dictionary<int, T> data)
+        public void SetData(Dictionary<TId, T> data)
         {
             _data = data;
         }

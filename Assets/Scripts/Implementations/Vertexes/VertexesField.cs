@@ -6,7 +6,7 @@ using Zenject;
 
 namespace ThisProject.Implementations.Vertexes
 {
-    public class VertexesField : SpatialField<VertexNode, VertexView>
+    public class VertexesField : SpatialField<VertexNode, VertexView, int>
     {
         private VertexesFieldGenerator _generator;
 

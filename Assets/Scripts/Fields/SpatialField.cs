@@ -6,24 +6,24 @@ using Zenject;
 
 namespace ThisProject.Fields
 {
-    public abstract class SpatialField<T, V> : VisibleField<T, V, int>
-        where T : class, INode<int>
-        where V : class, IView<int>
+    public abstract class SpatialField<T, V, TId> : VisibleField<T, V, TId>
+        where T : class, INode<TId>
+        where V : class, IView<TId>
     {
         [SerializeField]
         protected BoxCollider2D _collider;
 
-        protected DictTypeStorage<T> _nodes;
-        protected DictTypeStorage<V> _views;
+        protected DictTypeStorage<T, TId> _nodes;
+        protected DictTypeStorage<V, TId> _views;
 
-        public override IObjectsStorage<T, int> Nodes => _nodes;
-        public override IObjectsStorage<V, int> Views => _views;
+        public override IObjectsStorage<T, TId> Nodes => _nodes;
+        public override IObjectsStorage<V, TId> Views => _views;
 
         public override BoxCollider2D Box => _collider;
 
 
         [Inject]
-        public void Construct(DictTypeStorage<T> nodes, DictTypeStorage<V> views)
+        public void Construct(DictTypeStorage<T, TId> nodes, DictTypeStorage<V, TId> views)
         {
             _nodes = nodes;
             _views = views;
