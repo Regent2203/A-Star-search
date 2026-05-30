@@ -19,5 +19,10 @@ namespace ThisProject.ObjectsStorages
         {
             _data = data;
         }
+
+        public void ClearData()
+        {
+            _data = null;
+        }
     }
 }

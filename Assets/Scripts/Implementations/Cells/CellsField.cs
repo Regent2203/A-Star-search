@@ -18,9 +18,12 @@ namespace ThisProject.Implementations.Cells
         {
             base.Init();
 
-            //todo: change if we want to call this method not at scene start (instead: after we change grid size or else)
+            ConfigureGenerator();
+        }
+
+        private void ConfigureGenerator()
+        {
             _generator.SetConfiguration(this, transform, _scaleFactor);
-            _generator.PopulateField();
         }
     }
 }

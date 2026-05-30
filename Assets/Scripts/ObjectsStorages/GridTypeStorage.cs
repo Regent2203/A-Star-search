@@ -22,6 +22,11 @@ namespace ThisProject.ObjectsStorages
             _data = data;
         }
 
+        public void ClearData()
+        {
+            _data = null;
+        }
+
         public IReadOnlyList<T> GetNeighbourObjects(Vector2Int index, IGridNeighboursProvider<T> neighboursProvider)
         {
             return neighboursProvider.GetNeighbours(index, _data);

@@ -53,6 +53,9 @@ namespace ThisProject.Fields
 
         public void SetFieldData(T[,] nodes, V[,] views)
         {
+            _nodes.ClearData();
+            _views.ClearData();
+
             _nodes.SetData(nodes);
             _views.SetData(views);
         }

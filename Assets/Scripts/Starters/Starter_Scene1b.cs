@@ -14,6 +14,7 @@ namespace ThisProject.Starters
     {
         private CellsConfig _config;
         private CellsField _field;
+        private CellsFieldGenerator _generator;
         private CellsClickHandler _clickHandler;
         private CellTypeChanger _cellTypeChanger;
         private PathSetter<CellNode> _pathSetter;
@@ -26,13 +27,15 @@ namespace ThisProject.Starters
 
 
         [Inject]
-        public void Construct(CellsConfig config, CellsField field, CellsClickHandler clickHandler, CellTypeChanger cellTypeChanger,
+        public void Construct(CellsConfig config, CellsField field, CellsFieldGenerator generator,
+            CellsClickHandler clickHandler, CellTypeChanger cellTypeChanger,
             PathSetter<CellNode> pathSetter, PathFinder<CellNode> pathFinder, 
             LinePathDrawer pathDrawer, CellsPainter painter,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)
         {
             _config = config;
             _field = field;
+            _generator = generator;
             _clickHandler = clickHandler;
             _cellTypeChanger = cellTypeChanger;
             _pathSetter = pathSetter;
@@ -62,6 +65,8 @@ namespace ThisProject.Starters
         {
             _painter.SetBrush(BrushType.Primary, _config.DefaultCellType);
             _painter.SetBrush(BrushType.Secondary, _config.DefaultCellType);
+
+            _generator.PopulateField();
         }
 
         protected override void UnsubscribeAll()
