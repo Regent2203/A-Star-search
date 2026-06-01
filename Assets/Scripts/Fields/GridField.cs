@@ -14,11 +14,8 @@ namespace ThisProject.Fields
         protected Grid _grid;
         [SerializeField]
         protected BoxCollider2D _collider;
-        [SerializeField]
-        protected Vector2Int _cellsNumber = new Vector2Int(10, 10);
-        [SerializeField]
-        protected bool _doCentering = true;
 
+        protected Vector2Int _size;
         protected V _viewPrefab;
         protected Vector2 _scaleFactor;
 
@@ -30,7 +27,6 @@ namespace ThisProject.Fields
 
         public override BoxCollider2D Box => _collider;
         public Grid Grid => _grid;
-        public Vector2Int CellsNumber => _cellsNumber;
 
 
         [Inject]
@@ -41,44 +37,39 @@ namespace ThisProject.Fields
             _viewPrefab = cellViewPrefab;
         }
 
-        protected void Awake()
+        protected virtual void Awake()
         {
-            Init();
+            CalculateScaleFactor();
         }
 
-        protected virtual void Init()
+        private void CalculateScaleFactor()
         {
-            PrepareGrid();
+            _scaleFactor = _grid.cellSize / _viewPrefab.GetSize();
         }
 
-        public void SetFieldData(T[,] nodes, V[,] views)
+        public void SetFieldData(T[,] nodes, V[,] views, Vector2Int size)
         {
             _nodes.ClearData();
             _views.ClearData();
 
             _nodes.SetData(nodes);
             _views.SetData(views);
+
+            _size = size;
+            UpdateColliderSize();
         }
 
-        private void PrepareGrid()
+        private void UpdateColliderSize()
         {
-            _collider.size = (Vector2)_grid.cellSize * _cellsNumber;
-            _collider.offset = _collider.size * 0.5f;
-
-            if (_doCentering)
-            {
-                transform.position -= 0.5f * Vector3.Scale(_grid.cellSize, new Vector3(_cellsNumber.x, _cellsNumber.y, 0));
-            }
-
-            _scaleFactor = _grid.cellSize / _viewPrefab.GetSize();
+            _collider.size = _grid.cellSize * new Vector2(_size.x, _size.y);
         }
 
         public Vector2Int PositionToIndex(Vector2 coords)
         {
             var localPos = transform.InverseTransformPoint(coords);
 
-            int x = Mathf.FloorToInt(localPos.x / _grid.cellSize.x);
-            int y = Mathf.FloorToInt(localPos.y / _grid.cellSize.y);
+            int x = Mathf.FloorToInt(localPos.x / _grid.cellSize.x + _size.x / 2f);
+            int y = Mathf.FloorToInt(localPos.y / _grid.cellSize.y + _size.y / 2f);
 
             return new Vector2Int(x, y);
         }

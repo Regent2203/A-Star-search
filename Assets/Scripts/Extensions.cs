@@ -1,8 +1,8 @@
-﻿using ThisProject.Fields;
+﻿using System;
+using System.Collections.Generic;
+using ThisProject.Fields;
 using ThisProject.Nodes;
 using ThisProject.Views;
-using System;
-using System.Collections.Generic;
 
 public static class Extensions
 {

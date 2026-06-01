@@ -5,6 +5,7 @@ using ThisProject.Inputs;
 using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
 using ThisProject.PathSetters;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
@@ -66,7 +67,7 @@ namespace ThisProject.Starters
             _painter.SetBrush(BrushType.Primary, _config.DefaultCellType);
             _painter.SetBrush(BrushType.Secondary, _config.DefaultCellType);
 
-            _generator.PopulateField();
+            _generator.PopulateField(new Vector2Int(12, 10), _config.DefaultCellType);
         }
 
         protected override void UnsubscribeAll()

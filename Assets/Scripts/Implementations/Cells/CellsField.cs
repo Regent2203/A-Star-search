@@ -14,9 +14,9 @@ namespace ThisProject.Implementations.Cells
             _generator = generator;
         }
 
-        protected override void Init()
+        protected override void Awake()
         {
-            base.Init();
+            base.Awake();
 
             ConfigureGenerator();
         }

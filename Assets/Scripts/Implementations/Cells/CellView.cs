@@ -17,9 +17,6 @@ namespace ThisProject.Implementations.Cells
         private Vector2Int _index;
         public Vector2Int Id => _index;
 
-        private Vector2? _size;
-        private Vector3? _center;
-
 
         private void Awake()
         {
@@ -32,7 +29,7 @@ namespace ThisProject.Implementations.Cells
         {
             _index = index;
             transform.localScale = scale;
-            name = $"Cell {index.x},{index.y}";
+            name = $"CellView {index.x},{index.y}";
         }
 
         public void ShowPathMarker(bool show)
@@ -54,14 +51,12 @@ namespace ThisProject.Implementations.Cells
 
         public Vector2 GetSize()
         {
-            _size ??= _spriteRenderer.size;
-            return _size.Value;
+            return _spriteRenderer.size;
         }
 
         public Vector3 GetCenterCoords()
         {
-            _center ??= _spriteRenderer.bounds.center;
-            return _center.Value;
+            return _spriteRenderer.bounds.center;
         }
     }
 }
