@@ -29,13 +29,13 @@ namespace ThisProject.PathSetters
 
         private void UpdateDesiredNode(T node, ref T desiredNode, ref T notDesiredNode, Action<T, bool> desiredNodeChanged)
         {
-            if (node is not null && ReferenceEquals(notDesiredNode, node)) //when trying to set start node as finish node or vice versa
+            if (node is not null && ReferenceEquals(notDesiredNode, node)) //when trying to set start node as finish node or vice versa, we do nothing (it's a feature)
                 return;
 
             if (node is null && desiredNode is null) //when trying to set null to null
                 return;
 
-            if (ReferenceEquals(desiredNode, node)) //when trying to set same value to same desyred node, we clear desyred value instead (it's a feature)
+            if (ReferenceEquals(desiredNode, node)) //when trying to set same node value to desired node, we clear desired value instead (it's a feature)
             {
                 var oldDesiredNode = desiredNode;
                 desiredNode = null;

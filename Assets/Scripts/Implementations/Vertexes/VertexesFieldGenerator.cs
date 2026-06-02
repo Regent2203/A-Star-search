@@ -1,10 +1,6 @@
-﻿using ThisProject.Implementations.Vertexes;
-using ThisProject.Links.Providers;
-using System;
-using System.ComponentModel;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace ThisProject.Implementations.Cells
+namespace ThisProject.Implementations.Vertexes
 {
     public class VertexesFieldGenerator
     {
@@ -21,13 +17,11 @@ namespace ThisProject.Implementations.Cells
             _nodesFactory = nodeFactory;
         }
 
-        public void SetConfiguration(VertexesField field, Transform container,
-            Action<int, Vector2> nodeDragBeginCallback, Action<int, Vector2> nodeDragEndCallback)
+        public void SetConfiguration(VertexesField field, Transform container)
         {
             _field = field;
 
-            _viewsFactory.SetConfiguration(Vector2.one, container, nodeDragBeginCallback, nodeDragEndCallback);
-            _nodesFactory.SetConfiguration(nodeDragEndCallback);
+            _viewsFactory.SetConfiguration(Vector2.one, container);
         }
 
         //temp
@@ -45,7 +39,7 @@ namespace ThisProject.Implementations.Cells
             }
         }
 
-        public void BuildNodeForField(VertexesField field, Vector3 position, Transform container, Vector2 scale, Action<CellNode, CellType> callback)
+        public void BuildNodeForField(VertexesField field, Vector3 position, Transform container, Vector2 scale)
         {
             var id = _newId++;
 

@@ -51,7 +51,6 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellTypeChanger>().AsSingle();
-            Container.BindInterfacesAndSelfTo<GridClickHandler<CellNode, CellView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<EightSideGridNeighbours<CellNode>>().AsSingle();

@@ -1,14 +1,14 @@
 ﻿using System;
 using ThisProject.Inputs;
-using ThisProject.Nodes;
+using ThisProject.Views;
 using UnityEngine.EventSystems;
 
 namespace ThisProject.Fields.ClickHandlers
 {
-    public interface IClickHandler<T> : IPointerDownHandler
-        where T : class, INode
+    public interface IClickHandler<V> : IPointerDownHandler
+        where V : IView
     {
-        public event Action<T, PointerEventData.InputButton, InputSnapshot> NodeClicked;
+        public event Action<V, PointerEventData.InputButton, InputSnapshot> ViewClicked;
         public event Action<PointerEventData.InputButton, InputSnapshot> FieldClicked;
     }
 }

@@ -49,7 +49,7 @@ namespace ThisProject.Starters
 
         protected override void SubscribeAll()
         {
-            _clickHandler.NodeClicked += OnNodeClicked;
+            _clickHandler.ViewClicked += OnViewClicked;
             _cellTypeChanger.CellTypeChanged += OnCellTypeChanged;
 
             _pathSetter.StartNodeChanged += OnStartNodeChanged;
@@ -70,7 +70,7 @@ namespace ThisProject.Starters
 
         protected override void UnsubscribeAll()
         {
-            _clickHandler.NodeClicked -= OnNodeClicked;
+            _clickHandler.ViewClicked -= OnViewClicked;
             _cellTypeChanger.CellTypeChanged -= OnCellTypeChanged;
 
             _pathSetter.StartNodeChanged -= OnStartNodeChanged;
@@ -88,8 +88,10 @@ namespace ThisProject.Starters
             view.UpdateSprite(cellType.Sprite);
         }
 
-        private void OnNodeClicked(CellNode node, PointerEventData.InputButton button, InputSnapshot input)
+        private void OnViewClicked(CellView view, PointerEventData.InputButton button, InputSnapshot input)
         {
+            var node = _field.GetNodeById(view.Id);
+
             if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
             {
                 switch (button)

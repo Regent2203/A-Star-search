@@ -8,14 +8,14 @@ using Zenject;
 
 namespace ThisProject.Fields.ClickHandlers
 {
-    public class GridClickHandler<T, V> : MonoBehaviour, IClickHandler<T>
+    public class GridClickHandler<T, V> : MonoBehaviour, IClickHandler<V>
         where T : class, INode<Vector2Int>
         where V : class, IView<Vector2Int>
     {
         private GridField<T, V> _field;
         private IInputService _inputService;
 
-        public event Action<T, PointerEventData.InputButton, InputSnapshot> NodeClicked;
+        public event Action<V, PointerEventData.InputButton, InputSnapshot> ViewClicked;
         public event Action<PointerEventData.InputButton, InputSnapshot> FieldClicked;
 
 
@@ -30,10 +30,10 @@ namespace ThisProject.Fields.ClickHandlers
         {
             var index = _field.PositionToIndex(eventData.pointerCurrentRaycast.worldPosition);
 
-            var node = _field.GetNodeById(index);
-            if (node != null)
+            var view = _field.GetViewById(index);
+            if (view != null)
             {
-                NodeClicked?.Invoke(node, eventData.button, _inputService.CreateSnapshot());
+                ViewClicked?.Invoke(view, eventData.button, _inputService.CreateSnapshot());
                 return;
             }
 

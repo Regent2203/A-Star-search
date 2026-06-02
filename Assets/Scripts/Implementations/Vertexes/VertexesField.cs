@@ -1,7 +1,4 @@
-﻿using System;
-using ThisProject.Fields;
-using ThisProject.Implementations.Cells;
-using UnityEngine;
+﻿using ThisProject.Fields;
 using Zenject;
 
 namespace ThisProject.Implementations.Vertexes
@@ -9,9 +6,6 @@ namespace ThisProject.Implementations.Vertexes
     public class VertexesField : SpatialField<VertexNode, VertexView, int>
     {
         private VertexesFieldGenerator _generator;
-
-        public event Action<int, Vector2> NodeDragBegin;
-        public event Action<int, Vector2> NodeDragEnd;
 
 
         [Inject]
@@ -25,7 +19,7 @@ namespace ThisProject.Implementations.Vertexes
             base.Init();
             
             //todo
-            _generator.SetConfiguration(this, transform, NotifyNodeDragBegin, NotifyNodeDragEnd);
+            _generator.SetConfiguration(this, transform);
             _generator.TestPopulate();
         }
 
@@ -33,16 +27,6 @@ namespace ThisProject.Implementations.Vertexes
         {
             //_nodes.Add(node.Id, node);
             //_views.Add(view.Id, view);
-        }
-
-        private void NotifyNodeDragBegin(int id, Vector2 oldNodePosition)
-        {
-            NodeDragBegin?.Invoke(id, oldNodePosition);
-        }
-        private void NotifyNodeDragEnd(int id, Vector2 newNodePosition)
-        {
-            NodeDragEnd?.Invoke(id, newNodePosition);
-            GetNodeById(id).TryMove(newNodePosition);
         }
     }
 }

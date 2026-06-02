@@ -1,12 +1,11 @@
-using ThisProject.Fields.ClickHandlers;
 using ThisProject.Heuristic.Functions;
-using ThisProject.Implementations.Cells;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Implementations.VisualLinks;
 using ThisProject.Inputs;
 using ThisProject.Links.Factories;
 using ThisProject.Links.Factories.CostProviders;
 using ThisProject.Links.Providers;
+using ThisProject.ObjectsStorages;
 using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
 using ThisProject.PathSetters;
@@ -26,6 +25,8 @@ namespace ThisProject.Installers
         [SerializeField]
         private VertexesField _field;
         [SerializeField]
+        private VertexesClickHandler _clickHandler;
+        [SerializeField]
         private VisualLink<VertexNode> _visualLinkPrefab;
         [SerializeField]
         private VertexesVisualLinksCreator _visualLinksManager;
@@ -40,10 +41,12 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
             Container.BindInstance(_vertexViewPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesField>().FromInstance(_field).AsSingle();
+            Container.BindInstance(_clickHandler).AsSingle();
+            Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexNode, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexView, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesFieldGenerator>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexNodeFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<SpatialClickHandler<VertexNode, VertexView, int>>().AsSingle(); 
             Container.BindInstance(_visualLinkPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesVisualLinksCreator>().FromInstance(_visualLinksManager).AsSingle();
             Container.BindInterfacesAndSelfTo<VisualLinksFactory<VertexNode>>().AsSingle();

@@ -44,7 +44,7 @@ namespace ThisProject.Starters
 
         protected override void SubscribeAll()
         {
-            //_field.NodeClicked += OnNodeClicked;
+            //_field.ViewClicked += OnViewClicked;
             //_views.FieldChanged += OnFieldChanged;
 
             _pathSetter.StartNodeChanged += OnStartNodeChanged;
@@ -69,7 +69,7 @@ namespace ThisProject.Starters
 
             _pathSetter.AnyNodeChanged += TryRun;
 
-            //NodeClicked += -> LinksCreator.TryUseFirstNode
+            //ViewClicked += -> LinksCreator.TryUseFirstNode
             //mouseScroll -> ChangeLinkCost
 
             //temp

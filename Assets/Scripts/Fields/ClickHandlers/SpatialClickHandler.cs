@@ -1,6 +1,5 @@
 ﻿using System;
 using ThisProject.Inputs;
-using ThisProject.Nodes;
 using ThisProject.Views;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,21 +7,18 @@ using Zenject;
 
 namespace ThisProject.Fields.ClickHandlers
 {
-    public class SpatialClickHandler<T, V, TId> : MonoBehaviour, IClickHandler<T>
-        where T : class, INode<TId> 
-        where V : class, IView<TId>
+    public class SpatialClickHandler<V> : MonoBehaviour, IClickHandler<V>
+        where V : MonoBehaviour, IView
     {
-        private SpatialField<T, V, TId> _field;
         private IInputService _inputService;
 
-        public event Action<T, PointerEventData.InputButton, InputSnapshot> NodeClicked;
+        public event Action<V, PointerEventData.InputButton, InputSnapshot> ViewClicked;
         public event Action<PointerEventData.InputButton, InputSnapshot> FieldClicked;
 
 
         [Inject]
-        public void Construct(SpatialField<T, V, TId> field, IInputService inputService)
+        public void Construct(IInputService inputService)
         {
-            _field = field;
             _inputService = inputService;
         }
 
@@ -32,12 +28,8 @@ namespace ThisProject.Fields.ClickHandlers
 
             if (hitObject != null && hitObject.TryGetComponent<V>(out var view))
             {
-                var node = _field.GetNodeById(view.Id);
-                if (node != null)
-                {
-                    NodeClicked?.Invoke(node, eventData.button, _inputService.CreateSnapshot());
-                    return;
-                }
+                ViewClicked?.Invoke(view, eventData.button, _inputService.CreateSnapshot());
+                return;
             }
 
             FieldClicked?.Invoke(eventData.button, _inputService.CreateSnapshot());
