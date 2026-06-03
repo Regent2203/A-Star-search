@@ -403,6 +403,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 953047228407168596, guid: 6adb4a704c1068a40baf6b88e49e67db,
+        type: 3}
+      propertyPath: m_text
+      value: 'Scene 2.1: Spatial Field of Vertexes. Vertexes can be dragged.
+
+        Links
+        must be created manually. Link cost can be modified.
+
+        [work in progress]'
+      objectReference: {fileID: 0}
     - target: {fileID: 1918448847858689742, guid: 6adb4a704c1068a40baf6b88e49e67db,
         type: 3}
       propertyPath: m_AnchorMax.y

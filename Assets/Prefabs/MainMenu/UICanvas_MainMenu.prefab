@@ -238,6 +238,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3002439937581616002, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
+      propertyPath: _sceneName
+      value: Scene1b_CellsField
+      objectReference: {fileID: 0}
+    - target: {fileID: 3002439937581616002, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
       propertyPath: _sceneToLoad
       value: 
       objectReference: {fileID: 102900000, guid: c918875a47b9fd04a80726740a52e86b,
@@ -250,8 +255,8 @@ PrefabInstance:
         Movement
         in all directions (diagonal costs more than straight).
 
-        PathDrawer
-        draws line over cells.'
+        Movecost
+        = average sum of two cells. PathDrawer draws line over cells.'
       objectReference: {fileID: 0}
     - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
@@ -377,6 +382,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9022579682945723726}
     m_Modifications:
+    - target: {fileID: 3002439937581616002, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: _sceneName
+      value: Scene2a_VertexesField
+      objectReference: {fileID: 0}
     - target: {fileID: 3002439937581616002, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
       propertyPath: _sceneToLoad
@@ -522,6 +532,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3002439937581616002, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
+      propertyPath: _sceneName
+      value: Scene1a_CellsField
+      objectReference: {fileID: 0}
+    - target: {fileID: 3002439937581616002, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
       propertyPath: _sceneToLoad
       value: 
       objectReference: {fileID: 102900000, guid: ba47872206dcacb47a93ed12c1c3da26,
@@ -534,7 +549,8 @@ PrefabInstance:
         Only
         horizontal and vertical movement.
 
-        PathDrawer marks cells.'
+        Movecost = average sum of two
+        cells. PathDrawer uses cells'' graphics.'
       objectReference: {fileID: 0}
     - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
