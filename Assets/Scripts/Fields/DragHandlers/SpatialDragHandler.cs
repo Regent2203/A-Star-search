@@ -17,7 +17,7 @@ namespace ThisProject.Fields.DragHandlers
 
         public event Action<V, Vector2, PointerEventData> ViewDragStarted;
         public event Action<V, Vector2, PointerEventData> ViewDragging;
-        public event Action<V, Vector2, PointerEventData> ViewDragEnded;
+        public event Action<V, Vector2, Vector2, PointerEventData> ViewDragEnded;
 
 
         private void Awake()
@@ -59,7 +59,6 @@ namespace ThisProject.Fields.DragHandlers
             Vector2 mouseWorldPos = _mainCamera.ScreenToWorldPoint(eventData.position);
 
             var targetPosition = mouseWorldPos + _offset;
-            _currentView.transform.position = targetPosition; //temp
 
             ViewDragging?.Invoke(_currentView, targetPosition, eventData);
         }
@@ -72,9 +71,8 @@ namespace ThisProject.Fields.DragHandlers
             Vector2 mouseWorldPos = _mainCamera.ScreenToWorldPoint(eventData.position);
 
             var finalPosition = mouseWorldPos + _offset;
-            _currentView.transform.position = finalPosition; //temp
 
-            ViewDragEnded?.Invoke(_currentView, finalPosition, eventData);
+            ViewDragEnded?.Invoke(_currentView, finalPosition, _startPosition, eventData);
             
             ResetValues();
         }

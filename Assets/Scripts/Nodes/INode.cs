@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ThisProject.Nodes
 {
@@ -11,6 +10,6 @@ namespace ThisProject.Nodes
 
     public interface INode<TId> : INode
     {
-        TId Id { get; }
+        public TId Id { get; }
     }
 }

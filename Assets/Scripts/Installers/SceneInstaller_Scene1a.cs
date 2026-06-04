@@ -1,5 +1,4 @@
 using ThisProject.Fields;
-using ThisProject.Fields.ClickHandlers;
 using ThisProject.Fields.GridNeighbours;
 using ThisProject.Heuristic.Functions;
 using ThisProject.Implementations.Cells;
@@ -33,7 +32,7 @@ namespace ThisProject.Installers
         [SerializeField]
         private UICellsPaletteChoicePanel _paletteChoice;
         [SerializeField]
-        private UICellsPaletteHotkeyInfoPanel _hotkeyInfoPanel;
+        private UICellsHotkeysInfoPanel _hotkeyInfoPanel;
         
 
         public override void InstallBindings()
@@ -63,7 +62,7 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<CellsPainter>().AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsPalette>().FromInstance(_palette).AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsPaletteChoicePanel>().FromInstance(_paletteChoice).AsSingle();
-            Container.BindInterfacesAndSelfTo<UICellsPaletteHotkeyInfoPanel>().FromInstance(_hotkeyInfoPanel).AsSingle();
+            Container.BindInterfacesAndSelfTo<UICellsHotkeysInfoPanel>().FromInstance(_hotkeyInfoPanel).AsSingle();
 
             Container.BindInterfacesTo<Starter_Scene1a>().AsSingle();
         }

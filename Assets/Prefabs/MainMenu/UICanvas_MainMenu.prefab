@@ -250,7 +250,7 @@ PrefabInstance:
     - target: {fileID: 3672482812227839826, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
       propertyPath: m_text
-      value: 'Scene 1.2: Grid Field with Cells. Different terrain types.
+      value: 'Scene 1b: Grid Field with Cells. Different terrain types.
 
         Movement
         in all directions (diagonal costs more than straight).
@@ -396,10 +396,12 @@ PrefabInstance:
     - target: {fileID: 3672482812227839826, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
       propertyPath: m_text
-      value: 'Scene 2.1: Graph with Nodes. Weights of links can be modified.
+      value: 'Scene 2a: Spatial Field of Vertexes. Vertexes can be dragged.
 
-        [work
-        in progress]'
+        Links
+        must be created manually. Link cost can be modified.
+
+        [work in progress]'
       objectReference: {fileID: 0}
     - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
@@ -544,7 +546,7 @@ PrefabInstance:
     - target: {fileID: 3672482812227839826, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
       propertyPath: m_text
-      value: 'Scene 1.1: Grid Field with Cells. Different terrain types.
+      value: 'Scene 1a: Grid Field with Cells. Different terrain types.
 
         Only
         horizontal and vertical movement.

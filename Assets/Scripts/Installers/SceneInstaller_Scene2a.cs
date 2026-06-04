@@ -1,3 +1,4 @@
+using ThisProject.Fields.ViewMovers;
 using ThisProject.Heuristic.Functions;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Implementations.VisualLinks;
@@ -27,11 +28,11 @@ namespace ThisProject.Installers
         [SerializeField]
         private VertexesClickHandler _clickHandler;
         [SerializeField]
+        private VertexesDragHandler _dragHandler;
+        [SerializeField]
         private VisualLink<VertexNode> _visualLinkPrefab;
         [SerializeField]
         private VertexesVisualLinksCreator _visualLinksManager;
-        //[SerializeField]
-        //private UIHotkeyInfoPanel_Vertexes _hotkeyInfoPanel;
         [SerializeField]
         private LineRenderer _pathLineRenderer;
 
@@ -42,6 +43,8 @@ namespace ThisProject.Installers
             Container.BindInstance(_vertexViewPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesField>().FromInstance(_field).AsSingle();
             Container.BindInstance(_clickHandler).AsSingle();
+            Container.BindInstance(_dragHandler).AsSingle();
+            Container.BindInterfacesAndSelfTo<SpatialViewMover>().AsSingle();
             Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexNode, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexView, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesFieldGenerator>().AsSingle();

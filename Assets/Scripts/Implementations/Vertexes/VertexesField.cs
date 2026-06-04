@@ -14,19 +14,14 @@ namespace ThisProject.Implementations.Vertexes
             _generator = generator;
         }
 
-        protected override void Init()
+        protected void Awake()
         {
-            base.Init();
-            
-            //todo
-            _generator.SetConfiguration(this, transform);
-            _generator.TestPopulate();
+            ConfigureGenerator();
         }
 
-        public void AddFieldData(VertexNode node, VertexView view)
+        private void ConfigureGenerator()
         {
-            //_nodes.Add(node.Id, node);
-            //_views.Add(view.Id, view);
+            _generator.SetConfiguration(this, transform);
         }
     }
 }

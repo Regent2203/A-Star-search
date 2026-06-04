@@ -25,9 +25,9 @@ namespace ThisProject.Implementations.Vertexes
         }
 
         //temp
-        public void TestPopulate()
+        public void TestPopulate(int count)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < count; i++)
             {
                 var id = _newId++;
 
@@ -39,6 +39,7 @@ namespace ThisProject.Implementations.Vertexes
             }
         }
 
+        //todo
         public void BuildNodeForField(VertexesField field, Vector3 position, Transform container, Vector2 scale)
         {
             var id = _newId++;

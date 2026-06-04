@@ -3,21 +3,16 @@ using UnityEngine;
 
 namespace ThisProject.Implementations.Cells
 {
-    public class CellView : MonoBehaviour, IView<Vector2Int>
+    public class CellView : View<Vector2Int>
     {
         [SerializeField]
         private GameObject _pathMarker;
         [SerializeField]
         private GameObject _startMarker;
         [SerializeField]
-        private GameObject _finishMarker;        
-        [SerializeField]
-        private SpriteRenderer _spriteRenderer;
+        private GameObject _finishMarker;
 
-        private Vector2Int _index;
-        public Vector2Int Id => _index;
-
-
+        
         private void Awake()
         {
             ShowPathMarker(false);
@@ -27,7 +22,7 @@ namespace ThisProject.Implementations.Cells
 
         public void Init(Vector2Int index, Vector2 scale)
         {
-            _index = index;
+            _id = index;
             transform.localScale = scale;
             name = $"CellView {index.x},{index.y}";
         }
@@ -44,19 +39,10 @@ namespace ThisProject.Implementations.Cells
         {
             _finishMarker.SetActive(show);
         }
+
         public void UpdateSprite(Sprite sprite)
         {
             _spriteRenderer.sprite = sprite;
-        }
-
-        public Vector2 GetSize()
-        {
-            return _spriteRenderer.size;
-        }
-
-        public Vector3 GetCenterCoords()
-        {
-            return _spriteRenderer.bounds.center;
         }
     }
 }

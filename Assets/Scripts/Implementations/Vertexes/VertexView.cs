@@ -3,22 +3,24 @@ using UnityEngine;
 
 namespace ThisProject.Implementations.Vertexes
 {
-    public class VertexView : MonoBehaviour, IView<int>
+    public class VertexView : View<int>, IRoundView
     {
+        [SerializeField]
+        private CircleCollider2D _collider;
         [SerializeField]
         private GameObject _startMarker;
         [SerializeField]
         private GameObject _finishMarker;
-        [SerializeField]
-        private SpriteRenderer _spriteRenderer;
 
-        private int _id;
-        public int Id => _id;
+        private float _radius;
 
 
         private void Awake()
         {
-            //todo
+            ShowStartMarker(false);
+            ShowFinishMarker(false);
+
+            _radius = _collider.radius;
         }
 
         public void Init(int id, Vector2 position)
@@ -41,15 +43,9 @@ namespace ThisProject.Implementations.Vertexes
             _spriteRenderer.sprite = sprite;
         }
 
-
-        public Vector2 GetSize()
+        public float GetRadius()
         {
-            return _spriteRenderer.size;
-        }
-
-        public Vector3 GetCenterCoords()
-        {
-            return _spriteRenderer.bounds.center;
+            return _radius;
         }
     }
 }

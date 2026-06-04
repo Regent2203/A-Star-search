@@ -5,7 +5,7 @@ using Zenject;
 
 namespace ThisProject.Implementations.Cells.UI
 {
-    public class UICellsPaletteHotkeyInfoPanel : MonoBehaviour
+    public class UICellsHotkeysInfoPanel : MonoBehaviour
     {
         [SerializeField]
         private TMP_Text _lmbText;

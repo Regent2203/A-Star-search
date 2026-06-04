@@ -10,6 +10,6 @@ namespace ThisProject.Fields.DragHandlers
     {
         public event Action<V, Vector2, PointerEventData> ViewDragStarted;
         public event Action<V, Vector2, PointerEventData> ViewDragging;
-        public event Action<V, Vector2, PointerEventData> ViewDragEnded;
+        public event Action<V, Vector2, Vector2, PointerEventData> ViewDragEnded;
     }
 }

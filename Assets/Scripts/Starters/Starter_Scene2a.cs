@@ -1,85 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
-using ThisProject.Implementations.Cells;
+﻿using System.Collections.Generic;
+using ThisProject.Fields.ViewMovers;
 using ThisProject.Implementations.Vertexes;
+using ThisProject.Implementations.Vertexes.UI;
 using ThisProject.Inputs;
 using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
 using ThisProject.PathSetters;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Windows;
 using Zenject;
 
 namespace ThisProject.Starters
 {
     public class Starter_Scene2a : StarterBase
     {
-        //private CellsConfig _config;
         private VertexesField _field;
-        //private GridClickHandler<CellNode> _fieldInputHandler;
+        private VertexesFieldGenerator _generator;
+        private VertexesClickHandler _clickHandler;
+        private VertexesDragHandler _dragHandler;
+        private SpatialViewMover _viewMover;
         private VertexesVisualLinksCreator _visualLinksCreator;
         private PathSetter<VertexNode> _pathSetter;
         private PathFinder<VertexNode> _pathFinder;
         private LinePathDrawer _pathDrawer;
-        //private UIHotkeyInfoPanel_Vertexes _hotkeyInfoPanel;
+        //private UIVertexesHotkeyInfoPanel _hotkeyInfoPanel;
 
 
         [Inject]
-        /*
-        public void Construct(CellsConfig config, CellsField field, GridClickHandler<CellNode> fieldInputHandler,
-            palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)*/
-        public void Construct(VertexesField field,VertexesVisualLinksCreator visualLinksCreator,
+        public void Construct(VertexesField field, VertexesFieldGenerator generator,
+            VertexesClickHandler clickHandler, VertexesDragHandler dragHandler,
+            SpatialViewMover viewMover,
+            VertexesVisualLinksCreator visualLinksCreator,
             PathSetter<VertexNode> pathSetter, PathFinder<VertexNode> pathFinder, LinePathDrawer pathDrawer)
         {
             _field = field;
+            _generator = generator;
+            _clickHandler = clickHandler;
+            _dragHandler = dragHandler;
+            _viewMover = viewMover;
+
             _visualLinksCreator = visualLinksCreator;
 
             _pathSetter = pathSetter;
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
-            /*
-            _config = config;
-            _fieldInputHandler = fieldInputHandler;
-            _hotkeyInfoPanel = hotkeyInfoPanel;*/
         }
 
         protected override void SubscribeAll()
         {
-            //_field.ViewClicked += OnViewClicked;
-            //_views.FieldChanged += OnFieldChanged;
+            _clickHandler.ViewClicked += OnViewClicked;
+            _dragHandler.ViewDragStarted += OnViewDragStarted;
+            _dragHandler.ViewDragging += OnViewDragging;
+            _dragHandler.ViewDragEnded += OnViewDragEnded;
 
             _pathSetter.StartNodeChanged += OnStartNodeChanged;
             _pathSetter.FinishNodeChanged += OnFinishNodeChanged;
-            _pathSetter.AnyNodeChanged += ClearPath;
-            _pathSetter.AnyNodeChanged += TryRun;
-
-            //NodeMoved -> _pathDrawer.ShowPath(false); TryRun(_pathSetter.IsReady);
-            //NodeBlockStateChanged -> _pathDrawer.ShowPath(false); TryRun(_pathSetter.IsReady);            
-
-            _pathSetter.AnyNodeChanged += (b) => _pathDrawer.ShowPath(false);
-            _pathSetter.StartNodeChanged += (node, b) =>
-            {
-                var view = _field.GetViewById(node.Id);
-                view?.ShowStartMarker(b);
-            };
-            _pathSetter.FinishNodeChanged += (node, b) =>
-            {
-                var view = _field.GetViewById(node.Id);
-                view?.ShowFinishMarker(b);
-            };
-
-            _pathSetter.AnyNodeChanged += TryRun;
-
-            //ViewClicked += -> LinksCreator.TryUseFirstNode
-            //mouseScroll -> ChangeLinkCost
-
-            //temp
-            //_visualLinksCreator.TryUseNode(_views.Node1);
-            //_visualLinksCreator.TryUseNode(_views.Node2);
+            _pathSetter.AnyNodeChanged += OnPathChanged;
         }
 
         protected override void InitDefaultStates()
         {
-            //
+            //todo
+            _generator.TestPopulate(6);
         }
 
         protected override void UnsubscribeAll()
@@ -87,36 +70,61 @@ namespace ThisProject.Starters
             //
         }
 
-        private void OnNodeClicked(VertexNode node, PointerEventData.InputButton button, InputSnapshot input)
+        private void OLD_OnNodeClicked(VertexNode node, PointerEventData.InputButton button, InputSnapshot input)
         {
-            if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
-            {
-                //if (button == PointerEventData.InputButton.Right)
-                //    node.TrySetBlocked(!node.IsBlocked);
-            }
-
-            if (input.IsMarkingMode)
-            {
-                if (button == PointerEventData.InputButton.Left) //lmb
-                {
-                    _pathSetter.UpdateStartNode(node);
-                }
-                else if (button == PointerEventData.InputButton.Right) //rmb
-                {
-                    _pathSetter.UpdateFinishNode(node);
-                }
-            }
+            /*
+            
 
             if (input.IsLinkingMode)
             {
                 _visualLinksCreator.TryUseNode(node, button);
             }
+            */
         }
 
-        private void OnCellNodeTypeChanged(CellNode node, CellType cellType)
+        private void OnViewDragStarted(VertexView view, Vector2 pos, PointerEventData data)
         {
-            _pathDrawer.ShowPath(false);
-            TryRun(_pathSetter.IsReady);
+            //
+        }
+
+        private void OnViewDragging(VertexView view, Vector2 pos, PointerEventData data)
+        {
+            _viewMover.TryMoveView(view, pos);
+        }
+
+        private void OnViewDragEnded(VertexView view, Vector2 pos, Vector2 oldPos, PointerEventData data)
+        {
+            //_viewMover.TryMoveView(view, pos);
+            //
+        }
+
+        private void OnViewClicked(VertexView view, PointerEventData.InputButton button, InputSnapshot input)
+        {
+            var node = _field.GetNodeById(view.Id);
+
+            if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
+            {
+                if (button == PointerEventData.InputButton.Right)
+                    node.TrySetBlocked(!node.IsBlocked);
+            }
+
+            if (input.IsMarkingMode)
+            {
+                switch (button)
+                {
+                    case PointerEventData.InputButton.Left:
+                        _pathSetter.UpdateStartNode(node);
+                        break;
+                    case PointerEventData.InputButton.Right:
+                        _pathSetter.UpdateFinishNode(node);
+                        break;
+                }
+            }
+        }
+
+        private void OnFieldChanged()
+        {
+            OnPathChanged(_pathSetter.IsReady);
         }
 
         private void OnStartNodeChanged(VertexNode node, bool b)
@@ -131,9 +139,10 @@ namespace ThisProject.Starters
             view?.ShowFinishMarker(b);
         }
 
-        private void ClearPath(bool b)
+        private void OnPathChanged(bool isReady)
         {
             _pathDrawer.ShowPath(false);
+            TryRun(isReady);
         }
 
         private List<VertexView> _viewsPath = new List<VertexView>();

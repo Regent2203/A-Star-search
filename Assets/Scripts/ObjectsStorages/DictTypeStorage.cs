@@ -4,7 +4,7 @@ namespace ThisProject.ObjectsStorages
 {
     public class DictTypeStorage<T, TId> : IObjectsStorage<T, TId> where T : class
     {
-        private Dictionary<TId, T> _data;
+        private Dictionary<TId, T> _data = new Dictionary<TId, T>();
 
 
         public T GetById(TId id)
@@ -23,6 +23,16 @@ namespace ThisProject.ObjectsStorages
         public void ClearData()
         {
             _data = null;
+        }
+
+        public bool TryAddData(TId id, T value)
+        {
+            return _data.TryAdd(id, value);
+        }
+
+        public bool TryRemoveData(TId id)
+        {
+            return _data.Remove(id);
         }
     }
 }

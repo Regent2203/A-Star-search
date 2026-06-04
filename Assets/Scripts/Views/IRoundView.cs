@@ -1,11 +1,7 @@
 ﻿namespace ThisProject.Views
 {
-    public interface IRoundView : IView
+    public interface IRoundView
     {
         public float GetRadius();
-    }
-
-    public interface IRoundView<TId> : IRoundView, IView<TId>
-    {
     }
 }

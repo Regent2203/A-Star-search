@@ -1,4 +1,5 @@
-﻿using ThisProject.Nodes;
+﻿using ThisProject.Implementations.Vertexes;
+using ThisProject.Nodes;
 using ThisProject.ObjectsStorages;
 using ThisProject.Views;
 using UnityEngine;
@@ -29,14 +30,10 @@ namespace ThisProject.Fields
             _views = views;
         }
 
-        protected void Awake()
+        public void AddFieldData(T node, V view)
         {
-            Init();
-        }
-
-        protected virtual void Init()
-        {
-            
+            _nodes.TryAddData(node.Id, node);
+            _views.TryAddData(view.Id, view);
         }
     }
 }

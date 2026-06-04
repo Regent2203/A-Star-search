@@ -12,7 +12,7 @@ namespace ThisProject.Implementations.Cells
             if (node == null || cellType == null)
                 return false;
 
-            if (node.TryChangeType(cellType))
+            if (node.TryChangeCellType(cellType))
             {
                 CellTypeChanged?.Invoke(node, cellType);
                 return true;

@@ -23,7 +23,7 @@ namespace ThisProject.Starters
         private CellsPainter _painter;
         private UICellsPalette _palette;
         private UICellsPaletteChoicePanel _paletteChoice;
-        private UICellsPaletteHotkeyInfoPanel _hotkeyInfoPanel;
+        private UICellsHotkeysInfoPanel _hotkeyInfoPanel;
 
 
         [Inject]
@@ -31,7 +31,7 @@ namespace ThisProject.Starters
             CellsClickHandler clickHandler, CellTypeChanger cellTypeChanger,
             PathSetter<CellNode> pathSetter, PathFinder<CellNode> pathFinder, 
             CellsPathDrawer pathDrawer, CellsPainter painter,
-            UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsPaletteHotkeyInfoPanel hotkeyInfoPanel)
+            UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsHotkeysInfoPanel hotkeyInfoPanel)
         {
             _config = config;
             _field = field;
