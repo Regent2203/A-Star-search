@@ -82,7 +82,7 @@ namespace ThisProject.Starters
         }
 
 
-        private void UpdateView(CellNode node, CellType cellType)
+        private void UpdateViewSprite(CellNode node, CellType cellType)
         {
             var view = _field.GetViewById(node.Id);
             view.UpdateSprite(cellType.Sprite);
@@ -121,7 +121,7 @@ namespace ThisProject.Starters
 
         private void OnCellTypeChanged(CellNode node, CellType cellType)
         {
-            UpdateView(node, cellType);
+            UpdateViewSprite(node, cellType);
             OnFieldChanged();
         }
 

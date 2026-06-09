@@ -17,12 +17,12 @@ namespace ThisProject.Fields.ViewMovers
         }
 
         public bool TryMoveView(IView view, Vector2 position)
-        {/*
+        {
             if (view == null)
                 return false;
 
             if (!IsInsideBorders(position))
-                return false;*/
+                return false;
 
             view.Move(position);
             ViewMoved?.Invoke(view, position);

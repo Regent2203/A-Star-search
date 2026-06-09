@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ThisProject.Fields.ViewMovers;
+using ThisProject.Implementations.Cells;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Implementations.Vertexes.UI;
 using ThisProject.Inputs;
@@ -67,35 +69,42 @@ namespace ThisProject.Starters
 
         protected override void UnsubscribeAll()
         {
-            //
+            _clickHandler.ViewClicked -= OnViewClicked;
+            _dragHandler.ViewDragStarted -= OnViewDragStarted;
+            _dragHandler.ViewDragging -= OnViewDragging;
+            _dragHandler.ViewDragEnded -= OnViewDragEnded;
+
+            _pathSetter.StartNodeChanged -= OnStartNodeChanged;
+            _pathSetter.FinishNodeChanged -= OnFinishNodeChanged;
+            _pathSetter.AnyNodeChanged -= OnPathChanged;
         }
 
-        private void OLD_OnNodeClicked(VertexNode node, PointerEventData.InputButton button, InputSnapshot input)
+        private void UpdateNodePosition(VertexView view, Vector2 pos)
         {
-            /*
-            
+            var node = _field.GetNodeById(view.Id);
+            node.TryChangeNodePosition(pos);
+        }
 
-            if (input.IsLinkingMode)
+        private void OnViewDragStarted(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
+        {
+            if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
             {
-                _visualLinksCreator.TryUseNode(node, button);
+                if (button != PointerEventData.InputButton.Left)
+                {
+                    _dragHandler.CancelDrag();
+                }
             }
-            */
         }
 
-        private void OnViewDragStarted(VertexView view, Vector2 pos, PointerEventData data)
-        {
-            //
-        }
-
-        private void OnViewDragging(VertexView view, Vector2 pos, PointerEventData data)
-        {
-            _viewMover.TryMoveView(view, pos);
-        }
-
-        private void OnViewDragEnded(VertexView view, Vector2 pos, Vector2 oldPos, PointerEventData data)
+        private void OnViewDragging(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
         {
             //_viewMover.TryMoveView(view, pos);
-            //
+        }
+
+        private void OnViewDragEnded(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
+        {
+            if (_viewMover.TryMoveView(view, pos))
+                UpdateNodePosition(view, pos);
         }
 
         private void OnViewClicked(VertexView view, PointerEventData.InputButton button, InputSnapshot input)
@@ -119,6 +128,12 @@ namespace ThisProject.Starters
                         _pathSetter.UpdateFinishNode(node);
                         break;
                 }
+            }
+
+            if (input.IsLinkingMode)
+            {
+                Debug.Log($"{view.name} trying to use for linking");
+                _visualLinksCreator.TryUseNode(node, button);
             }
         }
 

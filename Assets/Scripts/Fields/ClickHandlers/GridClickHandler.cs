@@ -8,7 +8,7 @@ using Zenject;
 
 namespace ThisProject.Fields.ClickHandlers
 {
-    public class GridClickHandler<T, V> : MonoBehaviour, IClickHandler<V>
+    public class GridClickHandler<T, V> : MonoBehaviour, IFieldClickHandler<V>
         where T : class, INode<Vector2Int>
         where V : class, IView<Vector2Int>
     {

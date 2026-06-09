@@ -7,7 +7,8 @@ using Zenject;
 
 namespace ThisProject.Fields.ClickHandlers
 {
-    public class SpatialClickHandler<V> : MonoBehaviour, IClickHandler<V>
+    [RequireComponent(typeof(BoxCollider2D))]
+    public class SpatialClickHandler<V> : MonoBehaviour, IFieldClickHandler<V>
         where V : MonoBehaviour, IView
     {
         private IInputService _inputService;
