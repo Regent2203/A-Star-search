@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ThisProject.Inputs;
 using ThisProject.Views;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace ThisProject.Fields.DragHandlers
         private Camera _mainCamera;
         private IInputService _inputService;
 
+        private List<PointerEventData.InputButton> _buttons;
         private V _currentView;
         private Vector2 _offset;
 
@@ -23,16 +25,10 @@ namespace ThisProject.Fields.DragHandlers
 
 
         [Inject]
-        public void Construct(IInputService inputService)
+        public void Construct(Camera camera, IInputService inputService)
         {
+            _mainCamera = camera;
             _inputService = inputService;
-        }
-        
-        private void Awake()
-        {
-            _mainCamera = Camera.main; //todo inject!
-
-            ResetValues();
         }
 
         private void ResetValues()
@@ -46,8 +42,16 @@ namespace ThisProject.Fields.DragHandlers
             ResetValues();
         }
 
+        public void SetAllowedInputButtons(params PointerEventData.InputButton[] buttons)
+        {
+            _buttons = new List<PointerEventData.InputButton>(buttons);
+        }
+
         void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
         {
+            if (!_buttons.Contains(eventData.button))
+                return;
+
             var hitObject = eventData.pointerCurrentRaycast.gameObject;
 
             if (hitObject != null && hitObject.TryGetComponent<V>(out var view))
@@ -64,6 +68,9 @@ namespace ThisProject.Fields.DragHandlers
 
         void IDragHandler.OnDrag(PointerEventData eventData)
         {
+            if (!_buttons.Contains(eventData.button))
+                return;
+
             if (_currentView == null) 
                 return;
 
@@ -75,6 +82,9 @@ namespace ThisProject.Fields.DragHandlers
 
         void IEndDragHandler.OnEndDrag(PointerEventData eventData)
         {
+            if (!_buttons.Contains(eventData.button))
+                return;
+
             if (_currentView == null) 
                 return;
 

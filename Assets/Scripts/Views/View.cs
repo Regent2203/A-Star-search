@@ -13,7 +13,7 @@ namespace ThisProject.Views
 
         public Vector2 GetSize()
         {
-            return _spriteRenderer.size;
+            return _spriteRenderer.bounds.size;
         }
 
         public Vector3 GetCenterCoords()

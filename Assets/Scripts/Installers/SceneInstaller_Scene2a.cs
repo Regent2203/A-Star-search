@@ -20,6 +20,8 @@ namespace ThisProject.Installers
     public class SceneInstaller_Scene2a : MonoInstaller
     {
         [SerializeField]
+        private Camera _mainCamera;
+        [SerializeField]
         private InputSettings _inputSettings;
         [SerializeField]
         private VertexView _vertexViewPrefab;
@@ -38,6 +40,7 @@ namespace ThisProject.Installers
 
         public override void InstallBindings()
         {
+            Container.BindInstance(_mainCamera).AsSingle();
             Container.BindInstance(_inputSettings).AsSingle();
             Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
             Container.BindInstance(_vertexViewPrefab).AsSingle();

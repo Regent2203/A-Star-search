@@ -16,5 +16,7 @@ namespace ThisProject.Fields
     public interface IVisibleField
     {
         public BoxCollider2D Box { get; }
+
+        public bool CheckAndAdjustPoint(ref Vector2 pos);
     }
 }

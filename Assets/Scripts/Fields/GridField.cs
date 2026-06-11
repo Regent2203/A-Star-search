@@ -16,7 +16,6 @@ namespace ThisProject.Fields
         protected BoxCollider2D _collider;
 
         protected Vector2Int _size;
-        protected V _viewPrefab;
         protected Vector2 _scaleFactor;
 
         protected GridTypeStorage<T> _nodes;
@@ -30,11 +29,10 @@ namespace ThisProject.Fields
 
 
         [Inject]
-        public void Construct(GridTypeStorage<T> nodes, GridTypeStorage<V> views, V cellViewPrefab)
+        public void Construct(GridTypeStorage<T> nodes, GridTypeStorage<V> views)
         {
             _nodes = nodes;
             _views = views;
-            _viewPrefab = cellViewPrefab;
         }
 
         protected virtual void Awake()

@@ -6,14 +6,14 @@ namespace ThisProject.Fields.ViewMovers
 {
     public class SpatialViewMover : IViewMover
     {
-        private readonly BoxCollider2D _box;
+        private readonly IVisibleField _field;
 
         public event Action<IView, Vector2> ViewMoved;
 
 
         public SpatialViewMover(IVisibleField field) 
         {
-            _box = field.Box;
+            _field = field;
         }
 
         public bool TryMoveView(IView view, Vector2 position)
@@ -21,18 +21,15 @@ namespace ThisProject.Fields.ViewMovers
             if (view == null)
                 return false;
 
-            if (!IsInsideBorders(position))
-                return false;
+            if (_field.CheckAndAdjustPoint(ref position))
+            {
+                view.Move(position);
+                ViewMoved?.Invoke(view, position);
 
-            view.Move(position);
-            ViewMoved?.Invoke(view, position);
+                return true;
+            }
 
-            return true;
-        }
-
-        private bool IsInsideBorders(Vector2 nodePosition)
-        {
-            return _box.OverlapPoint(nodePosition);
+            return false;
         }
     }
 }

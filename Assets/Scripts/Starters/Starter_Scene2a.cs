@@ -63,6 +63,7 @@ namespace ThisProject.Starters
 
         protected override void InitDefaultStates()
         {
+            _dragHandler.SetAllowedInputButtons(PointerEventData.InputButton.Left);
             //todo
             _generator.TestPopulate(6);
         }
@@ -87,18 +88,16 @@ namespace ThisProject.Starters
 
         private void OnViewDragStarted(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
         {
-            if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
+            if (input.IsMarkingMode || input.IsCreatingMode || input.IsLinkingMode)
             {
-                if (button != PointerEventData.InputButton.Left)
-                {
-                    _dragHandler.CancelDrag();
-                }
+                _dragHandler.CancelDrag();
             }
         }
 
         private void OnViewDragging(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
         {
-            //_viewMover.TryMoveView(view, pos);
+            if (_viewMover.TryMoveView(view, pos))
+                UpdateNodePosition(view, pos);
         }
 
         private void OnViewDragEnded(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)

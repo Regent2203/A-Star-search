@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ThisProject.Implementations.Vertexes
 {
-    public class VertexView : View<int>, IRoundView
+    public class VertexView : View<int>
     {
         [SerializeField]
         private CircleCollider2D _collider;
@@ -12,15 +12,11 @@ namespace ThisProject.Implementations.Vertexes
         [SerializeField]
         private GameObject _finishMarker;
 
-        private float _radius;
-
 
         private void Awake()
         {
             ShowStartMarker(false);
             ShowFinishMarker(false);
-
-            _radius = _collider.radius;
         }
 
         public void Init(int id, Vector2 position)
@@ -41,11 +37,6 @@ namespace ThisProject.Implementations.Vertexes
         public void UpdateSprite(Sprite sprite)
         {
             _spriteRenderer.sprite = sprite;
-        }
-
-        public float GetRadius()
-        {
-            return _radius;
         }
     }
 }

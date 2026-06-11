@@ -1,5 +1,4 @@
-﻿using ThisProject.Implementations.Vertexes;
-using ThisProject.Nodes;
+﻿using ThisProject.Nodes;
 using ThisProject.ObjectsStorages;
 using ThisProject.Views;
 using UnityEngine;
