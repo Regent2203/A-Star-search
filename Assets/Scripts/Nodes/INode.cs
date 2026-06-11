@@ -6,6 +6,10 @@ namespace ThisProject.Nodes
     {
         public Vector2 NodePosition { get; }
         public bool IsBlocked { get; }
+
+        public bool TryChangeNodePosition(Vector2 position);
+
+        public bool TrySetBlocked(bool blocked);
     }
 
     public interface INode<TId> : INode

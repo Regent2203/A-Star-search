@@ -1,4 +1,6 @@
+using ThisProject.Fields.NodeBlockers;
 using ThisProject.Fields.ViewMovers;
+using ThisProject.Fields.ViewSelectors;
 using ThisProject.Heuristic.Functions;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Implementations.VisualLinks;
@@ -49,6 +51,7 @@ namespace ThisProject.Installers
             Container.BindInstance(_dragHandler).AsSingle();
             Container.BindInterfacesAndSelfTo<ViewSelector<VertexView>>().AsSingle(); 
             Container.BindInterfacesAndSelfTo<SpatialViewMover>().AsSingle();
+            Container.BindInterfacesAndSelfTo<NodeBlocker<VertexNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexNode, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexView, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesFieldGenerator>().AsSingle();

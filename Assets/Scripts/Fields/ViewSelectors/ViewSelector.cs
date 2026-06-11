@@ -2,7 +2,7 @@
 using ThisProject.Views;
 using UnityEngine;
 
-namespace ThisProject.Fields.ViewMovers
+namespace ThisProject.Fields.ViewSelectors
 {
     public class ViewSelector<V> : IViewSelector<V>
         where V : MonoBehaviour, IView
@@ -14,9 +14,9 @@ namespace ThisProject.Fields.ViewMovers
         public event Action<V, bool> ViewSelected; //true when select, false when deselect
 
 
-        public void SelectView(V view, bool clearSame)
+        public void SelectView(V view)
         {
-            if (view == null)
+            if (_selectedView == view)
                 return;
 
             if (_selectedView != null)
@@ -24,13 +24,10 @@ namespace ThisProject.Fields.ViewMovers
                 ViewSelected?.Invoke(_selectedView, false);
             }
 
-            if (_selectedView == view) //clear if same
+            _selectedView = view;
+
+            if (view != null)
             {
-                _selectedView = null;
-            }
-            else
-            {
-                _selectedView = view;
                 ViewSelected?.Invoke(_selectedView, true);
             }
         }
