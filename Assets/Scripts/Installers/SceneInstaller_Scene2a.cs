@@ -47,6 +47,7 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<VertexesField>().FromInstance(_field).AsSingle();
             Container.BindInstance(_clickHandler).AsSingle();
             Container.BindInstance(_dragHandler).AsSingle();
+            Container.BindInterfacesAndSelfTo<ViewSelector<VertexView>>().AsSingle(); 
             Container.BindInterfacesAndSelfTo<SpatialViewMover>().AsSingle();
             Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexNode, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexView, int>>().AsSingle();

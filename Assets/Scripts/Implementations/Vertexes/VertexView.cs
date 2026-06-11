@@ -7,6 +7,12 @@ namespace ThisProject.Implementations.Vertexes
     {
         [SerializeField]
         private CircleCollider2D _collider;
+
+        [Space]
+        [SerializeField]
+        private GameObject _blockedMarker;
+        [SerializeField]
+        private GameObject _selectedMarker;
         [SerializeField]
         private GameObject _startMarker;
         [SerializeField]
@@ -15,6 +21,13 @@ namespace ThisProject.Implementations.Vertexes
 
         private void Awake()
         {
+            ClearGraphics();
+        }
+
+        private void ClearGraphics()
+        {
+            ShowBlockedMarker(false);
+            ShowSelectedMarker(false);
             ShowStartMarker(false);
             ShowFinishMarker(false);
         }
@@ -26,6 +39,14 @@ namespace ThisProject.Implementations.Vertexes
             transform.position = position;
         }
 
+        public void ShowBlockedMarker(bool show)
+        {
+            _blockedMarker.SetActive(show);
+        }
+        public void ShowSelectedMarker(bool show)
+        {
+            _selectedMarker.SetActive(show);
+        }
         public void ShowStartMarker(bool show)
         {
             _startMarker.SetActive(show);
@@ -33,10 +54,6 @@ namespace ThisProject.Implementations.Vertexes
         public void ShowFinishMarker(bool show)
         {
             _finishMarker.SetActive(show);
-        }
-        public void UpdateSprite(Sprite sprite)
-        {
-            _spriteRenderer.sprite = sprite;
         }
     }
 }

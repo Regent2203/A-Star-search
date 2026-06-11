@@ -8,6 +8,7 @@ using ThisProject.Inputs;
 using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
 using ThisProject.PathSetters;
+using ThisProject.Views;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Windows;
@@ -21,6 +22,7 @@ namespace ThisProject.Starters
         private VertexesFieldGenerator _generator;
         private VertexesClickHandler _clickHandler;
         private VertexesDragHandler _dragHandler;
+        private ViewSelector<VertexView> _viewSelector;
         private SpatialViewMover _viewMover;
         private VertexesVisualLinksCreator _visualLinksCreator;
         private PathSetter<VertexNode> _pathSetter;
@@ -32,7 +34,7 @@ namespace ThisProject.Starters
         [Inject]
         public void Construct(VertexesField field, VertexesFieldGenerator generator,
             VertexesClickHandler clickHandler, VertexesDragHandler dragHandler,
-            SpatialViewMover viewMover,
+            ViewSelector<VertexView> viewSelector, SpatialViewMover viewMover,
             VertexesVisualLinksCreator visualLinksCreator,
             PathSetter<VertexNode> pathSetter, PathFinder<VertexNode> pathFinder, LinePathDrawer pathDrawer)
         {
@@ -40,6 +42,7 @@ namespace ThisProject.Starters
             _generator = generator;
             _clickHandler = clickHandler;
             _dragHandler = dragHandler;
+            _viewSelector = viewSelector;
             _viewMover = viewMover;
 
             _visualLinksCreator = visualLinksCreator;
@@ -55,6 +58,8 @@ namespace ThisProject.Starters
             _dragHandler.ViewDragStarted += OnViewDragStarted;
             _dragHandler.ViewDragging += OnViewDragging;
             _dragHandler.ViewDragEnded += OnViewDragEnded;
+
+            _viewSelector.ViewSelected += OnViewSelected;
 
             _pathSetter.StartNodeChanged += OnStartNodeChanged;
             _pathSetter.FinishNodeChanged += OnFinishNodeChanged;
@@ -74,6 +79,8 @@ namespace ThisProject.Starters
             _dragHandler.ViewDragging -= OnViewDragging;
             _dragHandler.ViewDragEnded -= OnViewDragEnded;
 
+            _viewSelector.ViewSelected -= OnViewSelected;
+
             _pathSetter.StartNodeChanged -= OnStartNodeChanged;
             _pathSetter.FinishNodeChanged -= OnFinishNodeChanged;
             _pathSetter.AnyNodeChanged -= OnPathChanged;
@@ -83,6 +90,39 @@ namespace ThisProject.Starters
         {
             var node = _field.GetNodeById(view.Id);
             node.TryChangeNodePosition(pos);
+        }
+
+        private void OnViewClicked(VertexView view, PointerEventData.InputButton button, InputSnapshot input)
+        {
+            var node = _field.GetNodeById(view.Id);
+
+            if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
+            {
+                if (button == PointerEventData.InputButton.Left)
+                    _viewSelector.SelectView(view, true);
+
+                if (button == PointerEventData.InputButton.Right)
+                    node.TrySetBlocked(!node.IsBlocked);
+            }
+
+            if (input.IsMarkingMode)
+            {
+                switch (button)
+                {
+                    case PointerEventData.InputButton.Left:
+                        _pathSetter.UpdateStartNode(node);
+                        break;
+                    case PointerEventData.InputButton.Right:
+                        _pathSetter.UpdateFinishNode(node);
+                        break;
+                }
+            }
+
+            if (input.IsLinkingMode)
+            {
+                Debug.Log($"{view.name} trying to use for linking");
+                _visualLinksCreator.TryUseNode(node, button);
+            }
         }
 
         private void OnViewDragStarted(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
@@ -106,34 +146,9 @@ namespace ThisProject.Starters
                 UpdateNodePosition(view, pos);
         }
 
-        private void OnViewClicked(VertexView view, PointerEventData.InputButton button, InputSnapshot input)
+        private void OnViewSelected(VertexView view, bool b)
         {
-            var node = _field.GetNodeById(view.Id);
-
-            if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
-            {
-                if (button == PointerEventData.InputButton.Right)
-                    node.TrySetBlocked(!node.IsBlocked);
-            }
-
-            if (input.IsMarkingMode)
-            {
-                switch (button)
-                {
-                    case PointerEventData.InputButton.Left:
-                        _pathSetter.UpdateStartNode(node);
-                        break;
-                    case PointerEventData.InputButton.Right:
-                        _pathSetter.UpdateFinishNode(node);
-                        break;
-                }
-            }
-
-            if (input.IsLinkingMode)
-            {
-                Debug.Log($"{view.name} trying to use for linking");
-                _visualLinksCreator.TryUseNode(node, button);
-            }
+            view.ShowSelectedMarker(b);
         }
 
         private void OnFieldChanged()

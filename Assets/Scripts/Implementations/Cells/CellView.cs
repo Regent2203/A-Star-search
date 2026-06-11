@@ -5,6 +5,7 @@ namespace ThisProject.Implementations.Cells
 {
     public class CellView : View<Vector2Int>
     {
+        [Space]
         [SerializeField]
         private GameObject _pathMarker;
         [SerializeField]
@@ -12,8 +13,13 @@ namespace ThisProject.Implementations.Cells
         [SerializeField]
         private GameObject _finishMarker;
 
-        
+
         private void Awake()
+        {
+            ClearGraphics();
+        }
+
+        private void ClearGraphics()
         {
             ShowPathMarker(false);
             ShowStartMarker(false);
