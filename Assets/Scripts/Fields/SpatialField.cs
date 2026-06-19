@@ -34,5 +34,13 @@ namespace ThisProject.Fields
             _nodes.TryAddData(node.Id, node);
             _views.TryAddData(view.Id, view);
         }
+
+        public void RemoveFieldData(TId id)
+        {
+            //todo: move into pool
+
+            _nodes.TryRemoveData(id);
+            _views.TryRemoveData(id);
+        }
     }
 }

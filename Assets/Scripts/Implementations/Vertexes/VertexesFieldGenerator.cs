@@ -40,22 +40,19 @@ namespace ThisProject.Implementations.Vertexes
         }
 
         //todo
-        public void BuildNodeForField(VertexesField field, Vector3 position, Transform container, Vector2 scale)
+        public void CreateFieldItem(Vector3 pos)
         {
             var id = _newId++;
 
-            //var view = _viewsFactory.Create(id, position);
-            //var node = _nodesFactory.Create(id, position);
+            var view = _viewsFactory.Create(id, pos);
+            var node = _nodesFactory.Create(id, pos);
 
-            //todo unsubscribe if ever needed
-            /*
-            field.FieldChanged += (node, type) =>
-            {
-                var view = field.GetViewById(node);
-                view.UpdateSprite(type.Sprite);
-            };*/
+            _field.AddFieldData(node, view);
+        }
 
-            //field.SetFieldData(nodes, views);
+        public void DeleteFieldItem(int id)
+        {
+            _field.RemoveFieldData(id);
         }
     }
 }

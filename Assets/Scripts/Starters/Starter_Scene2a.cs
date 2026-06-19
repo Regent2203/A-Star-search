@@ -170,7 +170,7 @@ namespace ThisProject.Starters
 
         private void OnViewMoved(IView view, Vector2 vector)
         {
-            //todo
+            //todo visual link update; also fieldchanged?
         }
 
         private void OnNodeBlocked(VertexNode node, bool b)
