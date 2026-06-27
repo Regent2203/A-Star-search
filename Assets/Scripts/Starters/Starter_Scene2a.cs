@@ -97,10 +97,7 @@ namespace ThisProject.Starters
         {
             var node = _field.GetNodeById(view.Id);
             if (node.TryChangeNodePosition(pos))
-            {
-                //
                 OnFieldChanged();
-            }
         }
 
         private void OnViewClicked(VertexView view, PointerEventData.InputButton button, InputSnapshot input)
@@ -129,10 +126,22 @@ namespace ThisProject.Starters
                 }
             }
 
-            if (input.IsLinkingMode) //todo
+            if (input.IsLinkingMode)
             {
-                Debug.Log($"{view.name} trying to use for linking");
-                _visualLinksCreator.TryUseNode(node, button);
+                if (_viewSelector.SelectedView != null)
+                {
+                    switch (button)
+                    {/*
+                        case PointerEventData.InputButton.Left:
+                            _visualLinksCreator.TryCreateLink(_viewSelector.SelectedView, node);
+                            break;
+                        case PointerEventData.InputButton.Right:
+                            _visualLinksCreator.TryDeleteLink(_viewSelector.SelectedView, node);
+                            break;*/
+                    }
+
+                    
+                }
             }
         }
 

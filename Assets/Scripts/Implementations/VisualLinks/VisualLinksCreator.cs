@@ -1,22 +1,18 @@
-﻿using ThisProject.Inputs;
+﻿using System.Collections.Generic;
 using ThisProject.Links;
 using ThisProject.Links.Factories;
 using ThisProject.Links.Providers;
 using ThisProject.Nodes;
-using System.Collections.Generic;
+using ThisProject.Views;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Zenject;
 
 namespace ThisProject.Implementations.VisualLinks
 {
-    public class VisualLinksCreator<T> : MonoBehaviour where T: class, INode
+    public class VisualLinksCreator<T, V> : MonoBehaviour 
+        where V: MonoBehaviour, IView
+        where T: class, INode
     {
-        private enum Mode { None, CreateLink, RemoveLink }
-
-        private KeyCode _linkingKeyCode = KeyCode.LeftAlt;
-        private Mode _mode = Mode.None;
-        private T _firstNode;
         private readonly Dictionary<ILink<T>, VisualLink<T>> _activeVisualLinks = new Dictionary<ILink<T>, VisualLink<T>>();
 
         private LinksFactory<T> _linksFactory;
@@ -25,69 +21,14 @@ namespace ThisProject.Implementations.VisualLinks
 
 
         [Inject]
-        public void Construct(LinksFactory<T> linksFactory, VisualLinksPool<T> visualLinksPool, StoredLinksProvider<T> linksProvider, InputSettings inputSettings)
+        public void Construct(LinksFactory<T> linksFactory, VisualLinksPool<T> visualLinksPool, StoredLinksProvider<T> linksProvider)
         {
             _linksFactory = linksFactory;
             _visualLinksPool = visualLinksPool;
             _linksProvider = linksProvider;
-            _linkingKeyCode = inputSettings.LinkingKey; //todo
         }
 
-        public void TryUseNode(T node, PointerEventData.InputButton btn)
-        {
-            bool isLinkingMode = Input.GetKey(_linkingKeyCode);
-
-            if (!isLinkingMode)
-                Cancel();
-            else
-            switch (_mode)
-            //[alt + lmb] twice -> CreateLink
-            //[alt + rmb] twice -> DeleteLink
-            {
-                case Mode.None:
-                    {
-                        if (btn == PointerEventData.InputButton.Left) //lmb
-                        {
-                            _firstNode = node;
-                            _mode = Mode.CreateLink;
-                        }
-                        else if (btn == PointerEventData.InputButton.Right) //rmb
-                        {
-                            _firstNode = node;
-                            _mode = Mode.RemoveLink;
-                        }
-                    }
-                    break;
-                case Mode.CreateLink:
-                    {
-                        if (btn == PointerEventData.InputButton.Left) //lmb
-                        {
-                            TryCreateLink(_firstNode, node);
-                            Cancel();
-                        }
-                        else if (btn == PointerEventData.InputButton.Right) //rmb
-                        {
-                            Cancel();
-                        }
-                    }
-                    break;
-                case Mode.RemoveLink:
-                    {
-                        if (btn == PointerEventData.InputButton.Right) //rmb
-                        {
-                            TryDeleteLink(_firstNode, node);
-                            Cancel();
-                        }
-                        else if (btn == PointerEventData.InputButton.Left) //lmb
-                        {
-                            Cancel();
-                        }
-                    }
-                    break;
-            }
-        }
-
-        private void TryCreateLink(T from, T to)
+        public void TryCreateLink(T from, T to)
         {
             if (from == to) 
                 return;
@@ -96,13 +37,13 @@ namespace ThisProject.Implementations.VisualLinks
             if (_linksProvider.TryAddLink(link))
             {
                 var visualLink = _visualLinksPool.Get();
-                visualLink.Bind(link);
+                //visualLink.Bind(link); //todo
 
                 _activeVisualLinks[link] = visualLink;
             }
         }
 
-        private void TryDeleteLink(T from, T to)
+        public void TryDeleteLink(T from, T to)
         {
             if (_linksProvider.TryRemoveLink(from, to))
             {
@@ -123,12 +64,6 @@ namespace ThisProject.Implementations.VisualLinks
                     _activeVisualLinks.Remove(targetKey);
                 }
             }
-        }
-
-        private void Cancel()
-        {
-            _mode = Mode.None; 
-            _firstNode = null;
-        }        
+        }      
     }
 }

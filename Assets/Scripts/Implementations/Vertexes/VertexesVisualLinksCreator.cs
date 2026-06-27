@@ -2,6 +2,6 @@
 
 namespace ThisProject.Implementations.Vertexes
 {
-    public class VertexesVisualLinksCreator : VisualLinksCreator<VertexNode>
+    public class VertexesVisualLinksCreator : VisualLinksCreator<VertexNode, VertexView>
     { }
 }

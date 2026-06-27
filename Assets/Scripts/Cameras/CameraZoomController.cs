@@ -5,7 +5,6 @@ namespace ThisProject.Cameras
     [RequireComponent(typeof(Camera))]
     public class CameraZoomController : MonoBehaviour
     {
-        [Header("Dependencies")]
         [SerializeField] private Camera _mainCamera;
 
         [Header("Zoom Settings")]

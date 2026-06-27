@@ -2,11 +2,12 @@ using System.Net;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Links;
 using ThisProject.Nodes;
+using ThisProject.Views;
 using UnityEngine;
 
 namespace ThisProject.Implementations.VisualLinks
 {
-    enum PlacementType { Center, Left, Right }
+    public enum PlacementType { Center, Left, Right }
 
     public class VisualLink : VisualLink<VertexNode>
     {
@@ -16,66 +17,83 @@ namespace ThisProject.Implementations.VisualLinks
         where T : class, INode
     {
         [SerializeField]
+        private float _placementOffset = 0.5f;
+
+        [Space]
+        [SerializeField]
         private LineRenderer _arrowBodyRenderer;
         [SerializeField]
         private SpriteRenderer _arrowTipRenderer;
 
-        private float _s;
-        private ILink<T> _link;
-        private PlacementType _placementType = PlacementType.Left;
+        private int _id;
+        private IView _viewFrom, _viewTo;
+
+        private PlacementType _placementType = PlacementType.Center;
+        private float _arrowOffset;
+        
+
+        public int Id => _id;
 
 
         private void Awake()
         {
-            _s = _arrowTipRenderer.sprite.bounds.size.y * _arrowTipRenderer.transform.localScale.y;
+            _arrowOffset = _arrowTipRenderer.sprite.bounds.size.y * _arrowTipRenderer.transform.localScale.y;
         }
 
-        public void Bind(ILink<T> link)
+        public void Init(int id, IView viewFrom, IView viewTo, PlacementType placementType)
         {
-            _link = link;
-            //_link.From.NodePositionChanged += OnNodePositionChanged; //todo
-            //_link.To.NodePositionChanged += OnNodePositionChanged; //todo
+            _id = id;
+            _viewFrom = viewFrom;
+            _viewTo = viewTo;
+            _placementType = placementType;
 
-            UpdatePositions();
+            Redraw();
         }
 
-        private void OnNodePositionChanged(INode node, Vector2 pos)
+        public void ChangePlacementType(PlacementType placementType)
         {
-            UpdatePositions();
+            if (_placementType == placementType)
+                return;
+
+            _placementType = placementType;
+
+            Redraw();
         }
 
-        private void UpdatePositions()
+        private void Redraw()
         {
-            Vector2 start, end;
-            float offset = 0.5f; //todo
+            Vector2 vFrom = _viewFrom.GetCenterCoords();
+            Vector2 vTo = _viewTo.GetCenterCoords();
             
-            var direction = (_link.To.NodePosition - _link.From.NodePosition).normalized;
+            Vector2 start, end;
+            
+            var direction = (vFrom - vTo).normalized;
             var perpendicular = new Vector2(-direction.y, direction.x);
 
             switch (_placementType)
             {
                 case PlacementType.Center:
                 default:
-                    start = _link.From.NodePosition;
-                    end = _link.To.NodePosition;
+                    start = vFrom;
+                    end = vTo;
                     break;
                 case PlacementType.Left:
-                    start = _link.From.NodePosition + perpendicular * offset;
-                    end = _link.To.NodePosition + perpendicular * offset;
+                    start = vFrom + perpendicular * _placementOffset;
+                    end = vTo + perpendicular * _placementOffset;
                     break;
 
                 case PlacementType.Right:
-                    start = _link.From.NodePosition - perpendicular * offset;
-                    end = _link.To.NodePosition - perpendicular * offset;
+                    start = vFrom - perpendicular * _placementOffset;
+                    end = vTo - perpendicular * _placementOffset;
                     break;
             }
 
-            var backwardShift = direction * _s; //area for arrow tip
-            end -= backwardShift;
+            end -= direction * _arrowOffset; //area for arrow tip
 
-            start += 0.45f * 4 * direction; //todo: set Z!
-            end -= 0.45f * 4 * direction;
+            //start += 0.45f * 4 * direction;
+            //end -= 0.45f * 4 * direction;
 
+            //todo: set Z!
             var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
 
             _arrowBodyRenderer.SetPosition(0, start);
