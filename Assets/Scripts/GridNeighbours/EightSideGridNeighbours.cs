@@ -14,7 +14,7 @@ namespace ThisProject.Fields.GridNeighbours
             int i = index.x;
             int j = index.y;
 
-            if (gridItems.IsWithinBounds(i, j))
+            if (gridItems.IsIndexWithinBounds(i, j))
             {
                 TryAddCell(_neighboursList, gridItems, i, j + 1);
                 TryAddCell(_neighboursList, gridItems, i + 1, j + 1);

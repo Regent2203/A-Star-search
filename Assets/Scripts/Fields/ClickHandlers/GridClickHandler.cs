@@ -1,6 +1,7 @@
 using System;
 using ThisProject.Inputs;
 using ThisProject.Nodes;
+using ThisProject.ObjectsStorages;
 using ThisProject.Views;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,11 +9,11 @@ using Zenject;
 
 namespace ThisProject.Fields.ClickHandlers
 {
-    public class GridClickHandler<T, V> : MonoBehaviour, IFieldClickHandler<V>
-        where T : class, INode<Vector2Int>
+    public class GridClickHandler<V> : MonoBehaviour, IFieldClickHandler<V> 
         where V : class, IView<Vector2Int>
     {
-        private GridField<T, V> _field;
+        private GridField _field;
+        private GridTypeStorage<V> _views;
         private IInputService _inputService;
 
         public event Action<V, PointerEventData.InputButton, InputSnapshot> ViewClicked;
@@ -20,9 +21,10 @@ namespace ThisProject.Fields.ClickHandlers
 
 
         [Inject]
-        public void Construct(GridField<T, V> field, IInputService inputService)
+        public void Construct(GridField field, GridTypeStorage<V> views, IInputService inputService)
         {
             _field = field;
+            _views = views;
             _inputService = inputService;
         }
 
@@ -30,7 +32,7 @@ namespace ThisProject.Fields.ClickHandlers
         {
             var index = _field.PositionToIndex(eventData.pointerCurrentRaycast.worldPosition);
 
-            var view = _field.GetViewById(index);
+            var view = _views.GetItemById(index);
             if (view != null)
             {
                 ViewClicked?.Invoke(view, eventData.button, _inputService.CreateSnapshot());

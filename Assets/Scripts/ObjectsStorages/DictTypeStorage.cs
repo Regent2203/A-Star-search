@@ -1,38 +1,64 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Zenject;
 
 namespace ThisProject.ObjectsStorages
 {
-    public class DictTypeStorage<T, TId> : IObjectsStorage<T, TId> where T : class
+    public class DictTypeStorage<T, TId> : IObjectsStorage<T, TId>
+        where T : class//, IPoolable
     {
+        private IMemoryPool _pool;
         private Dictionary<TId, T> _data = new Dictionary<TId, T>();
 
+        public event Action<TId> ItemAdded;
+        public event Action<TId> ItemRemoved;
 
-        public T GetById(TId id)
+        /*
+        [Inject]
+        public DictTypeStorage(IMemoryPool pool)
         {
-            if (_data.TryGetValue(id, out var node))
-                return node;
+            _pool = pool;
+        }*/
+
+        public T GetItemById(TId id)
+        {
+            if (_data.TryGetValue(id, out var item))
+                return item;
 
             return null;
         }
 
-        public void SetData(Dictionary<TId, T> data)
+        public bool TryAddItem(TId id, T item)
         {
-            _data = data;
+            if (_data.TryAdd(id, item))
+            {
+                ItemAdded?.Invoke(id);
+                return true;
+            }
+            return false;
+        }
+
+        public bool TryRemoveItem(TId id)
+        {
+            if (_data.Remove(id))
+            {
+                ItemRemoved?.Invoke(id);
+                return true;
+            }
+            return false;
         }
 
         public void ClearData()
         {
-            _data = null;
-        }
+            //todo pool
+            /*
+            foreach (var item in _data.Values)
+            {
+                _pool.Despawn(item); 
+            }
+            */
 
-        public bool TryAddData(TId id, T value)
-        {
-            return _data.TryAdd(id, value);
-        }
-
-        public bool TryRemoveData(TId id)
-        {
-            return _data.Remove(id);
+            _data.Clear();
         }
     }
 }

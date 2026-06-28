@@ -2,6 +2,7 @@
 using ThisProject.Implementations.Cells;
 using ThisProject.Implementations.Cells.UI;
 using ThisProject.Inputs;
+using ThisProject.ObjectsStorages;
 using ThisProject.PathFinders;
 using ThisProject.PathSetters;
 using UnityEngine;
@@ -13,9 +14,10 @@ namespace ThisProject.Starters
     public class Starter_Scene1a : StarterBase
     {
         private CellsConfig _config;
-        private CellsField _field;
-        private CellsFieldGenerator _generator;
+        private GridTypeStorage<CellNode> _nodes;
+        private GridTypeStorage<CellView> _views;
         private CellsClickHandler _clickHandler;
+        private CellsFieldGenerator _generator;
         private CellTypeChanger _cellTypeChanger;
         private PathSetter<CellNode> _pathSetter;
         private PathFinder<CellNode> _pathFinder;
@@ -27,16 +29,18 @@ namespace ThisProject.Starters
 
 
         [Inject]
-        public void Construct(CellsConfig config, CellsField field, CellsFieldGenerator generator,
-            CellsClickHandler clickHandler, CellTypeChanger cellTypeChanger,
+        public void Construct(CellsConfig config, GridTypeStorage<CellNode> nodes, GridTypeStorage<CellView> views,
+            CellsClickHandler clickHandler, CellsFieldGenerator generator,
+            CellTypeChanger cellTypeChanger,
             PathSetter<CellNode> pathSetter, PathFinder<CellNode> pathFinder, 
             CellsPathDrawer pathDrawer, CellsPainter painter,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsHotkeysInfoPanel hotkeyInfoPanel)
         {
             _config = config;
-            _field = field;
-            _generator = generator;
+            _nodes = nodes;
+            _views = views;
             _clickHandler = clickHandler;
+            _generator = generator;
             _cellTypeChanger = cellTypeChanger;
             _pathSetter = pathSetter;
             _pathFinder = pathFinder;
@@ -84,13 +88,13 @@ namespace ThisProject.Starters
 
         private void UpdateViewSprite(CellNode node, CellType cellType)
         {
-            var view = _field.GetViewById(node.Id);
+            var view = _views.GetItemById(node.Id);
             view.UpdateSprite(cellType.Sprite);
         }
 
         private void OnViewClicked(CellView view, PointerEventData.InputButton button, InputSnapshot input)
         {
-            var node = _field.GetNodeById(view.Id);
+            var node = _nodes.GetItemById(view.Id);
 
             if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
             {
@@ -132,13 +136,13 @@ namespace ThisProject.Starters
 
         private void OnStartNodeChanged(CellNode node, bool b)
         {
-            var view = _field.GetViewById(node.Id);
+            var view = _views.GetItemById(node.Id);
             view?.ShowStartMarker(b);
         }
 
         private void OnFinishNodeChanged(CellNode node, bool b)
         {
-            var view = _field.GetViewById(node.Id);
+            var view = _views.GetItemById(node.Id);
             view?.ShowFinishMarker(b);
         }
 
@@ -148,7 +152,7 @@ namespace ThisProject.Starters
             TryRun(isReady);
         }
 
-        private List<CellView> _viewsPath = new List<CellView>();
+        private readonly List<CellView> _viewsPath = new List<CellView>();
 
         private void TryRun(bool isReady)
         {
@@ -157,7 +161,7 @@ namespace ThisProject.Starters
                 var nodesPath = _pathFinder.GetPath(_pathSetter.StartNode, _pathSetter.FinishNode);
                 if (nodesPath != null)
                 {
-                    _field.NodesToViewsNonAlloc(nodesPath, _viewsPath);
+                    _views.NodesToViewsNonAlloc(nodesPath, _viewsPath);
                     _pathDrawer.SetPath(_viewsPath);
                     _pathDrawer.ShowPath(true);
                 }

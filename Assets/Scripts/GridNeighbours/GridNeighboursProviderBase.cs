@@ -7,7 +7,7 @@ namespace ThisProject.Fields.GridNeighbours
     {
         protected void TryAddCell(List<T> list, T[,] gridItems, int i, int j)
         {
-            if (gridItems.IsWithinBounds(i, j))
+            if (gridItems.IsIndexWithinBounds(i, j))
                 list.Add(gridItems[i, j]);
         }
 

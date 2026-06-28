@@ -1,29 +1,77 @@
-﻿using ThisProject.Fields.GridNeighbours;
+﻿using System;
 using System.Collections.Generic;
+using ThisProject.Fields.GridNeighbours;
 using UnityEngine;
+using Zenject;
 
 namespace ThisProject.ObjectsStorages
 {
-    public class GridTypeStorage<T> : IObjectsStorage<T, Vector2Int> where T : class
+    public class GridTypeStorage<T> : IObjectsStorage<T, Vector2Int>
+        where T : class//, IPoolable
     {
+        private IMemoryPool _pool;
         private T[,] _data;
 
+        public event Action<Vector2Int> ItemAdded;
+        public event Action<Vector2Int> ItemRemoved;
 
-        public T GetById(Vector2Int id)
+        /*
+        [Inject]
+        public GridTypeStorage(IMemoryPool pool)
         {
-            if (_data.IsWithinBounds(id.x, id.y))
+            _pool = pool;
+        }*/
+        
+        public void Init(Vector2Int size)
+        {
+            _data = new T[size.x, size.y];
+        }
+        
+        public T GetItemById(Vector2Int id)
+        {
+            if (_data.IsIndexWithinBounds(id.x, id.y))
                 return _data[id.x, id.y];
 
             return null;
         }
 
-        public void SetData(T[,] data)
+        public bool TryAddItem(Vector2Int id, T item)
         {
-            _data = data;
+            if (_data.IsIndexWithinBounds(id.x, id.y))
+            {
+                if (_data[id.x, id.y] == null)
+                {
+                    _data[id.x, id.y] = item;
+                    ItemAdded?.Invoke(id);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool TryRemoveItem(Vector2Int id)
+        {
+            if (_data.IsIndexWithinBounds(id.x, id.y))
+            {
+                _data[id.x, id.y] = null;
+                ItemRemoved?.Invoke(id);
+                return true;
+            }
+
+            return false;
         }
 
         public void ClearData()
         {
+            //todo pool
+            /*
+            foreach (var item in _data.Values)
+            {
+                _pool.Despawn(item); 
+            }
+            */
+
             _data = null;
         }
 

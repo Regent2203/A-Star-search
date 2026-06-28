@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using ThisProject.Fields.NodeBlockers;
 using ThisProject.Fields.ViewMovers;
 using ThisProject.Fields.ViewSelectors;
+using ThisProject.Implementations.Cells;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Inputs;
+using ThisProject.ObjectsStorages;
 using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
 using ThisProject.PathSetters;
@@ -18,12 +20,14 @@ namespace ThisProject.Starters
     public class Starter_Scene2a : StarterBase
     {
         private VertexesField _field;
-        private VertexesFieldGenerator _generator;
+        private DictTypeStorage<VertexNode, int> _nodes;
+        private DictTypeStorage<VertexView, int> _views;
         private VertexesClickHandler _clickHandler;
         private VertexesDragHandler _dragHandler;
-        private ViewSelector<VertexView> _viewSelector;
-        private SpatialViewMover _viewMover;
+        private VertexesFieldGenerator _generator;
         private NodeBlocker<VertexNode> _nodeBlocker;
+        private ViewSelector<VertexView> _viewSelector;
+        private ViewMover _viewMover;
         private VertexesVisualLinksCreator _visualLinksCreator;
         private PathSetter<VertexNode> _pathSetter;
         private PathFinder<VertexNode> _pathFinder;
@@ -32,19 +36,21 @@ namespace ThisProject.Starters
 
 
         [Inject]
-        public void Construct(VertexesField field, VertexesFieldGenerator generator,
-            VertexesClickHandler clickHandler, VertexesDragHandler dragHandler,
-            ViewSelector<VertexView> viewSelector, SpatialViewMover viewMover, NodeBlocker<VertexNode> nodeBlocker,
+        public void Construct(VertexesField field, DictTypeStorage<VertexNode, int> nodes, DictTypeStorage<VertexView, int> views,
+            VertexesClickHandler clickHandler, VertexesDragHandler dragHandler, VertexesFieldGenerator generator,
+            NodeBlocker<VertexNode> nodeBlocker, ViewSelector<VertexView> viewSelector, ViewMover viewMover, 
             VertexesVisualLinksCreator visualLinksCreator,
             PathSetter<VertexNode> pathSetter, PathFinder<VertexNode> pathFinder, LinePathDrawer pathDrawer)
         {
             _field = field;
-            _generator = generator;
+            _nodes = nodes;
+            _views = views;
             _clickHandler = clickHandler;
             _dragHandler = dragHandler;
+            _generator = generator;
+            _nodeBlocker = nodeBlocker;
             _viewSelector = viewSelector;
             _viewMover = viewMover;
-            _nodeBlocker = nodeBlocker;
 
             _visualLinksCreator = visualLinksCreator;
 
@@ -95,14 +101,14 @@ namespace ThisProject.Starters
 
         private void UpdateNodePosition(VertexView view, Vector2 pos)
         {
-            var node = _field.GetNodeById(view.Id);
+            var node = _nodes.GetItemById(view.Id);
             if (node.TryChangeNodePosition(pos))
                 OnFieldChanged();
         }
 
         private void OnViewClicked(VertexView view, PointerEventData.InputButton button, InputSnapshot input)
         {
-            var node = _field.GetNodeById(view.Id);
+            var node = _nodes.GetItemById(view.Id);
 
             if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
             {
@@ -184,7 +190,7 @@ namespace ThisProject.Starters
 
         private void OnNodeBlocked(VertexNode node, bool b)
         {
-            var view = _field.GetViewById(node.Id);
+            var view = _views.GetItemById(node.Id);
             view?.ShowBlockedMarker(b);
 
             OnFieldChanged();
@@ -197,13 +203,13 @@ namespace ThisProject.Starters
 
         private void OnStartNodeChanged(VertexNode node, bool b)
         {
-            var view = _field.GetViewById(node.Id);
+            var view = _views.GetItemById(node.Id);
             view?.ShowStartMarker(b);
         }
 
         private void OnFinishNodeChanged(VertexNode node, bool b)
         {
-            var view = _field.GetViewById(node.Id);
+            var view = _views.GetItemById(node.Id);
             view?.ShowFinishMarker(b);
         }
 
@@ -222,7 +228,7 @@ namespace ThisProject.Starters
                 var nodesPath = _pathFinder.GetPath(_pathSetter.StartNode, _pathSetter.FinishNode);
                 if (nodesPath != null)
                 {
-                    _field.NodesToViewsNonAlloc(nodesPath, _viewsPath);
+                    //_field.NodesToViewsNonAlloc(nodesPath, _viewsPath); //todo
                     _pathDrawer.SetPath(_viewsPath);
                     _pathDrawer.ShowPath(true);
                 }

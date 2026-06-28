@@ -1,33 +1,33 @@
+using ThisProject.Fields;
+using ThisProject.ObjectsStorages;
 using UnityEngine;
 
 namespace ThisProject.Implementations.Cells
 {
     public class CellsFieldGenerator
     {
-        private CellsField _field;
-        private Vector2 _scaleFactor;
-
-        private readonly CellViewFactory _viewsFactory;
+        private readonly GridField _field;
+        private readonly GridTypeStorage<CellNode> _nodes;
+        private readonly GridTypeStorage<CellView> _views;        
         private readonly CellNodeFactory _nodesFactory;
+        private readonly CellViewFactory _viewsFactory;
 
-        public CellsFieldGenerator(CellViewFactory viewFactory, CellNodeFactory nodeFactory)
-        {
-            _viewsFactory = viewFactory;
-            _nodesFactory = nodeFactory;
-        }
 
-        public void SetConfiguration(CellsField field, Transform container, Vector2 scaleFactor)
+        public CellsFieldGenerator(GridField field, GridTypeStorage<CellNode> nodes, GridTypeStorage<CellView> views,
+            CellNodeFactory nodeFactory, CellViewFactory viewFactory)
         {
             _field = field;
-            _scaleFactor = scaleFactor;
-
-            _viewsFactory.SetConfiguration(container);
+            _nodes = nodes;
+            _views = views;            
+            _nodesFactory = nodeFactory;
+            _viewsFactory = viewFactory;
         }
 
         public void PopulateField(Vector2Int size, CellType cellType)
         {
-            var views = new CellView[size.x, size.y];
-            var nodes = new CellNode[size.x, size.y];
+            _nodes.Init(size);
+            _views.Init(size);
+            _field.SetSize(size);
 
             for (int x = 0; x < size.x; x++)
             {
@@ -39,18 +39,16 @@ namespace ThisProject.Implementations.Cells
                     var localY = y - (size.y / 2f);
                     var localPos = new Vector3(localX * _field.Grid.cellSize.x, localY * _field.Grid.cellSize.y, 0);
 
-                    var viewPos = _field.Grid.transform.TransformPoint(localPos);
-                    var view = _viewsFactory.Create(index, viewPos, _scaleFactor);
-
                     var nodePos = index;
                     var node = _nodesFactory.Create(index, nodePos, cellType);
 
-                    views[x, y] = view;
-                    nodes[x, y] = node;
+                    var viewPos = _field.Grid.transform.TransformPoint(localPos);
+                    var view = _viewsFactory.Create(index, viewPos, _field.ScaleFactor, _field.Container);
+
+                    _nodes.TryAddItem(index, node);
+                    _views.TryAddItem(index, view);
                 }
             }
-
-            _field.SetFieldData(nodes, views, size);
         }
     }
 }

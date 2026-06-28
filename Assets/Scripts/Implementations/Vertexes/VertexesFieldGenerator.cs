@@ -1,27 +1,26 @@
-﻿using UnityEngine;
+﻿using ThisProject.ObjectsStorages;
+using UnityEngine;
 
 namespace ThisProject.Implementations.Vertexes
 {
     public class VertexesFieldGenerator
     {
-        private VertexesField _field;
+        private readonly VertexesField _field;
+        private DictTypeStorage<VertexNode, int> _nodes;
+        private DictTypeStorage<VertexView, int> _views;
+        private readonly VertexNodeFactory _nodesFactory;
+        private readonly VertexViewFactory _viewsFactory;
 
         private int _newId = 0;
 
-        private readonly VertexViewFactory _viewsFactory;
-        private readonly VertexNodeFactory _nodesFactory;
 
-        public VertexesFieldGenerator(VertexViewFactory viewFactory, VertexNodeFactory nodeFactory)
+        public VertexesFieldGenerator(DictTypeStorage<VertexNode, int> nodes, DictTypeStorage<VertexView, int> views, 
+            VertexViewFactory viewFactory, VertexNodeFactory nodeFactory)
         {
+            _nodes = nodes;
+            _views = views;
             _viewsFactory = viewFactory;
             _nodesFactory = nodeFactory;
-        }
-
-        public void SetConfiguration(VertexesField field, Transform container)
-        {
-            _field = field;
-
-            _viewsFactory.SetConfiguration(Vector2.one, container);
         }
 
         //temp
@@ -32,10 +31,11 @@ namespace ThisProject.Implementations.Vertexes
                 var id = _newId++;
 
                 var pos = new Vector3(UnityEngine.Random.value * 40 - 20, UnityEngine.Random.value * 40 - 20, 0);
-                var view = _viewsFactory.Create(id, pos);
                 var node = _nodesFactory.Create(id, pos);
+                var view = _viewsFactory.Create(id, pos);
 
-                _field.AddFieldData(node, view);
+                _nodes.TryAddItem(id, node);
+                _views.TryAddItem(id, view);
             }
         }
 
@@ -47,12 +47,12 @@ namespace ThisProject.Implementations.Vertexes
             var view = _viewsFactory.Create(id, pos);
             var node = _nodesFactory.Create(id, pos);
 
-            _field.AddFieldData(node, view);
+            //_field.AddFieldData(node, view);
         }
 
         public void DeleteFieldItem(int id)
         {
-            _field.RemoveFieldData(id);
+            //_field.RemoveFieldData(id);
         }
     }
 }

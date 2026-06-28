@@ -47,16 +47,16 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
             Container.BindInstance(_vertexViewPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesField>().FromInstance(_field).AsSingle();
-            Container.BindInstance(_clickHandler).AsSingle();
-            Container.BindInstance(_dragHandler).AsSingle();
-            Container.BindInterfacesAndSelfTo<ViewSelector<VertexView>>().AsSingle(); 
-            Container.BindInterfacesAndSelfTo<SpatialViewMover>().AsSingle();
-            Container.BindInterfacesAndSelfTo<NodeBlocker<VertexNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexNode, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexView, int>>().AsSingle();
+            Container.BindInstance(_clickHandler).AsSingle();
+            Container.BindInstance(_dragHandler).AsSingle();            
             Container.BindInterfacesAndSelfTo<VertexesFieldGenerator>().AsSingle();
-            Container.BindInterfacesAndSelfTo<VertexViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexNodeFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexViewFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<NodeBlocker<VertexNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ViewSelector<VertexView>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ViewMover>().AsSingle();
             Container.BindInstance(_visualLinkPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesVisualLinksCreator>().FromInstance(_visualLinksManager).AsSingle();
             Container.BindInterfacesAndSelfTo<VisualLinksFactory<VertexNode>>().AsSingle();
@@ -73,7 +73,7 @@ namespace ThisProject.Installers
             //Container.BindInterfacesAndSelfTo<UIHotkeyInfoPanel_Vertexes>().FromInstance(_hotkeyInfoPanel).AsSingle();
             Container.BindInterfacesAndSelfTo<LineRenderer>().FromInstance(_pathLineRenderer).AsSingle();
 
-            Container.BindInterfacesTo<Starter_Scene2a>().AsSingle();
+            Container.BindInterfacesAndSelfTo<Starter_Scene2a>().AsSingle();
         }
     }
 }

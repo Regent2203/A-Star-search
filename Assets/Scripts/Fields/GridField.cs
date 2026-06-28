@@ -1,58 +1,35 @@
-﻿using ThisProject.Nodes;
-using ThisProject.ObjectsStorages;
-using ThisProject.Views;
+﻿using ThisProject.Views;
 using UnityEngine;
 using Zenject;
 
 namespace ThisProject.Fields
 {
-    public abstract class GridField<T, V> : VisibleField<T, V, Vector2Int>
-        where T : class, INode<Vector2Int>
-        where V : class, IView<Vector2Int>
+    public class GridField : Field
     {
         [SerializeField]
         protected Grid _grid;
-        [SerializeField]
-        protected BoxCollider2D _collider;
 
         protected Vector2Int _size;
         protected Vector2 _scaleFactor;
 
-        protected GridTypeStorage<T> _nodes;
-        protected GridTypeStorage<V> _views;
-
-        public override IObjectsStorage<T, Vector2Int> Nodes => _nodes;
-        public override IObjectsStorage<V, Vector2Int> Views => _views;
-
-        public override BoxCollider2D Box => _collider;
+        public override Vector2 ScaleFactor => _scaleFactor;
         public Grid Grid => _grid;
 
+        
 
         [Inject]
-        public void Construct(GridTypeStorage<T> nodes, GridTypeStorage<V> views)
+        public void Construct(IView viewPrefab)
         {
-            _nodes = nodes;
-            _views = views;
+            CalculateScaleFactor(viewPrefab);
         }
 
-        protected virtual void Awake()
+        private void CalculateScaleFactor(IView viewPrefab)
         {
-            CalculateScaleFactor();
+            _scaleFactor = _grid.cellSize / viewPrefab.GetSize();
         }
 
-        private void CalculateScaleFactor()
+        public void SetSize(Vector2Int size)
         {
-            _scaleFactor = _grid.cellSize / _viewPrefab.GetSize();
-        }
-
-        public void SetFieldData(T[,] nodes, V[,] views, Vector2Int size)
-        {
-            _nodes.ClearData();
-            _views.ClearData();
-
-            _nodes.SetData(nodes);
-            _views.SetData(views);
-
             _size = size;
             UpdateColliderSize();
         }

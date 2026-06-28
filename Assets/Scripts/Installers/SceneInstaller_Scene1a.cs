@@ -12,6 +12,7 @@ using ThisProject.PathFinders;
 using ThisProject.PathSetters;
 using ThisProject.SearchAlgorithms;
 using ThisProject.Starters;
+using ThisProject.Views;
 using UnityEngine;
 using Zenject;
 
@@ -24,7 +25,7 @@ namespace ThisProject.Installers
         [SerializeField]
         private CellView _cellViewPrefab;
         [SerializeField]
-        private CellsField _field;
+        private GridField _field;
         [SerializeField]
         private CellsClickHandler _clickHandler;
         [SerializeField]
@@ -39,14 +40,14 @@ namespace ThisProject.Installers
         {
             Container.BindInstance(_inputSettings).AsSingle();
             Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
-            Container.BindInstance(_cellViewPrefab).AsSingle();
-            Container.Bind(typeof(CellsField), typeof(GridField<CellNode, CellView>)).FromInstance(_field).AsSingle();
-            Container.BindInstance(_clickHandler).AsSingle();
+            Container.Bind(typeof(CellView), typeof(IView)).FromInstance(_cellViewPrefab).AsSingle();
+            Container.Bind(typeof(GridField)).FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<GridTypeStorage<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridTypeStorage<CellView>>().AsSingle();
+            Container.BindInstance(_clickHandler).AsSingle();
             Container.BindInterfacesAndSelfTo<CellsFieldGenerator>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellTypeChanger>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<CellNode>>().AsSingle();
@@ -64,7 +65,7 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<UICellsPaletteChoicePanel>().FromInstance(_paletteChoice).AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsHotkeysInfoPanel>().FromInstance(_hotkeyInfoPanel).AsSingle();
 
-            Container.BindInterfacesTo<Starter_Scene1a>().AsSingle();
+            Container.BindInterfacesAndSelfTo<Starter_Scene1a>().AsSingle();
         }
     }
 }

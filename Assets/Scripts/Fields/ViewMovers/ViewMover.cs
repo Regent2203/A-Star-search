@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace ThisProject.Fields.ViewMovers
 {
-    public class SpatialViewMover : IViewMover
+    public class ViewMover : IViewMover
     {
-        private readonly IVisibleField _field;
+        private readonly IField _field;
 
         public event Action<IView, Vector2> ViewMoved;
 
 
-        public SpatialViewMover(IVisibleField field) 
+        public ViewMover(IField field) 
         {
             _field = field;
         }
@@ -21,7 +21,9 @@ namespace ThisProject.Fields.ViewMovers
             if (view == null)
                 return false;
 
-            if (_field.CheckAndAdjustPoint(ref position))
+            var size = view.GetSize() / 2;
+
+            if (_field.AdjustPoint(ref position, size))
             {
                 view.Move(position);
                 ViewMoved?.Invoke(view, position);
