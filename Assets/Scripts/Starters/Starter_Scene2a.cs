@@ -19,7 +19,6 @@ namespace ThisProject.Starters
 {
     public class Starter_Scene2a : StarterBase
     {
-        private VertexesField _field;
         private DictTypeStorage<VertexNode, int> _nodes;
         private DictTypeStorage<VertexView, int> _views;
         private VertexesClickHandler _clickHandler;
@@ -36,13 +35,12 @@ namespace ThisProject.Starters
 
 
         [Inject]
-        public void Construct(VertexesField field, DictTypeStorage<VertexNode, int> nodes, DictTypeStorage<VertexView, int> views,
+        public void Construct(DictTypeStorage<VertexNode, int> nodes, DictTypeStorage<VertexView, int> views,
             VertexesClickHandler clickHandler, VertexesDragHandler dragHandler, VertexesFieldGenerator generator,
             NodeBlocker<VertexNode> nodeBlocker, ViewSelector<VertexView> viewSelector, ViewMover viewMover, 
             VertexesVisualLinksCreator visualLinksCreator,
             PathSetter<VertexNode> pathSetter, PathFinder<VertexNode> pathFinder, LinePathDrawer pathDrawer)
         {
-            _field = field;
             _nodes = nodes;
             _views = views;
             _clickHandler = clickHandler;
@@ -219,7 +217,7 @@ namespace ThisProject.Starters
             TryRun(isReady);
         }
 
-        private List<VertexView> _viewsPath = new List<VertexView>();
+        private readonly List<VertexView> _viewsPath = new List<VertexView>();
 
         private void TryRun(bool isReady)
         {
@@ -228,7 +226,7 @@ namespace ThisProject.Starters
                 var nodesPath = _pathFinder.GetPath(_pathSetter.StartNode, _pathSetter.FinishNode);
                 if (nodesPath != null)
                 {
-                    //_field.NodesToViewsNonAlloc(nodesPath, _viewsPath); //todo
+                    _views.NodesToViewsNonAlloc(nodesPath, _viewsPath);
                     _pathDrawer.SetPath(_viewsPath);
                     _pathDrawer.ShowPath(true);
                 }

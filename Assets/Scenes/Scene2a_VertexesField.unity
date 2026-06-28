@@ -741,18 +741,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 728217725}
   m_CullTransparentMesh: 1
---- !u!114 &807301875 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8443539387802695160, guid: c599a52c07166ad47998dda9b80fa996,
-    type: 3}
-  m_PrefabInstance: {fileID: 371881653}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c74eef00fd1d554d98226757f425d6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1064474205 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9128622762643500671, guid: c599a52c07166ad47998dda9b80fa996,
@@ -777,6 +765,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7656790507954731064}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1312652363 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6436780679664142677, guid: c599a52c07166ad47998dda9b80fa996,
+    type: 3}
+  m_PrefabInstance: {fileID: 371881653}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f66333939a0219b4d99959a17fb85aa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1332422900
 GameObject:
   m_ObjectHideFlags: 0
@@ -861,7 +861,7 @@ MonoBehaviour:
     MarkingKey: 304
   _vertexViewPrefab: {fileID: -8279709390206036373, guid: acea59b5bf20c2846bd6ed73e168ea7f,
     type: 3}
-  _field: {fileID: 807301875}
+  _field: {fileID: 1312652363}
   _clickHandler: {fileID: 371881655}
   _dragHandler: {fileID: 1064474205}
   _visualLinkPrefab: {fileID: 246736580082225113, guid: 6a91640a09da55b40bdbf151f0023579,

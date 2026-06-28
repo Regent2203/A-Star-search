@@ -15,5 +15,5 @@ MonoBehaviour:
   _id: 5
   _name: Swamp
   _sprite: {fileID: 21300000, guid: 820d2043b75a7ac48862afcbe3c18c4b, type: 3}
-  _weight: 1.75
+  _moveCost: 1.75
   _paletteHotkey: 116

@@ -1,5 +1,6 @@
 using ThisProject.Views;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace ThisProject.Implementations.Vertexes
 {
@@ -32,11 +33,11 @@ namespace ThisProject.Implementations.Vertexes
             ShowFinishMarker(false);
         }
 
-        public void Init(int id, Vector2 position)
+        public void Init(int id, Vector2 scale)
         {
             _id = id;
+            transform.localScale = scale;
             name = $"VertexView {id}";
-            transform.position = position;
         }
 
         public void ShowBlockedMarker(bool show)

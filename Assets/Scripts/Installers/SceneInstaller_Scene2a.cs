@@ -1,3 +1,4 @@
+using ThisProject.Fields;
 using ThisProject.Fields.NodeBlockers;
 using ThisProject.Fields.ViewMovers;
 using ThisProject.Fields.ViewSelectors;
@@ -28,7 +29,7 @@ namespace ThisProject.Installers
         [SerializeField]
         private VertexView _vertexViewPrefab;
         [SerializeField]
-        private VertexesField _field;
+        private SpatialField _field;
         [SerializeField]
         private VertexesClickHandler _clickHandler;
         [SerializeField]
@@ -46,7 +47,7 @@ namespace ThisProject.Installers
             Container.BindInstance(_inputSettings).AsSingle();
             Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
             Container.BindInstance(_vertexViewPrefab).AsSingle();
-            Container.BindInterfacesAndSelfTo<VertexesField>().FromInstance(_field).AsSingle();
+            Container.BindInterfacesAndSelfTo<SpatialField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexNode, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexView, int>>().AsSingle();
             Container.BindInstance(_clickHandler).AsSingle();

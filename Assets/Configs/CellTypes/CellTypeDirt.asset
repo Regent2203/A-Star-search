@@ -15,5 +15,5 @@ MonoBehaviour:
   _id: 3
   _name: Dirt
   _sprite: {fileID: 21300000, guid: f5ca05003fd667c478f2bf42b551af70, type: 3}
-  _weight: 1.25
+  _moveCost: 1.25
   _paletteHotkey: 101

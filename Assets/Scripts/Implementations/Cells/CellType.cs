@@ -22,7 +22,6 @@ namespace ThisProject.Implementations.Cells
         private string _name;
         [SerializeField]
         private Sprite _sprite;
-        [FormerlySerializedAs("_weight")]
         [SerializeField]
         private float _moveCost = float.PositiveInfinity;
         [SerializeField]
