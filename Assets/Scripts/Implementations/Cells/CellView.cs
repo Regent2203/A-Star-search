@@ -14,9 +14,18 @@ namespace ThisProject.Implementations.Cells
         private GameObject _finishMarker;
 
 
-        private void Awake()
+        public override void OnSpawned(Vector2Int index, Vector2 scale)
+        {
+            base.OnSpawned(index, scale);
+
+            name = $"CellView {index.x},{index.y}";
+            ClearGraphics();
+        }
+
+        public override void OnDespawned()
         {
             ClearGraphics();
+            base.OnDespawned();
         }
 
         private void ClearGraphics()
@@ -24,13 +33,6 @@ namespace ThisProject.Implementations.Cells
             ShowPathMarker(false);
             ShowStartMarker(false);
             ShowFinishMarker(false);
-        }
-
-        public void Init(Vector2Int index, Vector2 scale)
-        {
-            _id = index;
-            transform.localScale = scale;
-            name = $"CellView {index.x},{index.y}";
         }
 
         public void ShowPathMarker(bool show)

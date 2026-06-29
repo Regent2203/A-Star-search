@@ -40,14 +40,14 @@ namespace ThisProject.Installers
         {
             Container.BindInstance(_inputSettings).AsSingle();
             Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
-            Container.Bind(typeof(CellView), typeof(INodeView)).FromInstance(_cellViewPrefab).AsSingle();
-            Container.Bind(typeof(GridField)).FromInstance(_field).AsSingle();
+            Container.BindInterfacesAndSelfTo<CellView>().FromInstance(_cellViewPrefab).AsSingle();
+            Container.BindInterfacesAndSelfTo<GridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<GridTypeStorage<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridTypeStorage<CellView>>().AsSingle();
             Container.BindInstance(_clickHandler).AsSingle();
             Container.BindInterfacesAndSelfTo<CellsFieldBuilder>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
+            Container.BindMemoryPool<CellView, CellViewPool>().WithInitialSize(100).FromComponentInNewPrefab(_cellViewPrefab).UnderTransform(_field.Container);
             Container.BindInterfacesAndSelfTo<CellTypeChanger>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<CellNode>>().AsSingle();

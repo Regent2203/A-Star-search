@@ -1,5 +1,6 @@
 using ThisProject.Fields;
 using ThisProject.Heuristic.Functions;
+using ThisProject.Implementations.Cells;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Implementations.VisualLinks;
 using ThisProject.Inputs;
@@ -46,7 +47,7 @@ namespace ThisProject.Installers
             Container.BindInstance(_mainCamera).AsSingle();
             Container.BindInstance(_inputSettings).AsSingle();
             Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
-            Container.BindInstance(_vertexViewPrefab).AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexView>().FromInstance(_vertexViewPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<SpatialField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexNode, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexView, int>>().AsSingle();
@@ -54,7 +55,7 @@ namespace ThisProject.Installers
             Container.BindInstance(_dragHandler).AsSingle();            
             Container.BindInterfacesAndSelfTo<VertexesFieldBuilder>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexNodeFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<VertexViewFactory>().AsSingle();
+            Container.BindMemoryPool<VertexView, VertexViewPool>().WithInitialSize(100).FromComponentInNewPrefab(_vertexViewPrefab).UnderTransform(_field.Container);
             Container.BindInterfacesAndSelfTo<NodeBlocker<VertexNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeViewSelector<VertexView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeViewMover>().AsSingle();

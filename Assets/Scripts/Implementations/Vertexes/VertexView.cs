@@ -1,6 +1,5 @@
 using ThisProject.Nodes;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace ThisProject.Implementations.Vertexes
 {
@@ -20,9 +19,18 @@ namespace ThisProject.Implementations.Vertexes
         private GameObject _finishMarker;
 
 
-        private void Awake()
+        public override void OnSpawned(int id, Vector2 scale)
+        {
+            base.OnSpawned(id, scale);
+
+            name = $"VertexView {id}";
+            ClearGraphics();
+        }
+
+        public override void OnDespawned()
         {
             ClearGraphics();
+            base.OnDespawned();
         }
 
         private void ClearGraphics()
@@ -31,13 +39,6 @@ namespace ThisProject.Implementations.Vertexes
             ShowSelectedMarker(false);
             ShowStartMarker(false);
             ShowFinishMarker(false);
-        }
-
-        public void Init(int id, Vector2 scale)
-        {
-            _id = id;
-            transform.localScale = scale;
-            name = $"VertexView {id}";
         }
 
         public void ShowBlockedMarker(bool show)

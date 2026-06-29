@@ -10,17 +10,17 @@ namespace ThisProject.Implementations.Cells
         private readonly GridTypeStorage<CellNode> _nodes;
         private readonly GridTypeStorage<CellView> _views;        
         private readonly CellNodeFactory _nodesFactory;
-        private readonly CellViewFactory _viewsFactory;
+        private readonly CellViewPool _viewsPool;
 
 
         public CellsFieldBuilder(GridField field, GridTypeStorage<CellNode> nodes, GridTypeStorage<CellView> views,
-            CellNodeFactory nodeFactory, CellViewFactory viewFactory)
+            CellNodeFactory nodeFactory, CellViewPool viewsPool)
         {
             _field = field;
             _nodes = nodes;
             _views = views;            
             _nodesFactory = nodeFactory;
-            _viewsFactory = viewFactory;
+            _viewsPool = viewsPool;
         }
 
         public void PopulateField(Vector2Int size, CellType cellType)
@@ -43,7 +43,9 @@ namespace ThisProject.Implementations.Cells
                     var node = _nodesFactory.Create(index, nodePos, cellType);
 
                     var viewPos = _field.Grid.transform.TransformPoint(localPos);
-                    var view = _viewsFactory.Create(index, viewPos, _field.ScaleFactor, _field.Container);
+                    var view = _viewsPool.Spawn(index, _field.ScaleFactor);
+                    view.Move(viewPos);
+
 
                     _nodes.TryAddItem(index, node);
                     _views.TryAddItem(index, view);

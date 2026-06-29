@@ -931,7 +931,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'LMB - select node (hold LMB to drag node)
+  m_text: 'LMB - select node / drag node (hold)
 
     RMB - switch node''s blocked
     state
