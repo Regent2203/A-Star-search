@@ -9,20 +9,20 @@ namespace ThisProject.Implementations.Vertexes
         private readonly SpatialField _field;
         private readonly DictTypeStorage<VertexNode, int> _nodes;
         private readonly DictTypeStorage<VertexView, int> _views;
-        private readonly VertexNodeFactory _nodesFactory;
+        private readonly VertexNodePool _nodesPool;
         private readonly VertexViewPool _viewsPool;
 
         private int _newId = 0;
 
 
         public VertexesFieldBuilder(SpatialField field, DictTypeStorage<VertexNode, int> nodes, DictTypeStorage<VertexView, int> views, 
-            VertexViewPool viewsPool, VertexNodeFactory nodeFactory)
+            VertexViewPool viewsPool, VertexNodePool nodesPool)
         {
             _field = field;
             _nodes = nodes;
             _views = views;
             _viewsPool = viewsPool;
-            _nodesFactory = nodeFactory;
+            _nodesPool = nodesPool;
         }
 
         //temp
@@ -33,7 +33,7 @@ namespace ThisProject.Implementations.Vertexes
                 var id = _newId++;
 
                 var pos = new Vector3(UnityEngine.Random.value * 40 - 20, UnityEngine.Random.value * 40 - 20, 0);
-                var node = _nodesFactory.Create(id, pos);
+                var node = _nodesPool.Spawn(id, pos);
                 var view = _viewsPool.Spawn(id, _field.ScaleFactor);
                 view.Move(pos);
 
@@ -47,7 +47,7 @@ namespace ThisProject.Implementations.Vertexes
         {
             var id = _newId++;
             
-            var node = _nodesFactory.Create(id, pos);
+            var node = _nodesPool.Spawn(id, pos);
             var view = _viewsPool.Spawn(id, _field.ScaleFactor);
             view.Move(pos);
 

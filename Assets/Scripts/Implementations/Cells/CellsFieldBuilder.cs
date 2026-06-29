@@ -9,17 +9,17 @@ namespace ThisProject.Implementations.Cells
         private readonly GridField _field;
         private readonly GridTypeStorage<CellNode> _nodes;
         private readonly GridTypeStorage<CellView> _views;        
-        private readonly CellNodeFactory _nodesFactory;
+        private readonly CellNodePool _nodesPool;
         private readonly CellViewPool _viewsPool;
 
 
         public CellsFieldBuilder(GridField field, GridTypeStorage<CellNode> nodes, GridTypeStorage<CellView> views,
-            CellNodeFactory nodeFactory, CellViewPool viewsPool)
+            CellNodePool nodesPool, CellViewPool viewsPool)
         {
             _field = field;
             _nodes = nodes;
             _views = views;            
-            _nodesFactory = nodeFactory;
+            _nodesPool = nodesPool;
             _viewsPool = viewsPool;
         }
 
@@ -40,7 +40,7 @@ namespace ThisProject.Implementations.Cells
                     var localPos = new Vector3(localX * _field.Grid.cellSize.x, localY * _field.Grid.cellSize.y, 0);
 
                     var nodePos = index;
-                    var node = _nodesFactory.Create(index, nodePos, cellType);
+                    var node = _nodesPool.Spawn(index, nodePos, cellType);
 
                     var viewPos = _field.Grid.transform.TransformPoint(localPos);
                     var view = _viewsPool.Spawn(index, _field.ScaleFactor);

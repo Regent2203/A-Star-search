@@ -25,6 +25,7 @@ namespace ThisProject.Implementations.Cells
         public override void OnDespawned()
         {
             ClearGraphics();
+
             base.OnDespawned();
         }
 

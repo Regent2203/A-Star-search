@@ -1,7 +1,4 @@
-﻿using ThisProject.Fields;
-using ThisProject.Inputs;
-using ThisProject.ObjectsStorages;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 namespace ThisProject.Nodes
@@ -14,14 +11,6 @@ namespace ThisProject.Nodes
         protected TId _id;
         public TId Id => _id;
 
-        protected IMemoryPool _pool;
-
-
-        [Inject]
-        public void Construct(IMemoryPool pool)
-        {
-            _pool = pool;
-        }
 
         public virtual void OnSpawned(TId id, Vector2 scale)
         {
@@ -34,8 +23,6 @@ namespace ThisProject.Nodes
         {
             gameObject.SetActive(false);
         }
-
-        public void ReturnToPool() => _pool?.Despawn(this); 
 
         
         public Vector2 GetSize()

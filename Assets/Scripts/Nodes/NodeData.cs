@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace ThisProject.Nodes
 {
-    public abstract class NodeData<TId> : INodeData<TId>
+    public abstract class NodeData<TId> : INodeData<TId>, IPoolable<TId, Vector2>
     {
         protected TId _id;
         protected Vector2 _nodePosition;
@@ -11,6 +12,21 @@ namespace ThisProject.Nodes
         public TId Id => _id;
         public Vector2 NodePosition => _nodePosition;
         public virtual bool IsBlocked => _isBlocked;
+
+
+        public virtual void OnSpawned(TId id, Vector2 nodePosition)
+        {
+            _id = id;
+            _nodePosition = nodePosition;
+            _isBlocked = false;
+        }
+
+        public virtual void OnDespawned()
+        {
+            _id = default;
+            _nodePosition = Vector2.zero;
+            _isBlocked = false;
+        }
 
 
         public bool TryChangeNodePosition(Vector2 position)

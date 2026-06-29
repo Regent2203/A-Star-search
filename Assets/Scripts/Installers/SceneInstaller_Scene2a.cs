@@ -54,8 +54,8 @@ namespace ThisProject.Installers
             Container.BindInstance(_clickHandler).AsSingle();
             Container.BindInstance(_dragHandler).AsSingle();            
             Container.BindInterfacesAndSelfTo<VertexesFieldBuilder>().AsSingle();
-            Container.BindInterfacesAndSelfTo<VertexNodeFactory>().AsSingle();
-            Container.BindMemoryPool<VertexView, VertexViewPool>().WithInitialSize(100).FromComponentInNewPrefab(_vertexViewPrefab).UnderTransform(_field.Container);
+            Container.BindMemoryPool<VertexNode, VertexNodePool>().WithInitialSize(20);
+            Container.BindMemoryPool<VertexView, VertexViewPool>().WithInitialSize(20).FromComponentInNewPrefab(_vertexViewPrefab).UnderTransform(_field.Container);
             Container.BindInterfacesAndSelfTo<NodeBlocker<VertexNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeViewSelector<VertexView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeViewMover>().AsSingle();
