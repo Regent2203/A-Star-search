@@ -10,7 +10,7 @@ using ThisProject.ObjectsStorages;
 using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
 using ThisProject.PathSetters;
-using ThisProject.Views;
+using ThisProject.Nodes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -59,11 +59,11 @@ namespace ThisProject.Starters
 
         protected override void SubscribeAll()
         {
-            _clickHandler.ViewClicked += OnViewClicked;
+            _clickHandler.NodeViewClicked += OnViewClicked;
             _clickHandler.FieldClicked += OnFieldClicked;
-            _dragHandler.ViewDragStarted += OnViewDragStarted;
-            _dragHandler.ViewDragging += OnViewDragging;
-            _dragHandler.ViewDragEnded += OnViewDragEnded;
+            _dragHandler.NodeViewDragStarted += OnViewDragStarted;
+            _dragHandler.NodeViewDragging += OnViewDragging;
+            _dragHandler.NodeViewDragEnded += OnViewDragEnded;
 
             _viewSelector.ViewSelected += OnViewSelected;
             _viewMover.ViewMoved += OnViewMoved;
@@ -82,11 +82,11 @@ namespace ThisProject.Starters
 
         protected override void UnsubscribeAll()
         {
-            _clickHandler.ViewClicked -= OnViewClicked;
+            _clickHandler.NodeViewClicked -= OnViewClicked;
             _clickHandler.FieldClicked -= OnFieldClicked;
-            _dragHandler.ViewDragStarted -= OnViewDragStarted;
-            _dragHandler.ViewDragging -= OnViewDragging;
-            _dragHandler.ViewDragEnded -= OnViewDragEnded;
+            _dragHandler.NodeViewDragStarted -= OnViewDragStarted;
+            _dragHandler.NodeViewDragging -= OnViewDragging;
+            _dragHandler.NodeViewDragEnded -= OnViewDragEnded;
 
             _viewSelector.ViewSelected -= OnViewSelected;
             _viewMover.ViewMoved -= OnViewMoved;
@@ -181,7 +181,7 @@ namespace ThisProject.Starters
             view.ShowSelectedMarker(b);
         }
 
-        private void OnViewMoved(IView view, Vector2 vector)
+        private void OnViewMoved(INodeView view, Vector2 vector)
         {
             //todo visual link update; also fieldchanged?
         }

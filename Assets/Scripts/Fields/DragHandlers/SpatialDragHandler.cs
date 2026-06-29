@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using ThisProject.Inputs;
-using ThisProject.Views;
+using ThisProject.Nodes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -10,7 +9,7 @@ namespace ThisProject.Fields.DragHandlers
 {
     [RequireComponent(typeof(BoxCollider2D))]
     public class SpatialDragHandler<V> : MonoBehaviour, IFieldDragHandler<V>
-        where V : MonoBehaviour, IView
+        where V : MonoBehaviour, INodeView
     {
         private Camera _mainCamera;
         private IInputService _inputService;
@@ -19,9 +18,9 @@ namespace ThisProject.Fields.DragHandlers
         private V _currentView;
         private Vector2 _offset;
 
-        public event Action<V, Vector2, PointerEventData.InputButton, InputSnapshot> ViewDragStarted;
-        public event Action<V, Vector2, PointerEventData.InputButton, InputSnapshot> ViewDragging;
-        public event Action<V, Vector2, PointerEventData.InputButton, InputSnapshot> ViewDragEnded;
+        public event Action<V, Vector2, PointerEventData.InputButton, InputSnapshot> NodeViewDragStarted;
+        public event Action<V, Vector2, PointerEventData.InputButton, InputSnapshot> NodeViewDragging;
+        public event Action<V, Vector2, PointerEventData.InputButton, InputSnapshot> NodeViewDragEnded;
 
 
         [Inject]
@@ -59,7 +58,7 @@ namespace ThisProject.Fields.DragHandlers
                 var startPosition = (Vector2)_currentView.transform.position;
                 _offset = startPosition - mouseWorldPos;
 
-                ViewDragStarted?.Invoke(_currentView, startPosition, eventData.button, _inputService.CreateSnapshot());
+                NodeViewDragStarted?.Invoke(_currentView, startPosition, eventData.button, _inputService.CreateSnapshot());
             }
         }
 
@@ -71,7 +70,7 @@ namespace ThisProject.Fields.DragHandlers
             Vector2 mouseWorldPos = _mainCamera.ScreenToWorldPoint(eventData.position);
             var targetPosition = mouseWorldPos + _offset;
 
-            ViewDragging?.Invoke(_currentView, targetPosition, eventData.button, _inputService.CreateSnapshot());
+            NodeViewDragging?.Invoke(_currentView, targetPosition, eventData.button, _inputService.CreateSnapshot());
         }
 
         void IEndDragHandler.OnEndDrag(PointerEventData eventData)
@@ -82,7 +81,7 @@ namespace ThisProject.Fields.DragHandlers
             Vector2 mouseWorldPos = _mainCamera.ScreenToWorldPoint(eventData.position);
             var finalPosition = mouseWorldPos + _offset;
 
-            ViewDragEnded?.Invoke(_currentView, finalPosition, eventData.button, _inputService.CreateSnapshot());
+            NodeViewDragEnded?.Invoke(_currentView, finalPosition, eventData.button, _inputService.CreateSnapshot());
             
             ResetValues();
         }

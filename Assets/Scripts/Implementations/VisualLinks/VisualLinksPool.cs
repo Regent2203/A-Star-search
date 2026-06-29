@@ -4,7 +4,7 @@ using UnityEngine.Pool;
 
 namespace ThisProject.Implementations.VisualLinks
 {
-    public class VisualLinksPool<T> where T : class, INode
+    public class VisualLinksPool<T> where T : class, INodeData
     {
         private readonly VisualLinksFactory<T> _factory;
         private readonly ObjectPool<VisualLink<T>> _pool;

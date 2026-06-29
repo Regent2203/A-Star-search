@@ -1,11 +1,11 @@
 ﻿using System;
-using ThisProject.Views;
+using ThisProject.Nodes;
 using UnityEngine;
 
 namespace ThisProject.Fields.ViewSelectors
 {
     public class ViewSelector<V> : IViewSelector<V>
-        where V : MonoBehaviour, IView
+        where V : MonoBehaviour, INodeView
     {
         private V _selectedView;
 

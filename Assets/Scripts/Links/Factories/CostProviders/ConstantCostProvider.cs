@@ -2,7 +2,8 @@
 
 namespace ThisProject.Links.Factories.CostProviders
 {
-    public class ConstantCostProvider<T> : ICostProvider<T> where T : class, INode
+    public class ConstantCostProvider<T> : ICostProvider<T>
+        where T : INodeData
     {
         private readonly float _cost;
 

@@ -1,8 +1,5 @@
-using System.Net;
 using ThisProject.Implementations.Vertexes;
-using ThisProject.Links;
 using ThisProject.Nodes;
-using ThisProject.Views;
 using UnityEngine;
 
 namespace ThisProject.Implementations.VisualLinks
@@ -14,7 +11,7 @@ namespace ThisProject.Implementations.VisualLinks
     }
 
     public class VisualLink<T> : MonoBehaviour 
-        where T : class, INode
+        where T : class, INodeData
     {
         [SerializeField]
         private float _placementOffset = 0.5f;
@@ -26,7 +23,7 @@ namespace ThisProject.Implementations.VisualLinks
         private SpriteRenderer _arrowTipRenderer;
 
         private int _id;
-        private IView _viewFrom, _viewTo;
+        private INodeView _viewFrom, _viewTo;
 
         private PlacementType _placementType = PlacementType.Center;
         private float _arrowOffset;
@@ -40,7 +37,7 @@ namespace ThisProject.Implementations.VisualLinks
             _arrowOffset = _arrowTipRenderer.sprite.bounds.size.y * _arrowTipRenderer.transform.localScale.y;
         }
 
-        public void Init(int id, IView viewFrom, IView viewTo, PlacementType placementType)
+        public void Init(int id, INodeView viewFrom, INodeView viewTo, PlacementType placementType)
         {
             _id = id;
             _viewFrom = viewFrom;

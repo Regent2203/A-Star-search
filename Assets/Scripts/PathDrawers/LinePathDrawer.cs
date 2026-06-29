@@ -1,13 +1,13 @@
-using ThisProject.Views;
+using ThisProject.Nodes;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace ThisProject.PathDrawers
 {
-    public class LinePathDrawer : IPathDrawer<IView>
+    public class LinePathDrawer : IPathDrawer<INodeView>
     {
         private readonly LineRenderer _lineRenderer;
-        private IReadOnlyList<IView> _path;
+        private IReadOnlyList<INodeView> _path;
 
         public LinePathDrawer(LineRenderer lineRenderer)
         {
@@ -15,7 +15,7 @@ namespace ThisProject.PathDrawers
             _lineRenderer.positionCount = 0;
         }
 
-        public void SetPath(IReadOnlyList<IView> path)
+        public void SetPath(IReadOnlyList<INodeView> path)
         {
             _path = path;
 

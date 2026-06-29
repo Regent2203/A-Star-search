@@ -4,7 +4,7 @@ using Zenject;
 
 namespace ThisProject.Implementations.VisualLinks
 {
-    public class VisualLinksFactory<T> where T : class, INode
+    public class VisualLinksFactory<T> where T : class, INodeData
     {
         private readonly VisualLink<T> _prefab;
         private readonly IInstantiator _instantiator;

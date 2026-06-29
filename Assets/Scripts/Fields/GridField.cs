@@ -1,4 +1,4 @@
-﻿using ThisProject.Views;
+﻿using ThisProject.Nodes;
 using UnityEngine;
 using Zenject;
 
@@ -18,12 +18,12 @@ namespace ThisProject.Fields
         
 
         [Inject]
-        public void Construct(IView viewPrefab)
+        public void Construct(INodeView viewPrefab)
         {
             CalculateScaleFactor(viewPrefab);
         }
 
-        private void CalculateScaleFactor(IView viewPrefab)
+        private void CalculateScaleFactor(INodeView viewPrefab)
         {
             _scaleFactor = _grid.cellSize / viewPrefab.GetSize();
         }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ThisProject.Implementations.Vertexes
 {
-    public class VertexNode : Node<int>
+    public class VertexNode : NodeData<int>
     {
         public VertexNode(int id, Vector2 nodePosition)
         {

@@ -2,7 +2,8 @@
 
 namespace ThisProject.Links
 {
-    public interface ILink<T> where T : class, INode
+    public interface ILinkData<T>
+        where T : INodeData
     {
         public T From { get; }
         public T To { get; }

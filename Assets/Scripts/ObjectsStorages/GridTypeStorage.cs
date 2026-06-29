@@ -7,7 +7,6 @@ using Zenject;
 namespace ThisProject.ObjectsStorages
 {
     public class GridTypeStorage<T> : IObjectsStorage<T, Vector2Int>
-        where T : class//, IPoolable
     {
         private IMemoryPool _pool;
         private T[,] _data;
@@ -32,7 +31,7 @@ namespace ThisProject.ObjectsStorages
             if (_data.IsIndexWithinBounds(id.x, id.y))
                 return _data[id.x, id.y];
 
-            return null;
+            return default(T);
         }
 
         public bool TryAddItem(Vector2Int id, T item)
@@ -54,7 +53,7 @@ namespace ThisProject.ObjectsStorages
         {
             if (_data.IsIndexWithinBounds(id.x, id.y))
             {
-                _data[id.x, id.y] = null;
+                _data[id.x, id.y] = default(T);
                 ItemRemoved?.Invoke(id);
                 return true;
             }

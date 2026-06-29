@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace ThisProject.Links.Factories.CostProviders
 {
-    public abstract class WeightedCostProvider<T> : ICostProvider<T> where T : class, INode
+    public abstract class WeightedCostProvider<T> : ICostProvider<T>
+        where T : INodeData
     {
         protected readonly IWeightGetter<T> _weightGetter;
 

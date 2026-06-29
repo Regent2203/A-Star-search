@@ -1,6 +1,6 @@
 ﻿using System;
 using ThisProject.Inputs;
-using ThisProject.Views;
+using ThisProject.Nodes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -9,11 +9,11 @@ namespace ThisProject.Fields.ClickHandlers
 {
     [RequireComponent(typeof(BoxCollider2D))]
     public class SpatialClickHandler<V> : MonoBehaviour, IFieldClickHandler<V>
-        where V : MonoBehaviour, IView
+        where V : MonoBehaviour, INodeView
     {
         private IInputService _inputService;
 
-        public event Action<V, PointerEventData.InputButton, InputSnapshot> ViewClicked;
+        public event Action<V, PointerEventData.InputButton, InputSnapshot> NodeViewClicked;
         public event Action<PointerEventData.InputButton, InputSnapshot> FieldClicked;
 
 
@@ -29,7 +29,7 @@ namespace ThisProject.Fields.ClickHandlers
 
             if (hitObject != null && hitObject.TryGetComponent<V>(out var view))
             {
-                ViewClicked?.Invoke(view, eventData.button, _inputService.CreateSnapshot());
+                NodeViewClicked?.Invoke(view, eventData.button, _inputService.CreateSnapshot());
                 return;
             }
 

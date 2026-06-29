@@ -3,17 +3,16 @@ using ThisProject.Links;
 using ThisProject.Links.Factories;
 using ThisProject.Links.Providers;
 using ThisProject.Nodes;
-using ThisProject.Views;
 using UnityEngine;
 using Zenject;
 
 namespace ThisProject.Implementations.VisualLinks
 {
     public class VisualLinksCreator<T, V> : MonoBehaviour 
-        where V: MonoBehaviour, IView
-        where T: class, INode
+        where V: MonoBehaviour, INodeView
+        where T: class, INodeData
     {
-        private readonly Dictionary<ILink<T>, VisualLink<T>> _activeVisualLinks = new Dictionary<ILink<T>, VisualLink<T>>();
+        private readonly Dictionary<ILinkData<T>, VisualLink<T>> _activeVisualLinks = new Dictionary<ILinkData<T>, VisualLink<T>>();
 
         private LinksFactory<T> _linksFactory;
         private VisualLinksPool<T> _visualLinksPool;
@@ -47,7 +46,7 @@ namespace ThisProject.Implementations.VisualLinks
         {
             if (_linksProvider.TryRemoveLink(from, to))
             {
-                ILink<T> targetKey = null;
+                ILinkData<T> targetKey = null;
 
                 foreach (var key in _activeVisualLinks.Keys)
                 {

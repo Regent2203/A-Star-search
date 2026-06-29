@@ -5,7 +5,6 @@ using Zenject;
 namespace ThisProject.ObjectsStorages
 {
     public class DictTypeStorage<T, TId> : IObjectsStorage<T, TId>
-        where T : class//, IPoolable
     {
         private IMemoryPool _pool;
         private Dictionary<TId, T> _data = new Dictionary<TId, T>();
@@ -25,7 +24,7 @@ namespace ThisProject.ObjectsStorages
             if (_data.TryGetValue(id, out var item))
                 return item;
 
-            return null;
+            return default(T);
         }
 
         public bool TryAddItem(TId id, T item)

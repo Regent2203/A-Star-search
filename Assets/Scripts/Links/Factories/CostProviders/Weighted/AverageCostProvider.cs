@@ -2,7 +2,8 @@
 
 namespace ThisProject.Links.Factories.CostProviders
 {
-    public class AverageCostProvider<T> : WeightedCostProvider<T> where T : class, INode
+    public class AverageCostProvider<T> : WeightedCostProvider<T>
+        where T : INodeData
     {
         public AverageCostProvider(IWeightGetter<T> weightGetter) : base(weightGetter) 
         { }

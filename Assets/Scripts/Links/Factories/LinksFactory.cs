@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 namespace ThisProject.Links.Factories
 {
-    public class LinksFactory<T> : ILinksFactory<T> where T : class, INode
+    public class LinksFactory<T> : ILinksFactory<T>
+        where T : INodeData
     {
         private readonly ICostProvider<T> _costProvider;
 
@@ -14,7 +15,7 @@ namespace ThisProject.Links.Factories
             _costProvider = costProvider;
         }
 
-        public IEnumerable<ILink<T>> CreateLinksFromNode(T from, IEnumerable<T> neighbours)
+        public IEnumerable<ILinkData<T>> CreateLinksFromNode(T from, IEnumerable<T> neighbours)
         {
             foreach (var to in neighbours)
             {
@@ -22,7 +23,7 @@ namespace ThisProject.Links.Factories
             }
         }
 
-        public IEnumerable<ILink<T>> CreateLinksToNode(T to, IEnumerable<T> neighbours)
+        public IEnumerable<ILinkData<T>> CreateLinksToNode(T to, IEnumerable<T> neighbours)
         {
             foreach (var from in neighbours)
             {
@@ -30,16 +31,16 @@ namespace ThisProject.Links.Factories
             }
         }
 
-        public ILink<T> CreateLink(T from, T to)
+        public ILinkData<T> CreateLink(T from, T to)
         {            
             return CreateLinkInternal(from, to);
         }
 
-        private ILink<T> CreateLinkInternal(T from, T to)
+        private ILinkData<T> CreateLinkInternal(T from, T to)
         {
             var cost = _costProvider.GetCost(from, to);
 
-            return new Link<T>(from, to, cost);
+            return new LinkData<T>(from, to, cost);
         }
     }
 }

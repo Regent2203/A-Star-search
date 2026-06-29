@@ -1,13 +1,13 @@
 using System;
-using ThisProject.Views;
+using ThisProject.Nodes;
 using UnityEngine;
 
 namespace ThisProject.Fields.ViewMovers
 {
     public interface IViewMover
     {
-        public bool TryMoveView(IView view, Vector2 position);
+        public bool TryMoveView(INodeView view, Vector2 position);
 
-        public event Action<IView, Vector2> ViewMoved;
+        public event Action<INodeView, Vector2> ViewMoved;
     }
 }

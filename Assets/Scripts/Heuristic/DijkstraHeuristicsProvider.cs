@@ -2,7 +2,8 @@
 
 namespace ThisProject.Heuristic
 {
-    public class DijkstraHeuristicsProvider<T> : IHeuristicsProvider<T> where T : class, INode
+    public class DijkstraHeuristicsProvider<T> : IHeuristicsProvider<T> 
+        where T : INodeData
     {
         public float EstimateCost(T node1, T node2)
         {

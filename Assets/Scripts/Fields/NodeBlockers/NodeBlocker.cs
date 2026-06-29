@@ -1,11 +1,10 @@
 ﻿using System;
 using ThisProject.Nodes;
-using UnityEngine;
 
 namespace ThisProject.Fields.NodeBlockers
 {
     public class NodeBlocker<T> : INodeBlocker<T>
-        where T : INode
+        where T : INodeData
     {
         public event Action<T, bool> NodeBlocked;
 

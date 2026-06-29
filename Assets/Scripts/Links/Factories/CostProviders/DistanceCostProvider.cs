@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace ThisProject.Links.Factories.CostProviders
 {
-    public class DistanceCostProvider<T> : ICostProvider<T> where T : class, INode
+    public class DistanceCostProvider<T> : ICostProvider<T>
+        where T : INodeData
     {
         public float GetCost(T from, T to) => Vector2.Distance(from.NodePosition, to.NodePosition);
     }

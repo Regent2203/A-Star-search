@@ -1,5 +1,5 @@
 ﻿using System;
-using ThisProject.Views;
+using ThisProject.Nodes;
 using UnityEngine;
 
 namespace ThisProject.Fields.ViewMovers
@@ -8,7 +8,7 @@ namespace ThisProject.Fields.ViewMovers
     {
         private readonly IField _field;
 
-        public event Action<IView, Vector2> ViewMoved;
+        public event Action<INodeView, Vector2> ViewMoved;
 
 
         public ViewMover(IField field) 
@@ -16,7 +16,7 @@ namespace ThisProject.Fields.ViewMovers
             _field = field;
         }
 
-        public bool TryMoveView(IView view, Vector2 position)
+        public bool TryMoveView(INodeView view, Vector2 position)
         {
             if (view == null)
                 return false;

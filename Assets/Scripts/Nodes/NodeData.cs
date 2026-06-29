@@ -2,7 +2,7 @@
 
 namespace ThisProject.Nodes
 {
-    public abstract class Node<TId> : INode<TId>
+    public abstract class NodeData<TId> : INodeData<TId>
     {
         protected TId _id;
         protected Vector2 _nodePosition;

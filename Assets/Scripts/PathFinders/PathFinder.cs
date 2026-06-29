@@ -6,7 +6,8 @@ using ThisProject.SearchAlgorithms;
 
 namespace ThisProject.PathFinders
 {
-    public class PathFinder<T> : IPathFinder<T> where T : class, INode
+    public class PathFinder<T> : IPathFinder<T>
+        where T : INodeData
     {
         private readonly IHeuristicsProvider<T> _heuristicsProvider;
         private readonly ILinksProvider<T> _linksProvider;

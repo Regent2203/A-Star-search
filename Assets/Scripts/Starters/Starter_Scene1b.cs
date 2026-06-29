@@ -55,7 +55,7 @@ namespace ThisProject.Starters
 
         protected override void SubscribeAll()
         {
-            _clickHandler.ViewClicked += OnViewClicked;
+            _clickHandler.NodeViewClicked += OnViewClicked;
             _cellTypeChanger.CellTypeChanged += OnCellTypeChanged;
 
             _pathSetter.StartNodeChanged += OnStartNodeChanged;
@@ -76,7 +76,7 @@ namespace ThisProject.Starters
 
         protected override void UnsubscribeAll()
         {
-            _clickHandler.ViewClicked -= OnViewClicked;
+            _clickHandler.NodeViewClicked -= OnViewClicked;
             _cellTypeChanger.CellTypeChanged -= OnCellTypeChanged;
 
             _pathSetter.StartNodeChanged -= OnStartNodeChanged;

@@ -1,9 +1,9 @@
-﻿using ThisProject.Views;
+﻿using ThisProject.Nodes;
 using UnityEngine;
 
 namespace ThisProject.Implementations.Cells
 {
-    public class CellView : View<Vector2Int>
+    public class CellView : NodeView<Vector2Int>
     {
         [Space]
         [SerializeField]

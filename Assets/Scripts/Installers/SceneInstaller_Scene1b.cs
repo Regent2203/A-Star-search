@@ -13,7 +13,7 @@ using ThisProject.PathFinders;
 using ThisProject.PathSetters;
 using ThisProject.SearchAlgorithms;
 using ThisProject.Starters;
-using ThisProject.Views;
+using ThisProject.Nodes;
 using UnityEngine;
 using Zenject;
 
@@ -42,7 +42,7 @@ namespace ThisProject.Installers
         {
             Container.BindInstance(_inputSettings).AsSingle();
             Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
-            Container.Bind(typeof(CellView), typeof(IView)).FromInstance(_cellViewPrefab).AsSingle();
+            Container.Bind(typeof(CellView), typeof(INodeView)).FromInstance(_cellViewPrefab).AsSingle();
             Container.Bind(typeof(GridField)).FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<GridTypeStorage<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridTypeStorage<CellView>>().AsSingle();

@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 
-namespace ThisProject.Views
+namespace ThisProject.Nodes
 {
-    public interface IView
+    public interface INodeView
     {
         public Vector2 GetSize();
         public Vector3 GetCenterCoords();
         public void Move(Vector2 position);
     }
 
-    public interface IView<TId> : IView
+    public interface INodeView<TId> : INodeView
     {
         TId Id { get; }
     }

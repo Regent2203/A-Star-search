@@ -2,18 +2,19 @@
 
 namespace ThisProject.Links
 {
-    public struct Link<T> : ILink<T> where T : class, INode
+    public class LinkData<T> : ILinkData<T>
+        where T : INodeData
     {
         private readonly T _from;
         private readonly T _to;
         private float _cost;
 
-        public readonly T From => _from;
-        public readonly T To => _to;
-        public readonly float Cost => _cost;
+        public T From => _from;
+        public T To => _to;
+        public float Cost => _cost;
 
 
-        public Link(T from, T to, float cost)
+        public LinkData(T from, T to, float cost)
         {
             _from = from;
             _to = to;

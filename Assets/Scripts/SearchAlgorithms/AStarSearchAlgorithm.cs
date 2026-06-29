@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 namespace ThisProject.SearchAlgorithms
 {
-    public class AStarSearchAlgorithm<T> : ISearchAlgorithm<T> where T : class, INode
+    public class AStarSearchAlgorithm<T> : ISearchAlgorithm<T>
+        where T : INodeData
     {
         private Dictionary<T, T> _cameFrom;
         private Dictionary<T, float> _costSoFar;

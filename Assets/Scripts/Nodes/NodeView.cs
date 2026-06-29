@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace ThisProject.Views
+namespace ThisProject.Nodes
 {
-    public abstract class View<TId> : MonoBehaviour, IView<TId>
+    public abstract class NodeView<TId> : MonoBehaviour, INodeView<TId>
     {
         [SerializeField]
         protected SpriteRenderer _spriteRenderer;

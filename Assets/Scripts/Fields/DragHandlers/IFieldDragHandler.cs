@@ -1,16 +1,16 @@
 ﻿using System;
 using ThisProject.Inputs;
-using ThisProject.Views;
+using ThisProject.Nodes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace ThisProject.Fields.DragHandlers
 {
     public interface IFieldDragHandler<V> : IBeginDragHandler, IDragHandler, IEndDragHandler
-        where V : IView
+        where V : MonoBehaviour, INodeView
     {
-        public event Action<V, Vector2, PointerEventData.InputButton, InputSnapshot> ViewDragStarted;
-        public event Action<V, Vector2, PointerEventData.InputButton, InputSnapshot> ViewDragging;
-        public event Action<V, Vector2, PointerEventData.InputButton, InputSnapshot> ViewDragEnded;
+        public event Action<V, Vector2, PointerEventData.InputButton, InputSnapshot> NodeViewDragStarted;
+        public event Action<V, Vector2, PointerEventData.InputButton, InputSnapshot> NodeViewDragging;
+        public event Action<V, Vector2, PointerEventData.InputButton, InputSnapshot> NodeViewDragEnded;
     }
 }

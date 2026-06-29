@@ -3,7 +3,8 @@ using ThisProject.Nodes;
 
 namespace ThisProject.PathSetters
 {
-    public class PathSetter<T> : IPathSetter<T> where T : class, INode
+    public class PathSetter<T> : IPathSetter<T>
+        where T : INodeData
     {
         private T _startNode;
         private T _finishNode;
@@ -38,7 +39,7 @@ namespace ThisProject.PathSetters
             if (ReferenceEquals(desiredNode, node)) //when trying to set same node value to desired node, we clear desired value instead (it's a feature)
             {
                 var oldDesiredNode = desiredNode;
-                desiredNode = null;
+                desiredNode = default;
                 desiredNodeChanged?.Invoke(oldDesiredNode, false);
                 AnyNodeChanged?.Invoke(IsReady);
                 return;

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using ThisProject.Nodes;
 using ThisProject.ObjectsStorages;
-using ThisProject.Views;
 using UnityEngine;
 
 public static class Extensions
@@ -39,8 +38,8 @@ public static class Extensions
 
 
     public static void NodesToViewsNonAlloc<T, V, TId>(this IObjectsStorage<V, TId> views, IList<T> nodesList, IList<V> viewsList)
-        where T : class, INode<TId>
-        where V : class, IView<TId>
+        where T : class, INodeData<TId>
+        where V : class, INodeView<TId>
     {
         viewsList.Clear();
 

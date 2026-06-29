@@ -4,13 +4,14 @@ using System.Linq;
 
 namespace ThisProject.Links.Providers
 {
-    public class StoredLinksProvider<T> : ILinksProvider<T> where T : class, INode
+    public class StoredLinksProvider<T> : ILinksProvider<T>
+        where T : INodeData
     {
-        private readonly Dictionary<T, Dictionary<T, ILink<T>>> _fromLinks = new Dictionary<T, Dictionary<T, ILink<T>>>();
-        private readonly Dictionary<T, Dictionary<T, ILink<T>>> _toLinks = new Dictionary<T, Dictionary<T, ILink<T>>>();
+        private readonly Dictionary<T, Dictionary<T, ILinkData<T>>> _fromLinks = new Dictionary<T, Dictionary<T, ILinkData<T>>>();
+        private readonly Dictionary<T, Dictionary<T, ILinkData<T>>> _toLinks = new Dictionary<T, Dictionary<T, ILinkData<T>>>();
 
 
-        public bool TryAddLink(ILink<T> link)
+        public bool TryAddLink(ILinkData<T> link)
         {
             if (link == null) 
                 return false;
@@ -24,19 +25,19 @@ namespace ThisProject.Links.Providers
                 return false;
             }
 
-            if (!_fromLinks.TryGetValue(fromNode, out var outgoing))
+            if (!_fromLinks.TryGetValue(fromNode, out var fromSubDict))
             {
-                outgoing = new Dictionary<T, ILink<T>>();
-                _fromLinks[fromNode] = outgoing;
+                fromSubDict = new Dictionary<T, ILinkData<T>>();
+                _fromLinks[fromNode] = fromSubDict;
             }
-            outgoing[toNode] = link;
+            fromSubDict[toNode] = link;
 
-            if (!_toLinks.TryGetValue(toNode, out var incoming))
+            if (!_toLinks.TryGetValue(toNode, out var toSubDict))
             {
-                incoming = new Dictionary<T, ILink<T>>();
-                _toLinks[toNode] = incoming;
+                toSubDict = new Dictionary<T, ILinkData<T>>();
+                _toLinks[toNode] = toSubDict;
             }
-            incoming[fromNode] = link;
+            toSubDict[fromNode] = link;
 
             return true;
         }
@@ -70,20 +71,20 @@ namespace ThisProject.Links.Providers
             return true;
         }
 
-        public IEnumerable<ILink<T>> GetLinksFromNode(T node)
+        public IEnumerable<ILinkData<T>> GetLinksFromNode(T node)
         {
             if (node != null && _fromLinks.TryGetValue(node, out var links))
                 return links.Values;
 
-            return Enumerable.Empty<ILink<T>>();
+            return Enumerable.Empty<ILinkData<T>>();
         }
 
-        public IEnumerable<ILink<T>> GetLinksToNode(T node)
+        public IEnumerable<ILinkData<T>> GetLinksToNode(T node)
         {
             if (node != null && _toLinks.TryGetValue(node, out var links))
                 return links.Values;
 
-            return Enumerable.Empty<ILink<T>>();
+            return Enumerable.Empty<ILinkData<T>>();
         }
     }
 }

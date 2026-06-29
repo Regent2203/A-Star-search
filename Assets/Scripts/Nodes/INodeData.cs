@@ -2,7 +2,7 @@
 
 namespace ThisProject.Nodes
 {
-    public interface INode
+    public interface INodeData
     {
         public Vector2 NodePosition { get; }
         public bool IsBlocked { get; }
@@ -12,7 +12,7 @@ namespace ThisProject.Nodes
         public bool TrySetBlocked(bool blocked);
     }
 
-    public interface INode<TId> : INode
+    public interface INodeData<TId> : INodeData
     {
         public TId Id { get; }
     }

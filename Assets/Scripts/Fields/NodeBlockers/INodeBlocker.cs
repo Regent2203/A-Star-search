@@ -4,7 +4,7 @@ using ThisProject.Nodes;
 namespace ThisProject.Fields.NodeBlockers
 {
     public interface INodeBlocker<T>
-        where T : INode
+        where T : INodeData
     {
         public bool TryBlockNode(T node, bool block);
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ThisProject.Implementations.Cells
 {
-    public class CellNode : Node<Vector2Int>
+    public class CellNode : NodeData<Vector2Int>
     {
         private CellType _cellType;
 

@@ -1,10 +1,10 @@
-using ThisProject.Views;
+using ThisProject.Nodes;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace ThisProject.Implementations.Vertexes
 {
-    public class VertexView : View<int>
+    public class VertexView : NodeView<int>
     {
         [SerializeField]
         private CircleCollider2D _collider;

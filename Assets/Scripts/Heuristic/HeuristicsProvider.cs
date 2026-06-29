@@ -3,7 +3,8 @@ using ThisProject.Nodes;
 
 namespace ThisProject.Heuristic
 {
-    public abstract class HeuristicsProvider<T> : IHeuristicsProvider<T> where T : class, INode
+    public abstract class HeuristicsProvider<T> : IHeuristicsProvider<T>
+        where T : INodeData
     {
         private readonly IHeuristicFunction _heuristicFunction;
         private readonly float _minStepCost;
