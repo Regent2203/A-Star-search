@@ -1,4 +1,7 @@
+using ThisProject.Fields;
+using ThisProject.Views;
 using UnityEngine;
+using Zenject;
 
 namespace ThisProject.Cameras
 {
@@ -13,6 +16,14 @@ namespace ThisProject.Cameras
         [SerializeField] private float _minOrthographicSize = 10f;
         [SerializeField] private float _maxOrthographicSize = 40f;
 
+        private IField _field;
+
+
+        [Inject]
+        public void Construct(IField field)
+        {
+            _field = field;
+        }
 
         private void Update()
         {
@@ -38,6 +49,7 @@ namespace ThisProject.Cameras
             Vector3 mouseWorldAfterZoom = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
             transform.position += mouseWorldBeforeZoom - mouseWorldAfterZoom;
+            transform.position = transform.position.Clamp(_field.Box.bounds);
         }
 
 

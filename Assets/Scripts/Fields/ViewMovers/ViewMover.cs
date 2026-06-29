@@ -21,17 +21,13 @@ namespace ThisProject.Fields.ViewMovers
             if (view == null)
                 return false;
 
-            var size = view.GetSize() / 2;
+            var offset = view.GetSize() / 2;
+            position = position.Clamp(_field.Box.bounds, offset);
 
-            if (_field.AdjustPoint(ref position, size))
-            {
-                view.Move(position);
-                ViewMoved?.Invoke(view, position);
+            view.Move(position);
+            ViewMoved?.Invoke(view, position);
 
-                return true;
-            }
-
-            return false;
+            return true;
         }
     }
 }
