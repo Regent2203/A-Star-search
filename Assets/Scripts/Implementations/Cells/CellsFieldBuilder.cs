@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ThisProject.Implementations.Cells
 {
-    public class CellsFieldGenerator
+    public class CellsFieldBuilder
     {
         private readonly GridField _field;
         private readonly GridTypeStorage<CellNode> _nodes;
@@ -13,7 +13,7 @@ namespace ThisProject.Implementations.Cells
         private readonly CellViewFactory _viewsFactory;
 
 
-        public CellsFieldGenerator(GridField field, GridTypeStorage<CellNode> nodes, GridTypeStorage<CellView> views,
+        public CellsFieldBuilder(GridField field, GridTypeStorage<CellNode> nodes, GridTypeStorage<CellView> views,
             CellNodeFactory nodeFactory, CellViewFactory viewFactory)
         {
             _field = field;

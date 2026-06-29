@@ -1,10 +1,9 @@
 using System;
-using ThisProject.Nodes;
 using UnityEngine;
 
-namespace ThisProject.Fields.ViewMovers
+namespace ThisProject.Nodes.ViewMovers
 {
-    public interface IViewMover
+    public interface INodeViewMover
     {
         public bool TryMoveView(INodeView view, Vector2 position);
 

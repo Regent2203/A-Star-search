@@ -1,17 +1,17 @@
 ﻿using System;
-using ThisProject.Nodes;
+using ThisProject.Fields;
 using UnityEngine;
 
-namespace ThisProject.Fields.ViewMovers
+namespace ThisProject.Nodes.ViewMovers
 {
-    public class ViewMover : IViewMover
+    public class NodeViewMover : INodeViewMover
     {
         private readonly IField _field;
 
         public event Action<INodeView, Vector2> ViewMoved;
 
 
-        public ViewMover(IField field) 
+        public NodeViewMover(IField field) 
         {
             _field = field;
         }

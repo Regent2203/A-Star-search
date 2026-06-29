@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ThisProject.Implementations.Vertexes
 {
-    public class VertexesFieldGenerator
+    public class VertexesFieldBuilder
     {
         private readonly SpatialField _field;
         private DictTypeStorage<VertexNode, int> _nodes;
@@ -15,7 +15,7 @@ namespace ThisProject.Implementations.Vertexes
         private int _newId = 0;
 
 
-        public VertexesFieldGenerator(SpatialField field, DictTypeStorage<VertexNode, int> nodes, DictTypeStorage<VertexView, int> views, 
+        public VertexesFieldBuilder(SpatialField field, DictTypeStorage<VertexNode, int> nodes, DictTypeStorage<VertexView, int> views, 
             VertexViewFactory viewFactory, VertexNodeFactory nodeFactory)
         {
             _field = field;

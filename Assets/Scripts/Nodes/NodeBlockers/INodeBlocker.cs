@@ -1,7 +1,6 @@
 ﻿using System;
-using ThisProject.Nodes;
 
-namespace ThisProject.Fields.NodeBlockers
+namespace ThisProject.Nodes.NodeBlockers
 {
     public interface INodeBlocker<T>
         where T : INodeData

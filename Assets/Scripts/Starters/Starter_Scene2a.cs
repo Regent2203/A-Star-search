@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using ThisProject.Fields.NodeBlockers;
-using ThisProject.Fields.ViewMovers;
-using ThisProject.Fields.ViewSelectors;
-using ThisProject.Implementations.Cells;
+﻿using System.Collections.Generic;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Inputs;
+using ThisProject.Nodes;
+using ThisProject.Nodes.NodeBlockers;
+using ThisProject.Nodes.ViewMovers;
+using ThisProject.Nodes.ViewSelectors;
 using ThisProject.ObjectsStorages;
 using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
 using ThisProject.PathSetters;
-using ThisProject.Nodes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -23,10 +21,10 @@ namespace ThisProject.Starters
         private DictTypeStorage<VertexView, int> _views;
         private VertexesClickHandler _clickHandler;
         private VertexesDragHandler _dragHandler;
-        private VertexesFieldGenerator _generator;
+        private VertexesFieldBuilder _builder;
         private NodeBlocker<VertexNode> _nodeBlocker;
-        private ViewSelector<VertexView> _viewSelector;
-        private ViewMover _viewMover;
+        private NodeViewSelector<VertexView> _viewSelector;
+        private NodeViewMover _viewMover;
         private VertexesVisualLinksCreator _visualLinksCreator;
         private PathSetter<VertexNode> _pathSetter;
         private PathFinder<VertexNode> _pathFinder;
@@ -36,8 +34,8 @@ namespace ThisProject.Starters
 
         [Inject]
         public void Construct(DictTypeStorage<VertexNode, int> nodes, DictTypeStorage<VertexView, int> views,
-            VertexesClickHandler clickHandler, VertexesDragHandler dragHandler, VertexesFieldGenerator generator,
-            NodeBlocker<VertexNode> nodeBlocker, ViewSelector<VertexView> viewSelector, ViewMover viewMover, 
+            VertexesClickHandler clickHandler, VertexesDragHandler dragHandler, VertexesFieldBuilder builder,
+            NodeBlocker<VertexNode> nodeBlocker, NodeViewSelector<VertexView> viewSelector, NodeViewMover viewMover, 
             VertexesVisualLinksCreator visualLinksCreator,
             PathSetter<VertexNode> pathSetter, PathFinder<VertexNode> pathFinder, LinePathDrawer pathDrawer)
         {
@@ -45,7 +43,7 @@ namespace ThisProject.Starters
             _views = views;
             _clickHandler = clickHandler;
             _dragHandler = dragHandler;
-            _generator = generator;
+            _builder = builder;
             _nodeBlocker = nodeBlocker;
             _viewSelector = viewSelector;
             _viewMover = viewMover;
@@ -77,7 +75,7 @@ namespace ThisProject.Starters
         protected override void InitDefaultStates()
         {
             //todo
-            _generator.TestPopulate(6);
+            _builder.TestPopulate(6);
         }
 
         protected override void UnsubscribeAll()

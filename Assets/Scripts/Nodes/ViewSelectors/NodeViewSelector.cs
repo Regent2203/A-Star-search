@@ -1,10 +1,9 @@
 ﻿using System;
-using ThisProject.Nodes;
 using UnityEngine;
 
-namespace ThisProject.Fields.ViewSelectors
+namespace ThisProject.Nodes.ViewSelectors
 {
-    public class ViewSelector<V> : IViewSelector<V>
+    public class NodeViewSelector<V> : INodeViewSelector<V>
         where V : MonoBehaviour, INodeView
     {
         private V _selectedView;

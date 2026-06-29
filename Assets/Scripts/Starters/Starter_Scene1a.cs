@@ -17,7 +17,7 @@ namespace ThisProject.Starters
         private GridTypeStorage<CellNode> _nodes;
         private GridTypeStorage<CellView> _views;
         private CellsClickHandler _clickHandler;
-        private CellsFieldGenerator _generator;
+        private CellsFieldBuilder _builder;
         private CellTypeChanger _cellTypeChanger;
         private PathSetter<CellNode> _pathSetter;
         private PathFinder<CellNode> _pathFinder;
@@ -30,7 +30,7 @@ namespace ThisProject.Starters
 
         [Inject]
         public void Construct(CellsConfig config, GridTypeStorage<CellNode> nodes, GridTypeStorage<CellView> views,
-            CellsClickHandler clickHandler, CellsFieldGenerator generator,
+            CellsClickHandler clickHandler, CellsFieldBuilder builder,
             CellTypeChanger cellTypeChanger,
             PathSetter<CellNode> pathSetter, PathFinder<CellNode> pathFinder, 
             CellsPathDrawer pathDrawer, CellsPainter painter,
@@ -40,7 +40,7 @@ namespace ThisProject.Starters
             _nodes = nodes;
             _views = views;
             _clickHandler = clickHandler;
-            _generator = generator;
+            _builder = builder;
             _cellTypeChanger = cellTypeChanger;
             _pathSetter = pathSetter;
             _pathFinder = pathFinder;
@@ -69,7 +69,7 @@ namespace ThisProject.Starters
             _painter.SetBrush(BrushType.Primary, _config.DefaultCellType);
             _painter.SetBrush(BrushType.Secondary, _config.DefaultCellType);
 
-            _generator.PopulateField(new Vector2Int(13, 11), _config.DefaultCellType);
+            _builder.PopulateField(new Vector2Int(13, 11), _config.DefaultCellType);
         }
 
         protected override void UnsubscribeAll()

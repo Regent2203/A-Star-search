@@ -45,7 +45,7 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<GridTypeStorage<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridTypeStorage<CellView>>().AsSingle();
             Container.BindInstance(_clickHandler).AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsFieldGenerator>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsFieldBuilder>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellNodeFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellTypeChanger>().AsSingle();
