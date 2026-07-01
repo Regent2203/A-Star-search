@@ -102,6 +102,13 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "eu.netherlands3d.filebrowser": {
+      "version": "https://github.com/Netherlands3D/FileBrowser.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "daa0e7398328041e35db9d0dce0009c8e3b32e0f"
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,
