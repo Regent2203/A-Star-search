@@ -2,24 +2,15 @@
 using System.Collections.Generic;
 using ThisProject.Fields.GridNeighbours;
 using UnityEngine;
-using Zenject;
 
 namespace ThisProject.ObjectsStorages
 {
     public class GridTypeStorage<T> : IObjectsStorage<T, Vector2Int>
     {
-        private IMemoryPool _pool;
         private T[,] _data;
 
         public event Action<Vector2Int> ItemAdded;
         public event Action<Vector2Int> ItemRemoved;
-
-        /*
-        [Inject]
-        public GridTypeStorage(IMemoryPool pool)
-        {
-            _pool = pool;
-        }*/
         
         public void Init(Vector2Int size)
         {
@@ -63,14 +54,6 @@ namespace ThisProject.ObjectsStorages
 
         public void ClearData()
         {
-            //todo pool
-            /*
-            foreach (var item in _data.Values)
-            {
-                _pool.Despawn(item); 
-            }
-            */
-
             _data = null;
         }
 

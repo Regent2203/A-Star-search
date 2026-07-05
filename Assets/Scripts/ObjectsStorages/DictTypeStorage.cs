@@ -1,23 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Zenject;
 
 namespace ThisProject.ObjectsStorages
 {
     public class DictTypeStorage<T, TId> : IObjectsStorage<T, TId>
     {
-        private IMemoryPool _pool;
         private Dictionary<TId, T> _data = new Dictionary<TId, T>();
 
         public event Action<TId> ItemAdded;
         public event Action<TId> ItemRemoved;
 
-        /*
-        [Inject]
-        public DictTypeStorage(IMemoryPool pool)
-        {
-            _pool = pool;
-        }*/
 
         public T GetItemById(TId id)
         {
@@ -49,14 +41,6 @@ namespace ThisProject.ObjectsStorages
 
         public void ClearData()
         {
-            //todo pool
-            /*
-            foreach (var item in _data.Values)
-            {
-                _pool.Despawn(item); 
-            }
-            */
-
             _data.Clear();
         }
     }

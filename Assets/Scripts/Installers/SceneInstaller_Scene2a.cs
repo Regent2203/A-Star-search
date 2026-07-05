@@ -1,6 +1,5 @@
 using ThisProject.Fields;
 using ThisProject.Heuristic.Functions;
-using ThisProject.Implementations.Cells;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Implementations.VisualLinks;
 using ThisProject.Inputs;
@@ -14,6 +13,8 @@ using ThisProject.ObjectsStorages;
 using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
 using ThisProject.PathSetters;
+using ThisProject.Savers;
+using ThisProject.Savers.FilePathProviders;
 using ThisProject.SearchAlgorithms;
 using ThisProject.Starters;
 using UnityEngine;
@@ -72,8 +73,10 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<PathSetter<VertexNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<VertexNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinePathDrawer>().AsSingle();
-            //Container.BindInterfacesAndSelfTo<UIHotkeyInfoPanel_Vertexes>().FromInstance(_hotkeyInfoPanel).AsSingle();
             Container.BindInterfacesAndSelfTo<LineRenderer>().FromInstance(_pathLineRenderer).AsSingle();
+            Container.BindInterfacesAndSelfTo<JsonSaver>().AsSingle();
+            Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
+            //Container.BindInterfacesAndSelfTo<UIHotkeyInfoPanel_Vertexes>().FromInstance(_hotkeyInfoPanel).AsSingle();
 
             Container.BindInterfacesAndSelfTo<Starter_Scene2a>().AsSingle();
         }
