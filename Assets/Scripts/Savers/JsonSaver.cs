@@ -1,71 +1,81 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using ThisProject.Fields;
+using System.Linq;
+using System.Threading.Tasks;
 using ThisProject.Implementations.Cells;
-using ThisProject.Nodes;
-using ThisProject.ObjectsStorages;
-using UnityEngine;
-using Newtonsoft.Json;
-using SFB;
-using ThisProject.Savers.FilePathProviders;
 using ThisProject.Implementations.Vertexes;
+using ThisProject.ObjectsStorages;
+using ThisProject.Savers.FilePathProviders;
+using ThisProject.Savers.Serializers;
+using UnityEngine;
 
 namespace ThisProject.Savers
 {
     public class JsonSaver : ISaver
     {
+        private readonly DictTypeStorage<VertexNode, int> _nodes; //todo iobj
         private readonly IFilePathProvider _filePathProvider;
-        private readonly DictTypeStorage<VertexNode, int> _nodes;
+        private readonly ITextSerializer _serializer;
 
 
-        public JsonSaver(DictTypeStorage<VertexNode, int> nodes, IFilePathProvider filePathProvider)
+        public JsonSaver(DictTypeStorage<VertexNode, int> nodes, IFilePathProvider filePathProvider, ITextSerializer serializer)
         {
             _nodes = nodes;
             _filePathProvider = filePathProvider;
-            //todo enumerator
+            _serializer = serializer;
         }
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            var path = _filePathProvider.GetSaveFilePath();
+            var path = _filePathProvider.GetSaveFilePath();            
+            if (string.IsNullOrEmpty(path)) 
+                return;
 
             try
             {
-                // Сериализуем словарь напрямую с помощью Newtonsoft.Json
-                string json = JsonConvert.SerializeObject(_nodes, Formatting.Indented); //todo nodes
-                
-                Debug.Log(_nodes.GetItemById(1).NodePosition);
+                var dtoList = _nodes.AllItems.Select(node => new NodeDataDTO<int>
+                {
+                    Id = node.Id,
+                    NodePosition = new Vector2DTO(node.NodePosition)
+                }).ToList();
 
-                // Записываем данные по выбранному пользователем пути
-                File.WriteAllText(path, json);
-                Debug.Log($"Карта успешно сохранена в файл: {path}");
+                var rootWrapper = new { Nodes = dtoList };
+                string rawData = _serializer.Serialize(rootWrapper);
+
+                await File.WriteAllTextAsync(path, rawData);
+                Debug.Log($"Data successfully saved to: {path}");
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                Debug.LogError($"Ошибка при сохранении файла: {e.Message}");
+                Debug.LogError($"Unexpected error while saving to json: {e.Message}");
+                throw;
             }
+
         }
 
         public void Load() //generic?
         {
-            var path = _filePathProvider.GetLoadFilePath();            
+            var path = _filePathProvider.GetLoadFilePath();
 
-            try
+            if (!string.IsNullOrEmpty(path))
             {
-                // Читаем весь текст из выбранного файла
-                string json = File.ReadAllText(path);
+                try
+                {
+                    string json = File.ReadAllText(path);
 
-                // Десериализуем обратно в словарь
-                Dictionary<Vector2Int, CellType> loadedGrid = JsonConvert.DeserializeObject<Dictionary<Vector2Int, CellType>>(json);
+                    // Десериализуем обратно в словарь
+                    Dictionary<Vector2Int, CellType> loadedGrid = JsonConvert.DeserializeObject<Dictionary<Vector2Int, CellType>>(json);
 
-                Debug.Log($"Карта успешно загружена из файла: {path}");
-                return;// loadedGrid;
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError($"Ошибка при чтении или парсинге файла: {e.Message}");
-                return;// null;
+                    Debug.Log($"Карта успешно загружена из файла: {path}");
+                    return;// loadedGrid;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"Ошибка при чтении или парсинге файла: {e.Message}");
+                    return;// null;
+                }
             }
         }
     }

@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace ThisProject.ObjectsStorages
 {
     public interface IObjectsStorage<T, TId>
     {
+        public IEnumerable<T> AllItems { get; }
+
         public T GetItemById(TId id);
         public bool TryAddItem(TId id, T item);
         public bool TryRemoveItem(TId id);

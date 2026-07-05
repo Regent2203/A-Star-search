@@ -8,5 +8,12 @@ namespace ThisProject.Fields
         protected Vector2 _scaleFactor = Vector2.one;
 
         public override Vector2 ScaleFactor => _scaleFactor;
+
+
+        public void SetSize(Vector2 size)
+        {
+            _spriteRenderer.size = size;
+            _collider.size = size;            
+        }
     }
 }

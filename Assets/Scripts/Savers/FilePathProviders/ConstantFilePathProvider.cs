@@ -1,15 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using System.IO;
 
 namespace ThisProject.Savers.FilePathProviders
 {
     public class ConstantFilePathProvider : IFilePathProvider
     {
-        private readonly string _filePath;
+        private readonly string _fileName;
 
 
         public ConstantFilePathProvider(string filePath)
         {
-            _filePath = filePath;
+            _fileName = filePath;
         }
 
         public string GetLoadFilePath()
@@ -24,7 +25,9 @@ namespace ThisProject.Savers.FilePathProviders
 
         private string GetFilePath()
         {
-            return Application.dataPath + _filePath; //todo
+            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            return Path.Combine(folderPath, _fileName);
         }
     }
 }

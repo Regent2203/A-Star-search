@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using ThisProject.Nodes;
 using ThisProject.ObjectsStorages;
@@ -37,15 +38,15 @@ public static class Extensions
     }
 
 
-    public static void NodesToViewsNonAlloc<T, V, TId>(this IObjectsStorage<V, TId> views, IList<T> nodesList, IList<V> viewsList)
+    public static void NodesToViewsNonAlloc<T, V, TId>(this IObjectsStorage<V, TId> views, IList<T> nodesList, IList<V> outViewsList)
         where T : class, INodeData<TId>
         where V : class, INodeView<TId>
     {
-        viewsList.Clear();
+        outViewsList.Clear();
 
         for (int i = 0; i < nodesList.Count; i++)
         {
-            viewsList.Add(views.GetItemById(nodesList[i].Id));
+            outViewsList.Add(views.GetItemById(nodesList[i].Id));
         }
     }
 }

@@ -31,11 +31,7 @@ namespace ThisProject.Fields
         public void SetSize(Vector2Int size)
         {
             _size = size;
-            UpdateColliderSize();
-        }
 
-        private void UpdateColliderSize()
-        {
             _collider.size = _grid.cellSize * new Vector2(_size.x, _size.y);
         }
 

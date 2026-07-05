@@ -164,13 +164,13 @@ namespace ThisProject.Starters
 
         private void OnViewDragging(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
         {
-            if (_viewMover.TryMoveView(view, pos))
+            if (_viewMover.TryMoveView(view, ref pos))
                 UpdateNodePosition(view, pos);
         }
 
         private void OnViewDragEnded(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
         {
-            if (_viewMover.TryMoveView(view, pos))
+            if (_viewMover.TryMoveView(view, ref pos))
                 UpdateNodePosition(view, pos);
         }
 

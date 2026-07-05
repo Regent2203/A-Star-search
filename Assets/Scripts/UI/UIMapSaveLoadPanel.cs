@@ -29,7 +29,7 @@ namespace ThisProject.UICommon
 
         private void Save()
         {
-            _saver.Save();
+            _saver.SaveAsync();
         }
 
         private void Load()

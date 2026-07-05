@@ -15,6 +15,7 @@ using ThisProject.PathFinders;
 using ThisProject.PathSetters;
 using ThisProject.Savers;
 using ThisProject.Savers.FilePathProviders;
+using ThisProject.Savers.Serializers;
 using ThisProject.SearchAlgorithms;
 using ThisProject.Starters;
 using UnityEngine;
@@ -56,7 +57,7 @@ namespace ThisProject.Installers
             Container.BindInstance(_dragHandler).AsSingle();            
             Container.BindInterfacesAndSelfTo<VertexesFieldBuilder>().AsSingle();
             Container.BindMemoryPool<VertexNode, VertexNodePool>().WithInitialSize(20);
-            Container.BindMemoryPool<VertexView, VertexViewPool>().WithInitialSize(20).FromComponentInNewPrefab(_vertexViewPrefab).UnderTransform(_field.Container);
+            Container.BindMemoryPool<VertexView, VertexViewPool>().WithInitialSize(20).FromComponentInNewPrefab(_vertexViewPrefab).UnderTransform(_field.NodesContainer);
             Container.BindInterfacesAndSelfTo<NodeBlocker<VertexNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeViewSelector<VertexView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeViewMover>().AsSingle();
@@ -75,8 +76,10 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<LinePathDrawer>().AsSingle();
             Container.BindInterfacesAndSelfTo<LineRenderer>().FromInstance(_pathLineRenderer).AsSingle();
             Container.BindInterfacesAndSelfTo<JsonSaver>().AsSingle();
-            Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
-            //Container.BindInterfacesAndSelfTo<UIHotkeyInfoPanel_Vertexes>().FromInstance(_hotkeyInfoPanel).AsSingle();
+            Container.BindInterfacesAndSelfTo<NewtonsoftJsonTextSerializer>().AsSingle();
+            //NodesContainer.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map.json");
+            //NodesContainer.BindInterfacesAndSelfTo<UIHotkeyInfoPanel_Vertexes>().FromInstance(_hotkeyInfoPanel).AsSingle();
 
             Container.BindInterfacesAndSelfTo<Starter_Scene2a>().AsSingle();
         }

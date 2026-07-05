@@ -48,7 +48,7 @@ namespace ThisProject.Installers
             Container.BindInstance(_clickHandler).AsSingle();
             Container.BindInterfacesAndSelfTo<CellsFieldBuilder>().AsSingle();
             Container.BindMemoryPool<CellNode, CellNodePool>().WithInitialSize(100);
-            Container.BindMemoryPool<CellView, CellViewPool>().WithInitialSize(100).FromComponentInNewPrefab(_cellViewPrefab).UnderTransform(_field.Container);
+            Container.BindMemoryPool<CellView, CellViewPool>().WithInitialSize(100).FromComponentInNewPrefab(_cellViewPrefab).UnderTransform(_field.NodesContainer);
             Container.BindInterfacesAndSelfTo<CellTypeChanger>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<CellNode>>().AsSingle();

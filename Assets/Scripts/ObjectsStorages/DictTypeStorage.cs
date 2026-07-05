@@ -5,7 +5,9 @@ namespace ThisProject.ObjectsStorages
 {
     public class DictTypeStorage<T, TId> : IObjectsStorage<T, TId>
     {
-        private Dictionary<TId, T> _data = new Dictionary<TId, T>();
+        private readonly Dictionary<TId, T> _data = new Dictionary<TId, T>();
+
+        public IEnumerable<T> AllItems => _data.Values;
 
         public event Action<TId> ItemAdded;
         public event Action<TId> ItemRemoved;
@@ -16,7 +18,7 @@ namespace ThisProject.ObjectsStorages
             if (_data.TryGetValue(id, out var item))
                 return item;
 
-            return default(T);
+            return default;
         }
 
         public bool TryAddItem(TId id, T item)

@@ -1,8 +1,10 @@
-﻿namespace ThisProject.Savers
+﻿using System.Threading.Tasks;
+
+namespace ThisProject.Savers
 {
     public interface ISaver
     {
-        public void Save();
+        public Task SaveAsync();
         public void Load();
     }
 }
