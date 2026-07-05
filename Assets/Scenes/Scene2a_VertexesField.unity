@@ -1139,6 +1139,7 @@ MonoBehaviour:
     type: 3}
   _visualLinksManager: {fileID: 1586002215}
   _pathLineRenderer: {fileID: 1307543501}
+  _saveLoadPanel: {fileID: 1634628135}
 --- !u!224 &1395924137 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4137025320744610401, guid: fc6c2c11c6bf4ca4b8bdaf70c6b74bf6,

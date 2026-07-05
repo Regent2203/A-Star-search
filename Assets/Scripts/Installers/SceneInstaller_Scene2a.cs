@@ -1,5 +1,6 @@
 using ThisProject.Fields;
 using ThisProject.Heuristic.Functions;
+using ThisProject.Implementations.Cells.UI;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Implementations.VisualLinks;
 using ThisProject.Inputs;
@@ -13,11 +14,12 @@ using ThisProject.ObjectsStorages;
 using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
 using ThisProject.PathSetters;
-using ThisProject.Savers;
-using ThisProject.Savers.FilePathProviders;
-using ThisProject.Savers.Serializers;
+using ThisProject.SaveSystem;
+using ThisProject.SaveSystem.FilePathProviders;
+using ThisProject.SaveSystem.Serializers;
 using ThisProject.SearchAlgorithms;
 using ThisProject.Starters;
+using ThisProject.UICommon;
 using UnityEngine;
 using Zenject;
 
@@ -43,6 +45,9 @@ namespace ThisProject.Installers
         private VertexesVisualLinksCreator _visualLinksManager;
         [SerializeField]
         private LineRenderer _pathLineRenderer;
+        [SerializeField]
+        private UISaveLoadPanel _saveLoadPanel;
+
 
         public override void InstallBindings()
         {
@@ -75,11 +80,14 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<PathFinder<VertexNode>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinePathDrawer>().AsSingle();
             Container.BindInterfacesAndSelfTo<LineRenderer>().FromInstance(_pathLineRenderer).AsSingle();
-            Container.BindInterfacesAndSelfTo<JsonSaver>().AsSingle();
+            Container.BindInterfacesAndSelfTo<TextSaver<VertexNode, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<TextLoader<FieldSaveDTO<int>>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NewtonsoftJsonTextSerializer>().AsSingle();
-            //NodesContainer.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
+            //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map.json");
-            //NodesContainer.BindInterfacesAndSelfTo<UIHotkeyInfoPanel_Vertexes>().FromInstance(_hotkeyInfoPanel).AsSingle();
+
+            //Container.BindInterfacesAndSelfTo<UIHotkeyInfoPanel_Vertexes>().FromInstance(_hotkeyInfoPanel).AsSingle();
+            Container.BindInterfacesAndSelfTo<UISaveLoadPanel>().FromInstance(_saveLoadPanel).AsSingle();
 
             Container.BindInterfacesAndSelfTo<Starter_Scene2a>().AsSingle();
         }

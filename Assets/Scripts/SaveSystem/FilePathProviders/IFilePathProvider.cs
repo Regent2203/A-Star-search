@@ -1,4 +1,4 @@
-﻿namespace ThisProject.Savers.FilePathProviders
+﻿namespace ThisProject.SaveSystem.FilePathProviders
 {
     public interface IFilePathProvider
     {

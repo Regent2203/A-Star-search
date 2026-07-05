@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ThisProject.Savers
+namespace ThisProject.SaveSystem
 {
     [Serializable]
     public struct Vector2DTO
@@ -20,15 +20,16 @@ namespace ThisProject.Savers
     }
 
     [Serializable]
-    public struct NodeDataDTO<TId>
+    public struct NodeDataDTO<TId> //todo rewrite
     {
         public TId Id;
         public Vector2DTO NodePosition;
     }
 
     [Serializable]
-    public class NodesRootWrapper<T>
+    public struct FieldSaveDTO<TId>
     {
-        public List<NodeDataDTO<T>> Nodes { get; set; }
+        public List<NodeDataDTO<TId>> Nodes { get; set; }
+        //public List<NodeDataDTO<TId>> Links { get; set; } //todo
     }
 }

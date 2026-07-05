@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.ObjectsStorages;
-using ThisProject.Savers.FilePathProviders;
-using ThisProject.Savers.Serializers;
+using ThisProject.SaveSystem.FilePathProviders;
+using ThisProject.SaveSystem.Serializers;
 using UnityEngine;
 
-namespace ThisProject.Savers
+namespace ThisProject.SaveSystem
 {
     public class BinarySaver : ISaver
     {
@@ -39,7 +39,7 @@ namespace ThisProject.Savers
                 }).ToList();
 
                 // 2. Упаковываем в объект-обертку, чтобы сохранить структуру с именем "Nodes"
-                var rootWrapper = new NodesRootWrapper<int> { Nodes = dtoList };
+                var rootWrapper = new FieldSaveDTO<int> { Nodes = dtoList };
 
                 // 3. Делегируем быструю бинарную сериализацию в byte[]
                 byte[] rawDataBytes = _serializer.Serialize(rootWrapper);
@@ -60,9 +60,10 @@ namespace ThisProject.Savers
             }
         }
 
-        public void Load()
+        public Task LoadAsync()
         {
             //todo
+            return Task.CompletedTask;            
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ThisProject.Savers.Serializers
+namespace ThisProject.SaveSystem.Serializers
 {
     public class UnityJsonTextSerializer : ITextSerializer
     {

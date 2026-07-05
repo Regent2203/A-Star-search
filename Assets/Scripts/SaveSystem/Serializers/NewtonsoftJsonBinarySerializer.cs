@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace ThisProject.Savers.Serializers
+namespace ThisProject.SaveSystem.Serializers
 {
     public class NewtonsoftJsonBinarySerializer
     {

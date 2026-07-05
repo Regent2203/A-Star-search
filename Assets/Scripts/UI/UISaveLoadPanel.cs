@@ -1,25 +1,19 @@
-﻿using ThisProject.Savers;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace ThisProject.UICommon
 {
-    public class UIMapSaveLoadPanel : MonoBehaviour
+    public class UISaveLoadPanel : MonoBehaviour
     {
         [SerializeField]
         private Button _btnSave;
         [SerializeField]
         private Button _btnLoad;
 
-        private ISaver _saver;
+        public event Action SaveBtnClicked;
+        public event Action LoadBtnClicked;
 
-
-        [Inject]
-        public void Construct(ISaver saver)
-        {
-            _saver = saver;
-        }
 
         private void Start()
         {
@@ -29,12 +23,12 @@ namespace ThisProject.UICommon
 
         private void Save()
         {
-            _saver.SaveAsync();
+            SaveBtnClicked?.Invoke();
         }
 
         private void Load()
         {
-            _saver.Load();
+            LoadBtnClicked?.Invoke();
         }
     }
 }

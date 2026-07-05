@@ -1,5 +1,6 @@
 ﻿using ThisProject.Fields;
 using ThisProject.ObjectsStorages;
+using ThisProject.SaveSystem;
 using UnityEngine;
 
 namespace ThisProject.Implementations.Vertexes
@@ -28,11 +29,33 @@ namespace ThisProject.Implementations.Vertexes
         //temp
         public void TestPopulate(int count)
         {
+            return;
+
             for (int i = 0; i < count; i++)
             {
                 var id = _newId++;
 
                 var pos = new Vector3(UnityEngine.Random.value * 40 - 20, UnityEngine.Random.value * 40 - 20, 0);
+
+                var node = _nodesPool.Spawn(id, pos);
+                var view = _viewsPool.Spawn(id, _field.ScaleFactor);
+                view.Move(pos);
+
+                _nodes.TryAddItem(id, node);
+                _views.TryAddItem(id, view);
+            }
+        }
+
+        public void BuildFromDto(FieldSaveDTO<int> data)
+        {
+            //todo field clear
+
+            foreach (var item in data.Nodes)
+            {
+                var id = item.Id;
+
+                var pos = item.NodePosition.ToVector2();
+
                 var node = _nodesPool.Spawn(id, pos);
                 var view = _viewsPool.Spawn(id, _field.ScaleFactor);
                 view.Move(pos);

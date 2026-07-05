@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using UnityEngine;
 
-namespace ThisProject.Savers.Serializers
+namespace ThisProject.SaveSystem.Serializers
 {
     public class UnityJsonBinarySerializer : IBinarySerializer
     {

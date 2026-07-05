@@ -1,0 +1,58 @@
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using ThisProject.SaveSystem.FilePathProviders;
+using ThisProject.SaveSystem.Serializers;
+using UnityEngine;
+
+namespace ThisProject.SaveSystem
+{
+    public class TextLoader<T> : ILoader<T>
+    {
+        private readonly IFilePathProvider _filePathProvider;
+        private readonly ITextSerializer _serializer;
+
+        public TextLoader(IFilePathProvider filePathProvider, ITextSerializer serializer)
+        {
+            _filePathProvider = filePathProvider;
+            _serializer = serializer;
+        }
+
+        public async Task<T> LoadAsync()
+        {
+            var path = _filePathProvider.GetLoadFilePath();
+
+            if (string.IsNullOrEmpty(path) || !File.Exists(path))
+            {
+                Debug.LogError($"File does not exist at path: {path}");
+                return default;
+            }
+
+            try
+            {
+                string textData = await File.ReadAllTextAsync(path);
+
+                var mainDto = _serializer.Deserialize<T>(textData);
+
+                if (mainDto == null)
+                {
+                    Debug.LogError($"Deserialization error: file is corrupt at {path}");
+                    return default;
+                }
+
+                Debug.Log($"Data successfully loaded from: {path}");
+                return mainDto;
+            }
+            catch (IOException ioEx)
+            {
+                Debug.LogError($"Disk I/O error while saving: {ioEx.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Unexpected error while saving: {ex.Message}");
+                throw;
+            }
+        }
+    }
+}

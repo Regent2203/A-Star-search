@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Inputs;
 using ThisProject.Nodes;
@@ -9,6 +11,8 @@ using ThisProject.ObjectsStorages;
 using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
 using ThisProject.PathSetters;
+using ThisProject.SaveSystem;
+using ThisProject.UICommon;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -29,7 +33,10 @@ namespace ThisProject.Starters
         private PathSetter<VertexNode> _pathSetter;
         private PathFinder<VertexNode> _pathFinder;
         private LinePathDrawer _pathDrawer;
+        private ISaver _saver;
+        private ILoader<FieldSaveDTO<int>> _loader;
         //private UIVertexesHotkeyInfoPanel _hotkeyInfoPanel;
+        private UISaveLoadPanel _saveLoadPanel;
 
 
         [Inject]
@@ -37,7 +44,9 @@ namespace ThisProject.Starters
             VertexesClickHandler clickHandler, VertexesDragHandler dragHandler, VertexesFieldBuilder builder,
             NodeBlocker<VertexNode> nodeBlocker, NodeViewSelector<VertexView> viewSelector, NodeViewMover viewMover, 
             VertexesVisualLinksCreator visualLinksCreator,
-            PathSetter<VertexNode> pathSetter, PathFinder<VertexNode> pathFinder, LinePathDrawer pathDrawer)
+            PathSetter<VertexNode> pathSetter, PathFinder<VertexNode> pathFinder, LinePathDrawer pathDrawer,
+            ISaver saver, ILoader<FieldSaveDTO<int>> loader,
+            UISaveLoadPanel saveLoadPanel)
         {
             _nodes = nodes;
             _views = views;
@@ -53,6 +62,11 @@ namespace ThisProject.Starters
             _pathSetter = pathSetter;
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
+
+            _saver = saver;
+            _loader = loader;
+
+            _saveLoadPanel = saveLoadPanel;
         }
 
         protected override void SubscribeAll()
@@ -70,6 +84,9 @@ namespace ThisProject.Starters
             _pathSetter.StartNodeChanged += OnStartNodeChanged;
             _pathSetter.FinishNodeChanged += OnFinishNodeChanged;
             _pathSetter.AnyNodeChanged += OnPathChanged;
+
+            _saveLoadPanel.SaveBtnClicked += OnSaveBtnClicked;
+            _saveLoadPanel.LoadBtnClicked += OnLoadBtnClicked;
         }
 
         protected override void InitDefaultStates()
@@ -93,6 +110,9 @@ namespace ThisProject.Starters
             _pathSetter.StartNodeChanged -= OnStartNodeChanged;
             _pathSetter.FinishNodeChanged -= OnFinishNodeChanged;
             _pathSetter.AnyNodeChanged -= OnPathChanged;
+
+            _saveLoadPanel.SaveBtnClicked -= OnSaveBtnClicked;
+            _saveLoadPanel.LoadBtnClicked -= OnLoadBtnClicked;
         }
 
         private void UpdateNodePosition(VertexView view, Vector2 pos)
@@ -228,6 +248,55 @@ namespace ThisProject.Starters
                     _pathDrawer.SetPath(_viewsPath);
                     _pathDrawer.ShowPath(true);
                 }
+            }
+        }
+
+        private Task _saveloadTask;
+
+        private async void OnSaveBtnClicked()
+        {
+            if (_saveloadTask != null && !_saveloadTask.IsCompleted)
+            {
+                return;
+            }
+
+            try
+            {
+                _saveloadTask = _saver.SaveAsync();
+                await _saveloadTask;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                _saveloadTask = null;
+            }
+        }
+
+        private async void OnLoadBtnClicked()
+        {
+            if (_saveloadTask != null && !_saveloadTask.IsCompleted)
+            {
+                return;
+            }
+
+            try
+            {
+                var loadTask = _loader.LoadAsync();
+                _saveloadTask = loadTask;
+
+                var dto = await loadTask;
+                _builder.BuildFromDto(dto);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                _saveloadTask = null;
             }
         }
     }

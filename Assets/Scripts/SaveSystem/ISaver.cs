@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
 
-namespace ThisProject.Savers
+namespace ThisProject.SaveSystem
 {
     public interface ISaver
     {
         public Task SaveAsync();
-        public void Load();
     }
 }

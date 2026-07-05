@@ -1,7 +1,7 @@
 ﻿using SFB;
 using System;
 
-namespace ThisProject.Savers.FilePathProviders
+namespace ThisProject.SaveSystem.FilePathProviders
 {
     public class DialogueFilePathProvider : IFilePathProvider
     {
