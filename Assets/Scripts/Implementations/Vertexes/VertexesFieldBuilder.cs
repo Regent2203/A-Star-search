@@ -41,14 +41,15 @@ namespace ThisProject.Implementations.Vertexes
                 var view = _viewsPool.Spawn(id, _field.ScaleFactor);
                 view.Move(pos);
 
-                _nodes.TryAddItem(id, node);
-                _views.TryAddItem(id, view);
+                _nodes.AddItem(id, node);
+                _views.AddItem(id, view);
             }
         }
 
         public void BuildFromDto(FieldSaveDTO<int> data)
         {
             //todo field clear
+            //vertexNodePool.Despawn(node);
 
             foreach (var item in data.Nodes)
             {
@@ -60,8 +61,8 @@ namespace ThisProject.Implementations.Vertexes
                 var view = _viewsPool.Spawn(id, _field.ScaleFactor);
                 view.Move(pos);
 
-                _nodes.TryAddItem(id, node);
-                _views.TryAddItem(id, view);
+                _nodes.AddItem(id, node);
+                _views.AddItem(id, view);
             }
         }
 

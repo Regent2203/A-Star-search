@@ -13,32 +13,32 @@ namespace ThisProject.ObjectsStorages
         public event Action<TId> ItemRemoved;
 
 
-        public T GetItemById(TId id)
+        public T GetItem(TId id)
         {
             if (_data.TryGetValue(id, out var item))
                 return item;
 
-            return default;
+            throw new KeyNotFoundException($"Cannot get item with id {id}. Item with this id does not exist.");
         }
 
-        public bool TryAddItem(TId id, T item)
+        public void AddItem(TId id, T item)
         {
-            if (_data.TryAdd(id, item))
+            if (!_data.TryAdd(id, item))
             {
-                ItemAdded?.Invoke(id);
-                return true;
+                throw new ArgumentException($"Cannot add item with id {id}. Item with this id already exists.");
             }
-            return false;
+
+            ItemAdded?.Invoke(id);
         }
 
-        public bool TryRemoveItem(TId id)
+        public void RemoveItem(TId id)
         {
-            if (_data.Remove(id))
+            if (!_data.Remove(id))
             {
-                ItemRemoved?.Invoke(id);
-                return true;
+                throw new KeyNotFoundException($"Cannot remove item with id {id}. Item with this id does not exist.");
             }
-            return false;
+
+            ItemRemoved?.Invoke(id);
         }
 
         public void ClearData()

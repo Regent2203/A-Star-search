@@ -89,13 +89,13 @@ namespace ThisProject.Starters
 
         private void UpdateViewSprite(CellNode node, CellType cellType)
         {
-            var view = _views.GetItemById(node.Id);
+            var view = _views.GetItem(node.Id);
             view.UpdateSprite(cellType.Sprite);
         }
 
         private void OnViewClicked(CellView view, PointerEventData.InputButton button, InputSnapshot input)
         {
-            var node = _nodes.GetItemById(view.Id);
+            var node = _nodes.GetItem(view.Id);
 
             if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
             {
@@ -137,13 +137,13 @@ namespace ThisProject.Starters
 
         private void OnStartNodeChanged(CellNode node, bool b)
         {
-            var view = _views.GetItemById(node.Id);
+            var view = _views.GetItem(node.Id);
             view?.ShowStartMarker(b);
         }
 
         private void OnFinishNodeChanged(CellNode node, bool b)
         {
-            var view = _views.GetItemById(node.Id);
+            var view = _views.GetItem(node.Id);
             view?.ShowFinishMarker(b);
         }
 

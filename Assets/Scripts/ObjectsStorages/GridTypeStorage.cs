@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ThisProject.Fields.GridNeighbours;
+using ThisProject.GridNeighbours;
 using UnityEngine;
 
 namespace ThisProject.ObjectsStorages
@@ -11,7 +11,7 @@ namespace ThisProject.ObjectsStorages
         private T[,] _data;
         private Vector2Int _size;
 
-        public IEnumerable<T> AllItems => _data.Cast<T>();
+        public IEnumerable<T> AllItems => _data != null ? _data.Cast<T>() : Enumerable.Empty<T>();
 
         public event Action<Vector2Int> ItemAdded;
         public event Action<Vector2Int> ItemRemoved;
@@ -19,38 +19,49 @@ namespace ThisProject.ObjectsStorages
 
         public void Init(Vector2Int size)
         {
+            if (size.x <= 0 || size.y <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(size), $"Incorrect size argument for grid: {size}");
+            }
+
             _size = size;
             _data = new T[size.x, size.y];
         }
         
-        public T GetItemById(Vector2Int id)
+        public T GetItem(Vector2Int id)
         {
-            if (_data.IsIndexWithinBounds(id.x, id.y))
-                return _data[id.x, id.y];
+            ValidateStorageInitialized();
+            ValidateBounds(id);
 
-            return default;
+            return _data[id.x, id.y];
         }
 
-        public bool TryAddItem(Vector2Int id, T item)
+        public void AddItem(Vector2Int id, T item)
         {
-            if (_data.IsIndexWithinBounds(id.x, id.y) && _data[id.x, id.y] == null)
+            ValidateStorageInitialized();
+            ValidateBounds(id);
+
+            if (!EqualityComparer<T>.Default.Equals(_data[id.x, id.y], default))
             {
-                _data[id.x, id.y] = item;
-                ItemAdded?.Invoke(id);
-                return true;
+                throw new InvalidOperationException($"Cannot add item with id {id}. Item with this id already exists.");
             }
-            return false;
+
+            _data[id.x, id.y] = item;
+            ItemAdded?.Invoke(id);
         }
 
-        public bool TryRemoveItem(Vector2Int id)
+        public void RemoveItem(Vector2Int id)
         {
-            if (_data.IsIndexWithinBounds(id.x, id.y) && _data[id.x, id.y] != null)
+            ValidateStorageInitialized();
+            ValidateBounds(id);
+
+            if (EqualityComparer<T>.Default.Equals(_data[id.x, id.y], default))
             {
-                _data[id.x, id.y] = default;
-                ItemRemoved?.Invoke(id);
-                return true;
+                throw new InvalidOperationException($"Cannot remove item with id {id}. Item with this id does not exist.");
             }
-            return false;
+
+            _data[id.x, id.y] = default;
+            ItemRemoved?.Invoke(id);
         }
 
         public void ClearData()
@@ -59,6 +70,22 @@ namespace ThisProject.ObjectsStorages
                 return;
 
             Array.Clear(_data, 0, _data.Length);
+        }
+
+        private void ValidateStorageInitialized()
+        {
+            if (_data == null)
+            {
+                throw new InvalidOperationException($"Grid storage is not initialized. You must call Init() first.");
+            }
+        }
+
+        private void ValidateBounds(Vector2Int id)
+        {
+            if (id.x < 0 || id.x >= _size.x || id.y < 0 || id.y >= _size.y)
+            {
+                throw new IndexOutOfRangeException($"Id {id} is out of grid bounds. Grid size is {_size}.");
+            }
         }
 
         public IReadOnlyList<T> GetNeighbourObjects(Vector2Int index, IGridNeighboursProvider<T> neighboursProvider)

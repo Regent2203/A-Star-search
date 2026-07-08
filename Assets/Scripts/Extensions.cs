@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ThisProject.Nodes;
 using ThisProject.ObjectsStorages;
 using UnityEngine;
 
 public static class Extensions
 {
-    public static bool IsIndexWithinBounds(this Array grid, int i, int j)
+    public static bool IsIndexWithinBounds<T>(this T[,] grid, int i, int j)
     {
         return i >= 0 && i < grid.GetLength(0) && j >= 0 && j < grid.GetLength(1);
     }
@@ -46,7 +44,7 @@ public static class Extensions
 
         for (int i = 0; i < nodesList.Count; i++)
         {
-            outViewsList.Add(views.GetItemById(nodesList[i].Id));
+            outViewsList.Add(views.GetItem(nodesList[i].Id));
         }
     }
 }

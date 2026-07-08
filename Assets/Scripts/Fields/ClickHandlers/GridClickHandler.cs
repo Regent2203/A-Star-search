@@ -31,7 +31,7 @@ namespace ThisProject.Fields.ClickHandlers
         {
             var index = _field.PositionToIndex(eventData.pointerCurrentRaycast.worldPosition);
 
-            var view = _views.GetItemById(index);
+            var view = _views.GetItem(index);
             if (view != null)
             {
                 NodeViewClicked?.Invoke(view, eventData.button, _inputService.CreateSnapshot());

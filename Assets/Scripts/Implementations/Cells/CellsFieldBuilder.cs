@@ -47,8 +47,8 @@ namespace ThisProject.Implementations.Cells
                     view.Move(viewPos);
 
 
-                    _nodes.TryAddItem(index, node);
-                    _views.TryAddItem(index, view);
+                    _nodes.AddItem(index, node);
+                    _views.AddItem(index, view);
                 }
             }
         }

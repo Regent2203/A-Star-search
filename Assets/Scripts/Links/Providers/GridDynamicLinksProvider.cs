@@ -1,8 +1,8 @@
-using ThisProject.Fields.GridNeighbours;
+using System.Collections.Generic;
+using ThisProject.GridNeighbours;
 using ThisProject.Links.Factories;
 using ThisProject.Nodes;
 using ThisProject.ObjectsStorages;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ThisProject.Links.Providers

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace ThisProject.Fields.GridNeighbours
+namespace ThisProject.GridNeighbours
 {
     public abstract class GridNeighboursProviderBase<T> : IGridNeighboursProvider<T>
     {

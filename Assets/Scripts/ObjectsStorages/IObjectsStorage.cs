@@ -7,9 +7,9 @@ namespace ThisProject.ObjectsStorages
     {
         public IEnumerable<T> AllItems { get; }
 
-        public T GetItemById(TId id);
-        public bool TryAddItem(TId id, T item);
-        public bool TryRemoveItem(TId id);
+        public T GetItem(TId id);
+        public void AddItem(TId id, T item);
+        public void RemoveItem(TId id);
         public void ClearData();
 
         public event Action<TId> ItemAdded;

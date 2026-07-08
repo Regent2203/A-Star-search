@@ -1,5 +1,5 @@
 using ThisProject.Fields;
-using ThisProject.Fields.GridNeighbours;
+using ThisProject.GridNeighbours;
 using ThisProject.Heuristic.Functions;
 using ThisProject.Implementations.Cells;
 using ThisProject.Implementations.Cells.UI;
