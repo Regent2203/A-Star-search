@@ -21,8 +21,8 @@ namespace ThisProject.Starters
 {
     public class Starter_Scene2a : StarterBase
     {
-        private DictTypeStorage<VertexData, int> _nodes;
-        private DictTypeStorage<VertexView, int> _views;
+        private VertexDataStorage _nodes;
+        private VertexViewStorage _views;
         private VertexesClickHandler _clickHandler;
         private VertexesDragHandler _dragHandler;
         private VertexesFieldBuilder _builder;
@@ -40,7 +40,7 @@ namespace ThisProject.Starters
 
 
         [Inject]
-        public void Construct(DictTypeStorage<VertexData, int> nodes, DictTypeStorage<VertexView, int> views,
+        public void Construct(VertexDataStorage nodes, VertexViewStorage views,
             VertexesClickHandler clickHandler, VertexesDragHandler dragHandler, VertexesFieldBuilder builder,
             NodeBlocker<VertexData> nodeBlocker, NodeViewSelector<VertexView> viewSelector, NodeViewMover viewMover, 
             VertexesVisualLinksCreator visualLinksCreator,

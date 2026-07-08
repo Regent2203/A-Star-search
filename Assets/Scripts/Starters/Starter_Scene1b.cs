@@ -15,8 +15,8 @@ namespace ThisProject.Starters
     public class Starter_Scene1b : StarterBase
     {
         private CellsConfig _config;
-        private GridTypeStorage<CellData> _nodes;
-        private GridTypeStorage<CellView> _views;
+        private CellDataStorage _nodes;
+        private CellViewStorage _views;
         private CellsClickHandler _clickHandler;
         private CellsFieldBuilder _builder;
         private CellTypeChanger _cellTypeChanger;
@@ -30,7 +30,7 @@ namespace ThisProject.Starters
 
 
         [Inject]
-        public void Construct(CellsConfig config, GridTypeStorage<CellData> nodes, GridTypeStorage<CellView> views,
+        public void Construct(CellsConfig config, CellDataStorage nodes, CellViewStorage views,
             CellsClickHandler clickHandler, CellsFieldBuilder builder,
             CellTypeChanger cellTypeChanger,
             PathSetter<CellData> pathSetter, PathFinder<CellData> pathFinder, 

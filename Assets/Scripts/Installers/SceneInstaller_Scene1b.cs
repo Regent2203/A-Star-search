@@ -3,6 +3,7 @@ using ThisProject.GridNeighbours;
 using ThisProject.Heuristic.Functions;
 using ThisProject.Implementations.Cells;
 using ThisProject.Implementations.Cells.UI;
+using ThisProject.Implementations.Vertexes;
 using ThisProject.Inputs;
 using ThisProject.Links.Factories;
 using ThisProject.Links.Factories.CostProviders;
@@ -43,12 +44,13 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellView>().FromInstance(_cellViewPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<GridField>().FromInstance(_field).AsSingle();
-            Container.BindInterfacesAndSelfTo<GridTypeStorage<CellData>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<GridTypeStorage<CellView>>().AsSingle();
+            Container.Bind(typeof(CellDataStorage), typeof(GridTypeStorage<CellData>), typeof(IObjectsStorage<CellData, Vector2Int>)).To<CellDataStorage>().AsSingle();
+            Container.Bind(typeof(CellViewStorage), typeof(GridTypeStorage<CellView>), typeof(IObjectsStorage<CellView, Vector2Int>)).To<CellViewStorage>().AsSingle();
             Container.BindInstance(_clickHandler).AsSingle();
             Container.BindInterfacesAndSelfTo<CellsFieldBuilder>().AsSingle();
             Container.BindMemoryPool<CellData, CellDataPool>().WithInitialSize(100);
-            Container.BindMemoryPool<CellView, CellViewPool>().WithInitialSize(100).FromComponentInNewPrefab(_cellViewPrefab).UnderTransform(_field.NodesContainer);
+            Container.BindMemoryPool<CellView, CellViewPool>().WithInitialSize(100).
+                FromComponentInNewPrefab(_cellViewPrefab).UnderTransform(_field.NodesContainer);
             Container.BindInterfacesAndSelfTo<CellTypeChanger>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<CellData>>().AsSingle();

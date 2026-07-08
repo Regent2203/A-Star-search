@@ -1,5 +1,6 @@
 using ThisProject.Fields;
 using ThisProject.Heuristic.Functions;
+using ThisProject.Implementations.Cells;
 using ThisProject.Implementations.Cells.UI;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Implementations.VisualLinks;
@@ -56,13 +57,14 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexView>().FromInstance(_vertexViewPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<SpatialField>().FromInstance(_field).AsSingle();
-            Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexData, int>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexView, int>>().AsSingle();
+            Container.Bind(typeof(VertexDataStorage), typeof(DictTypeStorage<VertexData, int>), typeof(IObjectsStorage<VertexData, int>)).To<VertexDataStorage>().AsSingle();
+            Container.Bind(typeof(VertexViewStorage), typeof(DictTypeStorage<VertexView, int>), typeof(IObjectsStorage<VertexView, int>)).To<VertexViewStorage>().AsSingle();
             Container.BindInstance(_clickHandler).AsSingle();
             Container.BindInstance(_dragHandler).AsSingle();            
             Container.BindInterfacesAndSelfTo<VertexesFieldBuilder>().AsSingle();
             Container.BindMemoryPool<VertexData, VertexDataPool>().WithInitialSize(20);
-            Container.BindMemoryPool<VertexView, VertexViewPool>().WithInitialSize(20).FromComponentInNewPrefab(_vertexViewPrefab).UnderTransform(_field.NodesContainer);
+            Container.BindMemoryPool<VertexView, VertexViewPool>().WithInitialSize(20).
+                FromComponentInNewPrefab(_vertexViewPrefab).UnderTransform(_field.NodesContainer);
             Container.BindInterfacesAndSelfTo<NodeBlocker<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeViewSelector<VertexView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeViewMover>().AsSingle();
