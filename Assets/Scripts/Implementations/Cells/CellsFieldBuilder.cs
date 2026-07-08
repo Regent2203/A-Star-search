@@ -7,14 +7,14 @@ namespace ThisProject.Implementations.Cells
     public class CellsFieldBuilder
     {
         private readonly GridField _field;
-        private readonly GridTypeStorage<CellNode> _nodes;
+        private readonly GridTypeStorage<CellData> _nodes;
         private readonly GridTypeStorage<CellView> _views;        
-        private readonly CellNodePool _nodesPool;
+        private readonly CellDataPool _nodesPool;
         private readonly CellViewPool _viewsPool;
 
 
-        public CellsFieldBuilder(GridField field, GridTypeStorage<CellNode> nodes, GridTypeStorage<CellView> views,
-            CellNodePool nodesPool, CellViewPool viewsPool)
+        public CellsFieldBuilder(GridField field, GridTypeStorage<CellData> nodes, GridTypeStorage<CellView> views,
+            CellDataPool nodesPool, CellViewPool viewsPool)
         {
             _field = field;
             _nodes = nodes;

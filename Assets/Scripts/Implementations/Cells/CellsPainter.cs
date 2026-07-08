@@ -29,7 +29,7 @@ namespace ThisProject.Implementations.Cells
             BrushChanged?.Invoke(brush, cellType);
         }
 
-        public void PaintCell(CellNode node, BrushType brush)
+        public void PaintCell(CellData node, BrushType brush)
         {
             if (_brushes.TryGetValue(brush, out CellType cellType))
             {

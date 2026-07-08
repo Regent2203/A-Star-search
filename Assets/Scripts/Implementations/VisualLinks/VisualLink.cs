@@ -6,7 +6,7 @@ namespace ThisProject.Implementations.VisualLinks
 {
     public enum PlacementType { Center, Left, Right }
 
-    public class VisualLink : VisualLink<VertexNode>
+    public class VisualLink : VisualLink<VertexData>
     {
     }
 

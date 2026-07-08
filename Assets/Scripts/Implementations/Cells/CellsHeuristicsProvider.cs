@@ -3,7 +3,7 @@ using ThisProject.Heuristic.Functions;
 
 namespace ThisProject.Implementations.Cells
 {
-    public class CellsHeuristicsProvider : HeuristicsProvider<CellNode>
+    public class CellsHeuristicsProvider : HeuristicsProvider<CellData>
     {
         public CellsHeuristicsProvider(CellsConfig cellsConfig, IHeuristicFunction heuristicFunction)
             : base(heuristicFunction, cellsConfig.GetMinimumCellTypeWeight()) { }

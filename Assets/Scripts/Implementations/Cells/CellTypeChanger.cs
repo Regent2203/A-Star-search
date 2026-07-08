@@ -4,10 +4,10 @@ namespace ThisProject.Implementations.Cells
 {
     public class CellTypeChanger : ICellTypeChanger
     {
-        public event Action<CellNode, CellType> CellTypeChanged;
+        public event Action<CellData, CellType> CellTypeChanged;
 
 
-        public bool TryChangeCellType(CellNode node, CellType cellType)
+        public bool TryChangeCellType(CellData node, CellType cellType)
         {
             if (node == null || cellType == null)
                 return false;

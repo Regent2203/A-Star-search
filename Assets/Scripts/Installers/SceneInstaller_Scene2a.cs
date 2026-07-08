@@ -40,7 +40,7 @@ namespace ThisProject.Installers
         [SerializeField]
         private VertexesDragHandler _dragHandler;
         [SerializeField]
-        private VisualLink<VertexNode> _visualLinkPrefab;
+        private VisualLink<VertexData> _visualLinkPrefab;
         [SerializeField]
         private VertexesVisualLinksCreator _visualLinksManager;
         [SerializeField]
@@ -56,31 +56,31 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexView>().FromInstance(_vertexViewPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<SpatialField>().FromInstance(_field).AsSingle();
-            Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexNode, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexData, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<DictTypeStorage<VertexView, int>>().AsSingle();
             Container.BindInstance(_clickHandler).AsSingle();
             Container.BindInstance(_dragHandler).AsSingle();            
             Container.BindInterfacesAndSelfTo<VertexesFieldBuilder>().AsSingle();
-            Container.BindMemoryPool<VertexNode, VertexNodePool>().WithInitialSize(20);
+            Container.BindMemoryPool<VertexData, VertexDataPool>().WithInitialSize(20);
             Container.BindMemoryPool<VertexView, VertexViewPool>().WithInitialSize(20).FromComponentInNewPrefab(_vertexViewPrefab).UnderTransform(_field.NodesContainer);
-            Container.BindInterfacesAndSelfTo<NodeBlocker<VertexNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<NodeBlocker<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeViewSelector<VertexView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeViewMover>().AsSingle();
             Container.BindInstance(_visualLinkPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesVisualLinksCreator>().FromInstance(_visualLinksManager).AsSingle();
-            Container.BindInterfacesAndSelfTo<VisualLinksFactory<VertexNode>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<VisualLinksPool<VertexNode>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<StoredLinksProvider<VertexNode>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LinksFactory<VertexNode>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<VertexNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VisualLinksFactory<VertexData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VisualLinksPool<VertexData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<StoredLinksProvider<VertexData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinksFactory<VertexData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesHeuristicsProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<EuclideanDistance>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ConstantCostProvider<VertexNode>>().AsSingle().WithArguments(0.0f);
-            Container.BindInterfacesAndSelfTo<PathSetter<VertexNode>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<PathFinder<VertexNode>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ConstantCostProvider<VertexData>>().AsSingle().WithArguments(0.0f);
+            Container.BindInterfacesAndSelfTo<PathSetter<VertexData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PathFinder<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinePathDrawer>().AsSingle();
             Container.BindInterfacesAndSelfTo<LineRenderer>().FromInstance(_pathLineRenderer).AsSingle();
-            Container.BindInterfacesAndSelfTo<TextSaver<VertexNode, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<TextSaver<VertexData, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<TextLoader<FieldSaveDTO<int>>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NewtonsoftJsonTextSerializer>().AsSingle();
             //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();

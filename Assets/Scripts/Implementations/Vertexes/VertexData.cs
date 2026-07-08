@@ -2,7 +2,7 @@ using ThisProject.Nodes;
 
 namespace ThisProject.Implementations.Vertexes
 {
-    public class VertexNode : NodeData<int>
+    public class VertexData : NodeData<int>
     {
     }
 }

@@ -4,7 +4,7 @@ using Zenject;
 
 namespace ThisProject.Implementations.Cells
 {
-    public class CellNode : NodeData<Vector2Int>, IPoolable<Vector2Int, Vector2, CellType>
+    public class CellData : NodeData<Vector2Int>, IPoolable<Vector2Int, Vector2, CellType>
     {
         private CellType _cellType;
 

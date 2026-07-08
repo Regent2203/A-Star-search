@@ -8,16 +8,16 @@ namespace ThisProject.Implementations.Vertexes
     public class VertexesFieldBuilder
     {
         private readonly SpatialField _field;
-        private readonly DictTypeStorage<VertexNode, int> _nodes;
+        private readonly DictTypeStorage<VertexData, int> _nodes;
         private readonly DictTypeStorage<VertexView, int> _views;
-        private readonly VertexNodePool _nodesPool;
+        private readonly VertexDataPool _nodesPool;
         private readonly VertexViewPool _viewsPool;
 
         private int _newId = 0;
 
 
-        public VertexesFieldBuilder(SpatialField field, DictTypeStorage<VertexNode, int> nodes, DictTypeStorage<VertexView, int> views, 
-            VertexViewPool viewsPool, VertexNodePool nodesPool)
+        public VertexesFieldBuilder(SpatialField field, DictTypeStorage<VertexData, int> nodes, DictTypeStorage<VertexView, int> views, 
+            VertexViewPool viewsPool, VertexDataPool nodesPool)
         {
             _field = field;
             _nodes = nodes;

@@ -14,9 +14,9 @@ namespace ThisProject.SaveSystem
     {
         private readonly IFilePathProvider _filePathProvider;
         private readonly IBinarySerializer _serializer;
-        private readonly DictTypeStorage<VertexNode, int> _nodes;
+        private readonly DictTypeStorage<VertexData, int> _nodes;
 
-        public BinarySaver(DictTypeStorage<VertexNode, int> nodes, IFilePathProvider filePathProvider, IBinarySerializer serializer)
+        public BinarySaver(DictTypeStorage<VertexData, int> nodes, IFilePathProvider filePathProvider, IBinarySerializer serializer)
         {
             _nodes = nodes;
             _filePathProvider = filePathProvider;

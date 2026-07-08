@@ -15,13 +15,13 @@ namespace ThisProject.Starters
     public class Starter_Scene1b : StarterBase
     {
         private CellsConfig _config;
-        private GridTypeStorage<CellNode> _nodes;
+        private GridTypeStorage<CellData> _nodes;
         private GridTypeStorage<CellView> _views;
         private CellsClickHandler _clickHandler;
         private CellsFieldBuilder _builder;
         private CellTypeChanger _cellTypeChanger;
-        private PathSetter<CellNode> _pathSetter;
-        private PathFinder<CellNode> _pathFinder;
+        private PathSetter<CellData> _pathSetter;
+        private PathFinder<CellData> _pathFinder;
         private LinePathDrawer _pathDrawer;
         private CellsPainter _painter;
         private UICellsPalette _palette;
@@ -30,10 +30,10 @@ namespace ThisProject.Starters
 
 
         [Inject]
-        public void Construct(CellsConfig config, GridTypeStorage<CellNode> nodes, GridTypeStorage<CellView> views,
+        public void Construct(CellsConfig config, GridTypeStorage<CellData> nodes, GridTypeStorage<CellView> views,
             CellsClickHandler clickHandler, CellsFieldBuilder builder,
             CellTypeChanger cellTypeChanger,
-            PathSetter<CellNode> pathSetter, PathFinder<CellNode> pathFinder, 
+            PathSetter<CellData> pathSetter, PathFinder<CellData> pathFinder, 
             LinePathDrawer pathDrawer, CellsPainter painter,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsHotkeysInfoPanel hotkeyInfoPanel)
         {
@@ -87,7 +87,7 @@ namespace ThisProject.Starters
             _painter.BrushChanged -= OnBrushChanged;
         }
 
-        private void UpdateViewSprite(CellNode node, CellType cellType)
+        private void UpdateViewSprite(CellData node, CellType cellType)
         {
             var view = _views.GetItem(node.Id);
             view.UpdateSprite(cellType.Sprite);
@@ -124,7 +124,7 @@ namespace ThisProject.Starters
             }
         }
 
-        private void OnCellTypeChanged(CellNode node, CellType cellType)
+        private void OnCellTypeChanged(CellData node, CellType cellType)
         {
             UpdateViewSprite(node, cellType);
             OnFieldChanged();
@@ -135,13 +135,13 @@ namespace ThisProject.Starters
             OnPathChanged(_pathSetter.IsReady);
         }
 
-        private void OnStartNodeChanged(CellNode node, bool b)
+        private void OnStartNodeChanged(CellData node, bool b)
         {
             var view = _views.GetItem(node.Id);
             view?.ShowStartMarker(b);
         }
 
-        private void OnFinishNodeChanged(CellNode node, bool b)
+        private void OnFinishNodeChanged(CellData node, bool b)
         {
             var view = _views.GetItem(node.Id);
             view?.ShowFinishMarker(b);

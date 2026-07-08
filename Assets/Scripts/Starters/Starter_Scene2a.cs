@@ -21,17 +21,17 @@ namespace ThisProject.Starters
 {
     public class Starter_Scene2a : StarterBase
     {
-        private DictTypeStorage<VertexNode, int> _nodes;
+        private DictTypeStorage<VertexData, int> _nodes;
         private DictTypeStorage<VertexView, int> _views;
         private VertexesClickHandler _clickHandler;
         private VertexesDragHandler _dragHandler;
         private VertexesFieldBuilder _builder;
-        private NodeBlocker<VertexNode> _nodeBlocker;
+        private NodeBlocker<VertexData> _nodeBlocker;
         private NodeViewSelector<VertexView> _viewSelector;
         private NodeViewMover _viewMover;
         private VertexesVisualLinksCreator _visualLinksCreator;
-        private PathSetter<VertexNode> _pathSetter;
-        private PathFinder<VertexNode> _pathFinder;
+        private PathSetter<VertexData> _pathSetter;
+        private PathFinder<VertexData> _pathFinder;
         private LinePathDrawer _pathDrawer;
         private ISaver _saver;
         private ILoader<FieldSaveDTO<int>> _loader;
@@ -40,11 +40,11 @@ namespace ThisProject.Starters
 
 
         [Inject]
-        public void Construct(DictTypeStorage<VertexNode, int> nodes, DictTypeStorage<VertexView, int> views,
+        public void Construct(DictTypeStorage<VertexData, int> nodes, DictTypeStorage<VertexView, int> views,
             VertexesClickHandler clickHandler, VertexesDragHandler dragHandler, VertexesFieldBuilder builder,
-            NodeBlocker<VertexNode> nodeBlocker, NodeViewSelector<VertexView> viewSelector, NodeViewMover viewMover, 
+            NodeBlocker<VertexData> nodeBlocker, NodeViewSelector<VertexView> viewSelector, NodeViewMover viewMover, 
             VertexesVisualLinksCreator visualLinksCreator,
-            PathSetter<VertexNode> pathSetter, PathFinder<VertexNode> pathFinder, LinePathDrawer pathDrawer,
+            PathSetter<VertexData> pathSetter, PathFinder<VertexData> pathFinder, LinePathDrawer pathDrawer,
             ISaver saver, ILoader<FieldSaveDTO<int>> loader,
             UISaveLoadPanel saveLoadPanel)
         {
@@ -204,7 +204,7 @@ namespace ThisProject.Starters
             //todo visual link update; also fieldchanged?
         }
 
-        private void OnNodeBlocked(VertexNode node, bool b)
+        private void OnNodeBlocked(VertexData node, bool b)
         {
             var view = _views.GetItem(node.Id);
             view?.ShowBlockedMarker(b);
@@ -217,13 +217,13 @@ namespace ThisProject.Starters
             OnPathChanged(_pathSetter.IsReady);
         }
 
-        private void OnStartNodeChanged(VertexNode node, bool b)
+        private void OnStartNodeChanged(VertexData node, bool b)
         {
             var view = _views.GetItem(node.Id);
             view?.ShowStartMarker(b);
         }
 
-        private void OnFinishNodeChanged(VertexNode node, bool b)
+        private void OnFinishNodeChanged(VertexData node, bool b)
         {
             var view = _views.GetItem(node.Id);
             view?.ShowFinishMarker(b);

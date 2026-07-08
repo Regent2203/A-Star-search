@@ -2,9 +2,9 @@
 
 namespace ThisProject.Implementations.Cells
 {
-    public class CellNodeWeightGetter : IWeightGetter<CellNode>
+    public class CellNodeWeightGetter : IWeightGetter<CellData>
     {
-        public float GetWeight(CellNode node)
+        public float GetWeight(CellData node)
         {
             return node.CellType.MoveCost;
         }
