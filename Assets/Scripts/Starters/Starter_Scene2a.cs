@@ -12,6 +12,7 @@ using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
 using ThisProject.PathSetters;
 using ThisProject.SaveSystem;
+using ThisProject.SaveSystem.Dto;
 using ThisProject.UICommon;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -34,7 +35,7 @@ namespace ThisProject.Starters
         private PathFinder<VertexData> _pathFinder;
         private LinePathDrawer _pathDrawer;
         private ISaver _saver;
-        private ILoader<FieldSaveDTO<int>> _loader;
+        private ILoader<FieldSaveDto<VertexDataDto, int>> _loader;
         //private UIVertexesHotkeyInfoPanel _hotkeyInfoPanel;
         private UISaveLoadPanel _saveLoadPanel;
 
@@ -45,7 +46,7 @@ namespace ThisProject.Starters
             NodeBlocker<VertexData> nodeBlocker, NodeViewSelector<VertexView> viewSelector, NodeViewMover viewMover, 
             VertexesVisualLinksCreator visualLinksCreator,
             PathSetter<VertexData> pathSetter, PathFinder<VertexData> pathFinder, LinePathDrawer pathDrawer,
-            ISaver saver, ILoader<FieldSaveDTO<int>> loader,
+            ISaver saver, ILoader<FieldSaveDto<VertexDataDto, int>> loader,
             UISaveLoadPanel saveLoadPanel)
         {
             _nodes = nodes;

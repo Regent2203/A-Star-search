@@ -26,12 +26,16 @@ namespace ThisProject.SaveSystem
         public async Task SaveAsync()
         {
             string path = _filePathProvider.GetSaveFilePath();
-            if (string.IsNullOrEmpty(path)) 
-                return;
 
+            if (string.IsNullOrEmpty(path))
+            {
+                Debug.LogError($"Invalid file path: {path}");
+                return;
+            }
+            /*
             try
             {
-                // 1. Превращаем элементы коллекции в плоский список DTO
+                // 1. Превращаем элементы коллекции в плоский список Dto
                 var dtoList = _nodes.AllItems.Select(node => new NodeDataDTO<int>
                 {
                     Id = node.Id,
@@ -57,7 +61,7 @@ namespace ThisProject.SaveSystem
             {
                 Debug.LogError($"[SaveSystem] Unexpected error during binary save: {ex.Message}");
                 throw; // Пробрасываем критические системные исключения дальше
-            }
+            }*/
         }
 
         public Task LoadAsync()

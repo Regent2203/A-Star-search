@@ -4,23 +4,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using ThisProject.Nodes;
 using ThisProject.ObjectsStorages;
+using ThisProject.SaveSystem.Dto;
 using ThisProject.SaveSystem.FilePathProviders;
+using ThisProject.SaveSystem.Mappers;
 using ThisProject.SaveSystem.Serializers;
 using UnityEngine;
 
 namespace ThisProject.SaveSystem
 {
-    public class TextSaver<T, TId> : ISaver
+    public class TextSaver<T, D, TId> : ISaver
         where T : INodeData<TId>
+        where D : NodeDataDto<TId>
     {
         private readonly IObjectsStorage<T, TId> _nodes;
+        private readonly IMapper<T, D, TId> _mapper;
         private readonly IFilePathProvider _filePathProvider;
         private readonly ITextSerializer _serializer;
 
 
-        public TextSaver(IObjectsStorage<T, TId> nodes, IFilePathProvider filePathProvider, ITextSerializer serializer)
+        public TextSaver(IObjectsStorage<T, TId> nodes, IMapper<T, D, TId> mapper, IFilePathProvider filePathProvider, ITextSerializer serializer)
         {
             _nodes = nodes;
+            _mapper = mapper;
             _filePathProvider = filePathProvider;
             _serializer = serializer;
         }
@@ -28,6 +33,7 @@ namespace ThisProject.SaveSystem
         public async Task SaveAsync()
         {
             var path = _filePathProvider.GetSaveFilePath();
+
             if (string.IsNullOrEmpty(path))
             {
                 Debug.LogError($"Invalid file path: {path}");
@@ -36,17 +42,12 @@ namespace ThisProject.SaveSystem
 
             try
             {
-                var nodesDto = _nodes.AllItems.Select(node => new NodeDataDTO<TId>
+                var FieldSaveDto = new FieldSaveDto<D, TId>
                 {
-                    Id = node.Id,
-                    NodePosition = new Vector2DTO(node.NodePosition)
-                }).ToList();
-
-                var mainDto = new FieldSaveDTO<TId>
-                {
-                    Nodes = nodesDto
+                    Nodes = _nodes.AllItems.Select(node => _mapper.ToDto(node)).ToList(),
                 };
-                string textData = _serializer.Serialize(mainDto);
+
+                string textData = _serializer.Serialize(FieldSaveDto);
 
                 await File.WriteAllTextAsync(path, textData);
                 Debug.Log($"Data successfully saved to: {path}");

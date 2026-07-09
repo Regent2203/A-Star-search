@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using ThisProject.Fields;
 using ThisProject.Heuristic.Functions;
 using ThisProject.Implementations.Cells;
@@ -16,7 +17,9 @@ using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
 using ThisProject.PathSetters;
 using ThisProject.SaveSystem;
+using ThisProject.SaveSystem.Dto;
 using ThisProject.SaveSystem.FilePathProviders;
+using ThisProject.SaveSystem.Mappers;
 using ThisProject.SaveSystem.Serializers;
 using ThisProject.SearchAlgorithms;
 using ThisProject.Starters;
@@ -82,10 +85,16 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<PathFinder<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinePathDrawer>().AsSingle();
             Container.BindInterfacesAndSelfTo<LineRenderer>().FromInstance(_pathLineRenderer).AsSingle();
-            Container.BindInterfacesAndSelfTo<TextSaver<VertexData, int>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<TextLoader<FieldSaveDTO<int>>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<NewtonsoftJsonTextSerializer>().AsSingle();
-            //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
+
+            //savesystem
+            Container.BindInterfacesAndSelfTo<TextSaver<VertexData, VertexDataDto, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<TextLoader<FieldSaveDto<VertexDataDto, int>>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexDataMapper>().AsSingle();
+
+            //Container.BindInterfacesAndSelfTo<NewtonsoftJsonTextSerializer>().AsSingle();
+            Container.BindInterfacesAndSelfTo<UnityJsonTextSerializer>().AsSingle(); //alternative
+
+            //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle(); //alternative
             Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map.json");
 
             //Container.BindInterfacesAndSelfTo<UIHotkeyInfoPanel_Vertexes>().FromInstance(_hotkeyInfoPanel).AsSingle();

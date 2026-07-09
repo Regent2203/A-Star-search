@@ -1,6 +1,7 @@
 ﻿using ThisProject.Fields;
 using ThisProject.ObjectsStorages;
 using ThisProject.SaveSystem;
+using ThisProject.SaveSystem.Dto;
 using UnityEngine;
 
 namespace ThisProject.Implementations.Vertexes
@@ -46,7 +47,7 @@ namespace ThisProject.Implementations.Vertexes
             }
         }
 
-        public void BuildFromDto(FieldSaveDTO<int> data)
+        public void BuildFromDto(FieldSaveDto<VertexDataDto, int> data)
         {
             //todo field clear
             //vertexNodePool.Despawn(node);
@@ -55,7 +56,7 @@ namespace ThisProject.Implementations.Vertexes
             {
                 var id = item.Id;
 
-                var pos = item.NodePosition.ToVector2();
+                var pos = (Vector2)item.NodePosition;
 
                 var node = _nodesPool.Spawn(id, pos);
                 var view = _viewsPool.Spawn(id, _field.ScaleFactor);
