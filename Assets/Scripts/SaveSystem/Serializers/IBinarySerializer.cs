@@ -1,8 +1,6 @@
 ﻿namespace ThisProject.SaveSystem.Serializers
 {
-    public interface IBinarySerializer
+    public interface IBinarySerializer : ISerializer<byte[]>
     {
-        public byte[] Serialize<T>(T obj);
-        public T Deserialize<T>(byte[] bytes);
     }
 }

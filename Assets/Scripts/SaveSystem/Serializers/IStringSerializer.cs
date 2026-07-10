@@ -1,8 +1,6 @@
 ﻿namespace ThisProject.SaveSystem.Serializers
 {
-    public interface IStringSerializer
+    public interface IStringSerializer : ISerializer<string>
     {
-        public string Serialize<T>(T obj);
-        public T Deserialize<T>(string text);
     }
 }
