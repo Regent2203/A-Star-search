@@ -2,7 +2,7 @@
 
 namespace ThisProject.SaveSystem.Serializers
 {
-    public class UnityJsonTextSerializer : ITextSerializer
+    public class UnityJsonStringSerializer : IStringSerializer
     {
         public string Serialize<T>(T obj)
         {

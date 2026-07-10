@@ -1,6 +1,7 @@
 using ThisProject.Nodes;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace ThisProject.PathDrawers
 {
@@ -9,7 +10,10 @@ namespace ThisProject.PathDrawers
         private readonly LineRenderer _lineRenderer;
         private IReadOnlyList<INodeView> _path;
 
-        public LinePathDrawer(LineRenderer lineRenderer)
+        public const string LineRendererId = "PathLine";
+
+
+        public LinePathDrawer([Inject(Id = LineRendererId)] LineRenderer lineRenderer)
         {
             _lineRenderer = lineRenderer;
             _lineRenderer.positionCount = 0;

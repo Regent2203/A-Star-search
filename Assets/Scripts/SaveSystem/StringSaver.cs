@@ -12,17 +12,17 @@ using UnityEngine;
 
 namespace ThisProject.SaveSystem
 {
-    public class TextSaver<T, D, TId> : ISaver
+    public class StringSaver<T, D, TId> : ISaver
         where T : INodeData<TId>
         where D : NodeDataDto<TId>
     {
         private readonly IObjectsStorage<T, TId> _nodes;
         private readonly IMapper<T, D, TId> _mapper;
         private readonly IFilePathProvider _filePathProvider;
-        private readonly ITextSerializer _serializer;
+        private readonly IStringSerializer _serializer;
 
 
-        public TextSaver(IObjectsStorage<T, TId> nodes, IMapper<T, D, TId> mapper, IFilePathProvider filePathProvider, ITextSerializer serializer)
+        public StringSaver(IObjectsStorage<T, TId> nodes, IMapper<T, D, TId> mapper, IFilePathProvider filePathProvider, IStringSerializer serializer)
         {
             _nodes = nodes;
             _mapper = mapper;

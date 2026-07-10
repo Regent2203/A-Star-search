@@ -4,10 +4,11 @@ using System.Text;
 
 namespace ThisProject.SaveSystem.Serializers
 {
-    public class NewtonsoftJsonBinarySerializer
+    public class NewtonsoftJsonBinarySerializer : IBinarySerializer
     {
         private readonly JsonSerializer _serializer;
         private readonly Encoding _encoding;
+
 
         public NewtonsoftJsonBinarySerializer(JsonSerializerSettings settings = null)
         {

@@ -7,7 +7,6 @@ using ThisProject.Nodes;
 using ThisProject.Nodes.NodeBlockers;
 using ThisProject.Nodes.ViewMovers;
 using ThisProject.Nodes.ViewSelectors;
-using ThisProject.ObjectsStorages;
 using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
 using ThisProject.PathSetters;

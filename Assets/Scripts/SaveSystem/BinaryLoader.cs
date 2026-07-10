@@ -7,12 +7,12 @@ using UnityEngine;
 
 namespace ThisProject.SaveSystem
 {
-    public class TextLoader<T> : ILoader<T>
+    public class BinaryLoader<T> : ILoader<T>
     {
         private readonly IFilePathProvider _filePathProvider;
-        private readonly ITextSerializer _serializer;
+        private readonly IStringSerializer _serializer;
 
-        public TextLoader(IFilePathProvider filePathProvider, ITextSerializer serializer)
+        public BinaryLoader(IFilePathProvider filePathProvider, IStringSerializer serializer)
         {
             _filePathProvider = filePathProvider;
             _serializer = serializer;
@@ -27,7 +27,8 @@ namespace ThisProject.SaveSystem
                 Debug.LogError($"File does not exist at path: {path}");
                 return default;
             }
-
+            return default; //todo
+            /*
             try
             {
                 string textData = await File.ReadAllTextAsync(path);
@@ -52,7 +53,7 @@ namespace ThisProject.SaveSystem
             {
                 Debug.LogError($"Unexpected error while saving: {ex.Message}");
                 throw;
-            }
+            }*/
         }
     }
 }

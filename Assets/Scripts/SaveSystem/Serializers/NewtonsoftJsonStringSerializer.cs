@@ -2,7 +2,7 @@
 
 namespace ThisProject.SaveSystem.Serializers
 {
-    public class NewtonsoftJsonTextSerializer : ITextSerializer
+    public class NewtonsoftJsonStringSerializer : IStringSerializer
     {
         private readonly JsonSerializerSettings _settings = new JsonSerializerSettings()
         {
@@ -16,9 +16,9 @@ namespace ThisProject.SaveSystem.Serializers
             return JsonConvert.SerializeObject(obj, _settings);
         }
 
-        public T Deserialize<T>(string rawData)
+        public T Deserialize<T>(string text)
         {
-            return JsonConvert.DeserializeObject<T>(rawData, _settings);
+            return JsonConvert.DeserializeObject<T>(text, _settings);
         }
     }
 }

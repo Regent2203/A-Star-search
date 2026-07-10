@@ -8,9 +8,9 @@ namespace ThisProject.SaveSystem.FilePathProviders
         private readonly string _filePath;
 
 
-        public ConstantFilePathProvider(string fileName)
+        public ConstantFilePathProvider(string fileName, Environment.SpecialFolder specialFolder)
         {
-            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string folderPath = Environment.GetFolderPath(specialFolder);
 
             _filePath = Path.Combine(folderPath, fileName);
         }
