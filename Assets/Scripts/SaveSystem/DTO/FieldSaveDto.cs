@@ -8,6 +8,6 @@ namespace ThisProject.SaveSystem.Dto
         where D : NodeDataDto<TId>
     {
         public List<D> Nodes;
-        //public List<T> Links { get; set; } //todo
+        //public List<TSaveDto> Links { get; set; } //todo
     }
 }

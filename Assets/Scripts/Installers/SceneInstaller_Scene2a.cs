@@ -20,6 +20,7 @@ using ThisProject.PathFinders;
 using ThisProject.PathSetters;
 using ThisProject.SaveSystem;
 using ThisProject.SaveSystem.Dto;
+using ThisProject.SaveSystem.DtoReaders;
 using ThisProject.SaveSystem.FilePathProviders;
 using ThisProject.SaveSystem.Mappers;
 using ThisProject.SaveSystem.Serializers;
@@ -142,7 +143,8 @@ namespace ThisProject.Installers
             void UseStringSaving()
             {
                 Container.BindInterfacesAndSelfTo<StringSaver<VertexData, VertexDataDto, int>>().AsSingle();
-                Container.BindInterfacesAndSelfTo<StringLoader<FieldSaveDto<VertexDataDto, int>>>().AsSingle();
+                Container.BindInterfacesAndSelfTo<Loader<FieldSaveDto<VertexDataDto, int>>>().AsSingle();
+                Container.BindInterfacesAndSelfTo<StringDtoReader>().AsSingle();
 
                 //pick only one
                 //Container.BindInterfacesAndSelfTo<NewtonsoftJsonStringSerializer>().AsSingle();
@@ -152,8 +154,9 @@ namespace ThisProject.Installers
             void UseBinarySaving()
             {
                 Container.BindInterfacesAndSelfTo<BinarySaver<VertexData, VertexDataDto, int>>().AsSingle();
-                Container.BindInterfacesAndSelfTo<BinaryLoader<FieldSaveDto<VertexDataDto, int>>>().AsSingle();
-                
+                Container.BindInterfacesAndSelfTo<Loader<FieldSaveDto<VertexDataDto, int>>>().AsSingle();
+                Container.BindInterfacesAndSelfTo<BinaryDtoReader>().AsSingle();
+
                 //pick only one
                 //Container.BindInterfacesAndSelfTo<NewtonsoftJsonBinarySerializer>().AsSingle();
                 Container.BindInterfacesAndSelfTo<UnityJsonBinarySerializer>().AsSingle();

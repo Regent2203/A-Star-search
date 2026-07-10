@@ -1,24 +1,24 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using ThisProject.SaveSystem.DtoReaders;
 using ThisProject.SaveSystem.FilePathProviders;
-using ThisProject.SaveSystem.Serializers;
 using UnityEngine;
 
 namespace ThisProject.SaveSystem
 {
-    public class BinaryLoader<T> : ILoader<T>
+    public class Loader<TSaveDto> : ILoader<TSaveDto>
     {
         private readonly IFilePathProvider _filePathProvider;
-        private readonly IBinarySerializer _serializer;
+        private readonly IDtoReader _dtoReader;
 
-        public BinaryLoader(IFilePathProvider filePathProvider, IBinarySerializer serializer)
+        public Loader(IFilePathProvider filePathProvider, IDtoReader dtoReader)
         {
             _filePathProvider = filePathProvider;
-            _serializer = serializer;
+            _dtoReader = dtoReader;
         }
 
-        public async Task<T> LoadAsync()
+        public async Task<TSaveDto> LoadAsync()
         {
             var path = _filePathProvider.GetLoadFilePath();
 
@@ -30,27 +30,25 @@ namespace ThisProject.SaveSystem
 
             try
             {
-                byte[] rawDataBytes = await File.ReadAllBytesAsync(path);
+                var saveDto = await _dtoReader.ReadFileAsync<TSaveDto>(path);
 
-                var mainDto = _serializer.Deserialize<T>(rawDataBytes);
-
-                if (mainDto == null)
+                if (saveDto == null)
                 {
                     Debug.LogError($"Deserialization error: file is corrupt at {path}");
                     return default;
                 }
 
                 Debug.Log($"Data successfully loaded from: {path}");
-                return mainDto;
+                return saveDto;
             }
             catch (IOException ioEx)
             {
-                Debug.LogError($"Disk I/O error while saving: {ioEx.Message}");
+                Debug.LogError($"Disk I/O error while loading: {ioEx.Message}");
                 throw;
             }
             catch (Exception ex)
             {
-                Debug.LogError($"Unexpected error while saving: {ex.Message}");
+                Debug.LogError($"Unexpected error while loading: {ex.Message}");
                 throw;
             }
         }
