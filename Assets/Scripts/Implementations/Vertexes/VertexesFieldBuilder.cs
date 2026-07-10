@@ -1,4 +1,5 @@
 ﻿using ThisProject.Fields;
+using ThisProject.Fields.FieldBuilders;
 using ThisProject.ObjectsStorages;
 using ThisProject.SaveSystem;
 using ThisProject.SaveSystem.Dto;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace ThisProject.Implementations.Vertexes
 {
-    public class VertexesFieldBuilder
+    public class VertexesFieldBuilder //: IFieldBuilder
     {
         private readonly SpatialField _field;
         private readonly DictTypeStorage<VertexData, int> _nodes;

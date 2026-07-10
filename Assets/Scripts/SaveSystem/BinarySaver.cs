@@ -3,22 +3,30 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ThisProject.Implementations.Vertexes;
+using ThisProject.Nodes;
 using ThisProject.ObjectsStorages;
+using ThisProject.SaveSystem.Dto;
 using ThisProject.SaveSystem.FilePathProviders;
+using ThisProject.SaveSystem.Mappers;
 using ThisProject.SaveSystem.Serializers;
 using UnityEngine;
 
 namespace ThisProject.SaveSystem
 {
-    public class BinarySaver : ISaver
+    public class BinarySaver<T, Dto, TId> : ISaver
+        where T : INodeData<TId>
+        where Dto : NodeDataDto<TId>
     {
+        private readonly IObjectsStorage<T, TId> _nodes;
+        private readonly IMapper<T, Dto, TId> _mapper;
         private readonly IFilePathProvider _filePathProvider;
         private readonly IBinarySerializer _serializer;
-        private readonly DictTypeStorage<VertexData, int> _nodes;
 
-        public BinarySaver(DictTypeStorage<VertexData, int> nodes, IFilePathProvider filePathProvider, IBinarySerializer serializer)
+
+        public BinarySaver(IObjectsStorage<T, TId> nodes, IMapper<T, Dto, TId> mapper, IFilePathProvider filePathProvider, IBinarySerializer serializer)
         {
             _nodes = nodes;
+            _mapper = mapper;
             _filePathProvider = filePathProvider;
             _serializer = serializer;
         }
@@ -32,42 +40,29 @@ namespace ThisProject.SaveSystem
                 Debug.LogError($"Invalid file path: {path}");
                 return;
             }
-            /*
+            
             try
             {
-                // 1. Превращаем элементы коллекции в плоский список Dto
-                var dtoList = _nodes.AllItems.Select(node => new NodeDataDTO<int>
+                var FieldSaveDto = new FieldSaveDto<Dto, TId>
                 {
-                    Id = node.Id,
-                    NodePosition = new Vector2DTO(node.NodePosition)
-                }).ToList();
+                    Nodes = _nodes.AllItems.Select(node => _mapper.ToDto(node)).ToList(),
+                };
 
-                // 2. Упаковываем в объект-обертку, чтобы сохранить структуру с именем "Nodes"
-                var rootWrapper = new FieldSaveDTO<int> { Nodes = dtoList };
+                byte[] rawDataBytes = _serializer.Serialize(FieldSaveDto);
 
-                // 3. Делегируем быструю бинарную сериализацию в byte[]
-                byte[] rawDataBytes = _serializer.Serialize(rootWrapper);
-
-                // 4. Асинхронно пишем байты на диск (Zero-freeze для кадров Unity)
                 await File.WriteAllBytesAsync(path, rawDataBytes);
-
-                Debug.Log($"[SaveSystem] Binary data successfully saved to: {path} ({rawDataBytes.Length} bytes)");
+                Debug.Log($"Data successfully saved to: {path}");
             }
             catch (IOException ioEx)
             {
-                Debug.LogError($"[SaveSystem] Disk I/O Error: {ioEx.Message}");
+                Debug.LogError($"Disk I/O error while saving: {ioEx.Message}");
+                throw;
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[SaveSystem] Unexpected error during binary save: {ex.Message}");
-                throw; // Пробрасываем критические системные исключения дальше
-            }*/
-        }
-
-        public Task LoadAsync()
-        {
-            //todo
-            return Task.CompletedTask;            
+                Debug.LogError($"Unexpected error while saving: {ex.Message}");
+                throw;
+            }
         }
     }
 }

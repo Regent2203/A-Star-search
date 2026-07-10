@@ -10,9 +10,9 @@ namespace ThisProject.SaveSystem
     public class BinaryLoader<T> : ILoader<T>
     {
         private readonly IFilePathProvider _filePathProvider;
-        private readonly IStringSerializer _serializer;
+        private readonly IBinarySerializer _serializer;
 
-        public BinaryLoader(IFilePathProvider filePathProvider, IStringSerializer serializer)
+        public BinaryLoader(IFilePathProvider filePathProvider, IBinarySerializer serializer)
         {
             _filePathProvider = filePathProvider;
             _serializer = serializer;
@@ -27,13 +27,12 @@ namespace ThisProject.SaveSystem
                 Debug.LogError($"File does not exist at path: {path}");
                 return default;
             }
-            return default; //todo
-            /*
+
             try
             {
-                string textData = await File.ReadAllTextAsync(path);
+                byte[] rawDataBytes = await File.ReadAllBytesAsync(path);
 
-                var mainDto = _serializer.Deserialize<T>(textData);
+                var mainDto = _serializer.Deserialize<T>(rawDataBytes);
 
                 if (mainDto == null)
                 {
@@ -53,7 +52,7 @@ namespace ThisProject.SaveSystem
             {
                 Debug.LogError($"Unexpected error while saving: {ex.Message}");
                 throw;
-            }*/
+            }
         }
     }
 }

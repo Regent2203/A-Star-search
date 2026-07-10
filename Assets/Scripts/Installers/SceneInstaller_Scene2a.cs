@@ -131,14 +131,14 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<VertexDataMapper>().AsSingle();
 
             //Choose only one of two variants (binary or string)
-            UseStringSaving();
-            //UseBinarySaving();
+            //UseStringSaving();
+            UseBinarySaving();
 
             //pick only one
             //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map.json", Environment.SpecialFolder.Desktop);
 
-#pragma warning disable CS8321
+            #pragma warning disable CS8321
             void UseStringSaving()
             {
                 Container.BindInterfacesAndSelfTo<StringSaver<VertexData, VertexDataDto, int>>().AsSingle();
@@ -151,14 +151,14 @@ namespace ThisProject.Installers
             
             void UseBinarySaving()
             {
-                //Container.BindInterfacesAndSelfTo<BinarySaver<VertexData, VertexDataDto, int>>().AsSingle();
-                //Container.BindInterfacesAndSelfTo<BinaryLoader<FieldSaveDto<VertexDataDto, int>>>().AsSingle();
+                Container.BindInterfacesAndSelfTo<BinarySaver<VertexData, VertexDataDto, int>>().AsSingle();
+                Container.BindInterfacesAndSelfTo<BinaryLoader<FieldSaveDto<VertexDataDto, int>>>().AsSingle();
                 
                 //pick only one
                 //Container.BindInterfacesAndSelfTo<NewtonsoftJsonBinarySerializer>().AsSingle();
-                //Container.BindInterfacesAndSelfTo<UnityJsonBinarySerializer>().AsSingle();
+                Container.BindInterfacesAndSelfTo<UnityJsonBinarySerializer>().AsSingle();
             }
-#pragma warning restore CS8321
+            #pragma warning restore CS8321
         }
 
         private void BindUI()

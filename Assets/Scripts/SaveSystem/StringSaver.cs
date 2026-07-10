@@ -12,17 +12,17 @@ using UnityEngine;
 
 namespace ThisProject.SaveSystem
 {
-    public class StringSaver<T, D, TId> : ISaver
+    public class StringSaver<T, Dto, TId> : ISaver
         where T : INodeData<TId>
-        where D : NodeDataDto<TId>
+        where Dto : NodeDataDto<TId>
     {
         private readonly IObjectsStorage<T, TId> _nodes;
-        private readonly IMapper<T, D, TId> _mapper;
+        private readonly IMapper<T, Dto, TId> _mapper;
         private readonly IFilePathProvider _filePathProvider;
         private readonly IStringSerializer _serializer;
 
 
-        public StringSaver(IObjectsStorage<T, TId> nodes, IMapper<T, D, TId> mapper, IFilePathProvider filePathProvider, IStringSerializer serializer)
+        public StringSaver(IObjectsStorage<T, TId> nodes, IMapper<T, Dto, TId> mapper, IFilePathProvider filePathProvider, IStringSerializer serializer)
         {
             _nodes = nodes;
             _mapper = mapper;
@@ -42,7 +42,7 @@ namespace ThisProject.SaveSystem
 
             try
             {
-                var FieldSaveDto = new FieldSaveDto<D, TId>
+                var FieldSaveDto = new FieldSaveDto<Dto, TId>
                 {
                     Nodes = _nodes.AllItems.Select(node => _mapper.ToDto(node)).ToList(),
                 };
