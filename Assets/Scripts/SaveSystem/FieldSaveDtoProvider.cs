@@ -7,17 +7,19 @@ using ThisProject.SaveSystem.Mappers;
 
 namespace ThisProject.SaveSystem
 {
-    public interface IFieldSaveDtoProvider<TNodeDto, TLinkDto>
+    public interface IFieldSaveDtoProvider<TNodeDataDto, TLinkDataDto>
     {
-        IFieldSaveDto<TNodeDto, TLinkDto> GetDto();
+        public T GetDto<T>()
+            where T : FieldSaveDto<TNodeDataDto, TLinkDataDto>, new();
     }
 
     public class FieldSaveDtoProvider<TNodeData, TNodeDataDto, TLinkDataDto, TId> : IFieldSaveDtoProvider<TNodeDataDto, TLinkDataDto>
         where TNodeData : INodeData<TId>
-        where TNodeDataDto : INodeDataDto<TId>
+        where TNodeDataDto : NodeDataDto<TId>
     {
         private readonly IObjectsStorage<TNodeData, TId> _nodes;
         private readonly IMapper<TNodeData, TNodeDataDto, TId> _mapper;
+
 
         public FieldSaveDtoProvider(
             IObjectsStorage<TNodeData, TId> nodes,
@@ -27,9 +29,10 @@ namespace ThisProject.SaveSystem
             _mapper = mapper;
         }
 
-        public IFieldSaveDto<TNodeDataDto, TLinkDataDto> GetDto()
+        public T GetDto<T>()
+            where T : FieldSaveDto<TNodeDataDto, TLinkDataDto>, new()
         {
-            var fieldSaveDto = new FieldSaveDto<TNodeDataDto, TLinkDataDto>
+            var fieldSaveDto = new T
             {
                 Nodes = _nodes.AllItems.Select(node => _mapper.ToDto(node)).ToList(),
                 //Links = null, //todo

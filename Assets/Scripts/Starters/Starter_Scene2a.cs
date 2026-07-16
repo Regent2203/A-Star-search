@@ -94,7 +94,7 @@ namespace ThisProject.Starters
         protected override void InitDefaultStates()
         {
             //todo
-            _builder.TestPopulate(7);
+            _builder.TestPopulate(5);
         }
 
         protected override void UnsubscribeAll()
@@ -264,9 +264,9 @@ namespace ThisProject.Starters
 
             try
             {
-                var saveDto = (VertexFieldSaveDto)_dtoProvider.GetDto();
-                Debug.Log(saveDto.Nodes.Count);
-                _saveloadTask = _saver.SaveAsync<VertexFieldSaveDto>(saveDto);
+                var saveDto = _dtoProvider.GetDto<VertexesFieldSaveDto>();
+                
+                _saveloadTask = _saver.SaveAsync<VertexesFieldSaveDto>(saveDto);
                 await _saveloadTask;
             }
             catch (Exception ex)
@@ -288,7 +288,7 @@ namespace ThisProject.Starters
 
             try
             {
-                var loadTask = _loader.LoadAsync<VertexFieldSaveDto>();
+                var loadTask = _loader.LoadAsync<VertexesFieldSaveDto>();
                 _saveloadTask = loadTask;
 
                 var dto = await loadTask;

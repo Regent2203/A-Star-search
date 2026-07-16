@@ -6,7 +6,7 @@ namespace ThisProject.Implementations.Vertexes
     {
         public VertexDataDto ToDto(VertexData nodeData)
         {
-            return new VertexDataDto(nodeData);
+            return new VertexDataDto(nodeData.Id, nodeData.NodePosition);
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ThisProject.Implementations.Cells
 {
     [Serializable]
-    public class CellDataDto : INodeDataDto<Vector2Int>
+    public class CellDataDto : NodeDataDto<Vector2Int>
     {
         private readonly Vector2Int _id;
         private readonly Vector2Dto _nodePosition;
