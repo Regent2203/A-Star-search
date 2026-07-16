@@ -15,8 +15,8 @@ namespace ThisProject.SaveSystem.Dto
             Y = vector.y;
         }
 
+        //remove?
         public static explicit operator Vector2(Vector2Dto dto) => new Vector2(dto.X, dto.Y);
-
         public static implicit operator Vector2Dto(Vector2 vector) => new Vector2Dto(vector);
     }
 }

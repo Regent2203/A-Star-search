@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ThisProject.ObjectsStorages
 {
@@ -43,7 +44,13 @@ namespace ThisProject.ObjectsStorages
 
         public void ClearData()
         {
+            var keys = _data.Keys.ToArray();
             _data.Clear();
+
+            foreach (var id in keys)
+            {
+                ItemRemoved?.Invoke(id);
+            }
         }
     }
 }

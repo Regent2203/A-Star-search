@@ -4,7 +4,7 @@
     {
         public void CreateFromDto();
         public void CreateEmpty();
-        public void Clear();
+        public void ClearAll();
         //todo
         public void CreateFieldItem();
         public void DeleteFieldItem();

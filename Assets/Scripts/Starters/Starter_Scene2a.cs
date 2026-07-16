@@ -94,7 +94,7 @@ namespace ThisProject.Starters
         protected override void InitDefaultStates()
         {
             //todo
-            _builder.TestPopulate(3);
+            _builder.TestPopulate(7);
         }
 
         protected override void UnsubscribeAll()

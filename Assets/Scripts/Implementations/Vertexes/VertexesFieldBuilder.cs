@@ -1,8 +1,5 @@
-﻿using System;
-using ThisProject.Fields;
-using ThisProject.Fields.FieldBuilders;
+﻿using ThisProject.Fields;
 using ThisProject.ObjectsStorages;
-using ThisProject.SaveSystem;
 using ThisProject.SaveSystem.Dto;
 using UnityEngine;
 
@@ -19,21 +16,19 @@ namespace ThisProject.Implementations.Vertexes
         private int _newId = 0;
 
 
-        public VertexesFieldBuilder(SpatialField field, DictTypeStorage<VertexData, int> nodes, DictTypeStorage<VertexView, int> views, 
-            VertexViewPool viewsPool, VertexDataPool nodesPool)
+        public VertexesFieldBuilder(SpatialField field, DictTypeStorage<VertexData, int> nodes, DictTypeStorage<VertexView, int> views,
+             VertexDataPool nodesPool, VertexViewPool viewsPool)
         {
             _field = field;
             _nodes = nodes;
             _views = views;
-            _viewsPool = viewsPool;
             _nodesPool = nodesPool;
+            _viewsPool = viewsPool;            
         }
 
         //temp
         public void TestPopulate(int count)
         {
-            return;
-
             for (int i = 0; i < count; i++)
             {
                 var id = _newId++;
@@ -51,8 +46,7 @@ namespace ThisProject.Implementations.Vertexes
 
         public void BuildFromDto(FieldSaveDto<VertexDataDto, LinkDataDto> data)
         {
-            //todo field clear
-            //vertexNodePool.Despawn(node);
+            ClearAll();
 
             foreach (var item in data.Nodes)
             {
@@ -69,6 +63,21 @@ namespace ThisProject.Implementations.Vertexes
             }
         }
 
+        public void ClearAll()
+        {
+            foreach (var node in _nodes.AllItems)
+            {
+                _nodesPool.Despawn(node);
+            }
+            _nodes.ClearData();
+
+            foreach (var view in _views.AllItems)
+            {
+                _viewsPool.Despawn(view);
+            }
+            _views.ClearData();
+        }
+
         //todo
         public void CreateItem(Vector3 pos)
         {
@@ -78,7 +87,7 @@ namespace ThisProject.Implementations.Vertexes
             var view = _viewsPool.Spawn(id, _field.ScaleFactor);
             view.Move(pos);
 
-            //_field.AddFieldData(node, view);
+            //_field.AddFieldData(view, view);
         }
 
         public void DeleteItem(int id)

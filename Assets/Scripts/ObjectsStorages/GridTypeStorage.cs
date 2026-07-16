@@ -11,7 +11,27 @@ namespace ThisProject.ObjectsStorages
         private T[,] _data;
         private Vector2Int _size;
 
-        public IEnumerable<T> AllItems => _data != null ? _data.Cast<T>() : Enumerable.Empty<T>();
+        public IEnumerable<T> AllItems
+        { 
+            get
+            {
+                if (_data == null) 
+                    yield break;
+
+                for (int x = 0; x<_size.x; x++)
+                {
+                    for (int y = 0; y<_size.y; y++)
+                    {
+                        T item = _data[x, y];
+                        
+                        if (!EqualityComparer<T>.Default.Equals(item, default))
+                        {
+                            yield return item;
+                        }
+                    }
+                }
+            }
+        }
 
         public event Action<Vector2Int> ItemAdded;
         public event Action<Vector2Int> ItemRemoved;
@@ -68,6 +88,17 @@ namespace ThisProject.ObjectsStorages
         {
             if (_data == null) 
                 return;
+            
+            for (int x = 0; x < _size.x; x++)
+            {
+                for (int y = 0; y < _size.y; y++)
+                {
+                    if (!EqualityComparer<T>.Default.Equals(_data[x, y], default))
+                    {
+                        ItemRemoved?.Invoke(new Vector2Int(x, y));
+                    }
+                }
+            }
 
             Array.Clear(_data, 0, _data.Length);
         }
