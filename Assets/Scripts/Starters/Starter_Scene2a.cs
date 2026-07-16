@@ -34,7 +34,8 @@ namespace ThisProject.Starters
         private PathFinder<VertexData> _pathFinder;
         private LinePathDrawer _pathDrawer;
         private ISaver _saver;
-        private ILoader<FieldSaveDto<VertexDataDto, int>> _loader;
+        private ILoader _loader;
+        private FieldSaveDtoProvider<VertexData, VertexDataDto, LinkDataDto, int> _dtoProvider;
         //private UIVertexesHotkeyInfoPanel _hotkeyInfoPanel;
         private UISaveLoadPanel _saveLoadPanel;
 
@@ -45,7 +46,7 @@ namespace ThisProject.Starters
             NodeBlocker<VertexData> nodeBlocker, NodeViewSelector<VertexView> viewSelector, NodeViewMover viewMover, 
             VertexesVisualLinksCreator visualLinksCreator,
             PathSetter<VertexData> pathSetter, PathFinder<VertexData> pathFinder, LinePathDrawer pathDrawer,
-            ISaver saver, ILoader<FieldSaveDto<VertexDataDto, int>> loader,
+            ISaver saver, ILoader loader, FieldSaveDtoProvider<VertexData, VertexDataDto, LinkDataDto, int> dtoProvider,
             UISaveLoadPanel saveLoadPanel)
         {
             _nodes = nodes;
@@ -65,6 +66,7 @@ namespace ThisProject.Starters
 
             _saver = saver;
             _loader = loader;
+            _dtoProvider = dtoProvider;
 
             _saveLoadPanel = saveLoadPanel;
         }
@@ -262,7 +264,9 @@ namespace ThisProject.Starters
 
             try
             {
-                _saveloadTask = _saver.SaveAsync();
+                var saveDto = (VertexFieldSaveDto)_dtoProvider.GetDto();
+                Debug.Log(saveDto.Nodes.Count);
+                _saveloadTask = _saver.SaveAsync<VertexFieldSaveDto>(saveDto);
                 await _saveloadTask;
             }
             catch (Exception ex)
@@ -284,7 +288,7 @@ namespace ThisProject.Starters
 
             try
             {
-                var loadTask = _loader.LoadAsync();
+                var loadTask = _loader.LoadAsync<VertexFieldSaveDto>();
                 _saveloadTask = loadTask;
 
                 var dto = await loadTask;

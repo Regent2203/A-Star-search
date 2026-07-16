@@ -20,7 +20,7 @@ using ThisProject.PathFinders;
 using ThisProject.PathSetters;
 using ThisProject.SaveSystem;
 using ThisProject.SaveSystem.Dto;
-using ThisProject.SaveSystem.DtoReaders;
+using ThisProject.SaveSystem.DtoFileIOs;
 using ThisProject.SaveSystem.FilePathProviders;
 using ThisProject.SaveSystem.Mappers;
 using ThisProject.SaveSystem.Serializers;
@@ -129,35 +129,36 @@ namespace ThisProject.Installers
 
         private void BindSaveSystem()
         {
-            Container.BindInterfacesAndSelfTo<VertexDataMapper>().AsSingle();
+            Container.BindInterfacesAndSelfTo<Saver>().AsSingle();
+            Container.BindInterfacesAndSelfTo<Loader>().AsSingle();
 
             //Choose only one of two variants (binary or string)
-            //UseStringSaving();
-            UseBinarySaving();
+            UseStringSaving();
+            //UseBinarySaving();
 
-            //pick only one
+            //Choose only one
             //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map.json", Environment.SpecialFolder.Desktop);
+
+            Container.BindInterfacesAndSelfTo<VertexDataMapper>().AsSingle();
+            Container.BindInterfacesAndSelfTo<FieldSaveDtoProvider<VertexData, VertexDataDto, LinkDataDto, int>>().AsSingle();
+
 
             #pragma warning disable CS8321
             void UseStringSaving()
             {
-                Container.BindInterfacesAndSelfTo<StringSaver<VertexData, VertexDataDto, int>>().AsSingle();
-                Container.BindInterfacesAndSelfTo<Loader<FieldSaveDto<VertexDataDto, int>>>().AsSingle();
-                Container.BindInterfacesAndSelfTo<StringDtoReader>().AsSingle();
+                Container.BindInterfacesAndSelfTo<StringDtoFileIO>().AsSingle();
 
-                //pick only one
-                //Container.BindInterfacesAndSelfTo<NewtonsoftJsonStringSerializer>().AsSingle();
-                Container.BindInterfacesAndSelfTo<UnityJsonStringSerializer>().AsSingle();
+                //Choose only one
+                Container.BindInterfacesAndSelfTo<NewtonsoftJsonStringSerializer>().AsSingle();
+                //Container.BindInterfacesAndSelfTo<UnityJsonStringSerializer>().AsSingle();
             }
             
             void UseBinarySaving()
             {
-                Container.BindInterfacesAndSelfTo<BinarySaver<VertexData, VertexDataDto, int>>().AsSingle();
-                Container.BindInterfacesAndSelfTo<Loader<FieldSaveDto<VertexDataDto, int>>>().AsSingle();
-                Container.BindInterfacesAndSelfTo<BinaryDtoReader>().AsSingle();
+                Container.BindInterfacesAndSelfTo<BinaryDtoFileIO>().AsSingle();
 
-                //pick only one
+                //Choose only one
                 //Container.BindInterfacesAndSelfTo<NewtonsoftJsonBinarySerializer>().AsSingle();
                 Container.BindInterfacesAndSelfTo<UnityJsonBinarySerializer>().AsSingle();
             }

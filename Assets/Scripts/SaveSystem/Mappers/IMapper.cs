@@ -2,11 +2,11 @@
 using ThisProject.SaveSystem.Dto;
 
 namespace ThisProject.SaveSystem.Mappers
-{
-    public interface IMapper<T, Dto, TId>
+{    
+    public interface IMapper<T, TNodeDataDto, TId>
         where T : INodeData<TId>
-        where Dto : NodeDataDto<TId>
+        where TNodeDataDto : INodeDataDto<TId>
     {
-        public Dto ToDto(T nodeData);
+        public TNodeDataDto ToDto(T nodeData);
     }
 }

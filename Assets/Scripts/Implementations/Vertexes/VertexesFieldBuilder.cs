@@ -1,4 +1,5 @@
-﻿using ThisProject.Fields;
+﻿using System;
+using ThisProject.Fields;
 using ThisProject.Fields.FieldBuilders;
 using ThisProject.ObjectsStorages;
 using ThisProject.SaveSystem;
@@ -48,7 +49,7 @@ namespace ThisProject.Implementations.Vertexes
             }
         }
 
-        public void BuildFromDto(FieldSaveDto<VertexDataDto, int> data)
+        public void BuildFromDto(FieldSaveDto<VertexDataDto, LinkDataDto> data)
         {
             //todo field clear
             //vertexNodePool.Despawn(node);

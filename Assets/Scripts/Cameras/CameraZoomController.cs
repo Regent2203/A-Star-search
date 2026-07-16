@@ -7,21 +7,21 @@ namespace ThisProject.Cameras
     [RequireComponent(typeof(Camera))]
     public class CameraZoomController : MonoBehaviour
     {
-        [SerializeField] private Camera _mainCamera;
-
         [Header("Zoom Settings")]
         [Range(0.5f, 2.0f)]
         [SerializeField] private float _zoomSensitivity = 1.5f;
         [SerializeField] private float _minOrthographicSize = 10f;
         [SerializeField] private float _maxOrthographicSize = 40f;
 
-        private IField _field;
+        private Camera _mainCamera;
+        private Bounds _bounds;
 
 
         [Inject]
-        public void Construct(IField field)
+        public void Construct(Camera mainCamera, IField field)
         {
-            _field = field;
+            _mainCamera = mainCamera;
+            _bounds = field.Box.bounds;
         }
 
         private void Update()
@@ -48,7 +48,7 @@ namespace ThisProject.Cameras
             Vector3 mouseWorldAfterZoom = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
             transform.position += mouseWorldBeforeZoom - mouseWorldAfterZoom;
-            transform.position = transform.position.Clamp(_field.Box.bounds);
+            transform.position = transform.position.Clamp(_bounds);
         }
 
 

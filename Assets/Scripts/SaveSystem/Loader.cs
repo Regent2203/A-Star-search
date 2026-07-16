@@ -1,24 +1,24 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using ThisProject.SaveSystem.DtoReaders;
+using ThisProject.SaveSystem.DtoFileIOs;
 using ThisProject.SaveSystem.FilePathProviders;
 using UnityEngine;
 
 namespace ThisProject.SaveSystem
 {
-    public class Loader<TSaveDto> : ILoader<TSaveDto>
+    public class Loader: ILoader
     {
         private readonly IFilePathProvider _filePathProvider;
-        private readonly IDtoReader _dtoReader;
+        private readonly IDtoFileIO _dtoFile;
 
-        public Loader(IFilePathProvider filePathProvider, IDtoReader dtoReader)
+        public Loader(IFilePathProvider filePathProvider, IDtoFileIO dtoFile)
         {
             _filePathProvider = filePathProvider;
-            _dtoReader = dtoReader;
+            _dtoFile = dtoFile;
         }
 
-        public async Task<TSaveDto> LoadAsync()
+        public async Task<TSaveDto> LoadAsync<TSaveDto>()
         {
             var path = _filePathProvider.GetLoadFilePath();
 
@@ -30,11 +30,11 @@ namespace ThisProject.SaveSystem
 
             try
             {
-                var saveDto = await _dtoReader.ReadFileAsync<TSaveDto>(path);
+                var saveDto = await _dtoFile.ReadFileAsync<TSaveDto>(path);
 
                 if (saveDto == null)
                 {
-                    Debug.LogError($"Deserialization error: file is corrupt at {path}");
+                    Debug.LogError($"Deserialization error: file is corrupt at path: {path}");
                     return default;
                 }
 

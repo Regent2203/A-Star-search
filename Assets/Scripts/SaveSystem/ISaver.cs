@@ -4,6 +4,6 @@ namespace ThisProject.SaveSystem
 {
     public interface ISaver
     {
-        public Task SaveAsync();
+        public Task SaveAsync<TSaveDto>(TSaveDto saveDto);
     }
 }

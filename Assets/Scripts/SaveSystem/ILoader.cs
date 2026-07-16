@@ -2,8 +2,8 @@
 
 namespace ThisProject.SaveSystem
 {
-    public interface ILoader<T>
+    public interface ILoader
     {
-        public Task<T> LoadAsync();
+        public Task<TSaveDto> LoadAsync<TSaveDto>();
     }
 }
