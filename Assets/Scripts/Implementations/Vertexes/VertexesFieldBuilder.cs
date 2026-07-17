@@ -23,7 +23,9 @@ namespace ThisProject.Implementations.Vertexes
             _nodes = nodes;
             _views = views;
             _nodesPool = nodesPool;
-            _viewsPool = viewsPool;            
+            _viewsPool = viewsPool;
+
+            ResetId();
         }
 
         //temp
@@ -44,7 +46,7 @@ namespace ThisProject.Implementations.Vertexes
             }
         }
 
-        public void BuildFromDto(FieldSaveDto<VertexDataDto, LinkDataDto> data)
+        public void BuildFromDto(FieldSaveDto<VertexDataDto, LinkDataDto<int>> data)
         {
             ClearAll();
 
@@ -76,6 +78,8 @@ namespace ThisProject.Implementations.Vertexes
                 _viewsPool.Despawn(view);
             }
             _views.ClearData();
+
+            ResetId();
         }
 
         //todo
@@ -93,6 +97,11 @@ namespace ThisProject.Implementations.Vertexes
         public void DeleteItem(int id)
         {
             //_field.RemoveFieldData(id);
+        }
+
+        private void ResetId()
+        {
+            _newId = 0;
         }
     }
 }

@@ -8,6 +8,7 @@ namespace ThisProject.SaveSystem.DtoFileIOs
     {
         private readonly IStringSerializer _serializer;
 
+
         public StringDtoFileIO(IStringSerializer serializer)
         {
             _serializer = serializer;

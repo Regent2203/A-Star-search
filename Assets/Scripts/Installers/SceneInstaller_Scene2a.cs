@@ -8,6 +8,7 @@ using ThisProject.Implementations.Cells.UI;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Implementations.VisualLinks;
 using ThisProject.Inputs;
+using ThisProject.Links;
 using ThisProject.Links.Factories;
 using ThisProject.Links.Factories.CostProviders;
 using ThisProject.Links.Providers;
@@ -87,6 +88,8 @@ namespace ThisProject.Installers
                 To<VertexDataStorage>().AsSingle();
             Container.Bind(typeof(VertexViewStorage), typeof(DictTypeStorage<VertexView, int>), typeof(IObjectsStorage<VertexView, int>)).
                 To<VertexViewStorage>().AsSingle();
+            Container.Bind(typeof(DictTypeStorage<LinkData<VertexData>, int>), typeof(IObjectsStorage<LinkData<VertexData>, int>)).
+                To<DictTypeStorage<LinkData<VertexData>, int>>().AsSingle(); //todo
 
             Container.BindInterfacesAndSelfTo<VertexesFieldBuilder>().AsSingle();
             Container.BindMemoryPool<VertexData, VertexDataPool>().WithInitialSize(20);
@@ -141,7 +144,7 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map.json", Environment.SpecialFolder.Desktop);
 
             Container.BindInterfacesAndSelfTo<VertexDataMapper>().AsSingle();
-            Container.BindInterfacesAndSelfTo<FieldSaveDtoProvider<VertexData, VertexDataDto, LinkDataDto, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexesFieldSaveDtoProvider>().AsSingle();
 
 
             #pragma warning disable CS8321

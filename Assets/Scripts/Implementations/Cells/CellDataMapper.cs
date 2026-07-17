@@ -7,7 +7,7 @@ namespace ThisProject.Implementations.Cells
     {
         public CellDataDto ToDto(CellData nodeData)
         {
-            return new CellDataDto(nodeData);
+            return new CellDataDto(nodeData.Id, nodeData.NodePosition, nodeData.CellType);
         }
     }
 }

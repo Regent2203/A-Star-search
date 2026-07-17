@@ -35,7 +35,7 @@ namespace ThisProject.Starters
         private LinePathDrawer _pathDrawer;
         private ISaver _saver;
         private ILoader _loader;
-        private FieldSaveDtoProvider<VertexData, VertexDataDto, LinkDataDto, int> _dtoProvider;
+        private VertexesFieldSaveDtoProvider _dtoProvider;
         //private UIVertexesHotkeyInfoPanel _hotkeyInfoPanel;
         private UISaveLoadPanel _saveLoadPanel;
 
@@ -46,7 +46,7 @@ namespace ThisProject.Starters
             NodeBlocker<VertexData> nodeBlocker, NodeViewSelector<VertexView> viewSelector, NodeViewMover viewMover, 
             VertexesVisualLinksCreator visualLinksCreator,
             PathSetter<VertexData> pathSetter, PathFinder<VertexData> pathFinder, LinePathDrawer pathDrawer,
-            ISaver saver, ILoader loader, FieldSaveDtoProvider<VertexData, VertexDataDto, LinkDataDto, int> dtoProvider,
+            ISaver saver, ILoader loader, VertexesFieldSaveDtoProvider dtoProvider,
             UISaveLoadPanel saveLoadPanel)
         {
             _nodes = nodes;
@@ -264,7 +264,7 @@ namespace ThisProject.Starters
 
             try
             {
-                var saveDto = _dtoProvider.GetDto<VertexesFieldSaveDto>();
+                var saveDto = _dtoProvider.GetDto();
                 
                 _saveloadTask = _saver.SaveAsync<VertexesFieldSaveDto>(saveDto);
                 await _saveloadTask;

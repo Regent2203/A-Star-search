@@ -7,14 +7,6 @@ namespace ThisProject.SaveSystem.Dto
     public class FieldSaveDto<TNodeDataDto, TLinkDataDto>
     {
         public List<TNodeDataDto> Nodes = new();
-        //public List<TLinkDataDto> Links = new();
-    }
-
-
-    //todo
-    [Serializable]
-    public class LinkDataDto
-    {
-        //id from, id to, weight
+        public List<TLinkDataDto> Links = new();
     }
 }

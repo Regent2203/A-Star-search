@@ -8,6 +8,7 @@ namespace ThisProject.SaveSystem.DtoFileIOs
     {
         private readonly IBinarySerializer _serializer;
 
+
         public BinaryDtoFileIO(IBinarySerializer serializer)
         {
             _serializer = serializer;

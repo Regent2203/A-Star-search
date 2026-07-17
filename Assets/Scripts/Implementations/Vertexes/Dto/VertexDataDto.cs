@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using ThisProject.SaveSystem.Dto;
 
 namespace ThisProject.Implementations.Vertexes
@@ -7,10 +6,8 @@ namespace ThisProject.Implementations.Vertexes
     [Serializable]
     public class VertexDataDto : NodeDataDto<int>
     {
-        public VertexDataDto(int id, Vector2Dto nodePosition)
+        public VertexDataDto(int id, Vector2Dto nodePosition) : base(id, nodePosition)
         {
-            Id = id;
-            NodePosition = nodePosition;
         }
     }
 }
