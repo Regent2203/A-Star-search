@@ -4,15 +4,21 @@ using System.Text;
 
 namespace ThisProject.SaveSystem.Serializers
 {
-    public class NewtonsoftJsonBinarySerializer : IBinarySerializer
+    public class NewtonsoftJsonBytesSerializer : IBytesSerializer
     {
         private readonly JsonSerializer _serializer;
         private readonly Encoding _encoding;
 
-
-        public NewtonsoftJsonBinarySerializer(JsonSerializerSettings settings = null)
+        private readonly JsonSerializerSettings _settings = new JsonSerializerSettings()
         {
-            _serializer = settings != null ? JsonSerializer.Create(settings) : JsonSerializer.CreateDefault();
+            Formatting = Formatting.Indented,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        };
+
+
+        public NewtonsoftJsonBytesSerializer()
+        {
+            _serializer = JsonSerializer.Create(_settings);
             _encoding = new UTF8Encoding(false);
         }
 

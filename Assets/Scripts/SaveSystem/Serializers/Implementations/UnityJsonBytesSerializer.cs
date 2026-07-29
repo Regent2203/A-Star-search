@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace ThisProject.SaveSystem.Serializers
 {
-    public class UnityJsonBinarySerializer : IBinarySerializer
+    public class UnityJsonBytesSerializer : IBytesSerializer
     {
         public byte[] Serialize<T>(T obj)
         {
-            string json = JsonUtility.ToJson(obj);
+            string json = JsonUtility.ToJson(obj, true);
             return Encoding.UTF8.GetBytes(json);
         }
 

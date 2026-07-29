@@ -4,12 +4,12 @@ using ThisProject.SaveSystem.Serializers;
 
 namespace ThisProject.SaveSystem.DtoFileIOs
 {
-    public class BinaryDtoFileIO : IDtoFileIO
+    public class BytesDtoFileIO : IDtoFileIO
     {
-        private readonly IBinarySerializer _serializer;
+        private readonly IBytesSerializer _serializer;
 
 
-        public BinaryDtoFileIO(IBinarySerializer serializer)
+        public BytesDtoFileIO(IBytesSerializer serializer)
         {
             _serializer = serializer;
         }

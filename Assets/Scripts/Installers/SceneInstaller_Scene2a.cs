@@ -135,9 +135,9 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<Saver>().AsSingle();
             Container.BindInterfacesAndSelfTo<Loader>().AsSingle();
 
-            //Choose only one of two variants (binary or string)
-            UseStringSaving();
-            //UseBinarySaving();
+            //Choose only one of two variants (bytes or string)
+            //UseStringSaving();
+            UseBytesSaving();
 
             //Choose only one
             //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
@@ -153,17 +153,17 @@ namespace ThisProject.Installers
                 Container.BindInterfacesAndSelfTo<StringDtoFileIO>().AsSingle();
 
                 //Choose only one
-                Container.BindInterfacesAndSelfTo<NewtonsoftJsonStringSerializer>().AsSingle();
-                //Container.BindInterfacesAndSelfTo<UnityJsonStringSerializer>().AsSingle();
+                //Container.BindInterfacesAndSelfTo<NewtonsoftJsonStringSerializer>().AsSingle();
+                Container.BindInterfacesAndSelfTo<UnityJsonStringSerializer>().AsSingle();
             }
             
-            void UseBinarySaving()
+            void UseBytesSaving()
             {
-                Container.BindInterfacesAndSelfTo<BinaryDtoFileIO>().AsSingle();
+                Container.BindInterfacesAndSelfTo<BytesDtoFileIO>().AsSingle();
 
                 //Choose only one
-                //Container.BindInterfacesAndSelfTo<NewtonsoftJsonBinarySerializer>().AsSingle();
-                Container.BindInterfacesAndSelfTo<UnityJsonBinarySerializer>().AsSingle();
+                //Container.BindInterfacesAndSelfTo<NewtonsoftJsonBytesSerializer>().AsSingle();
+                Container.BindInterfacesAndSelfTo<UnityJsonBytesSerializer>().AsSingle();
             }
             #pragma warning restore CS8321
         }
