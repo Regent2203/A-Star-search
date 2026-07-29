@@ -55,7 +55,7 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellNodeWeightGetter>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellWeightGetter>().AsSingle();
             Container.BindInterfacesAndSelfTo<AverageCostProvider<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathSetter<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<CellData>>().AsSingle();
