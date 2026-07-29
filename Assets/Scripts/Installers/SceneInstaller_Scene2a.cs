@@ -163,7 +163,16 @@ namespace ThisProject.Installers
 
                 //Choose only one
                 //Container.BindInterfacesAndSelfTo<NewtonsoftJsonBytesSerializer>().AsSingle();
-                Container.BindInterfacesAndSelfTo<UnityJsonBytesSerializer>().AsSingle();
+                //Container.BindInterfacesAndSelfTo<UnityJsonBytesSerializer>().AsSingle();
+                Container.BindInterfacesAndSelfTo<GZipCompressedBytesSerializer>().FromSubContainerResolve()
+                    .ByMethod(subContainer =>
+                    {
+                        subContainer.Bind<GZipCompressedBytesSerializer>().AsSingle();
+
+                        //Choose only one
+                        //subContainer.BindInterfacesAndSelfTo<NewtonsoftJsonBytesSerializer>().AsSingle();
+                        subContainer.BindInterfacesAndSelfTo<UnityJsonBytesSerializer>().AsSingle();                        
+                    }).AsSingle();
             }
             #pragma warning restore CS8321
         }
