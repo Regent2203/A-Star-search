@@ -1,29 +1,25 @@
-﻿using ThisProject.Nodes;
+﻿using System;
 
 namespace ThisProject.Links
 {
-    public class LinkData<T> : ILinkData<T>
-        where T : INodeData
+    public class LinkData<TId> : ILinkData<TId>
+    //where TId : IEquatable<TId>
     {
-        private readonly T _from;
-        private readonly T _to;
-        private float _cost;
+        public TId From { get; }
+        public TId To { get; }
+        
+        public float Cost { get; private set; }
 
-        public T From => _from;
-        public T To => _to;
-        public float Cost => _cost;
-
-
-        public LinkData(T from, T to, float cost)
+        public LinkData(TId fromId, TId toId, float cost)
         {
-            _from = from;
-            _to = to;
-            _cost = cost;
+            From = fromId;
+            To = toId;
+            Cost = cost;
         }
 
         public void ChangeCost(float value)
         {
-            _cost += value; 
+            Cost += value;
         }
     }
 }

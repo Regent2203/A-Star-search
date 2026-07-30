@@ -1,12 +1,9 @@
-﻿using ThisProject.Nodes;
-
-namespace ThisProject.Links
+﻿namespace ThisProject.Links
 {
-    public interface ILinkData<T>
-        where T : INodeData
+    public interface ILinkData<TId>
     {
-        public T From { get; }
-        public T To { get; }
+        public TId From { get; }
+        public TId To { get; }
         public float Cost { get; }
 
         public void ChangeCost(float value);

@@ -1,21 +1,32 @@
-﻿using ThisProject.Heuristic;
+﻿using System.Collections.Generic;
+using ThisProject.Heuristic;
 using ThisProject.Links.Providers;
 using ThisProject.Nodes;
-using System.Collections.Generic;
+using ThisProject.ObjectsStorages;
 
 namespace ThisProject.SearchAlgorithms
 {
-    public class AStarSearchAlgorithm<T> : ISearchAlgorithm<T>
-        where T : INodeData
+    public class AStarSearchAlgorithm<T,TId> : ISearchAlgorithm<T, TId>
+        where T : INodeData<TId>
     {
         private Dictionary<T, T> _cameFrom;
         private Dictionary<T, float> _costSoFar;
 
+        private readonly IObjectsStorage<T, TId> _nodes;
 
-        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider<T> heuristicsProvider, ILinksProvider<T> linksProvider)
+
+        public AStarSearchAlgorithm(IObjectsStorage<T, TId> nodes) 
+        {
+            _nodes = nodes;
+        }
+
+        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider<T> heuristicsProvider, ILinksProvider<T, TId> linksProvider)
         {
             if (startNode.Equals(finishNode))
                 return null;
+
+            T fromNode;
+            T toNode;
 
             _cameFrom = new Dictionary<T, T>();
             _costSoFar = new Dictionary<T, float>();
@@ -37,18 +48,21 @@ namespace ThisProject.SearchAlgorithms
 
                 foreach (var link in linksProvider.GetLinksFromNode(current))
                 {
-                    if (link.From.IsBlocked || link.To.IsBlocked)
+                    fromNode = _nodes.GetItem(link.From);
+                    toNode = _nodes.GetItem(link.To);
+
+                    if (fromNode.IsBlocked || toNode.IsBlocked)
                         continue;
 
                     var newCost = _costSoFar[current] + link.Cost;
 
-                    if (!_costSoFar.ContainsKey(link.To) || newCost < _costSoFar[link.To])
+                    if (!_costSoFar.ContainsKey(toNode) || newCost < _costSoFar[toNode])
                     {
-                        _costSoFar[link.To] = newCost;
-                        _cameFrom[link.To] = current;
+                        _costSoFar[toNode] = newCost;
+                        _cameFrom[toNode] = current;
 
-                        var newPriority = newCost + heuristicsProvider.EstimateCost(link.To, finishNode);
-                        needToCheck.Enqueue(link.To, newPriority);
+                        var newPriority = newCost + heuristicsProvider.EstimateCost(toNode, finishNode);
+                        needToCheck.Enqueue(toNode, newPriority);
                     }
                 }
             }

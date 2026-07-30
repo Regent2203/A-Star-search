@@ -21,7 +21,7 @@ namespace ThisProject.Starters
         private CellsFieldBuilder _builder;
         private CellTypeChanger _cellTypeChanger;
         private PathSetter<CellData> _pathSetter;
-        private PathFinder<CellData> _pathFinder;
+        private PathFinder<CellData, Vector2Int> _pathFinder;
         private LinePathDrawer _pathDrawer;
         private CellsPainter _painter;
         private UICellsPalette _palette;
@@ -33,7 +33,7 @@ namespace ThisProject.Starters
         public void Construct(CellsConfig config, CellDataStorage nodes, CellViewStorage views,
             CellsClickHandler clickHandler, CellsFieldBuilder builder,
             CellTypeChanger cellTypeChanger,
-            PathSetter<CellData> pathSetter, PathFinder<CellData> pathFinder, 
+            PathSetter<CellData> pathSetter, PathFinder<CellData, Vector2Int> pathFinder, 
             LinePathDrawer pathDrawer, CellsPainter painter,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsHotkeysInfoPanel hotkeyInfoPanel)
         {

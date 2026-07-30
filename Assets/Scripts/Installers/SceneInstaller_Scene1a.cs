@@ -50,15 +50,15 @@ namespace ThisProject.Installers
                 FromComponentInNewPrefab(_cellViewPrefab).UnderTransform(_field.NodesContainer);
             Container.BindInterfacesAndSelfTo<CellTypeChanger>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellData>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LinksFactory<CellData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinksFactory<CellData, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<FourSideGridNeighbours<CellData>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellWeightGetter>().AsSingle();
             Container.BindInterfacesAndSelfTo<AverageCostProvider<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathSetter<CellData>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<PathFinder<CellData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PathFinder<CellData, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPathDrawer>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPainter>().AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsPalette>().FromInstance(_palette).AsSingle();

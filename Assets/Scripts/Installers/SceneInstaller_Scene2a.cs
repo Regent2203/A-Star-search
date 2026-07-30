@@ -105,8 +105,8 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<VertexesVisualLinksCreator>().FromInstance(_visualLinksManager).AsSingle();
             Container.BindInterfacesAndSelfTo<VisualLinksFactory<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<VisualLinksPool<VertexData>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<StoredLinksProvider<VertexData>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LinksFactory<VertexData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<StoredLinksProvider<VertexData, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinksFactory<VertexData, int>>().AsSingle();
         }
 
         private void BindManipulators()
@@ -120,12 +120,12 @@ namespace ThisProject.Installers
 
         private void BindPathfinding()
         {
-            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<VertexData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<VertexData, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesHeuristicsProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<EuclideanDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<ConstantCostProvider<VertexData>>().AsSingle().WithArguments(0.0f);
             Container.BindInterfacesAndSelfTo<PathSetter<VertexData>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<PathFinder<VertexData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PathFinder<VertexData, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinePathDrawer>().AsSingle();
             Container.Bind<LineRenderer>().WithId(LinePathDrawer.LineRendererId).FromInstance(_pathLineRenderer).AsSingle();
         }
@@ -136,8 +136,8 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<Loader>().AsSingle();
 
             //Choose only one of two variants (bytes or string)
-            //UseStringSaving();
-            UseBytesSaving();
+            UseStringSaving();
+            //UseBytesSaving();
 
             //Choose only one
             //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();

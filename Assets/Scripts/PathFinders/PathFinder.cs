@@ -6,15 +6,15 @@ using ThisProject.SearchAlgorithms;
 
 namespace ThisProject.PathFinders
 {
-    public class PathFinder<T> : IPathFinder<T>
-        where T : INodeData
+    public class PathFinder<T, TId> : IPathFinder<T>
+        where T : INodeData<TId>
     {
         private readonly IHeuristicsProvider<T> _heuristicsProvider;
-        private readonly ILinksProvider<T> _linksProvider;
-        private readonly ISearchAlgorithm<T> _searchAlgorithm;
+        private readonly ILinksProvider<T, TId> _linksProvider;
+        private readonly ISearchAlgorithm<T, TId> _searchAlgorithm;
 
 
-        public PathFinder(IHeuristicsProvider<T> heuristicFunction, ILinksProvider<T> linksProvider, ISearchAlgorithm<T> searchAlgorithm)
+        public PathFinder(IHeuristicsProvider<T> heuristicFunction, ILinksProvider<T, TId> linksProvider, ISearchAlgorithm<T, TId> searchAlgorithm)
         {
             _heuristicsProvider = heuristicFunction;
             _linksProvider = linksProvider;

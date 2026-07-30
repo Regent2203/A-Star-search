@@ -8,19 +8,19 @@ using Zenject;
 
 namespace ThisProject.Implementations.VisualLinks
 {
-    public class VisualLinksCreator<T, V> : MonoBehaviour 
+    public class VisualLinksCreator<T, V, TId> : MonoBehaviour 
         where V: MonoBehaviour, INodeView
-        where T: class, INodeData
+        where T: class, INodeData<TId>
     {
-        private readonly Dictionary<ILinkData<T>, VisualLink<T>> _activeVisualLinks = new Dictionary<ILinkData<T>, VisualLink<T>>();
+        private readonly Dictionary<ILinkData<TId>, VisualLink<T>> _activeVisualLinks = new Dictionary<ILinkData<TId>, VisualLink<T>>();
 
-        private LinksFactory<T> _linksFactory;
+        private LinksFactory<T, TId> _linksFactory;
         private VisualLinksPool<T> _visualLinksPool;
-        private StoredLinksProvider<T> _linksProvider;
+        private StoredLinksProvider<T, TId> _linksProvider;
 
-
+        
         [Inject]
-        public void Construct(LinksFactory<T> linksFactory, VisualLinksPool<T> visualLinksPool, StoredLinksProvider<T> linksProvider)
+        public void Construct(LinksFactory<T, TId> linksFactory, VisualLinksPool<T> visualLinksPool, StoredLinksProvider<T, TId> linksProvider)
         {
             _linksFactory = linksFactory;
             _visualLinksPool = visualLinksPool;
@@ -35,8 +35,9 @@ namespace ThisProject.Implementations.VisualLinks
             var link = _linksFactory.CreateLink(from, to);
             if (_linksProvider.TryAddLink(link))
             {
+                //todo factory
                 var visualLink = _visualLinksPool.Get();
-                //visualLink.Bind(link); //todo
+                //visualLink.Init
 
                 _activeVisualLinks[link] = visualLink;
             }
@@ -44,13 +45,14 @@ namespace ThisProject.Implementations.VisualLinks
 
         public void TryDeleteLink(T from, T to)
         {
-            if (_linksProvider.TryRemoveLink(from, to))
+            if (_linksProvider.TryRemoveLink(from.Id, to.Id))
             {
-                ILinkData<T> targetKey = null;
+                ILinkData<TId> targetKey = null;
 
                 foreach (var key in _activeVisualLinks.Keys)
                 {
-                    if (key.From == from && key.To == to)
+                    if (EqualityComparer<TId>.Default.Equals(key.From, from.Id) &&
+                        EqualityComparer<TId>.Default.Equals(key.To, to.Id))
                     {
                         targetKey = key;
                         break;

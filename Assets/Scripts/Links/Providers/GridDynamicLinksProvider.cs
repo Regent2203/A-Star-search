@@ -10,29 +10,29 @@ namespace ThisProject.Links.Providers
     /// <summary>
     /// Creates links during search algorithm work - not beforehand
     /// </summary>
-    public class GridDynamicLinksProvider<T> : ILinksProvider<T>
+    public class GridDynamicLinksProvider<T> : ILinksProvider<T, Vector2Int>
         where T : INodeData<Vector2Int>
     {
-        private readonly ILinksFactory<T> _factory;
+        private readonly ILinksFactory<T, Vector2Int> _factory;
         private readonly IGridNeighboursProvider<T> _neighboursProvider;
         private readonly GridTypeStorage<T> _gridNodes;
 
 
-        public GridDynamicLinksProvider(ILinksFactory<T> factory, IGridNeighboursProvider<T> neighboursProvider, GridTypeStorage<T> gridNodes)
+        public GridDynamicLinksProvider(ILinksFactory<T, Vector2Int> factory, IGridNeighboursProvider<T> neighboursProvider, GridTypeStorage<T> gridNodes)
         {
             _factory = factory;
             _neighboursProvider = neighboursProvider;
             _gridNodes = gridNodes;
         }
 
-        public IEnumerable<ILinkData<T>> GetLinksFromNode(T node)
+        public IEnumerable<ILinkData<Vector2Int>> GetLinksFromNode(T node)
         {
             var neighbours = _gridNodes.GetNeighbourObjects(node.Id, _neighboursProvider);
 
             return _factory.CreateLinksFromNode(node, neighbours);
         }
 
-        public IEnumerable<ILinkData<T>> GetLinksToNode(T node)
+        public IEnumerable<ILinkData<Vector2Int>> GetLinksToNode(T node)
         {
             var neighbours = _gridNodes.GetNeighbourObjects(node.Id, _neighboursProvider);
 

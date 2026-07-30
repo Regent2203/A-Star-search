@@ -31,7 +31,7 @@ namespace ThisProject.Starters
         private NodeViewMover _viewMover;
         private VertexesVisualLinksCreator _visualLinksCreator;
         private PathSetter<VertexData> _pathSetter;
-        private PathFinder<VertexData> _pathFinder;
+        private PathFinder<VertexData, int> _pathFinder;
         private LinePathDrawer _pathDrawer;
         private ISaver _saver;
         private ILoader _loader;
@@ -45,7 +45,7 @@ namespace ThisProject.Starters
             VertexesClickHandler clickHandler, VertexesDragHandler dragHandler, VertexesFieldBuilder builder,
             NodeBlocker<VertexData> nodeBlocker, NodeViewSelector<VertexView> viewSelector, NodeViewMover viewMover, 
             VertexesVisualLinksCreator visualLinksCreator,
-            PathSetter<VertexData> pathSetter, PathFinder<VertexData> pathFinder, LinePathDrawer pathDrawer,
+            PathSetter<VertexData> pathSetter, PathFinder<VertexData, int> pathFinder, LinePathDrawer pathDrawer,
             ISaver saver, ILoader loader, VertexesFieldSaveDtoProvider dtoProvider,
             UISaveLoadPanel saveLoadPanel)
         {
@@ -154,14 +154,16 @@ namespace ThisProject.Starters
             {
                 if (_viewSelector.SelectedView != null)
                 {
+                    var selectedNode = _nodes.GetItem(_viewSelector.SelectedView.Id);
+
                     switch (button)
-                    {/*
+                    {
                         case PointerEventData.InputButton.Left:
-                            _visualLinksCreator.TryCreateLink(_viewSelector.SelectedView, node);
+                            _visualLinksCreator.TryCreateLink(selectedNode, node);
                             break;
                         case PointerEventData.InputButton.Right:
-                            _visualLinksCreator.TryDeleteLink(_viewSelector.SelectedView, node);
-                            break;*/
+                            _visualLinksCreator.TryDeleteLink(selectedNode, node);
+                            break;
                     }
 
                     

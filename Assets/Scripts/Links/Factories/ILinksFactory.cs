@@ -1,13 +1,13 @@
-﻿using ThisProject.Nodes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ThisProject.Nodes;
 
 namespace ThisProject.Links.Factories
 {
-    public interface ILinksFactory<T>
-        where T : INodeData
+    public interface ILinksFactory<T, TId>
+        where T : INodeData<TId>
     {
-        public IEnumerable<ILinkData<T>> CreateLinksFromNode(T from, IEnumerable<T> neighbours);
-        public IEnumerable<ILinkData<T>> CreateLinksToNode(T to, IEnumerable<T> neighbours);
-        public ILinkData<T> CreateLink(T from, T to);
+        public IEnumerable<ILinkData<TId>> CreateLinksFromNode(T from, IEnumerable<T> neighbours);
+        public IEnumerable<ILinkData<TId>> CreateLinksToNode(T to, IEnumerable<T> neighbours);
+        public ILinkData<TId> CreateLink(T from, T to);
     }
 }

@@ -1,90 +1,95 @@
-﻿using ThisProject.Nodes;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using ThisProject.Nodes;
 
 namespace ThisProject.Links.Providers
 {
-    public class StoredLinksProvider<T> : ILinksProvider<T>
-        where T : INodeData
+    public class StoredLinksProvider<T, TId> : ILinksProvider<T, TId>
+        where T : INodeData<TId>
+        //    where TId : IEquatable<TId>
     {
-        private readonly Dictionary<T, Dictionary<T, ILinkData<T>>> _fromLinks = new Dictionary<T, Dictionary<T, ILinkData<T>>>();
-        private readonly Dictionary<T, Dictionary<T, ILinkData<T>>> _toLinks = new Dictionary<T, Dictionary<T, ILinkData<T>>>();
+        // Основное хранилище связей по их уникальному ключу
+        private readonly Dictionary<LinkKey<TId>, ILinkData<TId>> _links = new Dictionary<LinkKey<TId>, ILinkData<TId>>();
 
+        // Индексы для быстрого поиска направлений без дублирования объектов связей
+        private readonly Dictionary<TId, HashSet<TId>> _outgoingIndex = new Dictionary<TId, HashSet<TId>>();
+        private readonly Dictionary<TId, HashSet<TId>> _incomingIndex = new Dictionary<TId, HashSet<TId>>();
 
-        public bool TryAddLink(ILinkData<T> link)
+        public bool TryAddLink(ILinkData<TId> link)
         {
-            if (link == null) 
-                return false;
+            if (link == null) return false;
 
-            var fromNode = link.From;
-            var toNode = link.To;
+            var key = new LinkKey<TId>(link.From, link.To);
 
-            if (_fromLinks.TryGetValue(fromNode, out var toNodes) && toNodes.ContainsKey(toNode))
+            // TryAdd — более эффективный атомарный метод в современном .NET
+            if (!_links.TryAdd(key, link))
+                return false; // Связь уже существует
+
+            // Обновляем индекс исходящих связей
+            if (!_outgoingIndex.TryGetValue(link.From, out var outgoing))
             {
-                //if such link already exists (only one link between two nodes is allowed)
-                return false;
+                outgoing = new HashSet<TId>();
+                _outgoingIndex[link.From] = outgoing;
             }
+            outgoing.Add(link.To);
 
-            if (!_fromLinks.TryGetValue(fromNode, out var fromSubDict))
+            // Обновляем индекс входящих связей
+            if (!_incomingIndex.TryGetValue(link.To, out var incoming))
             {
-                fromSubDict = new Dictionary<T, ILinkData<T>>();
-                _fromLinks[fromNode] = fromSubDict;
+                incoming = new HashSet<TId>();
+                _incomingIndex[link.To] = incoming;
             }
-            fromSubDict[toNode] = link;
-
-            if (!_toLinks.TryGetValue(toNode, out var toSubDict))
-            {
-                toSubDict = new Dictionary<T, ILinkData<T>>();
-                _toLinks[toNode] = toSubDict;
-            }
-            toSubDict[fromNode] = link;
+            incoming.Add(link.From);
 
             return true;
         }
 
-        public bool TryRemoveLink(T from, T to)
+        public bool TryRemoveLink(TId fromId, TId toId)
         {
-            if (from == null || to == null)
-                return false;
+            var key = new LinkKey<TId>(fromId, toId);
 
-            if (!_fromLinks.TryGetValue(from, out var outgoing) || !outgoing.ContainsKey(to))
+            if (!_links.Remove(key))
+                return false; // Связи не было
+
+            // Очищаем исходящий индекс
+            if (_outgoingIndex.TryGetValue(fromId, out var outgoing))
             {
-                //if such link doesn't exist
-                return false;
+                outgoing.Remove(toId);
+                if (outgoing.Count == 0) _outgoingIndex.Remove(fromId);
             }
 
-            outgoing.Remove(to);
-            if (outgoing.Count == 0)
+            // Очищаем входящий индекс
+            if (_incomingIndex.TryGetValue(toId, out var incoming))
             {
-                _fromLinks.Remove(from);
+                incoming.Remove(fromId);
+                if (incoming.Count == 0) _incomingIndex.Remove(toId);
             }
 
-            if (_toLinks.TryGetValue(to, out var incoming))
+            return true;
+        }
+
+        public IEnumerable<ILinkData<TId>> GetLinksFromNode(T node)
+        {
+            if (_outgoingIndex.TryGetValue(node.Id, out var targetIds))
             {
-                incoming.Remove(from);
-                if (incoming.Count == 0)
+                foreach (var targetId in targetIds)
                 {
-                    _toLinks.Remove(to);
+                    yield return _links[new LinkKey<TId>(node.Id, targetId)];
                 }
             }
-
-            return true;
         }
 
-        public IEnumerable<ILinkData<T>> GetLinksFromNode(T node)
+        public IEnumerable<ILinkData<TId>> GetLinksToNode(T node)
         {
-            if (node != null && _fromLinks.TryGetValue(node, out var links))
-                return links.Values;
-
-            return Enumerable.Empty<ILinkData<T>>();
-        }
-
-        public IEnumerable<ILinkData<T>> GetLinksToNode(T node)
-        {
-            if (node != null && _toLinks.TryGetValue(node, out var links))
-                return links.Values;
-
-            return Enumerable.Empty<ILinkData<T>>();
+            if (_incomingIndex.TryGetValue(node.Id, out var sourceIds))
+            {
+                foreach (var sourceId in sourceIds)
+                {
+                    yield return _links[new LinkKey<TId>(sourceId, node.Id)];
+                }
+            }
         }
     }
 }
+
+

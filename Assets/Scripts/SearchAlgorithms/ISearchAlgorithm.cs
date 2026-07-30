@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace ThisProject.SearchAlgorithms
 {
-    public interface ISearchAlgorithm<T>
-        where T : INodeData
+    public interface ISearchAlgorithm<T, TId>
+        where T : INodeData<TId>
     {
-        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider<T> heuristicsController, ILinksProvider<T> linksProvider);
+        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider<T> heuristicsController, ILinksProvider<T, TId> linksProvider);
     }
 }
