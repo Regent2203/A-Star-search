@@ -246,7 +246,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2dcf81371bc80448acc627f5ae6f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainCamera: {fileID: 146337544}
   _zoomSensitivity: 1.5
   _minOrthographicSize: 10
   _maxOrthographicSize: 40
@@ -1135,9 +1134,8 @@ MonoBehaviour:
   _field: {fileID: 1312652363}
   _clickHandler: {fileID: 371881655}
   _dragHandler: {fileID: 1064474205}
-  _visualLinkPrefab: {fileID: 246736580082225113, guid: 6a91640a09da55b40bdbf151f0023579,
+  _linkViewPrefab: {fileID: 246736580082225113, guid: 6a91640a09da55b40bdbf151f0023579,
     type: 3}
-  _visualLinksManager: {fileID: 1586002215}
   _pathLineRenderer: {fileID: 1307543501}
   _saveLoadPanel: {fileID: 1634628135}
 --- !u!224 &1395924137 stripped
@@ -1290,50 +1288,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1415840024}
   m_CullTransparentMesh: 1
---- !u!1 &1586002213
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1586002214}
-  - component: {fileID: 1586002215}
-  m_Layer: 0
-  m_Name: VisualLinkManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1586002214
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1586002213}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1586002215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1586002213}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1d978e4bc6216b42b70ca1ebbc2f163, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1634628133
 GameObject:
   m_ObjectHideFlags: 0
@@ -2379,4 +2333,3 @@ SceneRoots:
   - {fileID: 7836733952139691453}
   - {fileID: 693699700}
   - {fileID: 371881653}
-  - {fileID: 1586002214}

@@ -29,7 +29,7 @@ namespace ThisProject.Starters
         private NodeBlocker<VertexData> _nodeBlocker;
         private NodeViewSelector<VertexView> _viewSelector;
         private NodeViewMover _viewMover;
-        private VertexesVisualLinksCreator _visualLinksCreator;
+        private VertexesLinksBuilder _visualLinksCreator;
         private PathSetter<VertexData> _pathSetter;
         private PathFinder<VertexData, int> _pathFinder;
         private LinePathDrawer _pathDrawer;
@@ -44,7 +44,7 @@ namespace ThisProject.Starters
         public void Construct(VertexDataStorage nodes, VertexViewStorage views,
             VertexesClickHandler clickHandler, VertexesDragHandler dragHandler, VertexesFieldBuilder builder,
             NodeBlocker<VertexData> nodeBlocker, NodeViewSelector<VertexView> viewSelector, NodeViewMover viewMover, 
-            VertexesVisualLinksCreator visualLinksCreator,
+            VertexesLinksBuilder visualLinksCreator,
             PathSetter<VertexData> pathSetter, PathFinder<VertexData, int> pathFinder, LinePathDrawer pathDrawer,
             ISaver saver, ILoader loader, VertexesFieldSaveDtoProvider dtoProvider,
             UISaveLoadPanel saveLoadPanel)

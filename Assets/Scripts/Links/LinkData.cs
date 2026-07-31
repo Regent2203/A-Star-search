@@ -1,25 +1,33 @@
-﻿using System;
+﻿using Zenject;
 
 namespace ThisProject.Links
 {
-    public class LinkData<TId> : ILinkData<TId>
-    //where TId : IEquatable<TId>
+    public class LinkData<TId> : ILinkData<TId>, IPoolable<TId, TId, float>
     {
-        public TId From { get; }
-        public TId To { get; }
-        
-        public float Cost { get; private set; }
+        protected LinkKey<TId> _id;
+        protected float _cost;
 
-        public LinkData(TId fromId, TId toId, float cost)
+        public LinkKey<TId> Id => _id;
+        public TId From => _id.From;
+        public TId To => _id.To;
+        public float Cost => _cost;
+        
+
+        public virtual void OnSpawned(TId fromId, TId toId, float cost) //use NodeData?? todo
         {
-            From = fromId;
-            To = toId;
-            Cost = cost;
+            _id = new LinkKey<TId>(fromId, toId);
+            _cost = cost;
+        }
+
+        public virtual void OnDespawned()
+        {
+            _id = default;
+            _cost = 0;
         }
 
         public void ChangeCost(float value)
         {
-            Cost += value;
+            _cost += value;
         }
     }
 }

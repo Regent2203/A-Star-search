@@ -40,7 +40,11 @@ namespace ThisProject.Links.Factories
         {
             var cost = _costProvider.GetCost(from, to);
 
-            return new LinkData<TId>(from.Id, to.Id, cost);
+            //todo
+            var linkData = new LinkData<TId>();
+            linkData.OnSpawned(from.Id, to.Id, cost);
+
+            return linkData;
         }
     }
 }

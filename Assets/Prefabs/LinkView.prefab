@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 246736580082225113}
   - component: {fileID: 5990035476382241510}
   m_Layer: 0
-  m_Name: VisualLink
+  m_Name: LinkView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,9 +43,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5979294418695045160}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3ec57ab55fc18c4fad357f778996770, type: 3}
+  m_Script: {fileID: 11500000, guid: 624d4c87f961fa64094b522be3143c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _placementOffset: 0.5
   _arrowBodyRenderer: {fileID: 5990035476382241510}
   _arrowTipRenderer: {fileID: 7081141431544256906}
 --- !u!120 &5990035476382241510

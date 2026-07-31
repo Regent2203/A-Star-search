@@ -1,12 +1,7 @@
 using System;
-using System.ComponentModel;
-using System.Reflection;
 using ThisProject.Fields;
 using ThisProject.Heuristic.Functions;
-using ThisProject.Implementations.Cells;
-using ThisProject.Implementations.Cells.UI;
 using ThisProject.Implementations.Vertexes;
-using ThisProject.Implementations.VisualLinks;
 using ThisProject.Inputs;
 using ThisProject.Links;
 using ThisProject.Links.Factories;
@@ -20,10 +15,8 @@ using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
 using ThisProject.PathSetters;
 using ThisProject.SaveSystem;
-using ThisProject.SaveSystem.Dto;
 using ThisProject.SaveSystem.DtoFileIOs;
 using ThisProject.SaveSystem.FilePathProviders;
-using ThisProject.SaveSystem.Mappers;
 using ThisProject.SaveSystem.Serializers;
 using ThisProject.SearchAlgorithms;
 using ThisProject.Starters;
@@ -48,9 +41,9 @@ namespace ThisProject.Installers
         [SerializeField]
         private VertexesDragHandler _dragHandler;
         [SerializeField]
-        private VisualLink<VertexData> _visualLinkPrefab;
+        private LinkView_Int _linkViewPrefab;
         [SerializeField]
-        private VertexesVisualLinksCreator _visualLinksManager;
+        private VertexesLinksBuilder _visualLinksManager;
         [SerializeField]
         private LineRenderer _pathLineRenderer;
         [SerializeField]
@@ -87,9 +80,7 @@ namespace ThisProject.Installers
             Container.Bind(typeof(VertexDataStorage), typeof(DictTypeStorage<VertexData, int>), typeof(IObjectsStorage<VertexData, int>)).
                 To<VertexDataStorage>().AsSingle();
             Container.Bind(typeof(VertexViewStorage), typeof(DictTypeStorage<VertexView, int>), typeof(IObjectsStorage<VertexView, int>)).
-                To<VertexViewStorage>().AsSingle();
-            Container.Bind(typeof(DictTypeStorage<LinkData<VertexData>, int>), typeof(IObjectsStorage<LinkData<VertexData>, int>)).
-                To<DictTypeStorage<LinkData<VertexData>, int>>().AsSingle(); //todo
+                To<VertexViewStorage>().AsSingle();            
 
             Container.BindInterfacesAndSelfTo<VertexesFieldBuilder>().AsSingle();
             Container.BindMemoryPool<VertexData, VertexDataPool>().WithInitialSize(20);
@@ -101,12 +92,21 @@ namespace ThisProject.Installers
 
         private void BindLinks()
         {
-            Container.BindInstance(_visualLinkPrefab).AsSingle();
-            Container.BindInterfacesAndSelfTo<VertexesVisualLinksCreator>().FromInstance(_visualLinksManager).AsSingle();
-            Container.BindInterfacesAndSelfTo<VisualLinksFactory<VertexData>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<VisualLinksPool<VertexData>>().AsSingle();
+            Container.Bind(typeof(DictTypeStorage<LinkData<int>, LinkKey<int>>), typeof(IObjectsStorage<LinkData<int>, LinkKey<int>>)).
+                To<DictTypeStorage<LinkData<int>, LinkKey<int>>>().AsSingle(); //todo
+            Container.Bind(typeof(DictTypeStorage<LinkView<int>, LinkKey<int>>), typeof(IObjectsStorage<LinkView<int>, LinkKey<int>>)).
+                To<DictTypeStorage<LinkView<int>, LinkKey<int>>>().AsSingle(); //todo
+
+
+            Container.BindInterfacesAndSelfTo<VertexesLinksBuilder>().AsSingle();
+            Container.BindMemoryPool<LinkData<int>, LinkDataPool<int>>().WithInitialSize(20);
+            Container.BindMemoryPool<LinkView<int>, LinkViewPool<int>>().WithInitialSize(20).
+                FromComponentInNewPrefab(_linkViewPrefab).UnderTransform(_field.LinksContainer);
+
             Container.BindInterfacesAndSelfTo<StoredLinksProvider<VertexData, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<VertexData, int>>().AsSingle();
+
+            //Container.BindInstance(_linkViewPrefab).AsSingle();
         }
 
         private void BindManipulators()
