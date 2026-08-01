@@ -1,4 +1,4 @@
-﻿using ThisProject.Links.Factories.CostProviders;
+﻿using ThisProject.Links.CostProviders;
 using ThisProject.Nodes;
 using System.Collections.Generic;
 using ThisProject.ObjectsStorages;

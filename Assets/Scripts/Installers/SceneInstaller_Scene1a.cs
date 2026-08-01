@@ -6,7 +6,7 @@ using ThisProject.Implementations.Cells.UI;
 using ThisProject.Inputs;
 using ThisProject.Links;
 using ThisProject.Links.Factories;
-using ThisProject.Links.Factories.CostProviders;
+using ThisProject.Links.CostProviders;
 using ThisProject.Links.Providers;
 using ThisProject.ObjectsStorages;
 using ThisProject.PathFinders;

@@ -1,0 +1,11 @@
+﻿using ThisProject.Nodes;
+using UnityEngine;
+
+namespace ThisProject.Links.CostProviders
+{
+    public class DistanceCostProvider<TNodeData> : ICostProvider<TNodeData>
+        where TNodeData : INodeData
+    {
+        public float GetCost(TNodeData from, TNodeData to) => Vector2.Distance(from.NodePosition, to.NodePosition);
+    }
+}

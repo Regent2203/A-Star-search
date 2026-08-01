@@ -9,11 +9,10 @@ namespace ThisProject.Links
     public class LinksBuilder<T, V, L, TId>
         where T : class, INodeData<TId>
         where V : MonoBehaviour, INodeView<TId>
-        where L : ILinkData<TId>
     {        
 
-        private readonly ILinksFactory<T, L, TId> _linksFactory;
-        private readonly StoredLinksProvider<T, L, TId> _linksProvider;
+        private readonly ILinksFactory<T, LinkData<TId>, TId> _linksFactory;
+        private readonly StoredLinksProvider<T, LinkData<TId>, TId> _linksProvider;
 
         private readonly DictTypeStorage<LinkData<TId>, LinkKey<TId>> _linkDatas;
         private readonly DictTypeStorage<LinkView<TId>, LinkKey<TId>> _linkViews;
@@ -22,7 +21,7 @@ namespace ThisProject.Links
         private readonly IObjectsStorage<V, TId> _nodeViews;
 
 
-        public LinksBuilder(ILinksFactory<T, L, TId> linksFactory, StoredLinksProvider<T, L, TId> linksProvider,
+        public LinksBuilder(ILinksFactory<T, LinkData<TId>, TId> linksFactory, StoredLinksProvider<T, LinkData<TId>, TId> linksProvider,
             DictTypeStorage<LinkData<TId>, LinkKey<TId>> linkDatas, DictTypeStorage<LinkView<TId>, LinkKey<TId>> linkViews,
             LinkDataPool<TId> linkDatasPool, LinkViewPool<TId> linkViewsPool,
             IObjectsStorage<V, TId> nodeViews)

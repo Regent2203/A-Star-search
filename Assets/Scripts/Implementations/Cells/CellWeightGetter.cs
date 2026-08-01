@@ -1,4 +1,4 @@
-﻿using ThisProject.Links.Factories.CostProviders;
+﻿using ThisProject.Links.CostProviders;
 
 namespace ThisProject.Implementations.Cells
 {
