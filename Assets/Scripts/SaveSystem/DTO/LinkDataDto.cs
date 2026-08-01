@@ -2,10 +2,18 @@
 
 namespace ThisProject.SaveSystem.Dto
 {
-    //todo
     [Serializable]
     public class LinkDataDto<TId>
     {
-        //id from, id to, weight
+        public TId From;
+        public TId To;
+        public float Cost;
+
+        public LinkDataDto(TId from, TId to, float cost)
+        {            
+            From = from;
+            To = to;
+            Cost = cost;
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Inputs;
 using ThisProject.Links;
+using ThisProject.Links.Implementations;
 using ThisProject.Links.Providers;
 using ThisProject.Nodes;
 using ThisProject.Nodes.NodeBlockers;
@@ -34,7 +35,7 @@ namespace ThisProject.Starters
         private NodeViewSelector<VertexView> _viewSelector;
         private NodeViewMover<VertexView> _viewMover;
         private VertexesLinksBuilder _linksBuilder;
-        private StoredLinksProvider<VertexData, int> _linksProvider;
+        private StoredLinksProvider<VertexData, LinkData<int>, int> _linksProvider;
         private PathSetter<VertexData> _pathSetter;
         private PathFinder<VertexData, int> _pathFinder;
         private LinePathDrawer _pathDrawer;
@@ -49,7 +50,7 @@ namespace ThisProject.Starters
         public void Construct(VertexDataStorage nodes, VertexViewStorage views, LinkViewStorage_Int linkViews,
             VertexesClickHandler clickHandler, VertexesDragHandler dragHandler, VertexesFieldBuilder builder,
             NodeBlocker<VertexData> nodeBlocker, NodeViewSelector<VertexView> viewSelector, NodeViewMover<VertexView> viewMover, 
-            VertexesLinksBuilder linksBuilder, StoredLinksProvider<VertexData, int> linksProvider,
+            VertexesLinksBuilder linksBuilder, StoredLinksProvider<VertexData, LinkData<int>, int> linksProvider,
             PathSetter<VertexData> pathSetter, PathFinder<VertexData, int> pathFinder, LinePathDrawer pathDrawer,
             ISaver saver, ILoader loader, VertexesFieldSaveDtoProvider dtoProvider,
             UISaveLoadPanel saveLoadPanel)

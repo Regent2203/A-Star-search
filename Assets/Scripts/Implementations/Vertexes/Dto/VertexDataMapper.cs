@@ -2,7 +2,7 @@
 
 namespace ThisProject.Implementations.Vertexes
 {
-    public class VertexDataMapper : IMapper<VertexData, VertexDataDto, int>
+    public class VertexDataMapper : INodeMapper<VertexData, VertexDataDto, int>
     {
         public VertexDataDto ToDto(VertexData nodeData)
         {

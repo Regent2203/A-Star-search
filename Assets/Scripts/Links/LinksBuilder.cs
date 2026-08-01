@@ -6,23 +6,24 @@ using UnityEngine;
 
 namespace ThisProject.Links
 {
-    public class LinksBuilder<T, V, TId>
+    public class LinksBuilder<T, V, L, TId>
         where T : class, INodeData<TId>
-        where V: MonoBehaviour, INodeView<TId>        
+        where V : MonoBehaviour, INodeView<TId>
+        where L : ILinkData<TId>
     {        
 
-        private readonly LinksFactory<T, TId> _linksFactory;
-        private readonly StoredLinksProvider<T, TId> _linksProvider;
+        private readonly ILinksFactory<T, L, TId> _linksFactory;
+        private readonly StoredLinksProvider<T, L, TId> _linksProvider;
 
-        private readonly DictTypeStorage<ILinkData<TId>, LinkKey<TId>> _linkDatas;
+        private readonly DictTypeStorage<L, LinkKey<TId>> _linkDatas;
         private readonly DictTypeStorage<LinkView<TId>, LinkKey<TId>> _linkViews;
         //private readonly LinkDataPool<TId> _linkDatasPool; //todo
         private readonly LinkViewPool<TId> _linkViewsPool;
         private readonly IObjectsStorage<V, TId> _nodeViews;
 
 
-        public LinksBuilder(LinksFactory<T, TId> linksFactory, StoredLinksProvider<T, TId> linksProvider,
-            DictTypeStorage<ILinkData<TId>, LinkKey<TId>> linkDatas, DictTypeStorage<LinkView<TId>, LinkKey<TId>> linkViews,
+        public LinksBuilder(ILinksFactory<T, L, TId> linksFactory, StoredLinksProvider<T, L, TId> linksProvider,
+            DictTypeStorage<L, LinkKey<TId>> linkDatas, DictTypeStorage<LinkView<TId>, LinkKey<TId>> linkViews,
             LinkViewPool<TId> viewsPool,
             IObjectsStorage<V, TId> nodeViews)
         {

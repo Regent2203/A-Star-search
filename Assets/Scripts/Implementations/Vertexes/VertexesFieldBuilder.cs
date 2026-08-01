@@ -12,20 +12,22 @@ namespace ThisProject.Implementations.Vertexes
         private readonly DictTypeStorage<VertexView, int> _views;
         private readonly VertexDataPool _nodesPool;
         private readonly VertexViewPool _viewsPool;
+        private readonly VertexesLinksBuilder _linksBuilder;
 
         private int _newId = 0;
 
 
         public VertexesFieldBuilder(SpatialField field, DictTypeStorage<VertexData, int> nodes, DictTypeStorage<VertexView, int> views,
-             VertexDataPool nodesPool, VertexViewPool viewsPool)
+             VertexDataPool nodesPool, VertexViewPool viewsPool, VertexesLinksBuilder linksBuilder)
         {
             _field = field;
             _nodes = nodes;
             _views = views;
             _nodesPool = nodesPool;
             _viewsPool = viewsPool;
+            _linksBuilder = linksBuilder;
 
-            ResetId();
+            ResetId();            
         }
 
         //temp
@@ -62,6 +64,13 @@ namespace ThisProject.Implementations.Vertexes
 
                 _nodes.AddItem(id, node);
                 _views.AddItem(id, view);
+            }
+
+            foreach (var item in data.Links)
+            {
+                var from = _nodes.GetItem(item.From);
+                var to = _nodes.GetItem(item.To);
+                _linksBuilder.TryCreateLink(from, to);
             }
         }
 

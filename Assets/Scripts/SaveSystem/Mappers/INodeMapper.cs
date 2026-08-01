@@ -3,8 +3,7 @@ using ThisProject.SaveSystem.Dto;
 
 namespace ThisProject.SaveSystem.Mappers
 {
-    //todo: common easier converter?
-    public interface IMapper<TNodeData, TNodeDataDto, TId>
+    public interface INodeMapper<TNodeData, TNodeDataDto, TId>
         where TNodeData : INodeData<TId>
         where TNodeDataDto : NodeDataDto<TId>
     {

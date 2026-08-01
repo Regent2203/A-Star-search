@@ -1,23 +1,18 @@
 ﻿using System.Collections.Generic;
-using ThisProject.Heuristic;
-using ThisProject.Links.Providers;
 using ThisProject.Nodes;
 using ThisProject.SearchAlgorithms;
 
 namespace ThisProject.PathFinders
 {
+    //todo remove this class??
     public class PathFinder<T, TId> : IPathFinder<T>
         where T : INodeData<TId>
     {
-        private readonly IHeuristicsProvider<T> _heuristicsProvider;
-        private readonly ILinksProvider<T, TId> _linksProvider;
-        private readonly ISearchAlgorithm<T, TId> _searchAlgorithm;
+        private readonly ISearchAlgorithm<T> _searchAlgorithm;
 
 
-        public PathFinder(IHeuristicsProvider<T> heuristicFunction, ILinksProvider<T, TId> linksProvider, ISearchAlgorithm<T, TId> searchAlgorithm)
+        public PathFinder(ISearchAlgorithm<T> searchAlgorithm)
         {
-            _heuristicsProvider = heuristicFunction;
-            _linksProvider = linksProvider;
             _searchAlgorithm = searchAlgorithm;
         }
 
@@ -26,7 +21,7 @@ namespace ThisProject.PathFinders
             if (startNode == null || finishNode == null) 
                 return null;
 
-            return _searchAlgorithm.CalculateWay(startNode, finishNode, _heuristicsProvider, _linksProvider);
+            return _searchAlgorithm.CalculateWay(startNode, finishNode);
         }
     }
 }

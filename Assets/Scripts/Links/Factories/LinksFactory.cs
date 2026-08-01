@@ -5,7 +5,7 @@ using ThisProject.ObjectsStorages;
 
 namespace ThisProject.Links.Factories
 {
-    public class LinksFactory<T, TId> : ILinksFactory<T, TId>
+    public class LinksFactory<T, TId> : ILinksFactory<T, LinkData<TId>, TId>
         where T : INodeData<TId>
     {
         private readonly IObjectsStorage<T, TId> _nodeDatas;
@@ -18,7 +18,7 @@ namespace ThisProject.Links.Factories
             _costProvider = costProvider;
         }
 
-        public IEnumerable<ILinkData<TId>> CreateLinksFromNode(T from, IEnumerable<T> neighbours)
+        public IEnumerable<LinkData<TId>> CreateLinksFromNode(T from, IEnumerable<T> neighbours)
         {
             foreach (var to in neighbours)
             {
@@ -26,7 +26,7 @@ namespace ThisProject.Links.Factories
             }
         }
 
-        public IEnumerable<ILinkData<TId>> CreateLinksToNode(T to, IEnumerable<T> neighbours)
+        public IEnumerable<LinkData<TId>> CreateLinksToNode(T to, IEnumerable<T> neighbours)
         {
             foreach (var from in neighbours)
             {
@@ -34,12 +34,12 @@ namespace ThisProject.Links.Factories
             }
         }
 
-        public ILinkData<TId> CreateLink(T from, T to)
+        public LinkData<TId> CreateLink(T from, T to)
         {            
             return CreateLinkInternal(from, to);
         }
 
-        private ILinkData<TId> CreateLinkInternal(T from, T to)
+        private LinkData<TId> CreateLinkInternal(T from, T to)
         {
             var cost = _costProvider.GetCost(from, to);
 

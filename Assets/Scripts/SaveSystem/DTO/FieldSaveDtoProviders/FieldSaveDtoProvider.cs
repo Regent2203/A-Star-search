@@ -15,27 +15,30 @@ namespace ThisProject.SaveSystem
         where TLinkData : ILinkData<TId>
         where TLinkDataDto : LinkDataDto<TId>
     {
-        private readonly IObjectsStorage<TNodeData, TId> _nodes;
-        private readonly IObjectsStorage<ILinkData<TId>, LinkKey<TId>> _links;
-        private readonly IMapper<TNodeData, TNodeDataDto, TId> _nodeMapper;
+        private readonly IObjectsStorage<TNodeData, TId> _nodeDatas;
+        private readonly IObjectsStorage<TLinkData, LinkKey<TId>> _linkDatas;
+        private readonly INodeMapper<TNodeData, TNodeDataDto, TId> _nodesMapper;
+        private readonly ILinkMapper<TLinkData, TLinkDataDto, TId> _linksMapper;
 
 
         public FieldSaveDtoProvider(
-            IObjectsStorage<TNodeData, TId> nodes,
-            IObjectsStorage<ILinkData<TId>, LinkKey<TId>> links,
-            IMapper<TNodeData, TNodeDataDto, TId> nodeMapper)
+            IObjectsStorage<TNodeData, TId> nodeDatas,
+            IObjectsStorage<TLinkData, LinkKey<TId>> linkDatas,
+            INodeMapper<TNodeData, TNodeDataDto, TId> nodesMapper,
+            ILinkMapper<TLinkData, TLinkDataDto, TId> linksMapper)
         {
-            _nodes = nodes;
-            _links = links;
-            _nodeMapper = nodeMapper;
+            _nodeDatas = nodeDatas;
+            _linkDatas = linkDatas;
+            _nodesMapper = nodesMapper;
+            _linksMapper = linksMapper;
         }
 
         public virtual TFieldSaveDto GetDto()
         {
             var fieldSaveDto = new TFieldSaveDto
             {
-                Nodes = _nodes.AllItems.Select(node => _nodeMapper.ToDto(node)).ToList(),
-                //Links = _linkDatas.AllItems.Select(link => _linkMapper.ToDto(link)).ToList(), //todo
+                Nodes = _nodeDatas.AllItems.Select(node => _nodesMapper.ToDto(node)).ToList(),
+                Links = _linkDatas.AllItems.Select(link => _linksMapper.ToDto(link)).ToList(),
             };
 
             return fieldSaveDto;

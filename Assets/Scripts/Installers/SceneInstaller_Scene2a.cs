@@ -6,6 +6,7 @@ using ThisProject.Inputs;
 using ThisProject.Links;
 using ThisProject.Links.Factories;
 using ThisProject.Links.Factories.CostProviders;
+using ThisProject.Links.Implementations;
 using ThisProject.Links.Providers;
 using ThisProject.Nodes.NodeBlockers;
 using ThisProject.Nodes.ViewMovers;
@@ -93,7 +94,7 @@ namespace ThisProject.Installers
         private void BindLinks()
         {
             Container.Bind(typeof(LinkDataStorage_Int), 
-                typeof(DictTypeStorage<ILinkData<int>, LinkKey<int>>), typeof(IObjectsStorage<ILinkData<int>, LinkKey<int>>)).
+                typeof(DictTypeStorage<LinkData<int>, LinkKey<int>>), typeof(IObjectsStorage<LinkData<int>, LinkKey<int>>)).
                 To<LinkDataStorage_Int>().AsSingle();
             Container.Bind(typeof(LinkViewStorage_Int),
                 typeof(DictTypeStorage<LinkView<int>, LinkKey<int>>), typeof(IObjectsStorage<LinkView<int>, LinkKey<int>>)).
@@ -103,7 +104,7 @@ namespace ThisProject.Installers
             Container.BindMemoryPool<LinkView<int>, LinkViewPool<int>>().WithInitialSize(20).
                 FromComponentInNewPrefab(_linkViewPrefab).UnderTransform(_field.LinksContainer);
 
-            Container.BindInterfacesAndSelfTo<StoredLinksProvider<VertexData, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<StoredLinksProvider<VertexData, LinkData<int>, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<VertexData, int>>().AsSingle();
         }
 
@@ -118,7 +119,7 @@ namespace ThisProject.Installers
 
         private void BindPathfinding()
         {
-            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<VertexData, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<VertexData, LinkData<int>, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesHeuristicsProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<EuclideanDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<ConstantCostProvider<VertexData>>().AsSingle().WithArguments(0.0f);
@@ -142,6 +143,7 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map.json", Environment.SpecialFolder.Desktop);
 
             Container.BindInterfacesAndSelfTo<VertexDataMapper>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkDataMapper>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesFieldSaveDtoProvider>().AsSingle();
 
 

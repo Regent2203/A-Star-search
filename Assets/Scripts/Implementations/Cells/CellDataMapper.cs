@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ThisProject.Implementations.Cells
 {
-    public class CellDataMapper : IMapper<CellData, CellDataDto, Vector2Int>
+    public class CellDataMapper : INodeMapper<CellData, CellDataDto, Vector2Int>
     {
         public CellDataDto ToDto(CellData nodeData)
         {

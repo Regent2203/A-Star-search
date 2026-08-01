@@ -4,21 +4,22 @@ using ThisProject.ObjectsStorages;
 
 namespace ThisProject.Links.Providers
 {
-    public class StoredLinksProvider<T, TId> : ILinksProvider<T, TId>
+    public class StoredLinksProvider<T, L, TId> : ILinksProvider<T, L, TId>
         where T : INodeData<TId>
+        where L : ILinkData<TId>
     {
         private readonly Dictionary<TId, HashSet<TId>> _outgoingIndex = new Dictionary<TId, HashSet<TId>>();
         private readonly Dictionary<TId, HashSet<TId>> _incomingIndex = new Dictionary<TId, HashSet<TId>>();
 
-        private readonly DictTypeStorage<ILinkData<TId>, LinkKey<TId>> _linkDatas;
+        private readonly DictTypeStorage<L, LinkKey<TId>> _linkDatas;
 
 
-        public StoredLinksProvider(DictTypeStorage<ILinkData<TId>, LinkKey<TId>> linkDatas) 
+        public StoredLinksProvider(DictTypeStorage<L, LinkKey<TId>> linkDatas) 
         {
             _linkDatas = linkDatas;
         }
 
-        public bool TryAddLink(ILinkData<TId> link)
+        public bool TryAddLink(L link)
         {
             if (link == null) 
                 return false;
@@ -73,7 +74,7 @@ namespace ThisProject.Links.Providers
             return true;
         }
 
-        public IEnumerable<ILinkData<TId>> GetLinksFromNode(T node)
+        public IEnumerable<L> GetLinksFromNode(T node)
         {
             if (_outgoingIndex.TryGetValue(node.Id, out var targetIds))
             {
@@ -84,7 +85,7 @@ namespace ThisProject.Links.Providers
             }
         }
 
-        public IEnumerable<ILinkData<TId>> GetLinksToNode(T node)
+        public IEnumerable<L> GetLinksToNode(T node)
         {
             if (_incomingIndex.TryGetValue(node.Id, out var sourceIds))
             {

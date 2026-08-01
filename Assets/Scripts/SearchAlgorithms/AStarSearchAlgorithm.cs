@@ -1,26 +1,32 @@
 ﻿using System.Collections.Generic;
 using ThisProject.Heuristic;
+using ThisProject.Links;
 using ThisProject.Links.Providers;
 using ThisProject.Nodes;
 using ThisProject.ObjectsStorages;
 
 namespace ThisProject.SearchAlgorithms
 {
-    public class AStarSearchAlgorithm<T,TId> : ISearchAlgorithm<T, TId>
+    public class AStarSearchAlgorithm<T, L, TId> : ISearchAlgorithm<T>
         where T : INodeData<TId>
+        where L : ILinkData<TId>
     {
         private Dictionary<T, T> _cameFrom;
         private Dictionary<T, float> _costSoFar;
 
         private readonly IObjectsStorage<T, TId> _nodes;
+        private readonly IHeuristicsProvider<T> _heuristicsProvider;
+        private readonly ILinksProvider<T, L, TId> _linksProvider;
 
 
-        public AStarSearchAlgorithm(IObjectsStorage<T, TId> nodes) 
+        public AStarSearchAlgorithm(IObjectsStorage<T, TId> nodes, IHeuristicsProvider<T> heuristicsProvider, ILinksProvider<T, L, TId> linksProvider) 
         {
             _nodes = nodes;
+            _heuristicsProvider = heuristicsProvider;
+            _linksProvider = linksProvider;
         }
 
-        public IList<T> CalculateWay(T startNode, T finishNode, IHeuristicsProvider<T> heuristicsProvider, ILinksProvider<T, TId> linksProvider)
+        public IList<T> CalculateWay(T startNode, T finishNode)
         {
             if (startNode.Equals(finishNode))
                 return null;
@@ -46,7 +52,7 @@ namespace ThisProject.SearchAlgorithms
                     return RetracePath(startNode, finishNode);
                 }
 
-                foreach (var link in linksProvider.GetLinksFromNode(current))
+                foreach (var link in _linksProvider.GetLinksFromNode(current))
                 {
                     fromNode = _nodes.GetItem(link.From);
                     toNode = _nodes.GetItem(link.To);
@@ -61,7 +67,7 @@ namespace ThisProject.SearchAlgorithms
                         _costSoFar[toNode] = newCost;
                         _cameFrom[toNode] = current;
 
-                        var newPriority = newCost + heuristicsProvider.EstimateCost(toNode, finishNode);
+                        var newPriority = newCost + _heuristicsProvider.EstimateCost(toNode, finishNode);
                         needToCheck.Enqueue(toNode, newPriority);
                     }
                 }

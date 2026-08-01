@@ -4,6 +4,7 @@ using ThisProject.Heuristic.Functions;
 using ThisProject.Implementations.Cells;
 using ThisProject.Implementations.Cells.UI;
 using ThisProject.Inputs;
+using ThisProject.Links;
 using ThisProject.Links.Factories;
 using ThisProject.Links.Factories.CostProviders;
 using ThisProject.Links.Providers;
@@ -49,10 +50,10 @@ namespace ThisProject.Installers
             Container.BindMemoryPool<CellView, CellViewPool>().WithInitialSize(100).
                 FromComponentInNewPrefab(_cellViewPrefab).UnderTransform(_field.NodesContainer);
             Container.BindInterfacesAndSelfTo<CellTypeChanger>().AsSingle();
-            Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellData, LinkData<Vector2Int>>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<CellData, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<FourSideGridNeighbours<CellData>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData, Vector2Int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData, LinkData<Vector2Int>, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellWeightGetter>().AsSingle();
