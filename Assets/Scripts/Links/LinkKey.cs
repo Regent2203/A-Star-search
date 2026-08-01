@@ -31,5 +31,10 @@ namespace ThisProject.Links
         {            
             return HashCode.Combine(From, To);
         }
+
+        public override string ToString()
+        {
+            return $"LinkKey({From}->{To})";
+        }
     }
 }

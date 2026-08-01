@@ -16,13 +16,13 @@ namespace ThisProject.SaveSystem
         where TLinkDataDto : LinkDataDto<TId>
     {
         private readonly IObjectsStorage<TNodeData, TId> _nodes;
-        private readonly IObjectsStorage<LinkData<TId>, LinkKey<TId>> _links;
+        private readonly IObjectsStorage<ILinkData<TId>, LinkKey<TId>> _links;
         private readonly IMapper<TNodeData, TNodeDataDto, TId> _nodeMapper;
 
 
         public FieldSaveDtoProvider(
             IObjectsStorage<TNodeData, TId> nodes,
-            IObjectsStorage<LinkData<TId>, LinkKey<TId>> links,
+            IObjectsStorage<ILinkData<TId>, LinkKey<TId>> links,
             IMapper<TNodeData, TNodeDataDto, TId> nodeMapper)
         {
             _nodes = nodes;

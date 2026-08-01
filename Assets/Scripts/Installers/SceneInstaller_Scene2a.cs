@@ -54,7 +54,7 @@ namespace ThisProject.Installers
         {
             BindStarter();
             BindEnviroment();
-            BindField();
+            BindNodes();
             BindPathfinding();
             BindLinks();
             BindManipulators();
@@ -72,41 +72,39 @@ namespace ThisProject.Installers
             Container.BindInstance(_mainCamera).AsSingle();
             Container.BindInstance(_inputSettings).AsSingle();
             Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<SpatialField>().FromInstance(_field).AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexesFieldBuilder>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexesLinksBuilder>().AsSingle();
         }
 
-        private void BindField()
-        {
-            Container.BindInterfacesAndSelfTo<SpatialField>().FromInstance(_field).AsSingle();
+        private void BindNodes()
+        {            
             Container.Bind(typeof(VertexDataStorage), typeof(DictTypeStorage<VertexData, int>), typeof(IObjectsStorage<VertexData, int>)).
                 To<VertexDataStorage>().AsSingle();
             Container.Bind(typeof(VertexViewStorage), typeof(DictTypeStorage<VertexView, int>), typeof(IObjectsStorage<VertexView, int>)).
                 To<VertexViewStorage>().AsSingle();            
-
-            Container.BindInterfacesAndSelfTo<VertexesFieldBuilder>().AsSingle();
+            
             Container.BindMemoryPool<VertexData, VertexDataPool>().WithInitialSize(20);
             Container.BindMemoryPool<VertexView, VertexViewPool>().WithInitialSize(20).
-                FromComponentInNewPrefab(_vertexViewPrefab).UnderTransform(_field.NodesContainer);
-
-            //Container.BindInterfacesAndSelfTo<VertexView>().FromInstance(_vertexViewPrefab).AsSingle();
+                FromComponentInNewPrefab(_vertexViewPrefab).UnderTransform(_field.NodesContainer);            
         }
 
         private void BindLinks()
         {
-            Container.Bind(typeof(DictTypeStorage<LinkData<int>, LinkKey<int>>), typeof(IObjectsStorage<LinkData<int>, LinkKey<int>>)).
-                To<DictTypeStorage<LinkData<int>, LinkKey<int>>>().AsSingle(); //todo
-            Container.Bind(typeof(DictTypeStorage<LinkView<int>, LinkKey<int>>), typeof(IObjectsStorage<LinkView<int>, LinkKey<int>>)).
-                To<DictTypeStorage<LinkView<int>, LinkKey<int>>>().AsSingle(); //todo
+            Container.Bind(typeof(LinkDataStorage_Int), 
+                typeof(DictTypeStorage<ILinkData<int>, LinkKey<int>>), typeof(IObjectsStorage<ILinkData<int>, LinkKey<int>>)).
+                To<LinkDataStorage_Int>().AsSingle();
+            Container.Bind(typeof(LinkViewStorage_Int),
+                typeof(DictTypeStorage<LinkView<int>, LinkKey<int>>), typeof(IObjectsStorage<LinkView<int>, LinkKey<int>>)).
+                To<LinkViewStorage_Int>().AsSingle();
 
-
-            Container.BindInterfacesAndSelfTo<VertexesLinksBuilder>().AsSingle();
             Container.BindMemoryPool<LinkData<int>, LinkDataPool<int>>().WithInitialSize(20);
             Container.BindMemoryPool<LinkView<int>, LinkViewPool<int>>().WithInitialSize(20).
                 FromComponentInNewPrefab(_linkViewPrefab).UnderTransform(_field.LinksContainer);
 
             Container.BindInterfacesAndSelfTo<StoredLinksProvider<VertexData, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinksFactory<VertexData, int>>().AsSingle();
-
-            //Container.BindInstance(_linkViewPrefab).AsSingle();
         }
 
         private void BindManipulators()
@@ -115,7 +113,7 @@ namespace ThisProject.Installers
             Container.BindInstance(_dragHandler).AsSingle();
             Container.BindInterfacesAndSelfTo<NodeBlocker<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeViewSelector<VertexView>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<NodeViewMover>().AsSingle();
+            Container.BindInterfacesAndSelfTo<NodeViewMover<VertexView>>().AsSingle();
         }
 
         private void BindPathfinding()

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Inputs;
+using ThisProject.Links;
+using ThisProject.Links.Providers;
 using ThisProject.Nodes;
 using ThisProject.Nodes.NodeBlockers;
 using ThisProject.Nodes.ViewMovers;
@@ -23,13 +26,15 @@ namespace ThisProject.Starters
     {
         private VertexDataStorage _nodes;
         private VertexViewStorage _views;
+        private LinkViewStorage_Int _linkViews;
         private VertexesClickHandler _clickHandler;
         private VertexesDragHandler _dragHandler;
         private VertexesFieldBuilder _builder;
         private NodeBlocker<VertexData> _nodeBlocker;
         private NodeViewSelector<VertexView> _viewSelector;
-        private NodeViewMover _viewMover;
-        private VertexesLinksBuilder _visualLinksCreator;
+        private NodeViewMover<VertexView> _viewMover;
+        private VertexesLinksBuilder _linksBuilder;
+        private StoredLinksProvider<VertexData, int> _linksProvider;
         private PathSetter<VertexData> _pathSetter;
         private PathFinder<VertexData, int> _pathFinder;
         private LinePathDrawer _pathDrawer;
@@ -41,16 +46,17 @@ namespace ThisProject.Starters
 
 
         [Inject]
-        public void Construct(VertexDataStorage nodes, VertexViewStorage views,
+        public void Construct(VertexDataStorage nodes, VertexViewStorage views, LinkViewStorage_Int linkViews,
             VertexesClickHandler clickHandler, VertexesDragHandler dragHandler, VertexesFieldBuilder builder,
-            NodeBlocker<VertexData> nodeBlocker, NodeViewSelector<VertexView> viewSelector, NodeViewMover viewMover, 
-            VertexesLinksBuilder visualLinksCreator,
+            NodeBlocker<VertexData> nodeBlocker, NodeViewSelector<VertexView> viewSelector, NodeViewMover<VertexView> viewMover, 
+            VertexesLinksBuilder linksBuilder, StoredLinksProvider<VertexData, int> linksProvider,
             PathSetter<VertexData> pathSetter, PathFinder<VertexData, int> pathFinder, LinePathDrawer pathDrawer,
             ISaver saver, ILoader loader, VertexesFieldSaveDtoProvider dtoProvider,
             UISaveLoadPanel saveLoadPanel)
         {
             _nodes = nodes;
             _views = views;
+            _linkViews = linkViews;
             _clickHandler = clickHandler;
             _dragHandler = dragHandler;
             _builder = builder;
@@ -58,7 +64,8 @@ namespace ThisProject.Starters
             _viewSelector = viewSelector;
             _viewMover = viewMover;
 
-            _visualLinksCreator = visualLinksCreator;
+            _linksBuilder = linksBuilder;
+            _linksProvider = linksProvider;
 
             _pathSetter = pathSetter;
             _pathFinder = pathFinder;
@@ -124,6 +131,25 @@ namespace ThisProject.Starters
                 OnFieldChanged();
         }
 
+        //todo move?
+        private void RedrawLinkViews(VertexView view)
+        {
+            ILinkView linkView;
+            var fromLinks = _linksProvider.GetLinksFromNode(_nodes.GetItem(view.Id));
+            var toLinks = _linksProvider.GetLinksToNode(_nodes.GetItem(view.Id));
+
+            foreach (var linkData in fromLinks)
+            {
+                linkView = _linkViews.GetItem(new LinkKey<int>(view.Id, linkData.Id.To));
+                linkView.UpdatePositions();
+            }
+            foreach (var linkData in toLinks)
+            {
+                linkView = _linkViews.GetItem(new LinkKey<int>(linkData.Id.From, view.Id));
+                linkView.UpdatePositions();
+            }
+        }
+
         private void OnViewClicked(VertexView view, PointerEventData.InputButton button, InputSnapshot input)
         {
             var node = _nodes.GetItem(view.Id);
@@ -159,14 +185,14 @@ namespace ThisProject.Starters
                     switch (button)
                     {
                         case PointerEventData.InputButton.Left:
-                            _visualLinksCreator.TryCreateLink(selectedNode, node);
+                            if (_linksBuilder.TryCreateLink(selectedNode, node))
+                                OnFieldChanged();
                             break;
                         case PointerEventData.InputButton.Right:
-                            _visualLinksCreator.TryDeleteLink(selectedNode, node);
+                            if (_linksBuilder.TryDeleteLink(selectedNode, node))
+                                OnFieldChanged();
                             break;
-                    }
-
-                    
+                    }                    
                 }
             }
         }
@@ -188,24 +214,23 @@ namespace ThisProject.Starters
 
         private void OnViewDragging(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
         {
-            if (_viewMover.TryMoveView(view, ref pos))
-                UpdateNodePosition(view, pos);
+            _viewMover.TryMoveView(view, ref pos);                                        
         }
 
         private void OnViewDragEnded(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
         {
-            if (_viewMover.TryMoveView(view, ref pos))
-                UpdateNodePosition(view, pos);
-        }
+            _viewMover.TryMoveView(view, ref pos);
+        }        
 
         private void OnViewSelected(VertexView view, bool b)
         {
             view.ShowSelectedMarker(b);
         }
 
-        private void OnViewMoved(INodeView view, Vector2 vector)
+        private void OnViewMoved(VertexView view, Vector2 pos)
         {
-            //todo visual link update; also fieldchanged?
+            UpdateNodePosition(view, pos);
+            RedrawLinkViews(view);
         }
 
         private void OnNodeBlocked(VertexData node, bool b)

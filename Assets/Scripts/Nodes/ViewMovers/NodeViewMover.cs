@@ -4,11 +4,12 @@ using UnityEngine;
 
 namespace ThisProject.Nodes.ViewMovers
 {
-    public class NodeViewMover : INodeViewMover
+    public class NodeViewMover<V> : INodeViewMover<V>
+        where V : MonoBehaviour, INodeView
     {
         private readonly IField _field;
 
-        public event Action<INodeView, Vector2> ViewMoved;
+        public event Action<V, Vector2> ViewMoved;
 
 
         public NodeViewMover(IField field) 
@@ -16,7 +17,7 @@ namespace ThisProject.Nodes.ViewMovers
             _field = field;
         }
 
-        public bool TryMoveView(INodeView view, ref Vector2 position)
+        public bool TryMoveView(V view, ref Vector2 position)
         {
             if (view == null)
                 return false;

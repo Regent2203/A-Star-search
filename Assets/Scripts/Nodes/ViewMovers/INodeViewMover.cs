@@ -3,10 +3,11 @@ using UnityEngine;
 
 namespace ThisProject.Nodes.ViewMovers
 {
-    public interface INodeViewMover
+    public interface INodeViewMover<V>
+        where V : MonoBehaviour, INodeView
     {
-        public bool TryMoveView(INodeView view, ref Vector2 position);
+        public bool TryMoveView(V view, ref Vector2 position);
 
-        public event Action<INodeView, Vector2> ViewMoved;
+        public event Action<V, Vector2> ViewMoved;
     }
 }

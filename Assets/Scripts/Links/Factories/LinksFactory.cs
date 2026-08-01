@@ -1,17 +1,20 @@
 ﻿using ThisProject.Links.Factories.CostProviders;
 using ThisProject.Nodes;
 using System.Collections.Generic;
+using ThisProject.ObjectsStorages;
 
 namespace ThisProject.Links.Factories
 {
     public class LinksFactory<T, TId> : ILinksFactory<T, TId>
         where T : INodeData<TId>
     {
+        private readonly IObjectsStorage<T, TId> _nodeDatas;
         private readonly ICostProvider<T> _costProvider;
 
 
-        public LinksFactory(ICostProvider<T> costProvider)
+        public LinksFactory(IObjectsStorage<T, TId> nodeDatas, ICostProvider<T> costProvider)
         {
+            _nodeDatas = nodeDatas;
             _costProvider = costProvider;
         }
 
@@ -40,7 +43,7 @@ namespace ThisProject.Links.Factories
         {
             var cost = _costProvider.GetCost(from, to);
 
-            //todo
+            //todo some factory
             var linkData = new LinkData<TId>();
             linkData.OnSpawned(from.Id, to.Id, cost);
 

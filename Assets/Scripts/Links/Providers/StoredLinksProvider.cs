@@ -1,31 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ThisProject.Nodes;
+using ThisProject.ObjectsStorages;
 
 namespace ThisProject.Links.Providers
 {
     public class StoredLinksProvider<T, TId> : ILinksProvider<T, TId>
         where T : INodeData<TId>
-        //    where TId : IEquatable<TId>
     {
-        // Основное хранилище связей по их уникальному ключу
-        private readonly Dictionary<LinkKey<TId>, ILinkData<TId>> _links = new Dictionary<LinkKey<TId>, ILinkData<TId>>();
-
-        // Индексы для быстрого поиска направлений без дублирования объектов связей
         private readonly Dictionary<TId, HashSet<TId>> _outgoingIndex = new Dictionary<TId, HashSet<TId>>();
         private readonly Dictionary<TId, HashSet<TId>> _incomingIndex = new Dictionary<TId, HashSet<TId>>();
 
+        private readonly DictTypeStorage<ILinkData<TId>, LinkKey<TId>> _linkDatas;
+
+
+        public StoredLinksProvider(DictTypeStorage<ILinkData<TId>, LinkKey<TId>> linkDatas) 
+        {
+            _linkDatas = linkDatas;
+        }
+
         public bool TryAddLink(ILinkData<TId> link)
         {
-            if (link == null) return false;
+            if (link == null) 
+                return false;
 
             var key = new LinkKey<TId>(link.From, link.To);
 
-            // TryAdd — более эффективный атомарный метод в современном .NET
-            if (!_links.TryAdd(key, link))
-                return false; // Связь уже существует
+            if (_linkDatas.HasItem(key))
+                return false;
 
-            // Обновляем индекс исходящих связей
+            _linkDatas.AddItem(key, link);
+
             if (!_outgoingIndex.TryGetValue(link.From, out var outgoing))
             {
                 outgoing = new HashSet<TId>();
@@ -33,7 +37,6 @@ namespace ThisProject.Links.Providers
             }
             outgoing.Add(link.To);
 
-            // Обновляем индекс входящих связей
             if (!_incomingIndex.TryGetValue(link.To, out var incoming))
             {
                 incoming = new HashSet<TId>();
@@ -48,21 +51,23 @@ namespace ThisProject.Links.Providers
         {
             var key = new LinkKey<TId>(fromId, toId);
 
-            if (!_links.Remove(key))
-                return false; // Связи не было
+            if (!_linkDatas.HasItem(key))
+                return false;
+            
+            _linkDatas.RemoveItem(key);
 
-            // Очищаем исходящий индекс
             if (_outgoingIndex.TryGetValue(fromId, out var outgoing))
             {
                 outgoing.Remove(toId);
-                if (outgoing.Count == 0) _outgoingIndex.Remove(fromId);
+                if (outgoing.Count == 0) 
+                    _outgoingIndex.Remove(fromId);
             }
 
-            // Очищаем входящий индекс
             if (_incomingIndex.TryGetValue(toId, out var incoming))
             {
                 incoming.Remove(fromId);
-                if (incoming.Count == 0) _incomingIndex.Remove(toId);
+                if (incoming.Count == 0) 
+                    _incomingIndex.Remove(toId);
             }
 
             return true;
@@ -74,7 +79,7 @@ namespace ThisProject.Links.Providers
             {
                 foreach (var targetId in targetIds)
                 {
-                    yield return _links[new LinkKey<TId>(node.Id, targetId)];
+                    yield return _linkDatas.GetItem(new LinkKey<TId>(node.Id, targetId));
                 }
             }
         }
@@ -85,7 +90,7 @@ namespace ThisProject.Links.Providers
             {
                 foreach (var sourceId in sourceIds)
                 {
-                    yield return _links[new LinkKey<TId>(sourceId, node.Id)];
+                    yield return _linkDatas.GetItem(new LinkKey<TId>(sourceId, node.Id));
                 }
             }
         }
