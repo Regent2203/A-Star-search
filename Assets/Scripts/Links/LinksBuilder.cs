@@ -15,24 +15,26 @@ namespace ThisProject.Links
         private readonly ILinksFactory<T, L, TId> _linksFactory;
         private readonly StoredLinksProvider<T, L, TId> _linksProvider;
 
-        private readonly DictTypeStorage<L, LinkKey<TId>> _linkDatas;
+        private readonly DictTypeStorage<LinkData<TId>, LinkKey<TId>> _linkDatas;
         private readonly DictTypeStorage<LinkView<TId>, LinkKey<TId>> _linkViews;
-        //private readonly LinkDataPool<TId> _linkDatasPool; //todo
+        private readonly LinkDataPool<TId> _linkDatasPool;
         private readonly LinkViewPool<TId> _linkViewsPool;
         private readonly IObjectsStorage<V, TId> _nodeViews;
 
 
         public LinksBuilder(ILinksFactory<T, L, TId> linksFactory, StoredLinksProvider<T, L, TId> linksProvider,
-            DictTypeStorage<L, LinkKey<TId>> linkDatas, DictTypeStorage<LinkView<TId>, LinkKey<TId>> linkViews,
-            LinkViewPool<TId> viewsPool,
+            DictTypeStorage<LinkData<TId>, LinkKey<TId>> linkDatas, DictTypeStorage<LinkView<TId>, LinkKey<TId>> linkViews,
+            LinkDataPool<TId> linkDatasPool, LinkViewPool<TId> linkViewsPool,
             IObjectsStorage<V, TId> nodeViews)
         {
             _linksFactory = linksFactory;
             _linksProvider = linksProvider;
 
             _linkDatas = linkDatas;
+            _linkDatasPool = linkDatasPool;
             _linkViews = linkViews;
-            _linkViewsPool = viewsPool;
+            _linkViewsPool = linkViewsPool;
+
             _nodeViews = nodeViews;
         }
 
@@ -73,6 +75,22 @@ namespace ThisProject.Links
             }
             else
                 return false;
-        }      
+        }
+
+        public void ClearAll()
+        {            
+            foreach (var data in _linkDatas.AllItems)
+            {
+                _linkDatasPool.Despawn(data);
+                //_linksProvider.TryRemoveLink(data.From, data.To);
+            }
+            _linkDatas.ClearData();
+
+            foreach (var view in _linkViews.AllItems)
+            {
+                _linkViewsPool.Despawn(view);
+            }
+            _linkViews.ClearData();
+        }
     }
 }

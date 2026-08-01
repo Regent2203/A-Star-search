@@ -66,17 +66,18 @@ namespace ThisProject.Installers
         private void BindStarter()
         {
             Container.BindInterfacesAndSelfTo<Starter_Scene2a>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<SpatialField>().FromInstance(_field).AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexesFieldBuilder>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexesNodesBuilder>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexesLinksBuilder>().AsSingle();
         }
 
         private void BindEnviroment()
         {
             Container.BindInstance(_mainCamera).AsSingle();
             Container.BindInstance(_inputSettings).AsSingle();
-            Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
-
-            Container.BindInterfacesAndSelfTo<SpatialField>().FromInstance(_field).AsSingle();
-            Container.BindInterfacesAndSelfTo<VertexesFieldBuilder>().AsSingle();
-            Container.BindInterfacesAndSelfTo<VertexesLinksBuilder>().AsSingle();
+            Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();            
         }
 
         private void BindNodes()

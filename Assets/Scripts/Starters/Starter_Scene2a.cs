@@ -320,7 +320,9 @@ namespace ThisProject.Starters
                 _saveloadTask = loadTask;
 
                 var dto = await loadTask;
-                _builder.BuildFromDto(dto);
+                _pathSetter.UpdateStartNode(_pathSetter.StartNode);
+                _pathSetter.UpdateFinishNode(_pathSetter.FinishNode);
+                _builder.BuildFromDto(dto);                
             }
             catch (Exception ex)
             {
