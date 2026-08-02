@@ -7,37 +7,37 @@ using ThisProject.ObjectsStorages;
 
 namespace ThisProject.SearchAlgorithms
 {
-    public class AStarSearchAlgorithm<T, L, TId> : ISearchAlgorithm<T>
-        where T : INodeData<TId>
-        where L : ILinkData<TId>
+    public class AStarSearchAlgorithm<TNodeData, TLinkData, TId> : ISearchAlgorithm<TNodeData>
+        where TNodeData : INodeData<TId>
+        where TLinkData : ILinkData<TId>
     {
-        private Dictionary<T, T> _cameFrom;
-        private Dictionary<T, float> _costSoFar;
+        private Dictionary<TNodeData, TNodeData> _cameFrom;
+        private Dictionary<TNodeData, float> _costSoFar;
 
-        private readonly IObjectsStorage<T, TId> _nodes;
-        private readonly IHeuristicsProvider<T> _heuristicsProvider;
-        private readonly ILinksProvider<T, L, TId> _linksProvider;
+        private readonly IObjectsStorage<TNodeData, TId> _nodes;
+        private readonly IHeuristicsProvider<TNodeData> _heuristicsProvider;
+        private readonly ILinksProvider<TLinkData, TId> _linksProvider;
 
 
-        public AStarSearchAlgorithm(IObjectsStorage<T, TId> nodes, IHeuristicsProvider<T> heuristicsProvider, ILinksProvider<T, L, TId> linksProvider) 
+        public AStarSearchAlgorithm(IObjectsStorage<TNodeData, TId> nodes, IHeuristicsProvider<TNodeData> heuristicsProvider, ILinksProvider<TLinkData, TId> linksProvider)
         {
             _nodes = nodes;
             _heuristicsProvider = heuristicsProvider;
             _linksProvider = linksProvider;
         }
 
-        public IList<T> CalculateWay(T startNode, T finishNode)
+        public IList<TNodeData> CalculateWay(TNodeData startNode, TNodeData finishNode)
         {
             if (startNode.Equals(finishNode))
                 return null;
 
-            T fromNode;
-            T toNode;
+            TNodeData fromNode;
+            TNodeData toNode;
 
-            _cameFrom = new Dictionary<T, T>();
-            _costSoFar = new Dictionary<T, float>();
+            _cameFrom = new Dictionary<TNodeData, TNodeData>();
+            _costSoFar = new Dictionary<TNodeData, float>();
 
-            var needToCheck = new PriorityQueue<T>();
+            var needToCheck = new PriorityQueue<TNodeData>();
             needToCheck.Enqueue(startNode, 0);
 
             _cameFrom[startNode] = default;
@@ -52,7 +52,7 @@ namespace ThisProject.SearchAlgorithms
                     return RetracePath(startNode, finishNode);
                 }
 
-                foreach (var link in _linksProvider.GetLinksFromNode(current))
+                foreach (var link in _linksProvider.GetLinksFromNode(current.Id))
                 {
                     fromNode = _nodes.GetItem(link.From);
                     toNode = _nodes.GetItem(link.To);
@@ -76,9 +76,9 @@ namespace ThisProject.SearchAlgorithms
             return null;
         }
 
-        private IList<T> RetracePath(T startNode, T finishNode)
+        private IList<TNodeData> RetracePath(TNodeData startNode, TNodeData finishNode)
         {
-            var path = new List<T>();
+            var path = new List<TNodeData>();
             var current = finishNode;
 
             while (!current.Equals(startNode))

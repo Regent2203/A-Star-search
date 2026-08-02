@@ -1,8 +1,10 @@
-﻿namespace ThisProject.Links
+﻿using UnityEngine;
+
+namespace ThisProject.Links
 {
     public interface ILinkView
     {
-        public void UpdatePositions();
+        public void UpdatePositions(Vector2 posFrom, Vector2 posTo);
     }
 
     public interface ILinkView<TId> : ILinkView

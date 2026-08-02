@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Inputs;
 using ThisProject.Links;
 using ThisProject.Links.Implementations;
 using ThisProject.Links.Providers;
-using ThisProject.Nodes;
+using ThisProject.Links.ViewMovers;
 using ThisProject.Nodes.NodeBlockers;
 using ThisProject.Nodes.ViewMovers;
 using ThisProject.Nodes.ViewSelectors;
@@ -15,7 +15,6 @@ using ThisProject.PathDrawers;
 using ThisProject.PathFinders;
 using ThisProject.PathSetters;
 using ThisProject.SaveSystem;
-using ThisProject.SaveSystem.Dto;
 using ThisProject.UICommon;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -35,7 +34,8 @@ namespace ThisProject.Starters
         private NodeViewSelector<VertexView> _viewSelector;
         private NodeViewMover<VertexView> _viewMover;
         private VertexesLinksBuilder _linksBuilder;
-        private StoredLinksProvider<VertexData, LinkData<int>, int> _linksProvider;
+        private StoredLinksProvider<LinkData<int>, int> _linksProvider;
+        private LinkViewCoordinator<VertexView, int> _linkViewCoordinator;
         private PathSetter<VertexData> _pathSetter;
         private PathFinder<VertexData, int> _pathFinder;
         private LinePathDrawer _pathDrawer;
@@ -50,7 +50,7 @@ namespace ThisProject.Starters
         public void Construct(VertexDataStorage nodes, VertexViewStorage views, LinkViewStorage_Int linkViews,
             VertexesClickHandler clickHandler, VertexesDragHandler dragHandler, VertexesFieldBuilder builder,
             NodeBlocker<VertexData> nodeBlocker, NodeViewSelector<VertexView> viewSelector, NodeViewMover<VertexView> viewMover, 
-            VertexesLinksBuilder linksBuilder, StoredLinksProvider<VertexData, LinkData<int>, int> linksProvider,
+            VertexesLinksBuilder linksBuilder, StoredLinksProvider<LinkData<int>, int> linksProvider, LinkViewCoordinator<VertexView, int> linkViewCoordinator,
             PathSetter<VertexData> pathSetter, PathFinder<VertexData, int> pathFinder, LinePathDrawer pathDrawer,
             ISaver saver, ILoader loader, VertexesFieldSaveDtoProvider dtoProvider,
             UISaveLoadPanel saveLoadPanel)
@@ -67,6 +67,7 @@ namespace ThisProject.Starters
 
             _linksBuilder = linksBuilder;
             _linksProvider = linksProvider;
+            _linkViewCoordinator = linkViewCoordinator;
 
             _pathSetter = pathSetter;
             _pathFinder = pathFinder;
@@ -135,19 +136,21 @@ namespace ThisProject.Starters
         //todo move?
         private void RedrawLinkViews(VertexView view)
         {
-            ILinkView linkView;
-            var fromLinks = _linksProvider.GetLinksFromNode(_nodes.GetItem(view.Id));
-            var toLinks = _linksProvider.GetLinksToNode(_nodes.GetItem(view.Id));
+            LinkView<int> linkView;
+            var fromLinks = _linksProvider.GetLinksFromNode(view.Id);
+            var toLinks = _linksProvider.GetLinksToNode(view.Id);
 
             foreach (var linkData in fromLinks)
             {
                 linkView = _linkViews.GetItem(new LinkKey<int>(view.Id, linkData.Id.To));
-                linkView.UpdatePositions();
+                _linkViewCoordinator.CheckSingle(linkView);
+                //linkView.UpdatePositions();
             }
             foreach (var linkData in toLinks)
             {
                 linkView = _linkViews.GetItem(new LinkKey<int>(linkData.Id.From, view.Id));
-                linkView.UpdatePositions();
+                _linkViewCoordinator.CheckSingle(linkView);
+                //linkView.UpdatePositions();
             }
         }
 

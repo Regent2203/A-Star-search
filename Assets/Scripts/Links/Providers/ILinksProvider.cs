@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
-using ThisProject.Nodes;
 
 namespace ThisProject.Links.Providers
 {
-    public interface ILinksProvider<T, L, TId>
-        where T : INodeData<TId>
-        where L : ILinkData<TId>
+    public interface ILinksProvider<TLinkData, TId>
+        where TLinkData : ILinkData<TId>
     {
-        public IEnumerable<L> GetLinksFromNode(T node);
-        public IEnumerable<L> GetLinksToNode(T node);
+        public IEnumerable<TLinkData> GetLinksFromNode(TId id);
+        public IEnumerable<TLinkData> GetLinksToNode(TId id);
     }
 }

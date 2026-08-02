@@ -22,9 +22,9 @@ namespace ThisProject.ObjectsStorages
             throw new KeyNotFoundException($"Cannot get item with id {id}. Item with this id does not exist.");
         }
 
-        public bool HasItem(TId id)
+        public bool TryGetItem(TId id, out T item)
         {
-            return _data.ContainsKey(id);
+            return _data.TryGetValue(id, out item);
         }
 
         public void AddItem(TId id, T item)

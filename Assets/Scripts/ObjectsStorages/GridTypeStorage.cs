@@ -56,12 +56,17 @@ namespace ThisProject.ObjectsStorages
             return _data[id.x, id.y];
         }
 
-        public bool HasItem(Vector2Int id)
+        public bool TryGetItem(Vector2Int id, out T item)
         {
             ValidateStorageInitialized();
             ValidateBounds(id);
+            item = default;
 
-            return !EqualityComparer<T>.Default.Equals(_data[id.x, id.y], default);
+            var result = !EqualityComparer<T>.Default.Equals(_data[id.x, id.y], default);
+            if (result)
+                item = _data[id.x, id.y];
+
+            return result;
         }
 
         public void AddItem(Vector2Int id, T item)

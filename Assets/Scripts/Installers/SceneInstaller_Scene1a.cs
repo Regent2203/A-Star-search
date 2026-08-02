@@ -51,7 +51,7 @@ namespace ThisProject.Installers
                 FromComponentInNewPrefab(_cellViewPrefab).UnderTransform(_field.NodesContainer);
             Container.BindInterfacesAndSelfTo<CellTypeChanger>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellData, LinkData<Vector2Int>>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LinksFactory<CellData, Vector2Int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkDataFactory<CellData, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<FourSideGridNeighbours<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData, LinkData<Vector2Int>, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();

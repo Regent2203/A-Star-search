@@ -11,32 +11,34 @@ namespace ThisProject.Links.Providers
     /// <summary>
     /// Creates links during search algorithm work - not beforehand
     /// </summary>
-    public class GridDynamicLinksProvider<T, L> : ILinksProvider<T, L, Vector2Int>
-        where T : INodeData<Vector2Int>
-        where L : ILinkData<Vector2Int>
+    public class GridDynamicLinksProvider<TNodeData, TLinkData> : ILinksProvider<TLinkData, Vector2Int>
+        where TNodeData : INodeData<Vector2Int>
+        where TLinkData : ILinkData<Vector2Int>
     {
-        private readonly ILinksFactory<T, L, Vector2Int> _factory;
-        private readonly IGridNeighboursProvider<T> _neighboursProvider;
-        private readonly GridTypeStorage<T> _gridNodes;
+        private readonly ILinkDataFactory<TNodeData, TLinkData, Vector2Int> _factory;
+        private readonly IGridNeighboursProvider<TNodeData> _neighboursProvider;
+        private readonly GridTypeStorage<TNodeData> _nodeDatas;
 
 
-        public GridDynamicLinksProvider(ILinksFactory<T, L, Vector2Int> factory, IGridNeighboursProvider<T> neighboursProvider, GridTypeStorage<T> gridNodes)
+        public GridDynamicLinksProvider(ILinkDataFactory<TNodeData, TLinkData, Vector2Int> factory, IGridNeighboursProvider<TNodeData> neighboursProvider, GridTypeStorage<TNodeData> nodeDatas)
         {
             _factory = factory;
             _neighboursProvider = neighboursProvider;
-            _gridNodes = gridNodes;
+            _nodeDatas = nodeDatas;
         }
 
-        public IEnumerable<L> GetLinksFromNode(T node)
+        public IEnumerable<TLinkData> GetLinksFromNode(Vector2Int id)
         {
-            var neighbours = _gridNodes.GetNeighbourObjects(node.Id, _neighboursProvider);
+            var neighbours = _nodeDatas.GetNeighbourObjects(id, _neighboursProvider);
+            var node = _nodeDatas.GetItem(id);
 
             return _factory.CreateLinksFromNode(node, neighbours);
         }
 
-        public IEnumerable<L> GetLinksToNode(T node)
+        public IEnumerable<TLinkData> GetLinksToNode(Vector2Int id)
         {
-            var neighbours = _gridNodes.GetNeighbourObjects(node.Id, _neighboursProvider);
+            var neighbours = _nodeDatas.GetNeighbourObjects(id, _neighboursProvider);
+            var node = _nodeDatas.GetItem(id);
 
             return _factory.CreateLinksToNode(node, neighbours);
         }

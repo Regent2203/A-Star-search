@@ -13,7 +13,7 @@ namespace ThisProject.Links
         public float Cost => _cost;
         
 
-        public virtual void OnSpawned(TId fromId, TId toId, float cost) //use NodeData?? todo
+        public virtual void OnSpawned(TId fromId, TId toId, float cost)
         {
             _id = new LinkKey<TId>(fromId, toId);
             _cost = cost;

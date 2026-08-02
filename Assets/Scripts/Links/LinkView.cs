@@ -6,7 +6,7 @@ namespace ThisProject.Links
 {
     public enum PlacementType { Center, Left, Right }    
 
-    public class LinkView<TId> : MonoBehaviour, ILinkView<TId>, IPoolable<INodeView<TId>, INodeView<TId>, PlacementType>
+    public class LinkView<TId> : MonoBehaviour, ILinkView<TId>, IPoolable<TId, TId, PlacementType>
     {
         [SerializeField]
         private float _placementOffset = 0.5f;
@@ -18,11 +18,10 @@ namespace ThisProject.Links
         private SpriteRenderer _arrowTipRenderer;
 
         protected LinkKey<TId> _id;
-        protected INodeView<TId> _viewFrom, _viewTo;
 
-        public LinkKey<TId> Id => _id; //todo remove? dual source?
-        public TId From => _viewFrom.Id;
-        public TId To => _viewTo.Id;
+        public LinkKey<TId> Id => _id;
+        public TId From => _id.From;
+        public TId To => _id.To;
 
         private PlacementType _placementType = PlacementType.Center;
         private float _arrowOffset; //sizeY of arrow tip sprite
@@ -33,23 +32,20 @@ namespace ThisProject.Links
             _arrowOffset = _arrowTipRenderer.sprite.bounds.size.y;
         }
 
-        public virtual void OnSpawned(INodeView<TId> viewFrom, INodeView<TId> viewTo, PlacementType placementType)
+        public virtual void OnSpawned(TId from, TId to, PlacementType placementType)
         {
-            _viewFrom = viewFrom;
-            _viewTo = viewTo;
-
-            //_id = new LinkKey<TId>(viewFrom.Id, viewTo.Id);
+            _id = new LinkKey<TId>(from, to);
             name = $"LinkView {From}->{To}";
             _placementType = placementType;
-            UpdatePositions();
 
             gameObject.SetActive(true);
         }
 
         public virtual void OnDespawned()
         {
-            _viewFrom = null;
-            _viewTo = null;
+            _id = default;
+            name = $"LinkView";
+            _placementType = PlacementType.Center;
 
             gameObject.SetActive(false);
         }
@@ -60,19 +56,14 @@ namespace ThisProject.Links
                 return;
 
             _placementType = placementType;
-
-            UpdatePositions();
         }
 
-        public void UpdatePositions()
-        {
-            Vector2 posFrom = _viewFrom.GetCenterCoords();
-            Vector2 posTo = _viewTo.GetCenterCoords();
-            
-            Vector2 start, end;
-            
+        public void UpdatePositions(Vector2 posFrom, Vector2 posTo)
+        {            
             var direction = (posFrom - posTo).normalized;
             var perpendicular = new Vector2(-direction.y, direction.x);
+
+            Vector2 start, end;
 
             switch (_placementType)
             {

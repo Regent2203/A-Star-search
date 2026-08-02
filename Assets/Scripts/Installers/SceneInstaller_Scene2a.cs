@@ -24,6 +24,7 @@ using ThisProject.Starters;
 using ThisProject.UICommon;
 using UnityEngine;
 using Zenject;
+using ThisProject.Links.ViewMovers;
 
 namespace ThisProject.Installers
 {
@@ -105,8 +106,10 @@ namespace ThisProject.Installers
             Container.BindMemoryPool<LinkView<int>, LinkViewPool<int>>().WithInitialSize(20).
                 FromComponentInNewPrefab(_linkViewPrefab).UnderTransform(_field.LinksContainer);
 
-            Container.BindInterfacesAndSelfTo<StoredLinksProvider<VertexData, LinkData<int>, int>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LinksFactory<VertexData, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<StoredLinksProvider<LinkData<int>, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkViewCoordinator<VertexView, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkDataFactory<VertexData, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkViewFactory<int>>().AsSingle();
         }
 
         private void BindManipulators()
@@ -123,7 +126,7 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<VertexData, LinkData<int>, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesHeuristicsProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<EuclideanDistance>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ConstantCostProvider<VertexData>>().AsSingle().WithArguments(0.0f);
+            Container.BindInterfacesAndSelfTo<DistanceCostProvider<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathSetter<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<VertexData, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinePathDrawer>().AsSingle();
