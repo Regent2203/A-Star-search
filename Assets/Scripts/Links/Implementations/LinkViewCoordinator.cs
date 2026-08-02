@@ -4,6 +4,12 @@ using UnityEngine;
 
 namespace ThisProject.Links.ViewMovers
 {
+    /// <summary>
+    /// Updates start and end positions of LinkView.
+    /// When there are two opposited-directed links between same nodes, their visuals will overlap.
+    /// If you are fine with that, use CheckSingle() method only.
+    /// If you want to offset visuals for such case, use CheckDual() method instead.
+    /// </summary>
     public class LinkViewCoordinator<TNodeView, TId>
         where TNodeView : INodeView<TId>
     {

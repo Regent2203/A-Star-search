@@ -47,12 +47,13 @@ namespace ThisProject.Links.Providers
             incoming.Add(fromId);
         }
 
-        public void RemoveLink(LinkKey<TId> key)
+        public void RemoveLink(TLinkData link)
         {
+            var key = new LinkKey<TId>(link.From, link.To);
             var fromId = key.From;
             var toId = key.To;
 
-            _linkDatas.RemoveItem(key);            
+            _linkDatas.RemoveItem(key);
 
             if (_outgoingIndex.TryGetValue(fromId, out var outgoing))
             {
@@ -67,6 +68,14 @@ namespace ThisProject.Links.Providers
                 if (incoming.Count == 0) 
                     _incomingIndex.Remove(toId);
             }
+        }
+
+        public void ClearAllLinks()
+        {
+            _outgoingIndex.Clear();
+            _incomingIndex.Clear();
+
+            _linkDatas.ClearData();
         }
 
         public IEnumerable<TLinkData> GetLinksFromNode(TId id)

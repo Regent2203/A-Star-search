@@ -19,16 +19,11 @@ namespace ThisProject.Links.Implementations
 
         private readonly DictTypeStorage<LinkData<TId>, LinkKey<TId>> _linkDatas;
         private readonly DictTypeStorage<LinkView<TId>, LinkKey<TId>> _linkViews;
-        private readonly LinkDataPool<TId> _linkDatasPool;
-        private readonly LinkViewPool<TId> _linkViewsPool;
-        private readonly IObjectsStorage<TNodeView, TId> _nodeViews;
 
 
         public LinksBuilder(LinkDataFactory<TNodeData, TId> linkDatasFactory, LinkViewFactory<TId> linkViewsFactory,
             StoredLinksProvider<LinkData<TId>, TId> linksProvider, LinkViewCoordinator<TNodeView, TId> linkViewCoordinator,
-            DictTypeStorage<LinkData<TId>, LinkKey<TId>> linkDatas, DictTypeStorage<LinkView<TId>, LinkKey<TId>> linkViews,
-            LinkDataPool<TId> linkDatasPool, LinkViewPool<TId> linkViewsPool,
-            IObjectsStorage<TNodeView, TId> nodeViews)
+            DictTypeStorage<LinkData<TId>, LinkKey<TId>> linkDatas, DictTypeStorage<LinkView<TId>, LinkKey<TId>> linkViews)
         {
             _linkDatasFactory = linkDatasFactory;
             _linkViewsFactory = linkViewsFactory;
@@ -36,11 +31,7 @@ namespace ThisProject.Links.Implementations
             _linkViewCoordinator = linkViewCoordinator;
 
             _linkDatas = linkDatas;
-            _linkDatasPool = linkDatasPool;
             _linkViews = linkViews;
-            _linkViewsPool = linkViewsPool;
-
-            _nodeViews = nodeViews;
         }
 
         public bool TryCreateLink(TNodeData from, TNodeData to)
@@ -74,28 +65,26 @@ namespace ThisProject.Links.Implementations
             var linkView = _linkViews.GetItem(key);
             _linkViewCoordinator.CheckDual(linkView, true);
 
+            _linksProvider.RemoveLink(linkData);
+            _linkViews.RemoveItem(key);
+
             _linkDatasFactory.DeleteItem(linkData);
             _linkViewsFactory.DeleteItem(linkView);
-
-            _linksProvider.RemoveLink(key);
-            _linkViews.RemoveItem(key);            
 
             return true;
         }
 
         public void ClearAll()
         {
-            //todo
             foreach (var linkData in _linkDatas.AllItems)
             {
-                _linkDatasPool.Despawn(linkData);
-                //_linksProvider.RemoveLink(linkData.From, linkData.To);
+                _linkDatasFactory.DeleteItem(linkData);                
             }
-            _linkDatas.ClearData();
+            _linksProvider.ClearAllLinks();
 
             foreach (var linkView in _linkViews.AllItems)
             {
-                _linkViewsPool.Despawn(linkView);
+                _linkViewsFactory.DeleteItem(linkView);                
             }
             _linkViews.ClearData();
         }

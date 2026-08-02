@@ -4,10 +4,11 @@ using ThisProject.Heuristic.Functions;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Inputs;
 using ThisProject.Links;
-using ThisProject.Links.Factories;
 using ThisProject.Links.CostProviders;
+using ThisProject.Links.Factories;
 using ThisProject.Links.Implementations;
 using ThisProject.Links.Providers;
+using ThisProject.Links.ViewMovers;
 using ThisProject.Nodes.NodeBlockers;
 using ThisProject.Nodes.ViewMovers;
 using ThisProject.Nodes.ViewSelectors;
@@ -24,7 +25,6 @@ using ThisProject.Starters;
 using ThisProject.UICommon;
 using UnityEngine;
 using Zenject;
-using ThisProject.Links.ViewMovers;
 
 namespace ThisProject.Installers
 {

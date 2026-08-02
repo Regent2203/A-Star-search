@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Inputs;
@@ -133,7 +132,6 @@ namespace ThisProject.Starters
                 OnFieldChanged();
         }
 
-        //todo move?
         private void RedrawLinkViews(VertexView view)
         {
             LinkView<int> linkView;
@@ -144,13 +142,11 @@ namespace ThisProject.Starters
             {
                 linkView = _linkViews.GetItem(new LinkKey<int>(view.Id, linkData.Id.To));
                 _linkViewCoordinator.CheckSingle(linkView);
-                //linkView.UpdatePositions();
             }
             foreach (var linkData in toLinks)
             {
                 linkView = _linkViews.GetItem(new LinkKey<int>(linkData.Id.From, view.Id));
                 _linkViewCoordinator.CheckSingle(linkView);
-                //linkView.UpdatePositions();
             }
         }
 

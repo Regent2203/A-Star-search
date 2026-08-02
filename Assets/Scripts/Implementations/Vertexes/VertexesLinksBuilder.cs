@@ -14,7 +14,7 @@ namespace ThisProject.Implementations.Vertexes
             DictTypeStorage<LinkData<int>, LinkKey<int>> linkDatas, DictTypeStorage<LinkView<int>, LinkKey<int>> linkViews,
             LinkDataPool<int> linkDatasPool, LinkViewPool<int> linkViewsPool,
             IObjectsStorage<VertexView, int> nodeViews)
-            : base(linkDatasFactory, linkViewsFactory, linksProvider, linkViewCoordinator, linkDatas, linkViews, linkDatasPool, linkViewsPool, nodeViews)
+            : base(linkDatasFactory, linkViewsFactory, linksProvider, linkViewCoordinator, linkDatas, linkViews)
         {
         }
     }
