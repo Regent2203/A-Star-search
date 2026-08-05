@@ -1,4 +1,4 @@
-using ThisProject.Nodes;
+using TMPro;
 using UnityEngine;
 using Zenject;
 
@@ -6,12 +6,16 @@ namespace ThisProject.Links
 {
     public enum PlacementType { Center, Left, Right }    
 
-    public class LinkView<TId> : MonoBehaviour, ILinkView<TId>, IPoolable<TId, TId, PlacementType>
+    public class LinkView<TId> : MonoBehaviour, ILinkView<TId>, IPoolable<TId, TId, float, PlacementType>
     {
         [SerializeField]
-        private float _placementOffset = 0.5f;
+        private float _textOffset = 2.0f;
+        [SerializeField]
+        private float _placementOffset = 0.5f; //offset in units for PlacementType != Center
 
         [Space]
+        [SerializeField]
+        private TextMeshPro _costText;
         [SerializeField]
         private LineRenderer _arrowBodyRenderer;
         [SerializeField]
@@ -32,10 +36,11 @@ namespace ThisProject.Links
             _arrowOffset = _arrowTipRenderer.sprite.bounds.size.y;
         }
 
-        public virtual void OnSpawned(TId from, TId to, PlacementType placementType)
+        public virtual void OnSpawned(TId from, TId to, float cost, PlacementType placementType)
         {
             _id = new LinkKey<TId>(from, to);
             name = $"LinkView {From}->{To}";
+            UpdateCostText(cost);
             _placementType = placementType;
 
             gameObject.SetActive(true);
@@ -45,6 +50,7 @@ namespace ThisProject.Links
         {
             _id = default;
             name = $"LinkView";
+            UpdateCostText(0.0f);
             _placementType = PlacementType.Center;
 
             gameObject.SetActive(false);
@@ -83,6 +89,16 @@ namespace ThisProject.Links
                     break;
             }
 
+            //todo
+            Vector2 textBasePos = start - 0.6f * Vector2.Distance(start, end) * direction;
+            Vector2 textPosition = textBasePos + perpendicular * _textOffset * (0.5f + Mathf.Abs(direction.y / 2.0f));
+            /*
+            if (direction.y < 0)
+                _costText.alignment = TextAlignmentOptions.MidlineLeft;
+            else
+                _costText.alignment = TextAlignmentOptions.MidlineRight;
+            */
+
             //we have arrow tip sprite, so instead of drawing line between exactly start and end, we make line shorter and use arrow tip there
             end += direction * _arrowOffset; 
 
@@ -92,6 +108,13 @@ namespace ThisProject.Links
             _arrowBodyRenderer.SetPosition(0, start);
             _arrowBodyRenderer.SetPosition(1, end);
             _arrowTipRenderer.transform.SetPositionAndRotation(end, Quaternion.Euler(0, 0, angle));
+
+            _costText.transform.position = new Vector3(textPosition.x, textPosition.y, _costText.transform.position.z);
+        }
+
+        public void UpdateCostText(float cost)
+        {
+            _costText.text = $"{cost.ToString("0.00")}";
         }
     }
 }

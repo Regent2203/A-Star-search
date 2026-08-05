@@ -11,9 +11,9 @@ namespace ThisProject.Links.Factories
             _linkViewsPool = linkViewsPool;
         }
 
-        public LinkView<TId> CreateItem(TId fromId, TId toId, PlacementType placementType)
+        public LinkView<TId> CreateItem(TId fromId, TId toId, float cost, PlacementType placementType)
         {
-            var linkView = _linkViewsPool.Spawn(fromId, toId, placementType);
+            var linkView = _linkViewsPool.Spawn(fromId, toId, cost, placementType);
 
             return linkView;
         }

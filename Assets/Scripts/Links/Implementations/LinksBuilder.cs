@@ -44,7 +44,7 @@ namespace ThisProject.Links.Implementations
 
             var key = new LinkKey<TId>(from.Id, to.Id);
             var linkData = _linkDatasFactory.CreateLink(from, to);
-            var linkView = _linkViewsFactory.CreateItem(from.Id, to.Id, PlacementType.Center);
+            var linkView = _linkViewsFactory.CreateItem(from.Id, to.Id, linkData.Cost, PlacementType.Center);
             _linkViewCoordinator.CheckDual(linkView, false);
 
             _linksProvider.AddLink(linkData);             

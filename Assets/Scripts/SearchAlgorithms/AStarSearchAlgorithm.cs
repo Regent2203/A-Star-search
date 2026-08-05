@@ -4,6 +4,7 @@ using ThisProject.Links;
 using ThisProject.Links.Providers;
 using ThisProject.Nodes;
 using ThisProject.ObjectsStorages;
+using UnityEngine;
 
 namespace ThisProject.SearchAlgorithms
 {
@@ -49,6 +50,7 @@ namespace ThisProject.SearchAlgorithms
 
                 if (current.Equals(finishNode))
                 {
+                    Debug.Log($"{_costSoFar[finishNode]}");
                     return RetracePath(startNode, finishNode);
                 }
 

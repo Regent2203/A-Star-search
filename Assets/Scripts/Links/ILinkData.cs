@@ -4,6 +4,7 @@
     {        
         public float Cost { get; }
         public void ChangeCost(float value);
+        public void SetCost(float value);
     }
 
     public interface ILinkData<TId> : ILinkData
