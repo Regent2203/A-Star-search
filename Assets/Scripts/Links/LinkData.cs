@@ -25,11 +25,6 @@ namespace ThisProject.Links
             _cost = 0;
         }
 
-        public void ChangeCost(float value)
-        {
-            _cost += value;
-        }
-
         public void SetCost(float value)
         {
             _cost = value;

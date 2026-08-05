@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using ThisProject.Implementations.Vertexes;
 using ThisProject.Inputs;
 using ThisProject.Links;
+using ThisProject.Links.CostProviders;
 using ThisProject.Links.Implementations;
+using ThisProject.Links.LinkCostChangers;
 using ThisProject.Links.Providers;
 using ThisProject.Links.ViewMovers;
 using ThisProject.Nodes.NodeBlockers;
@@ -23,12 +25,14 @@ namespace ThisProject.Starters
 {
     public class Starter_Scene2a : StarterBase
     {
-        private VertexDataStorage _nodes;
-        private VertexViewStorage _views;
+        private VertexDataStorage _nodeDatas;
+        private VertexViewStorage _nodeViews;
         private LinkViewStorage_Int _linkViews;
         private VertexesClickHandler _clickHandler;
         private VertexesDragHandler _dragHandler;
         private VertexesFieldBuilder _builder;
+        private ICostProvider<VertexData> _costProvider;
+        private LinkCostSetter<LinkData<int>> _linkCostSetter;
         private NodeBlocker<VertexData> _nodeBlocker;
         private NodeViewSelector<VertexView> _viewSelector;
         private NodeViewMover<VertexView> _viewMover;
@@ -48,18 +52,22 @@ namespace ThisProject.Starters
         [Inject]
         public void Construct(VertexDataStorage nodes, VertexViewStorage views, LinkViewStorage_Int linkViews,
             VertexesClickHandler clickHandler, VertexesDragHandler dragHandler, VertexesFieldBuilder builder,
+            ICostProvider<VertexData> costProvider, LinkCostSetter<LinkData<int>> linkCostSetter,
             NodeBlocker<VertexData> nodeBlocker, NodeViewSelector<VertexView> viewSelector, NodeViewMover<VertexView> viewMover, 
             VertexesLinksBuilder linksBuilder, StoredLinksProvider<LinkData<int>, int> linksProvider, LinkViewCoordinator<VertexView, int> linkViewCoordinator,
             PathSetter<VertexData> pathSetter, PathFinder<VertexData, int> pathFinder, LinePathDrawer pathDrawer,
             ISaver saver, ILoader loader, VertexesFieldSaveDtoProvider dtoProvider,
             UISaveLoadPanel saveLoadPanel)
         {
-            _nodes = nodes;
-            _views = views;
+            _nodeDatas = nodes;
+            _nodeViews = views;
             _linkViews = linkViews;
             _clickHandler = clickHandler;
             _dragHandler = dragHandler;
             _builder = builder;
+            _costProvider = costProvider;
+            _linkCostSetter = linkCostSetter;
+
             _nodeBlocker = nodeBlocker;
             _viewSelector = viewSelector;
             _viewMover = viewMover;
@@ -127,7 +135,7 @@ namespace ThisProject.Starters
 
         private void UpdateNodePosition(VertexView view, Vector2 pos)
         {
-            var node = _nodes.GetItem(view.Id);
+            var node = _nodeDatas.GetItem(view.Id);
             if (node.TryChangeNodePosition(pos))
                 OnFieldChanged();
         }
@@ -135,6 +143,7 @@ namespace ThisProject.Starters
         private void RedrawLinkViews(VertexView view)
         {
             LinkView<int> linkView;
+            float cost;
             var fromLinks = _linksProvider.GetLinksFromNode(view.Id);
             var toLinks = _linksProvider.GetLinksToNode(view.Id);
 
@@ -142,17 +151,31 @@ namespace ThisProject.Starters
             {
                 linkView = _linkViews.GetItem(new LinkKey<int>(view.Id, linkData.Id.To));
                 _linkViewCoordinator.CheckSingle(linkView);
+
+                //todo
+                var from = _nodeDatas.GetItem(linkData.From);
+                var to = _nodeDatas.GetItem(linkData.To);
+                cost = _costProvider.GetCost(from, to);
+                _linkCostSetter.SetLinkCost(linkData, cost);
+                linkView.UpdateCostText(cost);
             }
             foreach (var linkData in toLinks)
             {
                 linkView = _linkViews.GetItem(new LinkKey<int>(linkData.Id.From, view.Id));
                 _linkViewCoordinator.CheckSingle(linkView);
+
+                //todo
+                var from = _nodeDatas.GetItem(linkData.From);
+                var to = _nodeDatas.GetItem(linkData.To);
+                cost = _costProvider.GetCost(from, to);
+                _linkCostSetter.SetLinkCost(linkData, cost);
+                linkView.UpdateCostText(cost);
             }
         }
 
         private void OnViewClicked(VertexView view, PointerEventData.InputButton button, InputSnapshot input)
         {
-            var node = _nodes.GetItem(view.Id);
+            var node = _nodeDatas.GetItem(view.Id);
 
             if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
             {
@@ -180,7 +203,7 @@ namespace ThisProject.Starters
             {
                 if (_viewSelector.SelectedView != null)
                 {
-                    var selectedNode = _nodes.GetItem(_viewSelector.SelectedView.Id);
+                    var selectedNode = _nodeDatas.GetItem(_viewSelector.SelectedView.Id);
 
                     switch (button)
                     {
@@ -195,12 +218,21 @@ namespace ThisProject.Starters
                     }                    
                 }
             }
+
+            if (input.IsCreatingMode)
+            {
+                if (button == PointerEventData.InputButton.Right)
+                    _builder.DeleteNode(view);
+            }
         }
 
-        private void OnFieldClicked(PointerEventData.InputButton button, InputSnapshot snapshot)
+        private void OnFieldClicked(Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
         {
             if (button == PointerEventData.InputButton.Left)
                 _viewSelector.SelectView(null);
+
+            if (input.IsCreatingMode)
+                _builder.CreateNode(pos);
         }
 
         private void OnViewDragStarted(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
@@ -235,7 +267,7 @@ namespace ThisProject.Starters
 
         private void OnNodeBlocked(VertexData node, bool b)
         {
-            var view = _views.GetItem(node.Id);
+            var view = _nodeViews.GetItem(node.Id);
             view?.ShowBlockedMarker(b);
 
             OnFieldChanged();
@@ -248,13 +280,13 @@ namespace ThisProject.Starters
 
         private void OnStartNodeChanged(VertexData node, bool b)
         {
-            var view = _views.GetItem(node.Id);
+            var view = _nodeViews.GetItem(node.Id);
             view?.ShowStartMarker(b);
         }
 
         private void OnFinishNodeChanged(VertexData node, bool b)
         {
-            var view = _views.GetItem(node.Id);
+            var view = _nodeViews.GetItem(node.Id);
             view?.ShowFinishMarker(b);
         }
 
@@ -273,7 +305,7 @@ namespace ThisProject.Starters
                 var nodesPath = _pathFinder.GetPath(_pathSetter.StartNode, _pathSetter.FinishNode);
                 if (nodesPath != null)
                 {
-                    _views.NodesToViewsNonAlloc(nodesPath, _viewsPath);
+                    _nodeViews.NodesToViewsNonAlloc(nodesPath, _viewsPath);
                     _pathDrawer.SetPath(_viewsPath);
                     _pathDrawer.ShowPath(true);
                 }

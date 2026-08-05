@@ -31,8 +31,16 @@ namespace ThisProject.Implementations.Vertexes
             }
         }
 
-        //cost changer
-        //single create-delete
+        public void CreateNode(Vector2 pos)
+        {
+            _nodesBuilder.CreateItem(pos);
+        }
+
+        public void DeleteNode(VertexView view)
+        {
+            _nodesBuilder.DeleteItem(view.Id);
+        }
+
         public void BuildFromDto(FieldSaveDto<VertexDataDto, LinkDataDto<int>> data)
         {
             ClearAll();

@@ -8,22 +8,25 @@ using Zenject;
 
 namespace ThisProject.Fields.ClickHandlers
 {
-    public class GridClickHandler<V> : MonoBehaviour, IFieldClickHandler<V> 
-        where V : MonoBehaviour, INodeView<Vector2Int>
+    [RequireComponent(typeof(BoxCollider2D))]
+    public class GridClickHandler<TNodeView> : MonoBehaviour, IFieldClickHandler<TNodeView> 
+        where TNodeView : MonoBehaviour, INodeView<Vector2Int>
     {
         private GridField _field;
-        private GridTypeStorage<V> _views;
+        private GridTypeStorage<TNodeView> _views;
+        private Camera _mainCamera;
         private IInputService _inputService;
 
-        public event Action<V, PointerEventData.InputButton, InputSnapshot> NodeViewClicked;
-        public event Action<PointerEventData.InputButton, InputSnapshot> FieldClicked;
+        public event Action<TNodeView, PointerEventData.InputButton, InputSnapshot> NodeViewClicked;
+        public event Action<Vector2, PointerEventData.InputButton, InputSnapshot> FieldClicked;
 
 
         [Inject]
-        public void Construct(GridField field, GridTypeStorage<V> views, IInputService inputService)
+        public void Construct(GridField field, GridTypeStorage<TNodeView> views, Camera camera, IInputService inputService)
         {
             _field = field;
             _views = views;
+            _mainCamera = camera;
             _inputService = inputService;
         }
 
@@ -38,7 +41,8 @@ namespace ThisProject.Fields.ClickHandlers
                 return;
             }
 
-            FieldClicked?.Invoke(eventData.button, _inputService.CreateSnapshot());
+            Vector2 worldPos = Camera.main.ScreenToWorldPoint(eventData.position);
+            FieldClicked?.Invoke(worldPos, eventData.button, _inputService.CreateSnapshot());
         }
     }
 }

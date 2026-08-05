@@ -7,6 +7,7 @@ using ThisProject.Links;
 using ThisProject.Links.CostProviders;
 using ThisProject.Links.Factories;
 using ThisProject.Links.Implementations;
+using ThisProject.Links.LinkCostChangers;
 using ThisProject.Links.Providers;
 using ThisProject.Links.ViewMovers;
 using ThisProject.Nodes.NodeBlockers;
@@ -110,6 +111,8 @@ namespace ThisProject.Installers
             Container.BindInterfacesAndSelfTo<LinkViewCoordinator<VertexView, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinkDataFactory<VertexData, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinkViewFactory<int>>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<LinkCostSetter<LinkData<int>>>().AsSingle();
         }
 
         private void BindManipulators()

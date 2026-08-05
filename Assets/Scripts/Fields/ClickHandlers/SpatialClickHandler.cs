@@ -8,18 +8,20 @@ using Zenject;
 namespace ThisProject.Fields.ClickHandlers
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class SpatialClickHandler<V> : MonoBehaviour, IFieldClickHandler<V>
-        where V : MonoBehaviour, INodeView
+    public class SpatialClickHandler<TNodeView> : MonoBehaviour, IFieldClickHandler<TNodeView>
+        where TNodeView : MonoBehaviour, INodeView
     {
+        private Camera _mainCamera;
         private IInputService _inputService;
 
-        public event Action<V, PointerEventData.InputButton, InputSnapshot> NodeViewClicked;
-        public event Action<PointerEventData.InputButton, InputSnapshot> FieldClicked;
+        public event Action<TNodeView, PointerEventData.InputButton, InputSnapshot> NodeViewClicked;
+        public event Action<Vector2, PointerEventData.InputButton, InputSnapshot> FieldClicked;
 
 
         [Inject]
-        public void Construct(IInputService inputService)
+        public void Construct(Camera camera, IInputService inputService)
         {
+            _mainCamera = camera;
             _inputService = inputService;
         }
 
@@ -27,13 +29,14 @@ namespace ThisProject.Fields.ClickHandlers
         {
             var hitObject = eventData.pointerCurrentRaycast.gameObject;
 
-            if (hitObject != null && hitObject.TryGetComponent<V>(out var view))
+            if (hitObject != null && hitObject.TryGetComponent<TNodeView>(out var view))
             {
                 NodeViewClicked?.Invoke(view, eventData.button, _inputService.CreateSnapshot());
                 return;
             }
 
-            FieldClicked?.Invoke(eventData.button, _inputService.CreateSnapshot());
+            Vector2 worldPos = Camera.main.ScreenToWorldPoint(eventData.position);
+            FieldClicked?.Invoke(worldPos, eventData.button, _inputService.CreateSnapshot());
         }
     }
 }

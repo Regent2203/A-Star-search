@@ -6,10 +6,10 @@ using UnityEngine.EventSystems;
 
 namespace ThisProject.Fields.ClickHandlers
 {
-    public interface IFieldClickHandler<V> : IPointerDownHandler
-        where V : MonoBehaviour, INodeView
+    public interface IFieldClickHandler<TNodeView> : IPointerDownHandler
+        where TNodeView : MonoBehaviour, INodeView
     {
-        public event Action<V, PointerEventData.InputButton, InputSnapshot> NodeViewClicked;
-        public event Action<PointerEventData.InputButton, InputSnapshot> FieldClicked;
+        public event Action<TNodeView, PointerEventData.InputButton, InputSnapshot> NodeViewClicked;
+        public event Action<Vector2, PointerEventData.InputButton, InputSnapshot> FieldClicked;
     }
 }

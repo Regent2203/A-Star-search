@@ -92,12 +92,6 @@ namespace ThisProject.Links
             //todo
             Vector2 textBasePos = start - 0.6f * Vector2.Distance(start, end) * direction;
             Vector2 textPosition = textBasePos + perpendicular * _textOffset * (0.5f + Mathf.Abs(direction.y / 2.0f));
-            /*
-            if (direction.y < 0)
-                _costText.alignment = TextAlignmentOptions.MidlineLeft;
-            else
-                _costText.alignment = TextAlignmentOptions.MidlineRight;
-            */
 
             //we have arrow tip sprite, so instead of drawing line between exactly start and end, we make line shorter and use arrow tip there
             end += direction * _arrowOffset; 
