@@ -1,6 +1,6 @@
+using EasyField.Inputs;
 using System;
 using System.Collections.Generic;
-using EasyField.Inputs;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;

@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using EasyField.Nodes;
+﻿using EasyField.Nodes;
+using System.Collections.Generic;
 
 namespace EasyField.SearchAlgorithms
 {
-    public interface ISearchAlgorithm<T>
-        where T : INodeData
+    public interface ISearchAlgorithm<TNodeData>
+        where TNodeData : INodeData
     {
-        public IList<T> CalculateWay(T startNode, T finishNode);
+        public IList<TNodeData> CalculateWay(TNodeData startNode, TNodeData finishNode);
     }
 }

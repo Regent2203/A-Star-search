@@ -3,7 +3,7 @@ using EasyField.SaveSystem.Dto;
 
 namespace EasyField.SaveSystem.Mappers
 {
-    public interface ILinkMapper<TLinkData, TLinkDataDto, TId>
+    public interface ILinkDataMapper<TLinkData, TLinkDataDto, TId>
         where TLinkData : ILinkData<TId>
         where TLinkDataDto : LinkDataDto<TId>
     {

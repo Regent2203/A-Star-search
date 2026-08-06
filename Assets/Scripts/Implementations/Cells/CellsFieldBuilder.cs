@@ -7,26 +7,26 @@ namespace EasyField.Implementations.Cells
     public class CellsFieldBuilder
     {
         private readonly GridField _field;
-        private readonly GridTypeStorage<CellData> _nodes;
-        private readonly GridTypeStorage<CellView> _views;        
-        private readonly CellDataPool _nodesPool;
-        private readonly CellViewPool _viewsPool;
+        private readonly GridTypeStorage<CellData> _nodeDatas;
+        private readonly GridTypeStorage<CellView> _nodeViews;        
+        private readonly CellDataPool _nodeDatasPool;
+        private readonly CellViewPool _nodeViewsPool;
 
 
-        public CellsFieldBuilder(GridField field, GridTypeStorage<CellData> nodes, GridTypeStorage<CellView> views,
-            CellDataPool nodesPool, CellViewPool viewsPool)
+        public CellsFieldBuilder(GridField field, GridTypeStorage<CellData> nodeDatas, GridTypeStorage<CellView> nodeViews,
+            CellDataPool nodeDatasPool, CellViewPool nodeViewsPool)
         {
             _field = field;
-            _nodes = nodes;
-            _views = views;            
-            _nodesPool = nodesPool;
-            _viewsPool = viewsPool;
+            _nodeDatas = nodeDatas;
+            _nodeViews = nodeViews;            
+            _nodeDatasPool = nodeDatasPool;
+            _nodeViewsPool = nodeViewsPool;
         }
 
         public void PopulateField(Vector2Int size, CellType cellType)
         {
-            _nodes.Init(size);
-            _views.Init(size);
+            _nodeDatas.Init(size);
+            _nodeViews.Init(size);
             _field.SetSize(size);
 
             for (int x = 0; x < size.x; x++)
@@ -40,15 +40,15 @@ namespace EasyField.Implementations.Cells
                     var localPos = new Vector3(localX * _field.Grid.cellSize.x, localY * _field.Grid.cellSize.y, 0);
 
                     var nodePos = index;
-                    var node = _nodesPool.Spawn(index, nodePos, cellType);
+                    var nodeData = _nodeDatasPool.Spawn(index, nodePos, cellType);
 
                     var viewPos = _field.Grid.transform.TransformPoint(localPos);
-                    var view = _viewsPool.Spawn(index, _field.ScaleFactor);
-                    view.Move(viewPos);
+                    var nodeView = _nodeViewsPool.Spawn(index, _field.ScaleFactor);
+                    nodeView.Move(viewPos);
 
 
-                    _nodes.AddItem(index, node);
-                    _views.AddItem(index, view);
+                    _nodeDatas.AddItem(index, nodeData);
+                    _nodeViews.AddItem(index, nodeView);
                 }
             }
         }

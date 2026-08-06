@@ -1,6 +1,6 @@
-﻿using System;
-using EasyField.Inputs;
+﻿using EasyField.Inputs;
 using EasyField.Nodes;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

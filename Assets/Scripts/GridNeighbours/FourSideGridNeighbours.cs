@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace EasyField.GridNeighbours
 {
-    public class FourSideGridNeighbours<T> : GridNeighboursProviderBase<T> //up, right, down, left, no diagonal
+    public class FourSideGridNeighbours<TNodeData> : GridNeighboursProviderBase<TNodeData> //up, right, down, left, no diagonal
     {
-        private readonly List<T> _neighboursList = new List<T>(4);
+        private readonly List<TNodeData> _neighboursList = new List<TNodeData>(4);
 
-        public override IReadOnlyList<T> GetNeighbours(Vector2Int index, T[,] gridItems)
+        public override IReadOnlyList<TNodeData> GetNeighbours(Vector2Int index, TNodeData[,] gridItems)
         {
             _neighboursList.Clear();
 

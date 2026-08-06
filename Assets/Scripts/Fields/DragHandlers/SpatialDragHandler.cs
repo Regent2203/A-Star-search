@@ -1,6 +1,6 @@
-﻿using System;
-using EasyField.Inputs;
+﻿using EasyField.Inputs;
 using EasyField.Nodes;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -8,19 +8,19 @@ using Zenject;
 namespace EasyField.Fields.DragHandlers
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class SpatialDragHandler<V> : MonoBehaviour, IFieldDragHandler<V>
-        where V : MonoBehaviour, INodeView
+    public class SpatialDragHandler<TNodeView> : MonoBehaviour, IFieldDragHandler<TNodeView>
+        where TNodeView : MonoBehaviour, INodeView
     {
         private Camera _mainCamera;
         private IInputService _inputService;
 
         private PointerEventData.InputButton? _currentBtn = null;
-        private V _currentView;
+        private TNodeView _currentView;
         private Vector2 _offset;
 
-        public event Action<V, Vector2, PointerEventData.InputButton, InputSnapshot> NodeViewDragStarted;
-        public event Action<V, Vector2, PointerEventData.InputButton, InputSnapshot> NodeViewDragging;
-        public event Action<V, Vector2, PointerEventData.InputButton, InputSnapshot> NodeViewDragEnded;
+        public event Action<TNodeView, Vector2, PointerEventData.InputButton, InputSnapshot> NodeViewDragStarted;
+        public event Action<TNodeView, Vector2, PointerEventData.InputButton, InputSnapshot> NodeViewDragging;
+        public event Action<TNodeView, Vector2, PointerEventData.InputButton, InputSnapshot> NodeViewDragEnded;
 
 
         [Inject]
@@ -49,7 +49,7 @@ namespace EasyField.Fields.DragHandlers
 
             var hitObject = eventData.pointerCurrentRaycast.gameObject;
 
-            if (hitObject != null && hitObject.TryGetComponent<V>(out var view))
+            if (hitObject != null && hitObject.TryGetComponent<TNodeView>(out var view))
             {
                 _currentBtn = eventData.button;
                 _currentView = view;

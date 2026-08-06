@@ -1,5 +1,5 @@
-﻿using System;
-using EasyField.SaveSystem.Dto;
+﻿using EasyField.SaveSystem.Dto;
+using System;
 
 namespace EasyField.Implementations.Vertexes
 {

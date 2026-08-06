@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace EasyField.GridNeighbours
 {
-    public abstract class GridNeighboursProviderBase<T> : IGridNeighboursProvider<T>
+    public abstract class GridNeighboursProviderBase<TNodeData> : IGridNeighboursProvider<TNodeData>
     {
-        protected void TryAddCell(List<T> list, T[,] gridItems, int i, int j)
+        protected void TryAddCell(List<TNodeData> list, TNodeData[,] gridItems, int i, int j)
         {
             if (gridItems.IsIndexWithinBounds(i, j))
                 list.Add(gridItems[i, j]);
         }
 
-        public abstract IReadOnlyList<T> GetNeighbours(Vector2Int index, T[,] gridItems);
+        public abstract IReadOnlyList<TNodeData> GetNeighbours(Vector2Int index, TNodeData[,] gridItems);
     }
 }

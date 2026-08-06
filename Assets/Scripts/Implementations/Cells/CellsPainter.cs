@@ -18,9 +18,9 @@ namespace EasyField.Implementations.Cells
         public event Action<BrushType, CellType> BrushChanged;
 
 
-        public CellsPainter(ICellTypeChanger cellChanger)
+        public CellsPainter(ICellTypeChanger cellTypeChanger)
         {
-            _cellTypeChanger = cellChanger;
+            _cellTypeChanger = cellTypeChanger;
         }
 
         public void SetBrush(BrushType brush, CellType cellType)
@@ -29,11 +29,11 @@ namespace EasyField.Implementations.Cells
             BrushChanged?.Invoke(brush, cellType);
         }
 
-        public void PaintCell(CellData node, BrushType brush)
+        public void PaintCell(CellData nodeData, BrushType brush)
         {
             if (_brushes.TryGetValue(brush, out CellType cellType))
             {
-                _cellTypeChanger.TryChangeCellType(node, cellType);
+                _cellTypeChanger.TryChangeCellType(nodeData, cellType);
             }
         }
     }

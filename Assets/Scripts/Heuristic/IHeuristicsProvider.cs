@@ -2,9 +2,9 @@
 
 namespace EasyField.Heuristic
 {
-    public interface IHeuristicsProvider<T>
-        where T : INodeData
+    public interface IHeuristicsProvider<TNodeData>
+        where TNodeData : INodeData
     {
-        public float EstimateCost(T node1, T node2);
+        public float EstimateCost(TNodeData nodeData1, TNodeData nodeData2);
     }
 }

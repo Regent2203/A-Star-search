@@ -3,8 +3,8 @@ using EasyField.Nodes;
 
 namespace EasyField.Heuristic
 {
-    public abstract class HeuristicsProvider<T> : IHeuristicsProvider<T>
-        where T : INodeData
+    public abstract class HeuristicsProvider<TNodeData> : IHeuristicsProvider<TNodeData>
+        where TNodeData : INodeData
     {
         private readonly IHeuristicFunction _heuristicFunction;
         private readonly float _minStepCost;
@@ -16,9 +16,9 @@ namespace EasyField.Heuristic
             _minStepCost = minStepCost;
         }
 
-        public float EstimateCost(T node1, T node2)
+        public float EstimateCost(TNodeData nodeData1, TNodeData nodeData2)
         {
-            return _heuristicFunction.Estimate(node1.NodePosition, node2.NodePosition) * _minStepCost;
+            return _heuristicFunction.Estimate(nodeData1.NodePosition, nodeData2.NodePosition) * _minStepCost;
         }
     }
 }

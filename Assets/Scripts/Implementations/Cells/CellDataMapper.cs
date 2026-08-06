@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EasyField.Implementations.Cells
 {
-    public class CellDataMapper : INodeMapper<CellData, CellDataDto, Vector2Int>
+    public class CellDataMapper : INodeDataMapper<CellData, CellDataDto, Vector2Int>
     {
         public CellDataDto ToDto(CellData nodeData)
         {

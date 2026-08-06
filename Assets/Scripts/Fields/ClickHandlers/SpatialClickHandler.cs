@@ -1,6 +1,6 @@
-﻿using System;
-using EasyField.Inputs;
+﻿using EasyField.Inputs;
 using EasyField.Nodes;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -35,7 +35,7 @@ namespace EasyField.Fields.ClickHandlers
                 return;
             }
 
-            Vector2 worldPos = Camera.main.ScreenToWorldPoint(eventData.position);
+            Vector2 worldPos = _mainCamera.ScreenToWorldPoint(eventData.position);
             FieldClicked?.Invoke(worldPos, eventData.button, _inputService.CreateSnapshot());
         }
     }

@@ -1,15 +1,14 @@
 ﻿using System;
-using UnityEngine;
 
 namespace EasyField.Nodes.ViewSelectors
 {
-    public interface INodeViewSelector<V>
-        where V : MonoBehaviour, INodeView
+    public interface INodeViewSelector<TNodeView>
+        where TNodeView : INodeView
     {
-        public V SelectedView { get; }
+        public TNodeView SelectedNodeView { get; }
 
-        public void SelectView(V view);
+        public void SelectView(TNodeView nodeView);
 
-        public event Action<V, bool> ViewSelected;
+        public event Action<TNodeView, bool> NodeViewSelected;
     }
 }

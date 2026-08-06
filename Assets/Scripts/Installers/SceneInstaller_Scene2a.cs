@@ -1,4 +1,3 @@
-using System;
 using EasyField.Fields;
 using EasyField.Heuristic.Functions;
 using EasyField.Implementations.Vertexes;
@@ -24,6 +23,7 @@ using EasyField.SaveSystem.Serializers;
 using EasyField.SearchAlgorithms;
 using EasyField.Starters;
 using EasyField.UICommon;
+using System;
 using UnityEngine;
 using Zenject;
 

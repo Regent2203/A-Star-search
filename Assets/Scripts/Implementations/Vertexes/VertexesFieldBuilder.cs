@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace EasyField.Implementations.Vertexes
 {
-    public class VertexesFieldBuilder //: IFieldBuilder
+    public class VertexesFieldBuilder
     {
         private readonly VertexesNodesBuilder _nodesBuilder;
         private readonly VertexesLinksBuilder _linksBuilder;

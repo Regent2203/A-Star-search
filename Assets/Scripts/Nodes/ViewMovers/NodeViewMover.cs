@@ -1,15 +1,15 @@
-﻿using System;
-using EasyField.Fields;
+﻿using EasyField.Fields;
+using System;
 using UnityEngine;
 
 namespace EasyField.Nodes.ViewMovers
 {
-    public class NodeViewMover<V> : INodeViewMover<V>
-        where V : MonoBehaviour, INodeView
+    public class NodeViewMover<TNodeView> : INodeViewMover<TNodeView>
+        where TNodeView : INodeView
     {
         private readonly IField _field;
 
-        public event Action<V, Vector2> ViewMoved;
+        public event Action<TNodeView, Vector2> NodeViewMoved;
 
 
         public NodeViewMover(IField field) 
@@ -17,16 +17,16 @@ namespace EasyField.Nodes.ViewMovers
             _field = field;
         }
 
-        public bool TryMoveView(V view, ref Vector2 position)
+        public bool TryMoveView(TNodeView nodeView, ref Vector2 position)
         {
-            if (view == null)
+            if (nodeView == null)
                 return false;
 
-            var offset = view.GetSize() / 2;
+            var offset = nodeView.GetSize() / 2;
             position = position.Clamp(_field.Box.bounds, offset);
 
-            view.Move(position);
-            ViewMoved?.Invoke(view, position);
+            nodeView.Move(position);
+            NodeViewMoved?.Invoke(nodeView, position);
 
             return true;
         }

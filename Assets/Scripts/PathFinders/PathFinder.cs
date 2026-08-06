@@ -1,22 +1,22 @@
-﻿using System.Collections.Generic;
-using EasyField.Nodes;
+﻿using EasyField.Nodes;
 using EasyField.SearchAlgorithms;
+using System.Collections.Generic;
 
 namespace EasyField.PathFinders
 {
     //todo remove this class??
-    public class PathFinder<T, TId> : IPathFinder<T>
-        where T : INodeData<TId>
+    public class PathFinder<TNodeData, TId> : IPathFinder<TNodeData>
+        where TNodeData : INodeData<TId>
     {
-        private readonly ISearchAlgorithm<T> _searchAlgorithm;
+        private readonly ISearchAlgorithm<TNodeData> _searchAlgorithm;
 
 
-        public PathFinder(ISearchAlgorithm<T> searchAlgorithm)
+        public PathFinder(ISearchAlgorithm<TNodeData> searchAlgorithm)
         {
             _searchAlgorithm = searchAlgorithm;
         }
 
-        public IList<T> GetPath(T startNode, T finishNode)
+        public IList<TNodeData> GetPath(TNodeData startNode, TNodeData finishNode)
         {
             if (startNode == null || finishNode == null) 
                 return null;

@@ -2,11 +2,11 @@
 
 namespace EasyField.Nodes.NodeBlockers
 {
-    public interface INodeBlocker<T>
-        where T : INodeData
+    public interface INodeBlocker<TNodeData>
+        where TNodeData : INodeData
     {
-        public bool TryBlockNode(T node, bool block);
+        public bool TryBlockNode(TNodeData nodeData, bool block);
 
-        public event Action<T, bool> NodeBlocked;
+        public event Action<TNodeData, bool> NodeBlocked;
     }
 }

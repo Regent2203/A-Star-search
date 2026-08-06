@@ -1,7 +1,7 @@
-using System;
 using EasyField.Inputs;
 using EasyField.Nodes;
 using EasyField.ObjectsStorages;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -13,7 +13,7 @@ namespace EasyField.Fields.ClickHandlers
         where TNodeView : MonoBehaviour, INodeView<Vector2Int>
     {
         private GridField _field;
-        private GridTypeStorage<TNodeView> _views;
+        private GridTypeStorage<TNodeView> _nodeViews;
         private Camera _mainCamera;
         private IInputService _inputService;
 
@@ -22,10 +22,10 @@ namespace EasyField.Fields.ClickHandlers
 
 
         [Inject]
-        public void Construct(GridField field, GridTypeStorage<TNodeView> views, Camera camera, IInputService inputService)
+        public void Construct(GridField field, GridTypeStorage<TNodeView> nodeViews, Camera camera, IInputService inputService)
         {
             _field = field;
-            _views = views;
+            _nodeViews = nodeViews;
             _mainCamera = camera;
             _inputService = inputService;
         }
@@ -34,14 +34,14 @@ namespace EasyField.Fields.ClickHandlers
         {
             var index = _field.PositionToIndex(eventData.pointerCurrentRaycast.worldPosition);
 
-            var view = _views.GetItem(index);
-            if (view != null)
+            var nodeView = _nodeViews.GetItem(index);
+            if (nodeView != null)
             {
-                NodeViewClicked?.Invoke(view, eventData.button, _inputService.CreateSnapshot());
+                NodeViewClicked?.Invoke(nodeView, eventData.button, _inputService.CreateSnapshot());
                 return;
             }
 
-            Vector2 worldPos = Camera.main.ScreenToWorldPoint(eventData.position);
+            Vector2 worldPos = _mainCamera.ScreenToWorldPoint(eventData.position);
             FieldClicked?.Invoke(worldPos, eventData.button, _inputService.CreateSnapshot());
         }
     }

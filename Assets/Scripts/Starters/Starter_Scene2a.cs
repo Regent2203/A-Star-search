@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using EasyField.Implementations.Vertexes;
+﻿using EasyField.Implementations.Vertexes;
 using EasyField.Inputs;
 using EasyField.Links;
 using EasyField.Links.CostProviders;
@@ -17,6 +14,9 @@ using EasyField.PathFinders;
 using EasyField.PathSetters;
 using EasyField.SaveSystem;
 using EasyField.UICommon;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -30,12 +30,12 @@ namespace EasyField.Starters
         private LinkViewStorage_Int _linkViews;
         private VertexesClickHandler _clickHandler;
         private VertexesDragHandler _dragHandler;
-        private VertexesFieldBuilder _builder;
+        private VertexesFieldBuilder _fieldBuilder;
         private ICostProvider<VertexData> _costProvider;
         private LinkCostSetter<LinkData<int>> _linkCostSetter;
         private NodeBlocker<VertexData> _nodeBlocker;
-        private NodeViewSelector<VertexView> _viewSelector;
-        private NodeViewMover<VertexView> _viewMover;
+        private NodeViewSelector<VertexView> _nodeViewSelector;
+        private NodeViewMover<VertexView> _nodeViewMover;
         private VertexesLinksBuilder _linksBuilder;
         private StoredLinksProvider<LinkData<int>, int> _linksProvider;
         private LinkViewCoordinator<VertexView, int> _linkViewCoordinator;
@@ -50,27 +50,27 @@ namespace EasyField.Starters
 
 
         [Inject]
-        public void Construct(VertexDataStorage nodes, VertexViewStorage views, LinkViewStorage_Int linkViews,
-            VertexesClickHandler clickHandler, VertexesDragHandler dragHandler, VertexesFieldBuilder builder,
+        public void Construct(VertexDataStorage nodeDatas, VertexViewStorage nodeViews, LinkViewStorage_Int linkViews,
+            VertexesClickHandler clickHandler, VertexesDragHandler dragHandler, VertexesFieldBuilder fieldBuilder,
             ICostProvider<VertexData> costProvider, LinkCostSetter<LinkData<int>> linkCostSetter,
-            NodeBlocker<VertexData> nodeBlocker, NodeViewSelector<VertexView> viewSelector, NodeViewMover<VertexView> viewMover, 
+            NodeBlocker<VertexData> nodeBlocker, NodeViewSelector<VertexView> nodeViewSelector, NodeViewMover<VertexView> nodeViewMover, 
             VertexesLinksBuilder linksBuilder, StoredLinksProvider<LinkData<int>, int> linksProvider, LinkViewCoordinator<VertexView, int> linkViewCoordinator,
             PathSetter<VertexData> pathSetter, PathFinder<VertexData, int> pathFinder, LinePathDrawer pathDrawer,
             ISaver saver, ILoader loader, VertexesFieldSaveDtoProvider dtoProvider,
             UISaveLoadPanel saveLoadPanel)
         {
-            _nodeDatas = nodes;
-            _nodeViews = views;
+            _nodeDatas = nodeDatas;
+            _nodeViews = nodeViews;
             _linkViews = linkViews;
             _clickHandler = clickHandler;
             _dragHandler = dragHandler;
-            _builder = builder;
+            _fieldBuilder = fieldBuilder;
             _costProvider = costProvider;
             _linkCostSetter = linkCostSetter;
 
             _nodeBlocker = nodeBlocker;
-            _viewSelector = viewSelector;
-            _viewMover = viewMover;
+            _nodeViewSelector = nodeViewSelector;
+            _nodeViewMover = nodeViewMover;
 
             _linksBuilder = linksBuilder;
             _linksProvider = linksProvider;
@@ -89,14 +89,14 @@ namespace EasyField.Starters
 
         protected override void SubscribeAll()
         {
-            _clickHandler.NodeViewClicked += OnViewClicked;
+            _clickHandler.NodeViewClicked += OnNodeViewClicked;
             _clickHandler.FieldClicked += OnFieldClicked;
-            _dragHandler.NodeViewDragStarted += OnViewDragStarted;
-            _dragHandler.NodeViewDragging += OnViewDragging;
-            _dragHandler.NodeViewDragEnded += OnViewDragEnded;
+            _dragHandler.NodeViewDragStarted += OnNodeViewDragStarted;
+            _dragHandler.NodeViewDragging += OnNodeViewDragging;
+            _dragHandler.NodeViewDragEnded += OnNodeViewDragEnded;
 
-            _viewSelector.ViewSelected += OnViewSelected;
-            _viewMover.ViewMoved += OnViewMoved;
+            _nodeViewSelector.NodeViewSelected += OnNodeViewSelected;
+            _nodeViewMover.NodeViewMoved += OnNodeViewMoved;
             _nodeBlocker.NodeBlocked += OnNodeBlocked;
 
             _pathSetter.StartNodeChanged += OnStartNodeChanged;
@@ -110,19 +110,19 @@ namespace EasyField.Starters
         protected override void InitDefaultStates()
         {
             //todo
-            _builder.TestPopulate(5);
+            _fieldBuilder.TestPopulate(5);
         }
 
         protected override void UnsubscribeAll()
         {
-            _clickHandler.NodeViewClicked -= OnViewClicked;
+            _clickHandler.NodeViewClicked -= OnNodeViewClicked;
             _clickHandler.FieldClicked -= OnFieldClicked;
-            _dragHandler.NodeViewDragStarted -= OnViewDragStarted;
-            _dragHandler.NodeViewDragging -= OnViewDragging;
-            _dragHandler.NodeViewDragEnded -= OnViewDragEnded;
+            _dragHandler.NodeViewDragStarted -= OnNodeViewDragStarted;
+            _dragHandler.NodeViewDragging -= OnNodeViewDragging;
+            _dragHandler.NodeViewDragEnded -= OnNodeViewDragEnded;
 
-            _viewSelector.ViewSelected -= OnViewSelected;
-            _viewMover.ViewMoved -= OnViewMoved;
+            _nodeViewSelector.NodeViewSelected -= OnNodeViewSelected;
+            _nodeViewMover.NodeViewMoved -= OnNodeViewMoved;
             _nodeBlocker.NodeBlocked -= OnNodeBlocked;
 
             _pathSetter.StartNodeChanged -= OnStartNodeChanged;
@@ -173,14 +173,14 @@ namespace EasyField.Starters
             }
         }
 
-        private void OnViewClicked(VertexView view, PointerEventData.InputButton button, InputSnapshot input)
+        private void OnNodeViewClicked(VertexView view, PointerEventData.InputButton button, InputSnapshot input)
         {
             var node = _nodeDatas.GetItem(view.Id);
 
             if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
             {
                 if (button == PointerEventData.InputButton.Left)
-                    _viewSelector.SelectView(view);
+                    _nodeViewSelector.SelectView(view);
 
                 if (button == PointerEventData.InputButton.Right)
                     _nodeBlocker.TryBlockNode(node, !node.IsBlocked);
@@ -201,9 +201,9 @@ namespace EasyField.Starters
 
             if (input.IsLinkingMode)
             {
-                if (_viewSelector.SelectedView != null)
+                if (_nodeViewSelector.SelectedNodeView != null)
                 {
-                    var selectedNode = _nodeDatas.GetItem(_viewSelector.SelectedView.Id);
+                    var selectedNode = _nodeDatas.GetItem(_nodeViewSelector.SelectedNodeView.Id);
 
                     switch (button)
                     {
@@ -222,20 +222,20 @@ namespace EasyField.Starters
             if (input.IsCreatingMode)
             {
                 if (button == PointerEventData.InputButton.Right)
-                    _builder.DeleteNode(view);
+                    _fieldBuilder.DeleteNode(view);
             }
         }
 
         private void OnFieldClicked(Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
         {
             if (button == PointerEventData.InputButton.Left)
-                _viewSelector.SelectView(null);
+                _nodeViewSelector.SelectView(null);
 
             if (input.IsCreatingMode)
-                _builder.CreateNode(pos);
+                _fieldBuilder.CreateNode(pos);
         }
 
-        private void OnViewDragStarted(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
+        private void OnNodeViewDragStarted(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
         {
             if ((button != PointerEventData.InputButton.Left) || 
                 input.IsMarkingMode || input.IsCreatingMode || input.IsLinkingMode)
@@ -244,22 +244,22 @@ namespace EasyField.Starters
             }
         }
 
-        private void OnViewDragging(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
+        private void OnNodeViewDragging(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
         {
-            _viewMover.TryMoveView(view, ref pos);                                        
+            _nodeViewMover.TryMoveView(view, ref pos);                                        
         }
 
-        private void OnViewDragEnded(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
+        private void OnNodeViewDragEnded(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
         {
-            _viewMover.TryMoveView(view, ref pos);
+            _nodeViewMover.TryMoveView(view, ref pos);
         }        
 
-        private void OnViewSelected(VertexView view, bool b)
+        private void OnNodeViewSelected(VertexView view, bool b)
         {
             view.ShowSelectedMarker(b);
         }
 
-        private void OnViewMoved(VertexView view, Vector2 pos)
+        private void OnNodeViewMoved(VertexView view, Vector2 pos)
         {
             UpdateNodePosition(view, pos);
             RedrawLinkViews(view);
@@ -353,7 +353,7 @@ namespace EasyField.Starters
                 var dto = await loadTask;
                 _pathSetter.UpdateStartNode(_pathSetter.StartNode);
                 _pathSetter.UpdateFinishNode(_pathSetter.FinishNode);
-                _builder.BuildFromDto(dto);                
+                _fieldBuilder.BuildFromDto(dto);                
             }
             catch (Exception ex)
             {

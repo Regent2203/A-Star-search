@@ -1,7 +1,6 @@
-﻿using System;
+﻿using EasyField.GridNeighbours;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using EasyField.GridNeighbours;
 using UnityEngine;
 
 namespace EasyField.ObjectsStorages

@@ -16,7 +16,7 @@ namespace EasyField.Implementations.Vertexes
 
 
         public VertexesNodesBuilder(SpatialField field, DictTypeStorage<VertexData, int> nodeDatas, DictTypeStorage<VertexView, int> nodeViews,
-             VertexDataPool nodeDatasPool, VertexViewPool nodeViewsPool)
+            VertexDataPool nodeDatasPool, VertexViewPool nodeViewsPool)
         {
             _field = field;
             _nodeDatas = nodeDatas;

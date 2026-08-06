@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace EasyField.GridNeighbours
 {
-    public interface IGridNeighboursProvider<T>
+    public interface IGridNeighboursProvider<TNodeData>
     {
-        public IReadOnlyList<T> GetNeighbours(Vector2Int index, T[,] gridItems);
+        public IReadOnlyList<TNodeData> GetNeighbours(Vector2Int index, TNodeData[,] gridItems);
     }
 }

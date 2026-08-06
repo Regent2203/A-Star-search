@@ -3,32 +3,32 @@ using EasyField.Nodes;
 
 namespace EasyField.PathSetters
 {
-    public class PathSetter<T> : IPathSetter<T>
-        where T : INodeData
+    public class PathSetter<TNodeData> : IPathSetter<TNodeData>
+        where TNodeData : INodeData
     {
-        private T _startNode;
-        private T _finishNode;
+        private TNodeData _startNode;
+        private TNodeData _finishNode;
 
-        public T StartNode => _startNode;
-        public T FinishNode => _finishNode;
+        public TNodeData StartNode => _startNode;
+        public TNodeData FinishNode => _finishNode;
 
         public event Action<bool> AnyNodeChanged;
-        public event Action<T, bool> StartNodeChanged;  //false is called when cleared, true is called when assigned
-        public event Action<T, bool> FinishNodeChanged; //false is called when cleared, true is called when assigned
+        public event Action<TNodeData, bool> StartNodeChanged;  //false is called when cleared, true is called when assigned
+        public event Action<TNodeData, bool> FinishNodeChanged; //false is called when cleared, true is called when assigned
         public bool IsReady => _startNode != null && _finishNode != null;
 
 
-        public void UpdateStartNode(T node)
+        public void UpdateStartNode(TNodeData node)
         {
             UpdateDesiredNode(node, ref _startNode, ref _finishNode, StartNodeChanged);
         }
 
-        public void UpdateFinishNode(T node)
+        public void UpdateFinishNode(TNodeData node)
         {
             UpdateDesiredNode(node, ref _finishNode, ref _startNode, FinishNodeChanged);
         }
 
-        private void UpdateDesiredNode(T node, ref T desiredNode, ref T notDesiredNode, Action<T, bool> desiredNodeChanged)
+        private void UpdateDesiredNode(TNodeData node, ref TNodeData desiredNode, ref TNodeData notDesiredNode, Action<TNodeData, bool> desiredNodeChanged)
         {
             if (node is not null && ReferenceEquals(notDesiredNode, node)) //when trying to set start node as finish node or vice versa, we do nothing (it's a feature)
                 return;

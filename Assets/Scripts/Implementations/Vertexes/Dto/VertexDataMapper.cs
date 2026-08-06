@@ -2,7 +2,7 @@
 
 namespace EasyField.Implementations.Vertexes
 {
-    public class VertexDataMapper : INodeMapper<VertexData, VertexDataDto, int>
+    public class VertexDataMapper : INodeDataMapper<VertexData, VertexDataDto, int>
     {
         public VertexDataDto ToDto(VertexData nodeData)
         {

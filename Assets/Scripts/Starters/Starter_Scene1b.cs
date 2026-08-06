@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using EasyField.Implementations.Cells;
+﻿using EasyField.Implementations.Cells;
 using EasyField.Implementations.Cells.UI;
 using EasyField.Inputs;
-using EasyField.ObjectsStorages;
 using EasyField.PathDrawers;
 using EasyField.PathFinders;
 using EasyField.PathSetters;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;

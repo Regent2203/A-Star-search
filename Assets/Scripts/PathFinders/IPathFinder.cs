@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace EasyField.PathFinders
 {
-    public interface IPathFinder<T>
-        where T : INodeData
+    public interface IPathFinder<TNodeData>
+        where TNodeData : INodeData
     {
-        public IList<T> GetPath(T startNode, T finishNode);
+        public IList<TNodeData> GetPath(TNodeData startNode, TNodeData finishNode);
     }
 }

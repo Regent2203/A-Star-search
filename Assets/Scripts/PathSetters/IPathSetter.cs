@@ -2,10 +2,10 @@
 
 namespace EasyField.PathSetters
 {
-    public interface IPathSetter<T>
-        where T : INodeData
+    public interface IPathSetter<TNodeData>
+        where TNodeData : INodeData
     {
-        public void UpdateStartNode(T node);
-        public void UpdateFinishNode(T node);
+        public void UpdateStartNode(TNodeData nodeData);
+        public void UpdateFinishNode(TNodeData nodeData);
     }
 }

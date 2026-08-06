@@ -5,7 +5,7 @@ using Zenject;
 
 namespace EasyField.Implementations.Cells
 {
-    [CreateAssetMenu(fileName = "CellsConfig", menuName = "Core/CellsConfig")] //todo rename Core
+    [CreateAssetMenu(fileName = "CellsConfig", menuName = "EasyField/CellsConfig")]
     public class CellsConfig : ScriptableObjectInstaller<CellsConfig>
     {
         [SerializeField]

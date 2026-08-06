@@ -2,19 +2,19 @@
 
 namespace EasyField.Nodes.NodeBlockers
 {
-    public class NodeBlocker<T> : INodeBlocker<T>
-        where T : INodeData
+    public class NodeBlocker<TNodeData> : INodeBlocker<TNodeData>
+        where TNodeData : INodeData
     {
-        public event Action<T, bool> NodeBlocked;
+        public event Action<TNodeData, bool> NodeBlocked;
 
-        public bool TryBlockNode(T node, bool block)
+        public bool TryBlockNode(TNodeData nodeData, bool block)
         {
-            if (node == null) 
+            if (nodeData == null) 
                 return false;
 
-            if (node.TrySetBlocked(block))
+            if (nodeData.TrySetBlocked(block))
             {
-                NodeBlocked?.Invoke(node, node.IsBlocked);
+                NodeBlocked?.Invoke(nodeData, nodeData.IsBlocked);
                 return true;
             }
 

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using EasyField.SaveSystem.DtoFileIOs;
+using EasyField.SaveSystem.FilePathProviders;
+using System;
 using System.IO;
 using System.Threading.Tasks;
-using EasyField.SaveSystem.DtoFileIOs;
-using EasyField.SaveSystem.FilePathProviders;
 using UnityEngine;
 
 namespace EasyField.SaveSystem
@@ -11,6 +11,7 @@ namespace EasyField.SaveSystem
     {
         private readonly IFilePathProvider _filePathProvider;
         private readonly IDtoFileIO _dtoFile;
+
 
         public Loader(IFilePathProvider filePathProvider, IDtoFileIO dtoFile)
         {

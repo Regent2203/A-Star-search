@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace EasyField.Nodes.ViewMovers
 {
-    public interface INodeViewMover<V>
-        where V : MonoBehaviour, INodeView
+    public interface INodeViewMover<TNodeView>
+        where TNodeView : INodeView
     {
-        public bool TryMoveView(V view, ref Vector2 position);
+        public bool TryMoveView(TNodeView nodeView, ref Vector2 position);
 
-        public event Action<V, Vector2> ViewMoved;
+        public event Action<TNodeView, Vector2> NodeViewMoved;
     }
 }

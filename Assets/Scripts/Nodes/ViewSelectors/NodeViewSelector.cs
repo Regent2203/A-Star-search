@@ -1,33 +1,33 @@
 ﻿using System;
-using UnityEngine;
+using System.Collections.Generic;
 
 namespace EasyField.Nodes.ViewSelectors
 {
-    public class NodeViewSelector<V> : INodeViewSelector<V>
-        where V : MonoBehaviour, INodeView
+    public class NodeViewSelector<TNodeView> : INodeViewSelector<TNodeView>
+        where TNodeView : INodeView
     {
-        private V _selectedView;
+        private TNodeView _selectedNodeView;
 
-        public V SelectedView => _selectedView;
+        public TNodeView SelectedNodeView => _selectedNodeView;
 
-        public event Action<V, bool> ViewSelected; //true when select, false when deselect
+        public event Action<TNodeView, bool> NodeViewSelected; //true when select, false when deselect
 
 
-        public void SelectView(V view)
+        public void SelectView(TNodeView nodeView)
         {
-            if (_selectedView == view)
+            if (EqualityComparer<TNodeView>.Default.Equals(_selectedNodeView, nodeView))
                 return;
 
-            if (_selectedView != null)
+            if (_selectedNodeView != null)
             {
-                ViewSelected?.Invoke(_selectedView, false);
+                NodeViewSelected?.Invoke(_selectedNodeView, false);
             }
 
-            _selectedView = view;
+            _selectedNodeView = nodeView;
 
-            if (view != null)
+            if (nodeView != null)
             {
-                ViewSelected?.Invoke(_selectedView, true);
+                NodeViewSelected?.Invoke(_selectedNodeView, true);
             }
         }
     }
