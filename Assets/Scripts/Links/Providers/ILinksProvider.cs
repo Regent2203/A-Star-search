@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ThisProject.Links.Providers
+namespace EasyField.Links.Providers
 {
     public interface ILinksProvider<TLinkData, TId>
         where TLinkData : ILinkData<TId>

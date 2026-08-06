@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ThisProject.Links.LinkCostChangers
+namespace EasyField.Links.LinkCostChangers
 {
     public interface ILinkCostChanger<TLinkData>
         where TLinkData : ILinkData

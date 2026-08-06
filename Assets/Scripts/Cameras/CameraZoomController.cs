@@ -1,8 +1,8 @@
-using ThisProject.Fields;
+using EasyField.Fields;
 using UnityEngine;
 using Zenject;
 
-namespace ThisProject.Cameras
+namespace EasyField.Cameras
 {
     [RequireComponent(typeof(Camera))]
     public class CameraZoomController : MonoBehaviour

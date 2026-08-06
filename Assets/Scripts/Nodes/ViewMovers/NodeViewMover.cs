@@ -1,8 +1,8 @@
 ﻿using System;
-using ThisProject.Fields;
+using EasyField.Fields;
 using UnityEngine;
 
-namespace ThisProject.Nodes.ViewMovers
+namespace EasyField.Nodes.ViewMovers
 {
     public class NodeViewMover<V> : INodeViewMover<V>
         where V : MonoBehaviour, INodeView

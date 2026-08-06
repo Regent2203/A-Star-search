@@ -1,11 +1,11 @@
 ﻿using System;
-using ThisProject.Inputs;
-using ThisProject.Nodes;
+using EasyField.Inputs;
+using EasyField.Nodes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace ThisProject.Fields.DragHandlers
+namespace EasyField.Fields.DragHandlers
 {
     [RequireComponent(typeof(BoxCollider2D))]
     public class SpatialDragHandler<V> : MonoBehaviour, IFieldDragHandler<V>

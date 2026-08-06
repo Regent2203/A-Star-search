@@ -1,4 +1,4 @@
-﻿namespace ThisProject.Inputs
+﻿namespace EasyField.Inputs
 {
     public readonly struct InputSnapshot
     {

@@ -1,6 +1,6 @@
-﻿using ThisProject.Links.Implementations;
+﻿using EasyField.Links.Implementations;
 
-namespace ThisProject.Links.Factories
+namespace EasyField.Links.Factories
 {
     public class LinkViewFactory<TId>
     {

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ThisProject.SaveSystem.Serializers
+namespace EasyField.SaveSystem.Serializers
 {
     public class NewtonsoftJsonStringSerializer : IStringSerializer
     {

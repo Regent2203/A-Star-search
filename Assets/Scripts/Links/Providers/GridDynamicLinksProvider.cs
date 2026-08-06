@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using ThisProject.GridNeighbours;
-using ThisProject.Links.Factories;
-using ThisProject.Nodes;
-using ThisProject.ObjectsStorages;
+using EasyField.GridNeighbours;
+using EasyField.Links.Factories;
+using EasyField.Nodes;
+using EasyField.ObjectsStorages;
 using UnityEngine;
 
-namespace ThisProject.Links.Providers
+namespace EasyField.Links.Providers
 {
     /// <summary>
     /// Creates links during search algorithm work - not beforehand

@@ -1,6 +1,6 @@
-﻿using ThisProject.ObjectsStorages;
+﻿using EasyField.ObjectsStorages;
 
-namespace ThisProject.Links.Implementations
+namespace EasyField.Links.Implementations
 {
     public class LinkViewStorage_Int : DictTypeStorage<LinkView<int>, LinkKey<int>>
     {

@@ -1,8 +1,8 @@
-using ThisProject.Nodes;
+using EasyField.Nodes;
 using UnityEngine;
 using Zenject;
 
-namespace ThisProject.Implementations.Cells
+namespace EasyField.Implementations.Cells
 {
     public class CellData : NodeData<Vector2Int>, IPoolable<Vector2Int, Vector2, CellType>
     {

@@ -1,6 +1,6 @@
-﻿using ThisProject.Nodes;
+﻿using EasyField.Nodes;
 
-namespace ThisProject.Links.CostProviders
+namespace EasyField.Links.CostProviders
 {
     public class FromCostProvider<TNodeData> : WeightedCostProvider<TNodeData>
         where TNodeData : INodeData

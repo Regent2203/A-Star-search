@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ThisProject.Implementations.Cells
+namespace EasyField.Implementations.Cells
 {
     public interface ICellTypeChanger
     {

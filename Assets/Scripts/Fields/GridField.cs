@@ -1,8 +1,8 @@
-﻿using ThisProject.Nodes;
+﻿using EasyField.Nodes;
 using UnityEngine;
 using Zenject;
 
-namespace ThisProject.Fields
+namespace EasyField.Fields
 {
     public class GridField : Field
     {

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace ThisProject.Nodes.ViewMovers
+namespace EasyField.Nodes.ViewMovers
 {
     public interface INodeViewMover<V>
         where V : MonoBehaviour, INodeView

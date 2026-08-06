@@ -1,7 +1,7 @@
-﻿using ThisProject.Nodes;
+﻿using EasyField.Nodes;
 using UnityEngine;
 
-namespace ThisProject.Links.CostProviders
+namespace EasyField.Links.CostProviders
 {
     public abstract class WeightedCostProvider<TNodeData> : ICostProvider<TNodeData>
         where TNodeData : INodeData

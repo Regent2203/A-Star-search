@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace ThisProject.SaveSystem.DtoFileIOs
+namespace EasyField.SaveSystem.DtoFileIOs
 {
     public interface IDtoFileIO
     {

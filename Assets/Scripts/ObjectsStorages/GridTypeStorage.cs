@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ThisProject.GridNeighbours;
+using EasyField.GridNeighbours;
 using UnityEngine;
 
-namespace ThisProject.ObjectsStorages
+namespace EasyField.ObjectsStorages
 {
     public class GridTypeStorage<T> : IObjectsStorage<T, Vector2Int>
     {

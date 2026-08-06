@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ThisProject.ObjectsStorages
+namespace EasyField.ObjectsStorages
 {
     public interface IObjectsStorage<T, TId>
     {

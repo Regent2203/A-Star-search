@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ThisProject.Fields
+namespace EasyField.Fields
 {
     public class SpatialField: Field
     {

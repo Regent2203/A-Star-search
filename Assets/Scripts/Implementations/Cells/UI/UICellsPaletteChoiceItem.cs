@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ThisProject.Implementations.Cells.UI
+namespace EasyField.Implementations.Cells.UI
 {
     public class UICellsPaletteChoiceItem : MonoBehaviour
     {

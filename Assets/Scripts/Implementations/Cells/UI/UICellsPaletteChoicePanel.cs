@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ThisProject.Implementations.Cells.UI
+namespace EasyField.Implementations.Cells.UI
 {
     public class UICellsPaletteChoicePanel : MonoBehaviour
     {

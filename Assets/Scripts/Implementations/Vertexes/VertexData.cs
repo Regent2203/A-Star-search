@@ -1,6 +1,6 @@
-using ThisProject.Nodes;
+using EasyField.Nodes;
 
-namespace ThisProject.Implementations.Vertexes
+namespace EasyField.Implementations.Vertexes
 {
     public class VertexData : NodeData<int>
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace ThisProject.Inputs
+namespace EasyField.Inputs
 {
     [Serializable]
     public class InputSettings

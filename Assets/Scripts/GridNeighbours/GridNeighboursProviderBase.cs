@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace ThisProject.GridNeighbours
+namespace EasyField.GridNeighbours
 {
     public abstract class GridNeighboursProviderBase<T> : IGridNeighboursProvider<T>
     {

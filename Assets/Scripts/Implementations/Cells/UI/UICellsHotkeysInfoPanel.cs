@@ -1,9 +1,9 @@
-using ThisProject.Inputs;
+using EasyField.Inputs;
 using TMPro;
 using UnityEngine;
 using Zenject;
 
-namespace ThisProject.Implementations.Cells.UI
+namespace EasyField.Implementations.Cells.UI
 {
     public class UICellsHotkeysInfoPanel : MonoBehaviour
     {

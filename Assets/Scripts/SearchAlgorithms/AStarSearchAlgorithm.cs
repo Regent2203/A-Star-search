@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using ThisProject.Heuristic;
-using ThisProject.Links;
-using ThisProject.Links.Providers;
-using ThisProject.Nodes;
-using ThisProject.ObjectsStorages;
+using EasyField.Heuristic;
+using EasyField.Links;
+using EasyField.Links.Providers;
+using EasyField.Nodes;
+using EasyField.ObjectsStorages;
 using UnityEngine;
 
-namespace ThisProject.SearchAlgorithms
+namespace EasyField.SearchAlgorithms
 {
     public class AStarSearchAlgorithm<TNodeData, TLinkData, TId> : ISearchAlgorithm<TNodeData>
         where TNodeData : INodeData<TId>

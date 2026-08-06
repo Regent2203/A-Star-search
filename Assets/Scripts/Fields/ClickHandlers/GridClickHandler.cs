@@ -1,12 +1,12 @@
 using System;
-using ThisProject.Inputs;
-using ThisProject.Nodes;
-using ThisProject.ObjectsStorages;
+using EasyField.Inputs;
+using EasyField.Nodes;
+using EasyField.ObjectsStorages;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace ThisProject.Fields.ClickHandlers
+namespace EasyField.Fields.ClickHandlers
 {
     [RequireComponent(typeof(BoxCollider2D))]
     public class GridClickHandler<TNodeView> : MonoBehaviour, IFieldClickHandler<TNodeView> 

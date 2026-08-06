@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ThisProject.SearchAlgorithms
+namespace EasyField.SearchAlgorithms
 {
     public class PriorityQueue<T>
     {

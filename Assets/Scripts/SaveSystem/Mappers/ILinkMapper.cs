@@ -1,7 +1,7 @@
-﻿using ThisProject.Links;
-using ThisProject.SaveSystem.Dto;
+﻿using EasyField.Links;
+using EasyField.SaveSystem.Dto;
 
-namespace ThisProject.SaveSystem.Mappers
+namespace EasyField.SaveSystem.Mappers
 {
     public interface ILinkMapper<TLinkData, TLinkDataDto, TId>
         where TLinkData : ILinkData<TId>

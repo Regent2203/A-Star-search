@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ThisProject.Inputs
+namespace EasyField.Inputs
 {
     public class UnityInputService : IInputService
     {

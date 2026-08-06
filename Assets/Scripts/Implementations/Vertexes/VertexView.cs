@@ -1,7 +1,7 @@
-using ThisProject.Nodes;
+using EasyField.Nodes;
 using UnityEngine;
 
-namespace ThisProject.Implementations.Vertexes
+namespace EasyField.Implementations.Vertexes
 {
     public class VertexView : NodeView<int>
     {

@@ -1,9 +1,9 @@
-using ThisProject.Nodes;
+using EasyField.Nodes;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-namespace ThisProject.PathDrawers
+namespace EasyField.PathDrawers
 {
     public class LinePathDrawer : IPathDrawer<INodeView>
     {

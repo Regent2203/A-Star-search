@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ThisProject.Heuristic.Functions
+namespace EasyField.Heuristic.Functions
 {
     public class ManhattanDistance : IHeuristicFunction
     {

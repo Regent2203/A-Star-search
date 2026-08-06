@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using ThisProject.Nodes;
+using EasyField.Nodes;
 
-namespace ThisProject.Links.Factories
+namespace EasyField.Links.Factories
 {
     public interface ILinkDataFactory<TNodeData, TLinkData, TId>
         where TNodeData : INodeData<TId>

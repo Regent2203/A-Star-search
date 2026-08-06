@@ -1,6 +1,6 @@
-﻿using ThisProject.Nodes;
+﻿using EasyField.Nodes;
 
-namespace ThisProject.Heuristic
+namespace EasyField.Heuristic
 {
     public class DijkstraHeuristicsProvider<T> : IHeuristicsProvider<T> 
         where T : INodeData

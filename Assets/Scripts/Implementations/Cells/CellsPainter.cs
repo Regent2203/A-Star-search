@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ThisProject.Implementations.Cells
+namespace EasyField.Implementations.Cells
 {
     public enum BrushType
     {

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using ThisProject.SaveSystem.DtoFileIOs;
-using ThisProject.SaveSystem.FilePathProviders;
+using EasyField.SaveSystem.DtoFileIOs;
+using EasyField.SaveSystem.FilePathProviders;
 using UnityEngine;
 
-namespace ThisProject.SaveSystem
+namespace EasyField.SaveSystem
 {
     public class Loader: ILoader
     {

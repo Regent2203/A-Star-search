@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace ThisProject.Nodes.ViewSelectors
+namespace EasyField.Nodes.ViewSelectors
 {
     public class NodeViewSelector<V> : INodeViewSelector<V>
         where V : MonoBehaviour, INodeView

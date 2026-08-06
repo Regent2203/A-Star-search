@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ThisProject.UICommon
+namespace EasyField.UICommon
 {
     public class UISaveLoadPanel : MonoBehaviour
     {

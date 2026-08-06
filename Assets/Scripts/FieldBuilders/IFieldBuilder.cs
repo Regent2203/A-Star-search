@@ -1,4 +1,4 @@
-﻿namespace ThisProject.Fields.FieldBuilders
+﻿namespace EasyField.Fields.FieldBuilders
 {
     public interface IFieldBuilder
     {

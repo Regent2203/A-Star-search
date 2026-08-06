@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace ThisProject.UICommon
+namespace EasyField.UICommon
 {
     public class UISceneLoadButton : MonoBehaviour
     {

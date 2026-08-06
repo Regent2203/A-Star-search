@@ -1,7 +1,7 @@
 ﻿using SFB;
 using System;
 
-namespace ThisProject.SaveSystem.FilePathProviders
+namespace EasyField.SaveSystem.FilePathProviders
 {
     public class DialogueFilePathProvider : IFilePathProvider
     {

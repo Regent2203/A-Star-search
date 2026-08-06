@@ -1,8 +1,8 @@
-﻿using ThisProject.Fields;
-using ThisProject.ObjectsStorages;
+﻿using EasyField.Fields;
+using EasyField.ObjectsStorages;
 using UnityEngine;
 
-namespace ThisProject.Implementations.Vertexes
+namespace EasyField.Implementations.Vertexes
 {
     public class VertexesNodesBuilder
     {

@@ -1,6 +1,6 @@
-﻿using ThisProject.SaveSystem.Mappers;
+﻿using EasyField.SaveSystem.Mappers;
 
-namespace ThisProject.Implementations.Vertexes
+namespace EasyField.Implementations.Vertexes
 {
     public class VertexDataMapper : INodeMapper<VertexData, VertexDataDto, int>
     {

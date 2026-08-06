@@ -1,6 +1,6 @@
-﻿using ThisProject.ObjectsStorages;
+﻿using EasyField.ObjectsStorages;
 
-namespace ThisProject.Implementations.Vertexes
+namespace EasyField.Implementations.Vertexes
 {
     public class VertexDataStorage : DictTypeStorage<VertexData, int>
     {

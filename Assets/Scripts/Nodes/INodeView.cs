@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ThisProject.Nodes
+namespace EasyField.Nodes
 {
     public interface INodeView
     {

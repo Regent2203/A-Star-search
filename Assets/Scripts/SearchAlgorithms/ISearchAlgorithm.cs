@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using ThisProject.Nodes;
+using EasyField.Nodes;
 
-namespace ThisProject.SearchAlgorithms
+namespace EasyField.SearchAlgorithms
 {
     public interface ISearchAlgorithm<T>
         where T : INodeData

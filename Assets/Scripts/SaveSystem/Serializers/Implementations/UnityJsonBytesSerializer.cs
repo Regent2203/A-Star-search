@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using UnityEngine;
 
-namespace ThisProject.SaveSystem.Serializers
+namespace EasyField.SaveSystem.Serializers
 {
     public class UnityJsonBytesSerializer : IBytesSerializer
     {

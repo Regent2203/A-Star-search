@@ -1,7 +1,7 @@
-﻿using ThisProject.Heuristic;
-using ThisProject.Heuristic.Functions;
+﻿using EasyField.Heuristic;
+using EasyField.Heuristic.Functions;
 
-namespace ThisProject.Implementations.Vertexes
+namespace EasyField.Implementations.Vertexes
 {
     public class VertexesHeuristicsProvider : HeuristicsProvider<VertexData>
     {

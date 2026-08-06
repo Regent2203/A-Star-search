@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ThisProject.Nodes.NodeBlockers
+namespace EasyField.Nodes.NodeBlockers
 {
     public interface INodeBlocker<T>
         where T : INodeData

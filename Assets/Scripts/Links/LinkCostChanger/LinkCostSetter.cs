@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace ThisProject.Links.LinkCostChangers
+namespace EasyField.Links.LinkCostChangers
 {
     public class LinkCostSetter<TLinkData> : ILinkCostChanger<TLinkData>
         where TLinkData : ILinkData

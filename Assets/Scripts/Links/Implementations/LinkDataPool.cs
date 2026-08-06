@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-namespace ThisProject.Links.Implementations
+namespace EasyField.Links.Implementations
 {
     public class LinkDataPool<TId> : PoolableMemoryPool<TId, TId, float, LinkData<TId>>
     {

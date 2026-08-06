@@ -1,6 +1,6 @@
-﻿using ThisProject.Nodes;
+﻿using EasyField.Nodes;
 
-namespace ThisProject.Links.CostProviders
+namespace EasyField.Links.CostProviders
 {
     public interface IWeightGetter<TNodeData>
         where TNodeData : INodeData

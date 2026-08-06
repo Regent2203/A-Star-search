@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using ThisProject.Nodes;
-using ThisProject.SearchAlgorithms;
+using EasyField.Nodes;
+using EasyField.SearchAlgorithms;
 
-namespace ThisProject.PathFinders
+namespace EasyField.PathFinders
 {
     //todo remove this class??
     public class PathFinder<T, TId> : IPathFinder<T>

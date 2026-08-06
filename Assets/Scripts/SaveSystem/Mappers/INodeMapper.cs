@@ -1,7 +1,7 @@
-﻿using ThisProject.Nodes;
-using ThisProject.SaveSystem.Dto;
+﻿using EasyField.Nodes;
+using EasyField.SaveSystem.Dto;
 
-namespace ThisProject.SaveSystem.Mappers
+namespace EasyField.SaveSystem.Mappers
 {
     public interface INodeMapper<TNodeData, TNodeDataDto, TId>
         where TNodeData : INodeData<TId>

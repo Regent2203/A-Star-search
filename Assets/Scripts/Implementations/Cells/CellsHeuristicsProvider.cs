@@ -1,7 +1,7 @@
-﻿using ThisProject.Heuristic;
-using ThisProject.Heuristic.Functions;
+﻿using EasyField.Heuristic;
+using EasyField.Heuristic.Functions;
 
-namespace ThisProject.Implementations.Cells
+namespace EasyField.Implementations.Cells
 {
     public class CellsHeuristicsProvider : HeuristicsProvider<CellData>
     {

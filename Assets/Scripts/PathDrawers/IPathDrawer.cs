@@ -1,7 +1,7 @@
-﻿using ThisProject.Nodes;
+﻿using EasyField.Nodes;
 using System.Collections.Generic;
 
-namespace ThisProject.PathDrawers
+namespace EasyField.PathDrawers
 {
     public interface IPathDrawer<V>
         where V : INodeView

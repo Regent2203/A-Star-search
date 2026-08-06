@@ -1,7 +1,7 @@
-﻿using ThisProject.Heuristic.Functions;
-using ThisProject.Nodes;
+﻿using EasyField.Heuristic.Functions;
+using EasyField.Nodes;
 
-namespace ThisProject.Heuristic
+namespace EasyField.Heuristic
 {
     public abstract class HeuristicsProvider<T> : IHeuristicsProvider<T>
         where T : INodeData

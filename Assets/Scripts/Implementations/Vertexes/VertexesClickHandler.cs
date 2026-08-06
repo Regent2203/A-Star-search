@@ -1,6 +1,6 @@
-﻿using ThisProject.Fields.ClickHandlers;
+﻿using EasyField.Fields.ClickHandlers;
 
-namespace ThisProject.Implementations.Vertexes
+namespace EasyField.Implementations.Vertexes
 {
     public class VertexesClickHandler : SpatialClickHandler<VertexView>
     {

@@ -1,23 +1,23 @@
-using ThisProject.Fields;
-using ThisProject.GridNeighbours;
-using ThisProject.Heuristic.Functions;
-using ThisProject.Implementations.Cells;
-using ThisProject.Implementations.Cells.UI;
-using ThisProject.Inputs;
-using ThisProject.Links;
-using ThisProject.Links.CostProviders;
-using ThisProject.Links.Factories;
-using ThisProject.Links.Providers;
-using ThisProject.ObjectsStorages;
-using ThisProject.PathDrawers;
-using ThisProject.PathFinders;
-using ThisProject.PathSetters;
-using ThisProject.SearchAlgorithms;
-using ThisProject.Starters;
+using EasyField.Fields;
+using EasyField.GridNeighbours;
+using EasyField.Heuristic.Functions;
+using EasyField.Implementations.Cells;
+using EasyField.Implementations.Cells.UI;
+using EasyField.Inputs;
+using EasyField.Links;
+using EasyField.Links.CostProviders;
+using EasyField.Links.Factories;
+using EasyField.Links.Providers;
+using EasyField.ObjectsStorages;
+using EasyField.PathDrawers;
+using EasyField.PathFinders;
+using EasyField.PathSetters;
+using EasyField.SearchAlgorithms;
+using EasyField.Starters;
 using UnityEngine;
 using Zenject;
 
-namespace ThisProject.Installers
+namespace EasyField.Installers
 {
     public class SceneInstaller_Scene1b : MonoInstaller
     {

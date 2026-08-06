@@ -1,7 +1,7 @@
 ﻿using System;
-using ThisProject.Nodes;
+using EasyField.Nodes;
 
-namespace ThisProject.PathSetters
+namespace EasyField.PathSetters
 {
     public class PathSetter<T> : IPathSetter<T>
         where T : INodeData

@@ -1,8 +1,8 @@
 ﻿using System;
-using ThisProject.SaveSystem.Dto;
+using EasyField.SaveSystem.Dto;
 using UnityEngine;
 
-namespace ThisProject.Implementations.Cells
+namespace EasyField.Implementations.Cells
 {
     [Serializable]
     public class CellDataDto : NodeDataDto<Vector2Int>

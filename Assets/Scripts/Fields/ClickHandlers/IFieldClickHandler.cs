@@ -1,10 +1,10 @@
 ﻿using System;
-using ThisProject.Inputs;
-using ThisProject.Nodes;
+using EasyField.Inputs;
+using EasyField.Nodes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace ThisProject.Fields.ClickHandlers
+namespace EasyField.Fields.ClickHandlers
 {
     public interface IFieldClickHandler<TNodeView> : IPointerDownHandler
         where TNodeView : MonoBehaviour, INodeView

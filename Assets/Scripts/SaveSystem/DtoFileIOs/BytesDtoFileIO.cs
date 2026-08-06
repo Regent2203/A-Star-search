@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using ThisProject.SaveSystem.Serializers;
+using EasyField.SaveSystem.Serializers;
 
-namespace ThisProject.SaveSystem.DtoFileIOs
+namespace EasyField.SaveSystem.DtoFileIOs
 {
     public class BytesDtoFileIO : IDtoFileIO
     {

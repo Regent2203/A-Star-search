@@ -1,3 +1,3 @@
-﻿namespace ThisProject.Implementations.Vertexes.UI
+﻿namespace EasyField.Implementations.Vertexes.UI
 { 
 }

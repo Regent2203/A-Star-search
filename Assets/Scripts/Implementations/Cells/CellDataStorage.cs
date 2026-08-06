@@ -1,6 +1,6 @@
-﻿using ThisProject.ObjectsStorages;
+﻿using EasyField.ObjectsStorages;
 
-namespace ThisProject.Implementations.Cells
+namespace EasyField.Implementations.Cells
 {
     public class CellDataStorage : GridTypeStorage<CellData>
     {

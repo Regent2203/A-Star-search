@@ -1,6 +1,6 @@
-﻿using ThisProject.Fields.DragHandlers;
+﻿using EasyField.Fields.DragHandlers;
 
-namespace ThisProject.Implementations.Vertexes
+namespace EasyField.Implementations.Vertexes
 {
     public class VertexesDragHandler : SpatialDragHandler<VertexView>
     {

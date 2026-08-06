@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ThisProject.Links
+namespace EasyField.Links
 {
     public interface ILinkView
     {

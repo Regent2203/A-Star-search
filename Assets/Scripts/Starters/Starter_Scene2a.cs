@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ThisProject.Implementations.Vertexes;
-using ThisProject.Inputs;
-using ThisProject.Links;
-using ThisProject.Links.CostProviders;
-using ThisProject.Links.Implementations;
-using ThisProject.Links.LinkCostChangers;
-using ThisProject.Links.Providers;
-using ThisProject.Links.ViewMovers;
-using ThisProject.Nodes.NodeBlockers;
-using ThisProject.Nodes.ViewMovers;
-using ThisProject.Nodes.ViewSelectors;
-using ThisProject.PathDrawers;
-using ThisProject.PathFinders;
-using ThisProject.PathSetters;
-using ThisProject.SaveSystem;
-using ThisProject.UICommon;
+using EasyField.Implementations.Vertexes;
+using EasyField.Inputs;
+using EasyField.Links;
+using EasyField.Links.CostProviders;
+using EasyField.Links.Implementations;
+using EasyField.Links.LinkCostChangers;
+using EasyField.Links.Providers;
+using EasyField.Links.ViewMovers;
+using EasyField.Nodes.NodeBlockers;
+using EasyField.Nodes.ViewMovers;
+using EasyField.Nodes.ViewSelectors;
+using EasyField.PathDrawers;
+using EasyField.PathFinders;
+using EasyField.PathSetters;
+using EasyField.SaveSystem;
+using EasyField.UICommon;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace ThisProject.Starters
+namespace EasyField.Starters
 {
     public class Starter_Scene2a : StarterBase
     {

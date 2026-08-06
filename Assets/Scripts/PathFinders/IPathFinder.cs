@@ -1,7 +1,7 @@
-﻿using ThisProject.Nodes;
+﻿using EasyField.Nodes;
 using System.Collections.Generic;
 
-namespace ThisProject.PathFinders
+namespace EasyField.PathFinders
 {
     public interface IPathFinder<T>
         where T : INodeData

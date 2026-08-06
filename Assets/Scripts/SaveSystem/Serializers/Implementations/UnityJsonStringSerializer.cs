@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ThisProject.SaveSystem.Serializers
+namespace EasyField.SaveSystem.Serializers
 {
     public class UnityJsonStringSerializer : IStringSerializer
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using ThisProject.ObjectsStorages;
+using EasyField.ObjectsStorages;
 
-namespace ThisProject.Links.Providers
+namespace EasyField.Links.Providers
 {
     public class StoredLinksProvider<TLinkData, TId> : ILinksProvider<TLinkData, TId>
         where TLinkData : ILinkData<TId>

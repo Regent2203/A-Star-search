@@ -1,7 +1,7 @@
-﻿using ThisProject.Nodes;
+﻿using EasyField.Nodes;
 using UnityEngine;
 
-namespace ThisProject.Implementations.Cells
+namespace EasyField.Implementations.Cells
 {
     public class CellView : NodeView<Vector2Int>
     {

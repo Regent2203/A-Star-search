@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using ThisProject.Nodes;
-using ThisProject.ObjectsStorages;
+using EasyField.Nodes;
+using EasyField.ObjectsStorages;
 using UnityEngine;
 
 public static class Extensions

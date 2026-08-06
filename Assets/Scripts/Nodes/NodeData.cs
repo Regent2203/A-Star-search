@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-namespace ThisProject.Nodes
+namespace EasyField.Nodes
 {
     public abstract class NodeData<TId> : INodeData<TId>, IPoolable<TId, Vector2>
     {

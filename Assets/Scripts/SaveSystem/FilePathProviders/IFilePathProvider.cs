@@ -1,4 +1,4 @@
-﻿namespace ThisProject.SaveSystem.FilePathProviders
+﻿namespace EasyField.SaveSystem.FilePathProviders
 {
     public interface IFilePathProvider
     {

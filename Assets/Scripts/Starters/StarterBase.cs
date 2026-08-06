@@ -1,7 +1,7 @@
 ﻿using System;
 using Zenject;
 
-namespace ThisProject.Starters
+namespace EasyField.Starters
 {
     public abstract class StarterBase : IInitializable, IDisposable
     {

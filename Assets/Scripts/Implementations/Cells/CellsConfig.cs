@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-namespace ThisProject.Implementations.Cells
+namespace EasyField.Implementations.Cells
 {
     [CreateAssetMenu(fileName = "CellsConfig", menuName = "Core/CellsConfig")] //todo rename Core
     public class CellsConfig : ScriptableObjectInstaller<CellsConfig>

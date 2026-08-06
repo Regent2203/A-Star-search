@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ThisProject.ObjectsStorages
+namespace EasyField.ObjectsStorages
 {
     public class DictTypeStorage<T, TId> : IObjectsStorage<T, TId>
     {

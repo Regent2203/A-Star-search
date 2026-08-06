@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using Zenject;
 
-namespace ThisProject.Links
+namespace EasyField.Links
 {
     public enum PlacementType { Center, Left, Right }    
 

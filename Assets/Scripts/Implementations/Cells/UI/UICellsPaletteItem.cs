@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace ThisProject.Implementations.Cells.UI
+namespace EasyField.Implementations.Cells.UI
 {
     public class UICellsPaletteItem : MonoBehaviour, IPointerDownHandler
     {

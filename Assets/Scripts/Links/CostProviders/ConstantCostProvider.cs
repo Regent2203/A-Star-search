@@ -1,6 +1,6 @@
-﻿using ThisProject.Nodes;
+﻿using EasyField.Nodes;
 
-namespace ThisProject.Links.CostProviders
+namespace EasyField.Links.CostProviders
 {
     public class ConstantCostProvider<TNodeData> : ICostProvider<TNodeData>
         where TNodeData : INodeData

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace ThisProject.SaveSystem.FilePathProviders
+namespace EasyField.SaveSystem.FilePathProviders
 {
     public class ConstantFilePathProvider : IFilePathProvider
     {

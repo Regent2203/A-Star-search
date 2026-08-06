@@ -1,6 +1,6 @@
-﻿using ThisProject.Fields.ClickHandlers;
+﻿using EasyField.Fields.ClickHandlers;
 
-namespace ThisProject.Implementations.Cells
+namespace EasyField.Implementations.Cells
 {
     public class CellsClickHandler : GridClickHandler<CellView>
     {

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using ThisProject.Inputs;
+using EasyField.Inputs;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace ThisProject.Implementations.Cells.UI
+namespace EasyField.Implementations.Cells.UI
 {
     public class UICellsPalette : MonoBehaviour
     {

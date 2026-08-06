@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-namespace ThisProject.Links
+namespace EasyField.Links
 {
     public class LinkData<TId> : ILinkData<TId>, IPoolable<TId, TId, float>
     {

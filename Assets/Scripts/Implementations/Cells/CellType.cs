@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ThisProject.Implementations.Cells
+namespace EasyField.Implementations.Cells
 {
     public enum CellId 
     {

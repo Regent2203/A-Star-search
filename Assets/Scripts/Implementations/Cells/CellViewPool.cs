@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace ThisProject.Implementations.Cells
+namespace EasyField.Implementations.Cells
 {
     public class CellViewPool : MonoPoolableMemoryPool<Vector2Int, Vector2, CellView>
     {

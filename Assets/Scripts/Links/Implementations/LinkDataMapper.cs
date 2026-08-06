@@ -1,7 +1,7 @@
-﻿using ThisProject.SaveSystem.Dto;
-using ThisProject.SaveSystem.Mappers;
+﻿using EasyField.SaveSystem.Dto;
+using EasyField.SaveSystem.Mappers;
 
-namespace ThisProject.Links.Implementations
+namespace EasyField.Links.Implementations
 {
     public class LinkDataMapper : ILinkMapper<LinkData<int>, LinkDataDto<int>, int>
     {

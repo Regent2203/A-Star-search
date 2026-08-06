@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
-using ThisProject.Implementations.Cells;
-using ThisProject.Implementations.Cells.UI;
-using ThisProject.Inputs;
-using ThisProject.ObjectsStorages;
-using ThisProject.PathFinders;
-using ThisProject.PathSetters;
+using EasyField.Implementations.Cells;
+using EasyField.Implementations.Cells.UI;
+using EasyField.Inputs;
+using EasyField.ObjectsStorages;
+using EasyField.PathFinders;
+using EasyField.PathSetters;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace ThisProject.Starters
+namespace EasyField.Starters
 {
     public class Starter_Scene1a : StarterBase
     {

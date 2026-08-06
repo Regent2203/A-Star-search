@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using ThisProject.Links.CostProviders;
-using ThisProject.Links.Implementations;
-using ThisProject.Nodes;
+using EasyField.Links.CostProviders;
+using EasyField.Links.Implementations;
+using EasyField.Nodes;
 
-namespace ThisProject.Links.Factories
+namespace EasyField.Links.Factories
 {
     public class LinkDataFactory<TNodeData, TId> : ILinkDataFactory<TNodeData, LinkData<TId>, TId>
         where TNodeData : INodeData<TId>

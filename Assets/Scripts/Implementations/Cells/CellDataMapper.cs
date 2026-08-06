@@ -1,7 +1,7 @@
-﻿using ThisProject.SaveSystem.Mappers;
+﻿using EasyField.SaveSystem.Mappers;
 using UnityEngine;
 
-namespace ThisProject.Implementations.Cells
+namespace EasyField.Implementations.Cells
 {
     public class CellDataMapper : INodeMapper<CellData, CellDataDto, Vector2Int>
     {

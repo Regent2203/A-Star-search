@@ -1,6 +1,6 @@
-﻿using ThisProject.Links.CostProviders;
+﻿using EasyField.Links.CostProviders;
 
-namespace ThisProject.Implementations.Cells
+namespace EasyField.Implementations.Cells
 {
     public class CellWeightGetter : IWeightGetter<CellData>
     {

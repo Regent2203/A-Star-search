@@ -1,11 +1,11 @@
-﻿using ThisProject.Links;
-using ThisProject.Links.Factories;
-using ThisProject.Links.Implementations;
-using ThisProject.Links.Providers;
-using ThisProject.Links.ViewMovers;
-using ThisProject.ObjectsStorages;
+﻿using EasyField.Links;
+using EasyField.Links.Factories;
+using EasyField.Links.Implementations;
+using EasyField.Links.Providers;
+using EasyField.Links.ViewMovers;
+using EasyField.ObjectsStorages;
 
-namespace ThisProject.Implementations.Vertexes
+namespace EasyField.Implementations.Vertexes
 {
     public class VertexesLinksBuilder : LinksBuilder<VertexData, VertexView, int>
     {

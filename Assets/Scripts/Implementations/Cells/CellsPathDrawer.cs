@@ -1,7 +1,7 @@
-﻿using ThisProject.PathDrawers;
+﻿using EasyField.PathDrawers;
 using System.Collections.Generic;
 
-namespace ThisProject.Implementations.Cells
+namespace EasyField.Implementations.Cells
 {
     public class CellsPathDrawer : IPathDrawer<CellView>
     {

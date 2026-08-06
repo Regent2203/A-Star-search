@@ -1,11 +1,11 @@
-﻿using ThisProject.Links.Factories;
-using ThisProject.Links.Providers;
-using ThisProject.Links.ViewMovers;
-using ThisProject.Nodes;
-using ThisProject.ObjectsStorages;
+﻿using EasyField.Links.Factories;
+using EasyField.Links.Providers;
+using EasyField.Links.ViewMovers;
+using EasyField.Nodes;
+using EasyField.ObjectsStorages;
 using UnityEngine;
 
-namespace ThisProject.Links.Implementations
+namespace EasyField.Links.Implementations
 {
     public class LinksBuilder<TNodeData, TNodeView, TId>
         where TNodeData : class, INodeData<TId>

@@ -1,10 +1,10 @@
-﻿using ThisProject.Links;
-using ThisProject.ObjectsStorages;
-using ThisProject.SaveSystem;
-using ThisProject.SaveSystem.Dto;
-using ThisProject.SaveSystem.Mappers;
+﻿using EasyField.Links;
+using EasyField.ObjectsStorages;
+using EasyField.SaveSystem;
+using EasyField.SaveSystem.Dto;
+using EasyField.SaveSystem.Mappers;
 
-namespace ThisProject.Implementations.Vertexes
+namespace EasyField.Implementations.Vertexes
 {
     public class VertexesFieldSaveDtoProvider : FieldSaveDtoProvider<VertexesFieldSaveDto, VertexData, VertexDataDto, LinkData<int>, LinkDataDto<int>, int>
     {

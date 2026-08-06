@@ -1,7 +1,7 @@
 ﻿using System;
-using ThisProject.SaveSystem.Dto;
+using EasyField.SaveSystem.Dto;
 
-namespace ThisProject.Implementations.Vertexes
+namespace EasyField.Implementations.Vertexes
 {
     [Serializable]
     public class VertexDataDto : NodeDataDto<int>

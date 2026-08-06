@@ -1,8 +1,8 @@
-﻿using ThisProject.Nodes;
-using ThisProject.ObjectsStorages;
+﻿using EasyField.Nodes;
+using EasyField.ObjectsStorages;
 using UnityEngine;
 
-namespace ThisProject.Links.ViewMovers
+namespace EasyField.Links.ViewMovers
 {
     /// <summary>
     /// Updates start and end positions of LinkView.

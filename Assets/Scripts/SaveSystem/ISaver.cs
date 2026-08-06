@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace ThisProject.SaveSystem
+namespace EasyField.SaveSystem
 {
     public interface ISaver
     {

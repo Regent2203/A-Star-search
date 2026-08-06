@@ -1,10 +1,10 @@
 ﻿using System;
-using ThisProject.Inputs;
-using ThisProject.Nodes;
+using EasyField.Inputs;
+using EasyField.Nodes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace ThisProject.Fields.DragHandlers
+namespace EasyField.Fields.DragHandlers
 {
     public interface IFieldDragHandler<V> : IBeginDragHandler, IDragHandler, IEndDragHandler
         where V : MonoBehaviour, INodeView
