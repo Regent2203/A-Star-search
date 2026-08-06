@@ -35,7 +35,7 @@ namespace EasyField.Implementations.Vertexes
 
         public void CreateItem(Vector3 pos)
         {
-            var id = _newId++;
+            var id = ++_newId;
             CreateItemInternal(id, pos);
         }
 
