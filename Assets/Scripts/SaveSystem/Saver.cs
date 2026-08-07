@@ -1,4 +1,4 @@
-﻿using EasyField.SaveSystem.DtoFileIOs;
+﻿using EasyField.SaveSystem.FileDtoGateways;
 using EasyField.SaveSystem.FilePathProviders;
 using System;
 using System.IO;
@@ -10,13 +10,13 @@ namespace EasyField.SaveSystem
     public class Saver : ISaver
     {
         private readonly IFilePathProvider _filePathProvider;
-        private readonly IDtoFileIO _dtoFile;
+        private readonly IFileDtoGateway _fileDtoGateway;
 
 
-        public Saver(IFilePathProvider filePathProvider, IDtoFileIO dtoFile)
+        public Saver(IFilePathProvider filePathProvider, IFileDtoGateway fileDtoGateway)
         {
             _filePathProvider = filePathProvider;
-            _dtoFile = dtoFile;
+            _fileDtoGateway = fileDtoGateway;
         }
 
         public async Task SaveAsync<TSaveDto>(TSaveDto saveDto)
@@ -31,7 +31,7 @@ namespace EasyField.SaveSystem
 
             try
             {
-                await _dtoFile.WriteFileAsync<TSaveDto>(path, saveDto);
+                await _fileDtoGateway.WriteFileAsync<TSaveDto>(path, saveDto);
                 Debug.Log($"Data successfully saved to: {path}");
             }
             catch (IOException ioEx)

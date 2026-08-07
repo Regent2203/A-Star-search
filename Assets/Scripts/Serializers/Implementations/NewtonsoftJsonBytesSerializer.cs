@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace EasyField.SaveSystem.Serializers
+namespace EasyField.Serializers
 {
     public class NewtonsoftJsonBytesSerializer : IBytesSerializer
     {

@@ -1,15 +1,15 @@
-﻿using EasyField.SaveSystem.Serializers;
+﻿using EasyField.Serializers;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace EasyField.SaveSystem.DtoFileIOs
+namespace EasyField.SaveSystem.FileDtoGateways
 {
-    public class BytesDtoFileIO : IDtoFileIO
+    public class BytesFileDtoGateway : IFileDtoGateway
     {
         private readonly IBytesSerializer _serializer;
 
 
-        public BytesDtoFileIO(IBytesSerializer serializer)
+        public BytesFileDtoGateway(IBytesSerializer serializer)
         {
             _serializer = serializer;
         }

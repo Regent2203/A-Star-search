@@ -1,4 +1,4 @@
-﻿using EasyField.SaveSystem.DtoFileIOs;
+﻿using EasyField.SaveSystem.FileDtoGateways;
 using EasyField.SaveSystem.FilePathProviders;
 using System;
 using System.IO;
@@ -10,13 +10,13 @@ namespace EasyField.SaveSystem
     public class Loader: ILoader
     {
         private readonly IFilePathProvider _filePathProvider;
-        private readonly IDtoFileIO _dtoFile;
+        private readonly IFileDtoGateway _fileDtoGateway;
 
 
-        public Loader(IFilePathProvider filePathProvider, IDtoFileIO dtoFile)
+        public Loader(IFilePathProvider filePathProvider, IFileDtoGateway fileDtoGateway)
         {
             _filePathProvider = filePathProvider;
-            _dtoFile = dtoFile;
+            _fileDtoGateway = fileDtoGateway;
         }
 
         public async Task<TSaveDto> LoadAsync<TSaveDto>()
@@ -31,7 +31,7 @@ namespace EasyField.SaveSystem
 
             try
             {
-                var saveDto = await _dtoFile.ReadFileAsync<TSaveDto>(path);
+                var saveDto = await _fileDtoGateway.ReadFileAsync<TSaveDto>(path);
 
                 if (saveDto == null)
                 {

@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using UnityEngine;
 
-namespace EasyField.SaveSystem.Serializers
+namespace EasyField.Serializers
 {
-    public class UnityJsonBytesSerializer : IBytesSerializer
+    public class JsonUtilityBytesSerializer : IBytesSerializer
     {
         public byte[] Serialize<T>(T obj)
         {

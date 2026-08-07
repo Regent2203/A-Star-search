@@ -17,9 +17,9 @@ using EasyField.PathDrawers;
 using EasyField.PathFinders;
 using EasyField.PathSetters;
 using EasyField.SaveSystem;
-using EasyField.SaveSystem.DtoFileIOs;
+using EasyField.SaveSystem.FileDtoGateways;
 using EasyField.SaveSystem.FilePathProviders;
-using EasyField.SaveSystem.Serializers;
+using EasyField.Serializers;
 using EasyField.SearchAlgorithms;
 using EasyField.Starters;
 using EasyField.UICommon;
@@ -157,20 +157,20 @@ namespace EasyField.Installers
             #pragma warning disable CS8321
             void UseStringSaving()
             {
-                Container.BindInterfacesAndSelfTo<StringDtoFileIO>().AsSingle();
+                Container.BindInterfacesAndSelfTo<StringFileDtoGateway>().AsSingle();
 
                 //Choose only one
                 //Container.BindInterfacesAndSelfTo<NewtonsoftJsonStringSerializer>().AsSingle();
-                Container.BindInterfacesAndSelfTo<UnityJsonStringSerializer>().AsSingle();
+                Container.BindInterfacesAndSelfTo<JsonUtilityStringSerializer>().AsSingle();
             }
             
             void UseBytesSaving()
             {
-                Container.BindInterfacesAndSelfTo<BytesDtoFileIO>().AsSingle();
+                Container.BindInterfacesAndSelfTo<BytesFileDtoGateway>().AsSingle();
 
                 //Choose only one
                 //Container.BindInterfacesAndSelfTo<NewtonsoftJsonBytesSerializer>().AsSingle();
-                //Container.BindInterfacesAndSelfTo<UnityJsonBytesSerializer>().AsSingle();
+                //Container.BindInterfacesAndSelfTo<JsonUtilityBytesSerializer>().AsSingle();
                 Container.BindInterfacesAndSelfTo<GZipCompressedBytesSerializer>().FromSubContainerResolve()
                     .ByMethod(subContainer =>
                     {
@@ -178,7 +178,7 @@ namespace EasyField.Installers
 
                         //Choose only one
                         //subContainer.BindInterfacesAndSelfTo<NewtonsoftJsonBytesSerializer>().AsSingle();
-                        subContainer.BindInterfacesAndSelfTo<UnityJsonBytesSerializer>().AsSingle();                        
+                        subContainer.BindInterfacesAndSelfTo<JsonUtilityBytesSerializer>().AsSingle();                        
                     }).AsSingle();
             }
             #pragma warning restore CS8321

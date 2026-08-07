@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.IO.Compression;
 
-namespace EasyField.SaveSystem.Serializers
+namespace EasyField.Serializers
 {
     public class GZipCompressedBytesSerializer : IBytesSerializer
     {

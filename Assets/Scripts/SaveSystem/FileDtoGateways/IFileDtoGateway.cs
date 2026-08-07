@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace EasyField.SaveSystem.DtoFileIOs
+namespace EasyField.SaveSystem.FileDtoGateways
 {
-    public interface IDtoFileIO
+    public interface IFileDtoGateway
     {
         public Task WriteFileAsync<TSaveDto>(string path, TSaveDto saveDto);
         public Task<TSaveDto> ReadFileAsync<TSaveDto>(string path);
