@@ -12,8 +12,9 @@ namespace EasyField.SearchAlgorithms
         where TNodeData : INodeData<TId>
         where TLinkData : ILinkData<TId>
     {
-        private Dictionary<TNodeData, TNodeData> _cameFrom;
-        private Dictionary<TNodeData, float> _costSoFar;
+        private List<TNodeData> _resultPath = new();
+        private Dictionary<TNodeData, TNodeData> _cameFrom = new();
+        private Dictionary<TNodeData, float> _costSoFar = new();
 
         private readonly IObjectsStorage<TNodeData, TId> _nodes;
         private readonly IHeuristicsProvider<TNodeData> _heuristicsProvider;
@@ -35,8 +36,8 @@ namespace EasyField.SearchAlgorithms
             TNodeData fromNode;
             TNodeData toNode;
 
-            _cameFrom = new Dictionary<TNodeData, TNodeData>();
-            _costSoFar = new Dictionary<TNodeData, float>();
+            _cameFrom.Clear();
+            _costSoFar.Clear();
 
             var needToCheck = new PriorityQueue<TNodeData>();
             needToCheck.Enqueue(startNode, 0);
@@ -78,20 +79,21 @@ namespace EasyField.SearchAlgorithms
             return null;
         }
 
-        private IList<TNodeData> RetracePath(TNodeData startNode, TNodeData finishNode)
+        private List<TNodeData> RetracePath(TNodeData startNode, TNodeData finishNode)
         {
-            var path = new List<TNodeData>();
+            _resultPath.Clear();
+
             var current = finishNode;
 
             while (!current.Equals(startNode))
             {
-                path.Add(current);
+                _resultPath.Add(current);
                 current = _cameFrom[current];
             }
 
-            path.Add(startNode);
-            path.Reverse();
-            return path;
+            _resultPath.Add(startNode);
+            _resultPath.Reverse();
+            return _resultPath;
         }
     }
 }
