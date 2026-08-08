@@ -46,8 +46,6 @@ namespace EasyField.Installers
         [SerializeField]
         private LinkView_Int _linkViewPrefab;
         [SerializeField]
-        private VertexesLinksBuilder _visualLinksManager;
-        [SerializeField]
         private LineRenderer _pathLineRenderer;
         [SerializeField]
         private UISaveLoadPanel _saveLoadPanel;
@@ -58,9 +56,9 @@ namespace EasyField.Installers
             BindStarter();
             BindEnviroment();
             BindNodes();
-            BindPathfinding();
             BindLinks();
             BindManipulators();
+            BindPathfinding();
             BindSaveSystem();
             BindUI();
         }

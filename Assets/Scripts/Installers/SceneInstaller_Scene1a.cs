@@ -7,6 +7,7 @@ using EasyField.Inputs;
 using EasyField.Links;
 using EasyField.Links.CostProviders;
 using EasyField.Links.Factories;
+using EasyField.Links.Implementations;
 using EasyField.Links.Providers;
 using EasyField.ObjectsStorages;
 using EasyField.PathFinders;
@@ -21,6 +22,8 @@ namespace EasyField.Installers
     public class SceneInstaller_Scene1a : MonoInstaller
     {
         [SerializeField]
+        private Camera _mainCamera;
+        [SerializeField]
         private InputSettings _inputSettings;
         [SerializeField]
         private CellView _cellViewPrefab;
@@ -34,25 +37,65 @@ namespace EasyField.Installers
         private UICellsPaletteChoicePanel _paletteChoice;
         [SerializeField]
         private UICellsHotkeysInfoPanel _hotkeyInfoPanel;
-        
+
 
         public override void InstallBindings()
         {
+            BindStarter();
+            BindEnviroment();
+            BindNodes();
+            BindLinks();
+            BindManipulators();
+            BindPathfinding();
+            BindSaveSystem();
+            BindUI();            
+        }
+
+        private void BindStarter()
+        {
+            Container.BindInterfacesAndSelfTo<Starter_Scene1a>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<GridField>().FromInstance(_field).AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsFieldBuilder>().AsSingle();
+        }
+
+        private void BindEnviroment()
+        {
+            Container.BindInstance(_mainCamera).AsSingle();
             Container.BindInstance(_inputSettings).AsSingle();
             Container.BindInterfacesAndSelfTo<UnityInputService>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellView>().FromInstance(_cellViewPrefab).AsSingle();
-            Container.BindInterfacesAndSelfTo<GridField>().FromInstance(_field).AsSingle();
+        }
+
+        private void BindNodes()
+        {
             Container.Bind(typeof(CellDataStorage), typeof(GridTypeStorage<CellData>), typeof(IObjectsStorage<CellData, Vector2Int>)).To<CellDataStorage>().AsSingle();
             Container.Bind(typeof(CellViewStorage), typeof(GridTypeStorage<CellView>), typeof(IObjectsStorage<CellView, Vector2Int>)).To<CellViewStorage>().AsSingle();
-            Container.BindInstance(_clickHandler).AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsFieldBuilder>().AsSingle();
+
             Container.BindMemoryPool<CellData, CellDataPool>().WithInitialSize(100);
             Container.BindMemoryPool<CellView, CellViewPool>().WithInitialSize(100).
                 FromComponentInNewPrefab(_cellViewPrefab).UnderTransform(_field.NodesContainer);
-            Container.BindInterfacesAndSelfTo<CellTypeChanger>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<CellView>().FromInstance(_cellViewPrefab).AsSingle(); //??
+        }
+
+        private void BindLinks()
+        {
+            Container.BindMemoryPool<LinkData<Vector2Int>, LinkDataPool<Vector2Int>>().WithInitialSize(20);
+
             Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellData, LinkData<Vector2Int>>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinkDataFactory<CellData, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<FourSideGridNeighbours<CellData>>().AsSingle();
+        }
+
+        private void BindManipulators()
+        {
+            Container.BindInstance(_clickHandler).AsSingle();
+            Container.BindInterfacesAndSelfTo<CellTypeChanger>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsPainter>().AsSingle();
+        }
+
+        private void BindPathfinding()
+        {
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData, LinkData<Vector2Int>, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
@@ -61,12 +104,17 @@ namespace EasyField.Installers
             Container.BindInterfacesAndSelfTo<PathSetter<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<CellData, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPathDrawer>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsPainter>().AsSingle();
+        }
+
+        private void BindSaveSystem()
+        {
+        }
+
+        private void BindUI()
+        {
             Container.BindInterfacesAndSelfTo<UICellsPalette>().FromInstance(_palette).AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsPaletteChoicePanel>().FromInstance(_paletteChoice).AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsHotkeysInfoPanel>().FromInstance(_hotkeyInfoPanel).AsSingle();
-
-            Container.BindInterfacesAndSelfTo<Starter_Scene1a>().AsSingle();
         }
     }
 }
