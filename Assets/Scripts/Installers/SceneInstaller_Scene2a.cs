@@ -130,8 +130,8 @@ namespace EasyField.Installers
             Container.BindInterfacesAndSelfTo<DistanceCostProvider<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathSetter<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<VertexData, int>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LinePathDrawer>().AsSingle();
-            Container.Bind<LineRenderer>().WithId(LinePathDrawer.LineRendererId).FromInstance(_pathLineRenderer).AsSingle();
+            Container.BindInterfacesAndSelfTo<LinePathDrawer<VertexView>>().AsSingle();
+            Container.Bind<LineRenderer>().WithId(LinePathDrawer<VertexView>.LineRendererId).FromInstance(_pathLineRenderer).AsSingle();
         }
 
         private void BindSaveSystem()

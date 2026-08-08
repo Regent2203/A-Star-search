@@ -21,7 +21,7 @@ namespace EasyField.Starters
         private CellTypeChanger _cellTypeChanger;
         private PathSetter<CellData> _pathSetter;
         private PathFinder<CellData, Vector2Int> _pathFinder;
-        private LinePathDrawer _pathDrawer;
+        private IPathDrawer<CellView> _pathDrawer;
         private CellsPainter _painter;
         private UICellsPalette _palette;
         private UICellsPaletteChoicePanel _paletteChoice;
@@ -32,8 +32,8 @@ namespace EasyField.Starters
         public void Construct(CellsConfig config, CellDataStorage nodes, CellViewStorage views,
             CellsClickHandler clickHandler, CellsFieldBuilder builder,
             CellTypeChanger cellTypeChanger,
-            PathSetter<CellData> pathSetter, PathFinder<CellData, Vector2Int> pathFinder, 
-            LinePathDrawer pathDrawer, CellsPainter painter,
+            PathSetter<CellData> pathSetter, PathFinder<CellData, Vector2Int> pathFinder,
+            IPathDrawer<CellView> pathDrawer, CellsPainter painter,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsHotkeysInfoPanel hotkeyInfoPanel)
         {
             _config = config;

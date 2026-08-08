@@ -41,7 +41,7 @@ namespace EasyField.Starters
         private LinkViewCoordinator<VertexView, int> _linkViewCoordinator;
         private PathSetter<VertexData> _pathSetter;
         private PathFinder<VertexData, int> _pathFinder;
-        private LinePathDrawer _pathDrawer;
+        private IPathDrawer<VertexView> _pathDrawer;
         private ISaver _saver;
         private ILoader _loader;
         private VertexesFieldSaveDtoProvider _dtoProvider;
@@ -55,7 +55,7 @@ namespace EasyField.Starters
             ICostProvider<VertexData> costProvider, LinkCostSetter<LinkData<int>> linkCostSetter,
             NodeBlocker<VertexData> nodeBlocker, NodeViewSelector<VertexView> nodeViewSelector, NodeViewMover<VertexView> nodeViewMover, 
             VertexesLinksBuilder linksBuilder, StoredLinksProvider<LinkData<int>, int> linksProvider, LinkViewCoordinator<VertexView, int> linkViewCoordinator,
-            PathSetter<VertexData> pathSetter, PathFinder<VertexData, int> pathFinder, LinePathDrawer pathDrawer,
+            PathSetter<VertexData> pathSetter, PathFinder<VertexData, int> pathFinder, IPathDrawer<VertexView> pathDrawer,
             ISaver saver, ILoader loader, VertexesFieldSaveDtoProvider dtoProvider,
             UISaveLoadPanel saveLoadPanel)
         {

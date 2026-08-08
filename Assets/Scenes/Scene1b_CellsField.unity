@@ -1094,6 +1094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9830aae06ddb50c4e898db000981f194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mainCamera: {fileID: 519420031}
   _inputSettings:
     CreatingKey: 306
     LinkingKey: 308
