@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EasyField.SaveSystem.Dto
+namespace EasyField.Nodes.Dto
 {
     [Serializable]
     public class NodeDataDto<TId>

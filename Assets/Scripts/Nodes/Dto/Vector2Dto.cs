@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace EasyField.SaveSystem.Dto
+namespace EasyField.Nodes.Dto
 {
     [Serializable]
     public struct Vector2Dto

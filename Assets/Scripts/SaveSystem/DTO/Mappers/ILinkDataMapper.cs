@@ -1,4 +1,5 @@
-﻿using EasyField.Links;
+﻿using EasyField.Implementations.Links;
+using EasyField.Links;
 
 namespace EasyField.SaveSystem.Dto.Mappers
 {

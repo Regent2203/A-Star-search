@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EasyField.SaveSystem.Dto
+namespace EasyField.Implementations.Links
 {
     [Serializable]
     public class LinkDataDto<TId>
