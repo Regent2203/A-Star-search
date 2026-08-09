@@ -86,8 +86,10 @@ namespace EasyField.Installers
             Container.Bind(typeof(VertexDataStorage), typeof(DictTypeStorage<VertexData, int>), typeof(IObjectsStorage<VertexData, int>)).
                 To<VertexDataStorage>().AsSingle();
             Container.Bind(typeof(VertexViewStorage), typeof(DictTypeStorage<VertexView, int>), typeof(IObjectsStorage<VertexView, int>)).
-                To<VertexViewStorage>().AsSingle();            
-            
+                To<VertexViewStorage>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<VertexDataFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexViewFactory>().AsSingle();
             Container.BindMemoryPool<VertexData, VertexDataPool>().WithInitialSize(20);
             Container.BindMemoryPool<VertexView, VertexViewPool>().WithInitialSize(20).
                 FromComponentInNewPrefab(_vertexViewPrefab).UnderTransform(_field.NodesContainer);            
@@ -102,16 +104,14 @@ namespace EasyField.Installers
                 typeof(DictTypeStorage<LinkView<int>, DualKey<int>>), typeof(IObjectsStorage<LinkView<int>, DualKey<int>>)).
                 To<LinkViewStorage_Int>().AsSingle();
 
+            Container.BindInterfacesAndSelfTo<LinkDataFactory<VertexData, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkViewFactory<int>>().AsSingle();
             Container.BindMemoryPool<LinkData<int>, LinkDataPool<int>>().WithInitialSize(20);
             Container.BindMemoryPool<LinkView<int>, LinkViewPool<int>>().WithInitialSize(20).
                 FromComponentInNewPrefab(_linkViewPrefab).UnderTransform(_field.LinksContainer);
 
             Container.BindInterfacesAndSelfTo<StoredLinksProvider<LinkData<int>, int>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LinkViewCoordinator<VertexView, int>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LinkDataFactory<VertexData, int>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LinkViewFactory<int>>().AsSingle();
-
-            Container.BindInterfacesAndSelfTo<LinkCostSetter<LinkData<int>>>().AsSingle();
+            
         }
 
         private void BindManipulators()
@@ -121,6 +121,8 @@ namespace EasyField.Installers
             Container.BindInterfacesAndSelfTo<NodeBlocker<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeViewSelector<VertexView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeViewMover<VertexView>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkViewCoordinator<VertexView, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkCostSetter<LinkData<int>>>().AsSingle();
         }
 
         private void BindPathfinding()

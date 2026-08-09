@@ -1,12 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Implementations.Vertexes.Core.Factories
+namespace EasyField.Implementations.Vertexes
 {
-    internal class VertexDataFactory
+    public class VertexDataFactory
     {
+        private readonly VertexDataPool _vertexDatasPool;
+
+        public VertexDataFactory(VertexDataPool vertexDatasPool)
+        {
+            _vertexDatasPool = vertexDatasPool;
+        }
+
+        public VertexData CreateItem(int id, Vector2 scaleFactor)
+        {
+            var vertexData = _vertexDatasPool.Spawn(id, scaleFactor);
+
+            return vertexData;
+        }
+
+        public void DeleteItem(VertexData item)
+        {
+            _vertexDatasPool.Despawn(item);
+        }
     }
 }

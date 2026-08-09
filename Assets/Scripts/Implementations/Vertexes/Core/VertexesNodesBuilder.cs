@@ -9,40 +9,40 @@ namespace EasyField.Implementations.Vertexes
         private readonly SpatialField _field;
         private readonly DictTypeStorage<VertexData, int> _nodeDatas;
         private readonly DictTypeStorage<VertexView, int> _nodeViews;
-        private readonly VertexDataPool _nodeDatasPool;
-        private readonly VertexViewPool _nodeViewsPool;
+        private readonly VertexDataFactory _nodeDatasFactory;
+        private readonly VertexViewFactory _nodeViewsFactory;
 
         private int _newId = 0;
 
 
         public VertexesNodesBuilder(SpatialField field, DictTypeStorage<VertexData, int> nodeDatas, DictTypeStorage<VertexView, int> nodeViews,
-            VertexDataPool nodeDatasPool, VertexViewPool nodeViewsPool)
+            VertexDataFactory nodeDatasFactory, VertexViewFactory nodeViewsFactory)
         {
             _field = field;
             _nodeDatas = nodeDatas;
             _nodeViews = nodeViews;
-            _nodeDatasPool = nodeDatasPool;
-            _nodeViewsPool = nodeViewsPool;
+            _nodeDatasFactory = nodeDatasFactory;
+            _nodeViewsFactory = nodeViewsFactory;
 
             ResetId();
         }
 
-        public void CreateItem(int id, Vector3 pos)
+        public void CreateItem(int id, Vector2 pos)
         {            
             CreateItemInternal(id, pos);
             _newId = id;
         }
 
-        public void CreateItem(Vector3 pos)
+        public void CreateItem(Vector2 pos)
         {
             var id = ++_newId;
             CreateItemInternal(id, pos);
         }
 
-        private void CreateItemInternal(int id, Vector3 pos)
+        private void CreateItemInternal(int id, Vector2 pos)
         {
-            var nodeData = _nodeDatasPool.Spawn(id, pos);
-            var nodeView = _nodeViewsPool.Spawn(id, _field.ScaleFactor);
+            var nodeData = _nodeDatasFactory.CreateItem(id, pos);
+            var nodeView = _nodeViewsFactory.CreateItem(id, _field.ScaleFactor);
             nodeView.Move(pos);
 
             _nodeDatas.AddItem(id, nodeData);
@@ -54,8 +54,8 @@ namespace EasyField.Implementations.Vertexes
             var nodeData = _nodeDatas.GetItem(id);
             var nodeView = _nodeViews.GetItem(id);
 
-            _nodeDatasPool.Despawn(nodeData);
-            _nodeViewsPool.Despawn(nodeView);
+            _nodeDatasFactory.DeleteItem(nodeData);
+            _nodeViewsFactory.DeleteItem(nodeView);
 
             _nodeDatas.RemoveItem(id);
             _nodeViews.RemoveItem(id);
@@ -65,13 +65,13 @@ namespace EasyField.Implementations.Vertexes
         {
             foreach (var data in _nodeDatas.AllItems)
             {
-                _nodeDatasPool.Despawn(data);
+                _nodeDatasFactory.DeleteItem(data);
             }
             _nodeDatas.ClearData();
 
             foreach (var view in _nodeViews.AllItems)
             {
-                _nodeViewsPool.Despawn(view);
+                _nodeViewsFactory.DeleteItem(view);
             }
             _nodeViews.ClearData();
 

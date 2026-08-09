@@ -14,6 +14,7 @@ namespace EasyField.Implementations.Vertexes
             INodeDataMapper<VertexData, VertexDataDto, int> nodesMapper,
             ILinkDataMapper<LinkData<int>, LinkDataDto<int>, int> linksMapper)
             : base(nodeDatas, linkDatas, nodesMapper, linksMapper)
-        { }
+        {
+        }
     }
 }

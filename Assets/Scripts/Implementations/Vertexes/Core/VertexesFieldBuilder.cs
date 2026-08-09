@@ -40,6 +40,7 @@ namespace EasyField.Implementations.Vertexes
         public void DeleteNode(VertexView view)
         {
             _nodesBuilder.DeleteItem(view.Id);
+            //_linksBuilder.TryDeleteLink //todo
         }
 
         public void BuildFromDto(FieldSaveDto<VertexDataDto, LinkDataDto<int>> data)
