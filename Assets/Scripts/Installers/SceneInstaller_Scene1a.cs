@@ -1,3 +1,4 @@
+using EasyField.BrushManagers;
 using EasyField.Fields;
 using EasyField.GridNeighbours;
 using EasyField.Heuristic.Functions;
@@ -91,7 +92,7 @@ namespace EasyField.Installers
         {
             Container.BindInstance(_clickHandler).AsSingle();
             Container.BindInterfacesAndSelfTo<CellTypeChanger>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsPainter>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BrushManager<CellType>>().AsSingle();
         }
 
         private void BindPathfinding()

@@ -1,4 +1,5 @@
-﻿using EasyField.Implementations.Cells;
+﻿using EasyField.BrushManagers;
+using EasyField.Implementations.Cells;
 using EasyField.Implementations.Cells.UI;
 using EasyField.Inputs;
 using EasyField.PathDrawers;
@@ -22,7 +23,7 @@ namespace EasyField.Starters
         private PathSetter<CellData> _pathSetter;
         private PathFinder<CellData, Vector2Int> _pathFinder;
         private IPathDrawer<CellView> _pathDrawer;
-        private CellsPainter _painter;
+        private BrushManager<CellType> _cellTypebrushManager;
         private UICellsPalette _palette;
         private UICellsPaletteChoicePanel _paletteChoice;
         private UICellsHotkeysInfoPanel _hotkeyInfoPanel;
@@ -33,7 +34,7 @@ namespace EasyField.Starters
             CellsClickHandler clickHandler, CellsFieldBuilder builder,
             CellTypeChanger cellTypeChanger,
             PathSetter<CellData> pathSetter, PathFinder<CellData, Vector2Int> pathFinder,
-            IPathDrawer<CellView> pathDrawer, CellsPainter painter,
+            IPathDrawer<CellView> pathDrawer, BrushManager<CellType> cellTypebrushManager,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsHotkeysInfoPanel hotkeyInfoPanel)
         {
             _config = config;
@@ -45,7 +46,7 @@ namespace EasyField.Starters
             _pathSetter = pathSetter;
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
-            _painter = painter;
+            _cellTypebrushManager = cellTypebrushManager;
             _palette = palette;
             _paletteChoice = paletteChoice;
             _hotkeyInfoPanel = hotkeyInfoPanel;
@@ -61,13 +62,13 @@ namespace EasyField.Starters
             _pathSetter.AnyNodeChanged += OnPathChanged;
 
             _palette.ItemClicked += OnPaletteItemClicked;
-            _painter.BrushChanged += OnBrushChanged;
+            _cellTypebrushManager.BrushChanged += OnBrushChanged;
         }
 
         protected override void InitDefaultStates()
         {
-            _painter.SetBrush(BrushType.Primary, _config.DefaultCellType);
-            _painter.SetBrush(BrushType.Secondary, _config.DefaultCellType);
+            _cellTypebrushManager.SetBrush(1, _config.DefaultCellType);
+            _cellTypebrushManager.SetBrush(2, _config.DefaultCellType);
 
             _builder.PopulateField(new Vector2Int(13, 11), _config.DefaultCellType);
         }
@@ -82,7 +83,7 @@ namespace EasyField.Starters
             _pathSetter.AnyNodeChanged -= OnPathChanged;
 
             _palette.ItemClicked -= OnPaletteItemClicked;
-            _painter.BrushChanged -= OnBrushChanged;
+            _cellTypebrushManager.BrushChanged -= OnBrushChanged;
         }
 
 
@@ -101,10 +102,10 @@ namespace EasyField.Starters
                 switch (button)
                 {
                     case PointerEventData.InputButton.Left:
-                        _painter.PaintCell(node, BrushType.Primary);
+                        _cellTypeChanger.TryChangeCellType(node, _cellTypebrushManager.GetBrush(1));
                         break;
                     case PointerEventData.InputButton.Right:
-                        _painter.PaintCell(node, BrushType.Secondary);
+                        _cellTypeChanger.TryChangeCellType(node, _cellTypebrushManager.GetBrush(2));
                         break;
                 }
             }
@@ -173,23 +174,23 @@ namespace EasyField.Starters
             switch (button)
             {
                 case PointerEventData.InputButton.Left:
-                    _painter.SetBrush(BrushType.Primary, cellType);
+                    _cellTypebrushManager.SetBrush(1, cellType);
                     break;
                 case PointerEventData.InputButton.Right:
-                    _painter.SetBrush(BrushType.Secondary, cellType);
+                    _cellTypebrushManager.SetBrush(2, cellType);
                     break;
             }
         }
 
-        private void OnBrushChanged(BrushType brush, CellType cellType)
+        private void OnBrushChanged(int brushIndex, CellType cellType)
         {
-            switch (brush)
+            switch (brushIndex)
             {
-                case BrushType.Primary:
+                case 1:
                     _hotkeyInfoPanel.SetLMBText(cellType.Name);
                     _paletteChoice.SetLMBChoice(cellType);
                     break;
-                case BrushType.Secondary:
+                case 2:
                     _hotkeyInfoPanel.SetRMBText(cellType.Name);
                     _paletteChoice.SetRMBChoice(cellType);
                     break;
