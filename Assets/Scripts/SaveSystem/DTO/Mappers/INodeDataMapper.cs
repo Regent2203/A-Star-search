@@ -1,7 +1,6 @@
 ﻿using EasyField.Nodes;
-using EasyField.SaveSystem.Dto;
 
-namespace EasyField.SaveSystem.Mappers
+namespace EasyField.SaveSystem.Dto.Mappers
 {
     public interface INodeDataMapper<TNodeData, TNodeDataDto, TId>
         where TNodeData : INodeData<TId>

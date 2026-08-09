@@ -76,7 +76,7 @@ namespace EasyField.Installers
             Container.BindMemoryPool<CellView, CellViewPool>().WithInitialSize(100).
                 FromComponentInNewPrefab(_cellViewPrefab).UnderTransform(_field.NodesContainer);
 
-            Container.BindInterfacesAndSelfTo<CellView>().FromInstance(_cellViewPrefab).AsSingle(); //??
+            Container.BindInterfacesAndSelfTo<CellView>().FromInstance(_cellViewPrefab).AsSingle();
         }
 
         private void BindLinks()

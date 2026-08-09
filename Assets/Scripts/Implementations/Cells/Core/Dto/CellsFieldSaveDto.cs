@@ -2,7 +2,7 @@
 
 namespace EasyField.Implementations.Cells
 {
-    public class CellsFieldSaveDto : FieldSaveDto<CellDataDto, LinkDataDto<int>>
+    public class CellsFieldSaveDto : FieldSaveDto<CellDataDto>
     {
     }
 }

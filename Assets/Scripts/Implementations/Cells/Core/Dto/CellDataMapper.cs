@@ -1,4 +1,4 @@
-﻿using EasyField.SaveSystem.Mappers;
+﻿using EasyField.SaveSystem.Dto.Mappers;
 using UnityEngine;
 
 namespace EasyField.Implementations.Cells

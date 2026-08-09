@@ -1,8 +1,8 @@
 ﻿using EasyField.Links;
 using EasyField.ObjectsStorages;
-using EasyField.SaveSystem;
 using EasyField.SaveSystem.Dto;
-using EasyField.SaveSystem.Mappers;
+using EasyField.SaveSystem.Dto.FieldSaveDtoProviders;
+using EasyField.SaveSystem.Dto.Mappers;
 
 namespace EasyField.Implementations.Vertexes
 {

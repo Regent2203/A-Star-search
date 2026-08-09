@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EasyField.ObjectsStorages;
+using EasyField.SaveSystem.Dto.FieldSaveDtoProviders;
+using EasyField.SaveSystem.Dto.Mappers;
+using UnityEngine;
 
-namespace Assets.Scripts.Implementations.Cells.Core.Dto
+namespace EasyField.Implementations.Cells
 {
-    internal class CellsFieldSaveDtoProvider
+    public class CellsFieldSaveDtoProvider : FieldSaveDtoProvider<CellsFieldSaveDto, CellData, CellDataDto, Vector2Int>
     {
+        public CellsFieldSaveDtoProvider(
+            IObjectsStorage<CellData, Vector2Int> nodeDatas,
+            INodeDataMapper<CellData, CellDataDto, Vector2Int> nodesMapper)
+            : base(nodeDatas, nodesMapper)
+        { }
     }
 }

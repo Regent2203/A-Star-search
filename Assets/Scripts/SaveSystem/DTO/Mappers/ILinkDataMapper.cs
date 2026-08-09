@@ -1,7 +1,6 @@
 ﻿using EasyField.Links;
-using EasyField.SaveSystem.Dto;
 
-namespace EasyField.SaveSystem.Mappers
+namespace EasyField.SaveSystem.Dto.Mappers
 {
     public interface ILinkDataMapper<TLinkData, TLinkDataDto, TId>
         where TLinkData : ILinkData<TId>

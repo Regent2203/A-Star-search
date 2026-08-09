@@ -9,4 +9,10 @@ namespace EasyField.SaveSystem.Dto
         public List<TNodeDataDto> Nodes = new();
         public List<TLinkDataDto> Links = new();
     }
+
+    [Serializable]
+    public class FieldSaveDto<TNodeDataDto>
+    {
+        public List<TNodeDataDto> Nodes = new();
+    }
 }
