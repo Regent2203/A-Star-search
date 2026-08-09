@@ -1,4 +1,4 @@
-﻿namespace EasyField.Links
+﻿namespace EasyField
 {
     public readonly struct LinkKey<TId>
     {
