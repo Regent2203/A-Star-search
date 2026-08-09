@@ -1,12 +1,12 @@
 ﻿namespace EasyField
 {
-    public readonly struct LinkKey<TId>
+    public readonly struct DualKey<TId>
     {
         public TId From { get; }
         public TId To { get; }
 
 
-        public LinkKey(TId fromId, TId toId)
+        public DualKey(TId fromId, TId toId)
         {
             From = fromId;
             To = toId;

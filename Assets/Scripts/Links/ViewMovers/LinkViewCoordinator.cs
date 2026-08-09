@@ -14,10 +14,10 @@ namespace EasyField.Links.ViewMovers
         where TNodeView : INodeView<TId>
     {
         private readonly IObjectsStorage<TNodeView, TId> _nodeViews;
-        private readonly DictTypeStorage<LinkView<TId>, LinkKey<TId>> _linkViews;
+        private readonly DictTypeStorage<LinkView<TId>, DualKey<TId>> _linkViews;
 
 
-        public LinkViewCoordinator(IObjectsStorage<TNodeView, TId> nodeViews, DictTypeStorage<LinkView<TId>, LinkKey<TId>> linkViews) 
+        public LinkViewCoordinator(IObjectsStorage<TNodeView, TId> nodeViews, DictTypeStorage<LinkView<TId>, DualKey<TId>> linkViews) 
         {
             _nodeViews = nodeViews;
             _linkViews = linkViews;
@@ -36,7 +36,7 @@ namespace EasyField.Links.ViewMovers
 
         public void CheckDual(LinkView<TId> linkView, bool isDelete)
         {
-            var oppKey = new LinkKey<TId>(linkView.To, linkView.From);
+            var oppKey = new DualKey<TId>(linkView.To, linkView.From);
             if (_linkViews.TryGetItem(oppKey, out var oppLinkView)) //if opposite-directed link found
             {
                 if (!isDelete)

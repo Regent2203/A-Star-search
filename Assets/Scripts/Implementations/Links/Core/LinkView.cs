@@ -21,9 +21,9 @@ namespace EasyField.Links
         [SerializeField]
         private SpriteRenderer _arrowTipRenderer;
 
-        protected LinkKey<TId> _id;
+        protected DualKey<TId> _id;
 
-        public LinkKey<TId> Id => _id;
+        public DualKey<TId> Id => _id;
         public TId From => _id.From;
         public TId To => _id.To;
 
@@ -38,7 +38,7 @@ namespace EasyField.Links
 
         public virtual void OnSpawned(TId from, TId to, float cost, PlacementType placementType)
         {
-            _id = new LinkKey<TId>(from, to);
+            _id = new DualKey<TId>(from, to);
             name = $"LinkView {From}->{To}";
             UpdateCostText(cost);
             _placementType = placementType;

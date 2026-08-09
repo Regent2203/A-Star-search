@@ -11,7 +11,7 @@ namespace EasyField.Implementations.Vertexes
     {
         public VertexesLinksBuilder(LinkDataFactory<VertexData, int> linkDatasFactory, LinkViewFactory<int> linkViewsFactory,
             StoredLinksProvider<LinkData<int>, int> linksProvider, LinkViewCoordinator<VertexView, int> linkViewCoordinator,
-            DictTypeStorage<LinkData<int>, LinkKey<int>> linkDatas, DictTypeStorage<LinkView<int>, LinkKey<int>> linkViews)
+            DictTypeStorage<LinkData<int>, DualKey<int>> linkDatas, DictTypeStorage<LinkView<int>, DualKey<int>> linkViews)
             : base(linkDatasFactory, linkViewsFactory, linksProvider, linkViewCoordinator, linkDatas, linkViews)
         { }
     }

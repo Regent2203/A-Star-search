@@ -149,7 +149,7 @@ namespace EasyField.Starters
 
             foreach (var linkData in fromLinks)
             {
-                linkView = _linkViews.GetItem(new LinkKey<int>(view.Id, linkData.Id.To));
+                linkView = _linkViews.GetItem(new DualKey<int>(view.Id, linkData.Id.To));
                 _linkViewCoordinator.CheckSingle(linkView);
 
                 //todo
@@ -161,7 +161,7 @@ namespace EasyField.Starters
             }
             foreach (var linkData in toLinks)
             {
-                linkView = _linkViews.GetItem(new LinkKey<int>(linkData.Id.From, view.Id));
+                linkView = _linkViews.GetItem(new DualKey<int>(linkData.Id.From, view.Id));
                 _linkViewCoordinator.CheckSingle(linkView);
 
                 //todo

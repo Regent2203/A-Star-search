@@ -17,13 +17,13 @@ namespace EasyField.Links.Implementations
         private readonly StoredLinksProvider<LinkData<TId>, TId> _linksProvider;
         private readonly LinkViewCoordinator<TNodeView, TId> _linkViewCoordinator;
 
-        private readonly DictTypeStorage<LinkData<TId>, LinkKey<TId>> _linkDatas;
-        private readonly DictTypeStorage<LinkView<TId>, LinkKey<TId>> _linkViews;
+        private readonly DictTypeStorage<LinkData<TId>, DualKey<TId>> _linkDatas;
+        private readonly DictTypeStorage<LinkView<TId>, DualKey<TId>> _linkViews;
 
 
         public LinksBuilder(LinkDataFactory<TNodeData, TId> linkDatasFactory, LinkViewFactory<TId> linkViewsFactory,
             StoredLinksProvider<LinkData<TId>, TId> linksProvider, LinkViewCoordinator<TNodeView, TId> linkViewCoordinator,
-            DictTypeStorage<LinkData<TId>, LinkKey<TId>> linkDatas, DictTypeStorage<LinkView<TId>, LinkKey<TId>> linkViews)
+            DictTypeStorage<LinkData<TId>, DualKey<TId>> linkDatas, DictTypeStorage<LinkView<TId>, DualKey<TId>> linkViews)
         {
             _linkDatasFactory = linkDatasFactory;
             _linkViewsFactory = linkViewsFactory;
@@ -42,7 +42,7 @@ namespace EasyField.Links.Implementations
             if (_linksProvider.TryGetLink(from.Id, to.Id, out _))
                 return false;
 
-            var key = new LinkKey<TId>(from.Id, to.Id);
+            var key = new DualKey<TId>(from.Id, to.Id);
             var linkData = _linkDatasFactory.CreateLink(from, to);
             var linkView = _linkViewsFactory.CreateItem(from.Id, to.Id, linkData.Cost, PlacementType.Center);
             _linkViewCoordinator.CheckDual(linkView, false);
@@ -61,7 +61,7 @@ namespace EasyField.Links.Implementations
             if (!_linksProvider.TryGetLink(from.Id, to.Id, out var linkData))
                 return false;
 
-            var key = new LinkKey<TId>(from.Id, to.Id);
+            var key = new DualKey<TId>(from.Id, to.Id);
             var linkView = _linkViews.GetItem(key);
             _linkViewCoordinator.CheckDual(linkView, true);
 

@@ -2,7 +2,7 @@
 
 namespace EasyField.Links.Implementations
 {
-    public class LinkDataStorage_Int : DictTypeStorage<LinkData<int>, LinkKey<int>>
+    public class LinkDataStorage_Int : DictTypeStorage<LinkData<int>, DualKey<int>>
     {
     }
 }

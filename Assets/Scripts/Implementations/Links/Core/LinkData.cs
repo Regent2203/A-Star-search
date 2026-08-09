@@ -4,10 +4,10 @@ namespace EasyField.Links
 {
     public class LinkData<TId> : ILinkData<TId>, IPoolable<TId, TId, float>
     {
-        protected LinkKey<TId> _id;
+        protected DualKey<TId> _id;
         protected float _cost;
 
-        public LinkKey<TId> Id => _id;
+        public DualKey<TId> Id => _id;
         public TId From => _id.From;
         public TId To => _id.To;
         public float Cost => _cost;
@@ -15,7 +15,7 @@ namespace EasyField.Links
 
         public virtual void OnSpawned(TId fromId, TId toId, float cost)
         {
-            _id = new LinkKey<TId>(fromId, toId);
+            _id = new DualKey<TId>(fromId, toId);
             _cost = cost;
         }
 

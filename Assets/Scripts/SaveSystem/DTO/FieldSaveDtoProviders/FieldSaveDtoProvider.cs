@@ -16,14 +16,14 @@ namespace EasyField.SaveSystem
         where TLinkDataDto : LinkDataDto<TId>
     {
         private readonly IObjectsStorage<TNodeData, TId> _nodeDatas;
-        private readonly IObjectsStorage<TLinkData, LinkKey<TId>> _linkDatas;
+        private readonly IObjectsStorage<TLinkData, DualKey<TId>> _linkDatas;
         private readonly INodeDataMapper<TNodeData, TNodeDataDto, TId> _nodesMapper;
         private readonly ILinkDataMapper<TLinkData, TLinkDataDto, TId> _linksMapper;
 
 
         public FieldSaveDtoProvider(
             IObjectsStorage<TNodeData, TId> nodeDatas,
-            IObjectsStorage<TLinkData, LinkKey<TId>> linkDatas,
+            IObjectsStorage<TLinkData, DualKey<TId>> linkDatas,
             INodeDataMapper<TNodeData, TNodeDataDto, TId> nodesMapper,
             ILinkDataMapper<TLinkData, TLinkDataDto, TId> linksMapper)
         {

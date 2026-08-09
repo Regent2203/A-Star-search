@@ -95,10 +95,10 @@ namespace EasyField.Installers
         private void BindLinks()
         {
             Container.Bind(typeof(LinkDataStorage_Int), 
-                typeof(DictTypeStorage<LinkData<int>, LinkKey<int>>), typeof(IObjectsStorage<LinkData<int>, LinkKey<int>>)).
+                typeof(DictTypeStorage<LinkData<int>, DualKey<int>>), typeof(IObjectsStorage<LinkData<int>, DualKey<int>>)).
                 To<LinkDataStorage_Int>().AsSingle();
             Container.Bind(typeof(LinkViewStorage_Int),
-                typeof(DictTypeStorage<LinkView<int>, LinkKey<int>>), typeof(IObjectsStorage<LinkView<int>, LinkKey<int>>)).
+                typeof(DictTypeStorage<LinkView<int>, DualKey<int>>), typeof(IObjectsStorage<LinkView<int>, DualKey<int>>)).
                 To<LinkViewStorage_Int>().AsSingle();
 
             Container.BindMemoryPool<LinkData<int>, LinkDataPool<int>>().WithInitialSize(20);

@@ -9,24 +9,24 @@ namespace EasyField.Links.Providers
         private readonly Dictionary<TId, HashSet<TId>> _outgoingIndex = new Dictionary<TId, HashSet<TId>>();
         private readonly Dictionary<TId, HashSet<TId>> _incomingIndex = new Dictionary<TId, HashSet<TId>>();
 
-        private readonly DictTypeStorage<TLinkData, LinkKey<TId>> _linkDatas;
+        private readonly DictTypeStorage<TLinkData, DualKey<TId>> _linkDatas;
 
 
-        public StoredLinksProvider(DictTypeStorage<TLinkData, LinkKey<TId>> linkDatas) 
+        public StoredLinksProvider(DictTypeStorage<TLinkData, DualKey<TId>> linkDatas) 
         {
             _linkDatas = linkDatas;
         }
                 
         public bool TryGetLink(TId fromId, TId toId, out TLinkData link)
         {
-            var key = new LinkKey<TId>(fromId, toId);
+            var key = new DualKey<TId>(fromId, toId);
 
             return _linkDatas.TryGetItem(key, out link);
         }
 
         public void AddLink(TLinkData link)
         {
-            var key = new LinkKey<TId>(link.From, link.To);
+            var key = new DualKey<TId>(link.From, link.To);
             var fromId = key.From;
             var toId = key.To;
 
@@ -49,7 +49,7 @@ namespace EasyField.Links.Providers
 
         public void RemoveLink(TLinkData link)
         {
-            var key = new LinkKey<TId>(link.From, link.To);
+            var key = new DualKey<TId>(link.From, link.To);
             var fromId = key.From;
             var toId = key.To;
 
@@ -84,7 +84,7 @@ namespace EasyField.Links.Providers
             {
                 foreach (var targetId in targetIds)
                 {
-                    yield return _linkDatas.GetItem(new LinkKey<TId>(id, targetId));
+                    yield return _linkDatas.GetItem(new DualKey<TId>(id, targetId));
                 }
             }
         }
@@ -95,7 +95,7 @@ namespace EasyField.Links.Providers
             {
                 foreach (var sourceId in sourceIds)
                 {
-                    yield return _linkDatas.GetItem(new LinkKey<TId>(sourceId, id));
+                    yield return _linkDatas.GetItem(new DualKey<TId>(sourceId, id));
                 }
             }
         }
