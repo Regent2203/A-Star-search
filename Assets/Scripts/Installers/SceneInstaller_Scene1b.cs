@@ -71,9 +71,13 @@ namespace EasyField.Installers
 
         private void BindNodes()
         {
-            Container.Bind(typeof(CellDataStorage), typeof(GridTypeStorage<CellData>), typeof(IObjectsStorage<CellData, Vector2Int>)).To<CellDataStorage>().AsSingle();
-            Container.Bind(typeof(CellViewStorage), typeof(GridTypeStorage<CellView>), typeof(IObjectsStorage<CellView, Vector2Int>)).To<CellViewStorage>().AsSingle();
+            Container.Bind(typeof(CellDataStorage), typeof(GridTypeStorage<CellData>), typeof(IObjectsStorage<CellData, Vector2Int>)).
+                To<CellDataStorage>().AsSingle();
+            Container.Bind(typeof(CellViewStorage), typeof(GridTypeStorage<CellView>), typeof(IObjectsStorage<CellView, Vector2Int>)).
+                To<CellViewStorage>().AsSingle();
 
+            Container.BindInterfacesAndSelfTo<CellDataFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindMemoryPool<CellData, CellDataPool>().WithInitialSize(100);
             Container.BindMemoryPool<CellView, CellViewPool>().WithInitialSize(100).
                 FromComponentInNewPrefab(_cellViewPrefab).UnderTransform(_field.NodesContainer);

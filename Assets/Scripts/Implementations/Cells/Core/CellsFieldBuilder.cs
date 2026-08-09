@@ -9,18 +9,18 @@ namespace EasyField.Implementations.Cells
         private readonly GridField _field;
         private readonly GridTypeStorage<CellData> _nodeDatas;
         private readonly GridTypeStorage<CellView> _nodeViews;        
-        private readonly CellDataPool _nodeDatasPool;
-        private readonly CellViewPool _nodeViewsPool;
+        private readonly CellDataFactory _nodeDatasFactory;
+        private readonly CellViewFactory _nodeViewsFactory;
 
 
         public CellsFieldBuilder(GridField field, GridTypeStorage<CellData> nodeDatas, GridTypeStorage<CellView> nodeViews,
-            CellDataPool nodeDatasPool, CellViewPool nodeViewsPool)
+            CellDataFactory nodeDatasFactory, CellViewFactory nodeViewsFactory)
         {
             _field = field;
             _nodeDatas = nodeDatas;
             _nodeViews = nodeViews;            
-            _nodeDatasPool = nodeDatasPool;
-            _nodeViewsPool = nodeViewsPool;
+            _nodeDatasFactory = nodeDatasFactory;
+            _nodeViewsFactory = nodeViewsFactory;
         }
 
         public void PopulateField(Vector2Int size, CellType cellType)
@@ -33,22 +33,22 @@ namespace EasyField.Implementations.Cells
             {
                 for (int y = 0; y < size.y; y++)
                 {
-                    var index = new Vector2Int(x, y);
+                    var id = new Vector2Int(x, y);
 
                     var localX = x - (size.x / 2f);
                     var localY = y - (size.y / 2f);
                     var localPos = new Vector3(localX * _field.Grid.cellSize.x, localY * _field.Grid.cellSize.y, 0);
 
-                    var nodePos = index;
-                    var nodeData = _nodeDatasPool.Spawn(index, nodePos, cellType);
+                    var nodePos = id;
+                    var nodeData = _nodeDatasFactory.CreateItem(id, nodePos, cellType);
 
                     var viewPos = _field.Grid.transform.TransformPoint(localPos);
-                    var nodeView = _nodeViewsPool.Spawn(index, _field.ScaleFactor);
+                    var nodeView = _nodeViewsFactory.CreateItem(id, _field.ScaleFactor);
                     nodeView.Move(viewPos);
 
 
-                    _nodeDatas.AddItem(index, nodeData);
-                    _nodeViews.AddItem(index, nodeView);
+                    _nodeDatas.AddItem(id, nodeData);
+                    _nodeViews.AddItem(id, nodeView);
                 }
             }
         }

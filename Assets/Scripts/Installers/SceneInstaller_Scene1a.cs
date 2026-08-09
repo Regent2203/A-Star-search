@@ -4,6 +4,7 @@ using EasyField.GridNeighbours;
 using EasyField.Heuristic.Functions;
 using EasyField.Implementations.Cells;
 using EasyField.Implementations.Cells.UI;
+using EasyField.Implementations.Vertexes;
 using EasyField.Inputs;
 using EasyField.Links;
 using EasyField.Links.CostProviders;
@@ -69,9 +70,13 @@ namespace EasyField.Installers
 
         private void BindNodes()
         {
-            Container.Bind(typeof(CellDataStorage), typeof(GridTypeStorage<CellData>), typeof(IObjectsStorage<CellData, Vector2Int>)).To<CellDataStorage>().AsSingle();
-            Container.Bind(typeof(CellViewStorage), typeof(GridTypeStorage<CellView>), typeof(IObjectsStorage<CellView, Vector2Int>)).To<CellViewStorage>().AsSingle();
+            Container.Bind(typeof(CellDataStorage), typeof(GridTypeStorage<CellData>), typeof(IObjectsStorage<CellData, Vector2Int>)).
+                To<CellDataStorage>().AsSingle();
+            Container.Bind(typeof(CellViewStorage), typeof(GridTypeStorage<CellView>), typeof(IObjectsStorage<CellView, Vector2Int>)).
+                To<CellViewStorage>().AsSingle();
 
+            Container.BindInterfacesAndSelfTo<CellDataFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellViewFactory>().AsSingle();
             Container.BindMemoryPool<CellData, CellDataPool>().WithInitialSize(100);
             Container.BindMemoryPool<CellView, CellViewPool>().WithInitialSize(100).
                 FromComponentInNewPrefab(_cellViewPrefab).UnderTransform(_field.NodesContainer);

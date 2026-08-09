@@ -1,18 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CelLDataFactory : MonoBehaviour
+namespace EasyField.Implementations.Cells
 {
-    // Start is called before the first frame update
-    void Start()
+    public class CellDataFactory
     {
-        
-    }
+        private readonly CellDataPool _cellDatasPool;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public CellDataFactory(CellDataPool cellDatasPool)
+        {
+            _cellDatasPool = cellDatasPool;
+        }
+
+        public CellData CreateItem(Vector2Int id, Vector2 nodePos, CellType cellType)
+        {
+            var vertexData = _cellDatasPool.Spawn(id, nodePos, cellType);
+
+            return vertexData;
+        }
+
+        public void DeleteItem(CellData item)
+        {
+            _cellDatasPool.Despawn(item);
+        }
     }
 }

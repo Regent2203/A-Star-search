@@ -11,6 +11,7 @@ namespace EasyField.Implementations.Cells
             IObjectsStorage<CellData, Vector2Int> nodeDatas,
             INodeDataMapper<CellData, CellDataDto, Vector2Int> nodesMapper)
             : base(nodeDatas, nodesMapper)
-        { }
+        { 
+        }
     }
 }
