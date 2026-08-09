@@ -45,13 +45,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4720909223337668367}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e7eb9f341b7dbc4a99525ab5f7953af, type: 3}
+  m_Script: {fileID: 11500000, guid: b7de0988e7e5ee54cbe5b21123943465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 4720909223337668361}
   _pathMarker: {fileID: 8980790688552938801}
   _startMarker: {fileID: 6862667248682550103}
   _finishMarker: {fileID: 7598374524073988106}
-  _spriteRenderer: {fileID: 4720909223337668361}
 --- !u!212 &4720909223337668361
 SpriteRenderer:
   m_ObjectHideFlags: 0
