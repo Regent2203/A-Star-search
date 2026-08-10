@@ -1,4 +1,5 @@
 ﻿using EasyField.Implementations.Vertexes;
+using EasyField.Implementations.Vertexes.Core.Dto;
 using EasyField.Inputs;
 using EasyField.Links;
 using EasyField.Links.CostProviders;
@@ -42,11 +43,9 @@ namespace EasyField.SceneControllers
         private PathSetter<VertexData> _pathSetter;
         private PathFinder<VertexData, int> _pathFinder;
         private IPathDrawer<VertexView> _pathDrawer;
-        private ISaver _saver;
-        private ILoader _loader;
-        private VertexesFieldSaveDtoProvider _dtoProvider;
+        private VertexesSaveLoadManager _saveLoadManager;
         //private UIVertexesHotkeyInfoPanel _hotkeyInfoPanel;
-        private UIButtonsPanel _saveLoadPanel;
+        private UIMainButtonsPanel _saveLoadPanel;
 
 
         [Inject]
@@ -56,8 +55,8 @@ namespace EasyField.SceneControllers
             NodeBlocker<VertexData> nodeBlocker, NodeViewSelector<VertexView> nodeViewSelector, NodeViewMover<VertexView> nodeViewMover, 
             VertexesLinksBuilder linksBuilder, StoredLinksProvider<LinkData<int>, int> linksProvider, LinkViewCoordinator<VertexView, int> linkViewCoordinator,
             PathSetter<VertexData> pathSetter, PathFinder<VertexData, int> pathFinder, IPathDrawer<VertexView> pathDrawer,
-            ISaver saver, ILoader loader, VertexesFieldSaveDtoProvider dtoProvider,
-            UIButtonsPanel saveLoadPanel)
+            VertexesSaveLoadManager saveLoadManager,
+            UIMainButtonsPanel saveLoadPanel)
         {
             _nodeDatas = nodeDatas;
             _nodeViews = nodeViews;
@@ -80,10 +79,7 @@ namespace EasyField.SceneControllers
             _pathFinder = pathFinder;
             _pathDrawer = pathDrawer;
 
-            _saver = saver;
-            _loader = loader;
-            _dtoProvider = dtoProvider;
-
+            _saveLoadManager = saveLoadManager;
             _saveLoadPanel = saveLoadPanel;
         }
 
@@ -321,57 +317,15 @@ namespace EasyField.SceneControllers
             }
         }
 
-        private Task _saveloadTask;
-
-        private async void OnSaveBtnClicked()
+        private void OnSaveBtnClicked()
         {
-            if (_saveloadTask != null && !_saveloadTask.IsCompleted)
-            {
-                return;
-            }
-
-            try
-            {
-                var saveDto = _dtoProvider.GetDto();
-                
-                _saveloadTask = _saver.SaveAsync<VertexesFieldSaveDto>(saveDto);
-                await _saveloadTask;
-            }
-            catch (Exception ex)
-            {
-                Debug.LogException(ex);
-            }
-            finally
-            {
-                _saveloadTask = null;
-            }
+            _saveLoadManager.StartSaving();
         }
 
         private async void OnLoadBtnClicked()
         {
-            if (_saveloadTask != null && !_saveloadTask.IsCompleted)
-            {
-                return;
-            }
-
-            try
-            {
-                var loadTask = _loader.LoadAsync<VertexesFieldSaveDto>();
-                _saveloadTask = loadTask;
-
-                var dto = await loadTask;
-                _pathSetter.UpdateStartNode(null);
-                _pathSetter.UpdateFinishNode(null);
-                _fieldBuilder.BuildFromDto(dto);                
-            }
-            catch (Exception ex)
-            {
-                Debug.LogException(ex);
-            }
-            finally
-            {
-                _saveloadTask = null;
-            }
+            var dto = await _saveLoadManager.StartLoading();
+            _fieldBuilder.BuildFromDto(dto);
         }
 
         private void OnNewBtnClicked(int sizeX, int sizeY)

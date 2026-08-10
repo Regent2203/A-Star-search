@@ -1,6 +1,7 @@
 ﻿using EasyField.Fields;
 using EasyField.Implementations.Links;
 using EasyField.ObjectsStorages;
+using EasyField.PathSetters;
 using EasyField.SaveSystem.Dto;
 using UnityEngine;
 
@@ -9,19 +10,20 @@ namespace EasyField.Implementations.Vertexes
     public class VertexesFieldBuilder
     {
         private readonly SpatialField _field;
+        private readonly PathSetter<VertexData> _pathSetter;
         private readonly VertexesNodesBuilder _nodesBuilder;
         private readonly VertexesLinksBuilder _linksBuilder;
-
         private readonly DictTypeStorage<VertexData, int> _nodeDatas;
 
 
-        public VertexesFieldBuilder(SpatialField field, VertexesNodesBuilder nodesBuilder, VertexesLinksBuilder linksBuilder,
+        public VertexesFieldBuilder(SpatialField field, PathSetter<VertexData> pathSetter,
+            VertexesNodesBuilder nodesBuilder, VertexesLinksBuilder linksBuilder,
             DictTypeStorage<VertexData, int> nodeDatas)
         {
             _field = field;
+            _pathSetter = pathSetter;
             _nodesBuilder = nodesBuilder;
             _linksBuilder = linksBuilder;
-
             _nodeDatas = nodeDatas;
         }
 
@@ -64,6 +66,9 @@ namespace EasyField.Implementations.Vertexes
 
         public void ClearAll()
         {
+            _pathSetter.UpdateStartNode(null);
+            _pathSetter.UpdateFinishNode(null);
+
             _nodesBuilder.ClearAll();
             _linksBuilder.ClearAll();
         }

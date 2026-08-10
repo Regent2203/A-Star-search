@@ -3,6 +3,7 @@ using EasyField.Fields;
 using EasyField.GridNeighbours;
 using EasyField.Heuristic.Functions;
 using EasyField.Implementations.Cells;
+using EasyField.Implementations.Cells.Core.Dto;
 using EasyField.Implementations.Cells.UI;
 using EasyField.Inputs;
 using EasyField.Links;
@@ -13,8 +14,8 @@ using EasyField.Links.Providers;
 using EasyField.ObjectsStorages;
 using EasyField.PathFinders;
 using EasyField.PathSetters;
-using EasyField.SearchAlgorithms;
 using EasyField.SceneControllers;
+using EasyField.SearchAlgorithms;
 using UnityEngine;
 using Zenject;
 
@@ -42,7 +43,7 @@ namespace EasyField.Installers
 
         public override void InstallBindings()
         {
-            BindStarter();
+            BindMainComponents();
             BindEnviroment();
             BindNodes();
             BindLinks();
@@ -52,9 +53,10 @@ namespace EasyField.Installers
             BindUI();            
         }
 
-        private void BindStarter()
+        private void BindMainComponents()
         {
             Container.BindInterfacesAndSelfTo<SceneController_Scene1a>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsSaveLoadManager>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<GridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<CellsFieldBuilder>().AsSingle();

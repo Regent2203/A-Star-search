@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace EasyField.UICommon
 {
-    public class UIButtonsPanel : MonoBehaviour
+    public class UIMainButtonsPanel : MonoBehaviour
     {
         [SerializeField]
         private Button _btnSave;

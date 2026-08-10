@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 2002593578037123904}
   - component: {fileID: 338539561299803301}
   m_Layer: 5
-  m_Name: UIButtonsPanel
+  m_Name: UIMainButtonsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

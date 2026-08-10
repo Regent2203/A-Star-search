@@ -3,6 +3,7 @@ using EasyField.Heuristic.Functions;
 using EasyField.Implementations.Cells.UI;
 using EasyField.Implementations.Links;
 using EasyField.Implementations.Vertexes;
+using EasyField.Implementations.Vertexes.Core.Dto;
 using EasyField.Implementations.Vertexes.UI;
 using EasyField.Inputs;
 using EasyField.Links;
@@ -22,9 +23,9 @@ using EasyField.PathSetters;
 using EasyField.SaveSystem;
 using EasyField.SaveSystem.FileDtoGateways;
 using EasyField.SaveSystem.FilePathProviders;
+using EasyField.SceneControllers;
 using EasyField.SearchAlgorithms;
 using EasyField.Serializers;
-using EasyField.SceneControllers;
 using EasyField.UICommon;
 using System;
 using UnityEngine;
@@ -53,12 +54,12 @@ namespace EasyField.Installers
         [SerializeField]
         private UIHotkeysInfoPanel_Vertexes _hotkeyInfoPanel;
         [SerializeField]
-        private UIButtonsPanel _saveLoadPanel;
+        private UIMainButtonsPanel _saveLoadPanel;
 
 
         public override void InstallBindings()
         {
-            BindStarter();
+            BindMainComponents();
             BindEnviroment();
             BindNodes();
             BindLinks();
@@ -68,9 +69,10 @@ namespace EasyField.Installers
             BindUI();
         }
 
-        private void BindStarter()
+        private void BindMainComponents()
         {
             Container.BindInterfacesAndSelfTo<SceneController_Scene2a>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexesSaveLoadManager>().AsSingle();            
 
             Container.BindInterfacesAndSelfTo<SpatialField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesFieldBuilder>().AsSingle();
@@ -146,17 +148,18 @@ namespace EasyField.Installers
             Container.BindInterfacesAndSelfTo<Saver>().AsSingle();
             Container.BindInterfacesAndSelfTo<Loader>().AsSingle();
 
-            //Choose only one of two variants (bytes or string)
-            UseStringSaving();
-            //UseBytesSaving();
-
-            //Choose only one
-            //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map.json", Environment.SpecialFolder.Desktop);
-
             Container.BindInterfacesAndSelfTo<VertexDataMapper>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinkDataMapper>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesFieldSaveDtoProvider>().AsSingle();
+
+            //Choose only one variant here
+            //UseStringSaving();
+            //UseBytesSaving();
+            UseCompressedBytesSaving();
+
+            //Choose only one
+            //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map.json", Environment.SpecialFolder.Desktop);            
 
 
             #pragma warning disable CS8321
@@ -175,7 +178,13 @@ namespace EasyField.Installers
 
                 //Choose only one
                 //Container.BindInterfacesAndSelfTo<NewtonsoftJsonBytesSerializer>().AsSingle();
-                //Container.BindInterfacesAndSelfTo<JsonUtilityBytesSerializer>().AsSingle();
+                Container.BindInterfacesAndSelfTo<JsonUtilityBytesSerializer>().AsSingle();                
+            }
+
+            void UseCompressedBytesSaving()
+            {
+                Container.BindInterfacesAndSelfTo<BytesFileDtoGateway>().AsSingle();
+                
                 Container.BindInterfacesAndSelfTo<GZipCompressedBytesSerializer>().FromSubContainerResolve()
                     .ByMethod(subContainer =>
                     {
@@ -183,7 +192,7 @@ namespace EasyField.Installers
 
                         //Choose only one
                         //subContainer.BindInterfacesAndSelfTo<NewtonsoftJsonBytesSerializer>().AsSingle();
-                        subContainer.BindInterfacesAndSelfTo<JsonUtilityBytesSerializer>().AsSingle();                        
+                        subContainer.BindInterfacesAndSelfTo<JsonUtilityBytesSerializer>().AsSingle();
                     }).AsSingle();
             }
             #pragma warning restore CS8321
@@ -192,7 +201,7 @@ namespace EasyField.Installers
         private void BindUI()
         {
             Container.BindInterfacesAndSelfTo<UIHotkeysInfoPanel_Vertexes>().FromInstance(_hotkeyInfoPanel).AsSingle();
-            Container.BindInterfacesAndSelfTo<UIButtonsPanel>().FromInstance(_saveLoadPanel).AsSingle();
+            Container.BindInterfacesAndSelfTo<UIMainButtonsPanel>().FromInstance(_saveLoadPanel).AsSingle();
         }
     }
 }
