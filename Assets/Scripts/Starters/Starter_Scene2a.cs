@@ -110,8 +110,7 @@ namespace EasyField.Starters
 
         protected override void InitDefaultStates()
         {
-            //todo
-            _fieldBuilder.TestPopulate(5);
+            _fieldBuilder.CreateNewField(64, 40);
         }
 
         protected override void UnsubscribeAll()
@@ -231,10 +230,12 @@ namespace EasyField.Starters
         private void OnFieldClicked(Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
         {
             if (button == PointerEventData.InputButton.Left)
-                _nodeViewSelector.SelectView(null);
-
-            if (input.IsCreatingMode)
-                _fieldBuilder.CreateNode(pos);
+            {
+                if (input.IsCreatingMode)
+                    _fieldBuilder.CreateNode(pos);
+                else
+                    _nodeViewSelector.SelectView(null);
+            }   
         }
 
         private void OnNodeViewDragStarted(VertexView view, Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
@@ -282,14 +283,20 @@ namespace EasyField.Starters
 
         private void OnStartNodeChanged(VertexData node, bool b)
         {
-            var view = _nodeViews.GetItem(node.Id);
-            view?.ShowStartMarker(b);
+            if (node != null)
+            {
+                var view = _nodeViews.GetItem(node.Id);
+                view?.ShowStartMarker(b);
+            }
         }
 
         private void OnFinishNodeChanged(VertexData node, bool b)
         {
-            var view = _nodeViews.GetItem(node.Id);
-            view?.ShowFinishMarker(b);
+            if (node != null)
+            {
+                var view = _nodeViews.GetItem(node.Id);
+                view?.ShowFinishMarker(b);
+            }
         }
 
         private void OnPathChanged(bool isReady)
@@ -353,8 +360,8 @@ namespace EasyField.Starters
                 _saveloadTask = loadTask;
 
                 var dto = await loadTask;
-                _pathSetter.UpdateStartNode(_pathSetter.StartNode);
-                _pathSetter.UpdateFinishNode(_pathSetter.FinishNode);
+                _pathSetter.UpdateStartNode(null);
+                _pathSetter.UpdateFinishNode(null);
                 _fieldBuilder.BuildFromDto(dto);                
             }
             catch (Exception ex)

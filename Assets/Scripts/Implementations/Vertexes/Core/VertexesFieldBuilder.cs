@@ -25,16 +25,6 @@ namespace EasyField.Implementations.Vertexes
             _nodeDatas = nodeDatas;
         }
 
-        //temp
-        public void TestPopulate(int count)
-        {
-            for (int i = 0; i < count; i++)
-            {
-                var pos = new Vector3(UnityEngine.Random.value * 40 - 20, UnityEngine.Random.value * 40 - 20, 0);
-                _nodesBuilder.CreateItem(pos);
-            }
-        }
-
         public void CreateNode(Vector2 pos)
         {
             _nodesBuilder.CreateItem(pos);

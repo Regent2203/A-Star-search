@@ -1,5 +1,6 @@
 ﻿using System;
 using EasyField.Nodes;
+using UnityEngine;
 
 namespace EasyField.PathSetters
 {
@@ -31,10 +32,9 @@ namespace EasyField.PathSetters
         private void UpdateDesiredNode(TNodeData node, ref TNodeData desiredNode, ref TNodeData notDesiredNode, Action<TNodeData, bool> desiredNodeChanged)
         {
             if (node is not null && ReferenceEquals(notDesiredNode, node)) //when trying to set start node as finish node or vice versa, we do nothing (it's a feature)
+            {
                 return;
-
-            if (node is null && desiredNode is null) //when trying to set null to null
-                return;
+            }            
 
             if (ReferenceEquals(desiredNode, node)) //when trying to set same node value to desired node, we clear desired value instead (it's a feature)
             {
@@ -45,7 +45,12 @@ namespace EasyField.PathSetters
                 return;
             }
 
-            if (desiredNode is not null) //if desired node is already set, we should clear the previous one
+            if (node is null && desiredNode is null) //when trying to set null to desired node when it is currently null
+            {
+                return;
+            }
+
+            if (desiredNode is not null) //if desired node is already set, we should clear the previous node from this value
             {
                 desiredNodeChanged?.Invoke(desiredNode, false);
             }

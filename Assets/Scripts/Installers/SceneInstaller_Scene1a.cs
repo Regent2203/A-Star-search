@@ -37,7 +37,7 @@ namespace EasyField.Installers
         [SerializeField]
         private UICellsPaletteChoicePanel _paletteChoice;
         [SerializeField]
-        private UICellsHotkeysInfoPanel _hotkeyInfoPanel;
+        private UIHotkeysInfoPanel_Cells _hotkeyInfoPanel;
 
 
         public override void InstallBindings()
@@ -119,7 +119,7 @@ namespace EasyField.Installers
         {
             Container.BindInterfacesAndSelfTo<UICellsPalette>().FromInstance(_palette).AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsPaletteChoicePanel>().FromInstance(_paletteChoice).AsSingle();
-            Container.BindInterfacesAndSelfTo<UICellsHotkeysInfoPanel>().FromInstance(_hotkeyInfoPanel).AsSingle();
+            Container.BindInterfacesAndSelfTo<UIHotkeysInfoPanel_Cells>().FromInstance(_hotkeyInfoPanel).AsSingle();
         }
     }
 }

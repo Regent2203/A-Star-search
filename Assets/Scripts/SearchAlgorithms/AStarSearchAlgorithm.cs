@@ -51,7 +51,7 @@ namespace EasyField.SearchAlgorithms
 
                 if (current.Equals(finishNode))
                 {
-                    Debug.Log($"{_costSoFar[finishNode]}");
+                    //Debug.Log($"{_costSoFar[finishNode]}");
                     return RetracePath(startNode, finishNode);
                 }
 

@@ -1,7 +1,9 @@
 using EasyField.Fields;
 using EasyField.Heuristic.Functions;
+using EasyField.Implementations.Cells.UI;
 using EasyField.Implementations.Links;
 using EasyField.Implementations.Vertexes;
+using EasyField.Implementations.Vertexes.UI;
 using EasyField.Inputs;
 using EasyField.Links;
 using EasyField.Links.CostProviders;
@@ -48,6 +50,8 @@ namespace EasyField.Installers
         private LinkView_Int _linkViewPrefab;
         [SerializeField]
         private LineRenderer _pathLineRenderer;
+        [SerializeField]
+        private UIHotkeysInfoPanel_Vertexes _hotkeyInfoPanel;
         [SerializeField]
         private UIButtonsPanel _saveLoadPanel;
 
@@ -187,8 +191,7 @@ namespace EasyField.Installers
 
         private void BindUI()
         {
-            //todo
-            //Container.BindInterfacesAndSelfTo<UIHotkeyInfoPanel_Vertexes>().FromInstance(_hotkeyInfoPanel).AsSingle();
+            Container.BindInterfacesAndSelfTo<UIHotkeysInfoPanel_Vertexes>().FromInstance(_hotkeyInfoPanel).AsSingle();
             Container.BindInterfacesAndSelfTo<UIButtonsPanel>().FromInstance(_saveLoadPanel).AsSingle();
         }
     }

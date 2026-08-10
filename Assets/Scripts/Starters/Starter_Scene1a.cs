@@ -26,7 +26,7 @@ namespace EasyField.Starters
         private BrushManager<CellType> _cellTypebrushManager;
         private UICellsPalette _palette;
         private UICellsPaletteChoicePanel _paletteChoice;
-        private UICellsHotkeysInfoPanel _hotkeyInfoPanel;
+        private UIHotkeysInfoPanel_Cells _hotkeyInfoPanel;
 
 
         [Inject]
@@ -35,7 +35,7 @@ namespace EasyField.Starters
             CellTypeChanger cellTypeChanger,
             PathSetter<CellData> pathSetter, PathFinder<CellData, Vector2Int> pathFinder,
             IPathDrawer<CellView> pathDrawer, BrushManager<CellType> cellTypebrushManager,
-            UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UICellsHotkeysInfoPanel hotkeyInfoPanel)
+            UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UIHotkeysInfoPanel_Cells hotkeyInfoPanel)
         {
             _config = config;
             _nodes = nodes;
@@ -187,11 +187,11 @@ namespace EasyField.Starters
             switch (brushIndex)
             {
                 case 1:
-                    _hotkeyInfoPanel.SetLMBText(cellType.Name);
+                    _hotkeyInfoPanel.SetLMBPaintText(cellType.Name);
                     _paletteChoice.SetLMBChoice(cellType);
                     break;
                 case 2:
-                    _hotkeyInfoPanel.SetRMBText(cellType.Name);
+                    _hotkeyInfoPanel.SetRMBPaintText(cellType.Name);
                     _paletteChoice.SetRMBChoice(cellType);
                     break;
             }
