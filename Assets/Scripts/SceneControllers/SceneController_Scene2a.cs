@@ -21,9 +21,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace EasyField.Starters
+namespace EasyField.SceneControllers
 {
-    public class Starter_Scene2a : StarterBase
+    public class SceneController_Scene2a : SceneControllerBase
     {
         private VertexDataStorage _nodeDatas;
         private VertexViewStorage _nodeViews;

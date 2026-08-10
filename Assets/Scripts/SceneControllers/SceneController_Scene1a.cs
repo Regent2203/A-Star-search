@@ -10,9 +10,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace EasyField.Starters
+namespace EasyField.SceneControllers
 {
-    public class Starter_Scene1a : StarterBase
+    public class SceneController_Scene1a : SceneControllerBase
     {
         private CellsConfig _config;
         private CellDataStorage _nodes;

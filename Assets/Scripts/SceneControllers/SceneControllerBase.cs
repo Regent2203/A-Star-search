@@ -1,9 +1,9 @@
 ﻿using System;
 using Zenject;
 
-namespace EasyField.Starters
+namespace EasyField.SceneControllers
 {
-    public abstract class StarterBase : IInitializable, IDisposable
+    public abstract class SceneControllerBase : IInitializable, IDisposable
     {
         public void Initialize()
         {

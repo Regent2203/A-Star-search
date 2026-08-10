@@ -14,7 +14,7 @@ using EasyField.ObjectsStorages;
 using EasyField.PathFinders;
 using EasyField.PathSetters;
 using EasyField.SearchAlgorithms;
-using EasyField.Starters;
+using EasyField.SceneControllers;
 using UnityEngine;
 using Zenject;
 
@@ -54,7 +54,7 @@ namespace EasyField.Installers
 
         private void BindStarter()
         {
-            Container.BindInterfacesAndSelfTo<Starter_Scene1a>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SceneController_Scene1a>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<GridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<CellsFieldBuilder>().AsSingle();
