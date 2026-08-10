@@ -14,14 +14,14 @@ namespace EasyField.Cameras
         [SerializeField] private float _maxOrthographicSize = 40f;
 
         private Camera _mainCamera;
-        private Bounds _bounds;
+        private BoxCollider2D _box;
 
 
         [Inject]
         public void Construct(Camera mainCamera, IField field)
         {
             _mainCamera = mainCamera;
-            _bounds = field.Box.bounds;
+            _box = field.Box;
         }
 
         private void Update()
@@ -48,7 +48,7 @@ namespace EasyField.Cameras
             Vector3 mouseWorldAfterZoom = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
             transform.position += mouseWorldBeforeZoom - mouseWorldAfterZoom;
-            transform.position = transform.position.Clamp(_bounds);
+            transform.position = transform.position.Clamp(_box.bounds);
         }
 
 

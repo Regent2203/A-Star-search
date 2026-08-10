@@ -17,7 +17,7 @@ namespace EasyField.Implementations.Vertexes
         private GameObject _startMarker;
         [SerializeField]
         private GameObject _finishMarker;
-
+        
 
         public override void OnSpawned(int id, Vector2 scale)
         {

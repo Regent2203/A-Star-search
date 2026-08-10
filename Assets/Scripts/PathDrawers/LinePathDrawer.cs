@@ -5,16 +5,19 @@ using Zenject;
 
 namespace EasyField.PathDrawers
 {
+    public static class LinePathDrawer
+    {
+        public const string LineRendererId = "PathLine";
+    }
+
     public class LinePathDrawer<TNodeView> : IPathDrawer<TNodeView>
         where TNodeView : INodeView
     {
         private readonly LineRenderer _lineRenderer;
-        private IReadOnlyList<TNodeView> _path;
-
-        public const string LineRendererId = "PathLine";
+        private IReadOnlyList<TNodeView> _path;        
 
 
-        public LinePathDrawer([Inject(Id = LineRendererId)] LineRenderer lineRenderer)
+        public LinePathDrawer([Inject(Id = LinePathDrawer.LineRendererId)] LineRenderer lineRenderer)
         {
             _lineRenderer = lineRenderer;
             _lineRenderer.positionCount = 0;

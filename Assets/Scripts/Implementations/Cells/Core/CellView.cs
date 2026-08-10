@@ -13,7 +13,7 @@ namespace EasyField.Implementations.Cells
         [SerializeField]
         private GameObject _finishMarker;
 
-
+        
         public override void OnSpawned(Vector2Int index, Vector2 scale)
         {
             base.OnSpawned(index, scale);

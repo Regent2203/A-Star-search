@@ -1,4 +1,5 @@
-﻿using EasyField.Implementations.Links;
+﻿using EasyField.Fields;
+using EasyField.Implementations.Links;
 using EasyField.ObjectsStorages;
 using EasyField.SaveSystem.Dto;
 using UnityEngine;
@@ -7,15 +8,17 @@ namespace EasyField.Implementations.Vertexes
 {
     public class VertexesFieldBuilder
     {
+        private readonly SpatialField _field;
         private readonly VertexesNodesBuilder _nodesBuilder;
         private readonly VertexesLinksBuilder _linksBuilder;
 
         private readonly DictTypeStorage<VertexData, int> _nodeDatas;
 
 
-        public VertexesFieldBuilder(VertexesNodesBuilder nodesBuilder, VertexesLinksBuilder linksBuilder,
+        public VertexesFieldBuilder(SpatialField field, VertexesNodesBuilder nodesBuilder, VertexesLinksBuilder linksBuilder,
             DictTypeStorage<VertexData, int> nodeDatas)
         {
+            _field = field;
             _nodesBuilder = nodesBuilder;
             _linksBuilder = linksBuilder;
 
@@ -40,7 +43,7 @@ namespace EasyField.Implementations.Vertexes
         public void DeleteNode(VertexView view)
         {
             _nodesBuilder.DeleteItem(view.Id);
-            //_linksBuilder.TryDeleteLink //todo
+            //_linksBuilder.TryDeleteLink //todo (all nodes from and to)
         }
 
         public void BuildFromDto(FieldSaveDto<VertexDataDto, LinkDataDto<int>> data)
@@ -61,6 +64,12 @@ namespace EasyField.Implementations.Vertexes
                 var to = _nodeDatas.GetItem(item.To);
                 _linksBuilder.TryCreateLink(from, to);
             }
+        }
+
+        public void CreateNewField(int sizeX, int sizeY)
+        {
+            ClearAll();
+            _field.SetSize(new Vector2(sizeX, sizeY));
         }
 
         public void ClearAll()

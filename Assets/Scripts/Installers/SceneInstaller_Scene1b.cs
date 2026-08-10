@@ -112,7 +112,7 @@ namespace EasyField.Installers
             Container.BindInterfacesAndSelfTo<PathFinder<CellData, Vector2Int>>().AsSingle();
             
             Container.BindInterfacesAndSelfTo<LinePathDrawer<CellView>>().AsSingle();
-            Container.Bind<LineRenderer>().WithId(LinePathDrawer<CellView>.LineRendererId).FromInstance(_pathLineRenderer).AsSingle();
+            Container.Bind<LineRenderer>().WithId(LinePathDrawer.LineRendererId).FromInstance(_pathLineRenderer).AsSingle();
         }
 
         private void BindSaveSystem()

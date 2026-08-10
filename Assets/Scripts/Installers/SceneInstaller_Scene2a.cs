@@ -49,7 +49,7 @@ namespace EasyField.Installers
         [SerializeField]
         private LineRenderer _pathLineRenderer;
         [SerializeField]
-        private UISaveLoadPanel _saveLoadPanel;
+        private UIButtonsPanel _saveLoadPanel;
 
 
         public override void InstallBindings()
@@ -134,7 +134,7 @@ namespace EasyField.Installers
             Container.BindInterfacesAndSelfTo<PathSetter<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<VertexData, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinePathDrawer<VertexView>>().AsSingle();
-            Container.Bind<LineRenderer>().WithId(LinePathDrawer<VertexView>.LineRendererId).FromInstance(_pathLineRenderer).AsSingle();
+            Container.Bind<LineRenderer>().WithId(LinePathDrawer.LineRendererId).FromInstance(_pathLineRenderer).AsSingle();
         }
 
         private void BindSaveSystem()
@@ -189,7 +189,7 @@ namespace EasyField.Installers
         {
             //todo
             //Container.BindInterfacesAndSelfTo<UIHotkeyInfoPanel_Vertexes>().FromInstance(_hotkeyInfoPanel).AsSingle();
-            Container.BindInterfacesAndSelfTo<UISaveLoadPanel>().FromInstance(_saveLoadPanel).AsSingle();
+            Container.BindInterfacesAndSelfTo<UIButtonsPanel>().FromInstance(_saveLoadPanel).AsSingle();
         }
     }
 }

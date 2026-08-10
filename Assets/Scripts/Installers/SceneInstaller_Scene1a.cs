@@ -4,7 +4,6 @@ using EasyField.GridNeighbours;
 using EasyField.Heuristic.Functions;
 using EasyField.Implementations.Cells;
 using EasyField.Implementations.Cells.UI;
-using EasyField.Implementations.Vertexes;
 using EasyField.Inputs;
 using EasyField.Links;
 using EasyField.Links.CostProviders;

@@ -38,9 +38,9 @@ namespace EasyField.Implementations.Cells.UI
         public void SetMarkFinishText(string btnArg)
             => SetText(_markFinishText, string.Format(CellMarkFormat, btnArg, "RMB", "finish"));
 
-        private void SetText(TMP_Text label, string text)
+        private void SetText(TMP_Text textComponent, string text)
         {
-            label.text = text;
+            textComponent.text = text;
         }
     }
 }

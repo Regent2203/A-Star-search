@@ -46,7 +46,7 @@ namespace EasyField.Starters
         private ILoader _loader;
         private VertexesFieldSaveDtoProvider _dtoProvider;
         //private UIVertexesHotkeyInfoPanel _hotkeyInfoPanel;
-        private UISaveLoadPanel _saveLoadPanel;
+        private UIButtonsPanel _saveLoadPanel;
 
 
         [Inject]
@@ -57,7 +57,7 @@ namespace EasyField.Starters
             VertexesLinksBuilder linksBuilder, StoredLinksProvider<LinkData<int>, int> linksProvider, LinkViewCoordinator<VertexView, int> linkViewCoordinator,
             PathSetter<VertexData> pathSetter, PathFinder<VertexData, int> pathFinder, IPathDrawer<VertexView> pathDrawer,
             ISaver saver, ILoader loader, VertexesFieldSaveDtoProvider dtoProvider,
-            UISaveLoadPanel saveLoadPanel)
+            UIButtonsPanel saveLoadPanel)
         {
             _nodeDatas = nodeDatas;
             _nodeViews = nodeViews;
@@ -105,6 +105,7 @@ namespace EasyField.Starters
 
             _saveLoadPanel.SaveBtnClicked += OnSaveBtnClicked;
             _saveLoadPanel.LoadBtnClicked += OnLoadBtnClicked;
+            _saveLoadPanel.NewBtnClicked += OnNewBtnClicked;
         }
 
         protected override void InitDefaultStates()
@@ -131,6 +132,7 @@ namespace EasyField.Starters
 
             _saveLoadPanel.SaveBtnClicked -= OnSaveBtnClicked;
             _saveLoadPanel.LoadBtnClicked -= OnLoadBtnClicked;
+            _saveLoadPanel.NewBtnClicked -= OnNewBtnClicked;
         }
 
         private void UpdateNodePosition(VertexView view, Vector2 pos)
@@ -363,6 +365,11 @@ namespace EasyField.Starters
             {
                 _saveloadTask = null;
             }
+        }
+
+        private void OnNewBtnClicked(int sizeX, int sizeY)
+        {
+            _fieldBuilder.CreateNewField(sizeX, sizeY);
         }
     }
 }
