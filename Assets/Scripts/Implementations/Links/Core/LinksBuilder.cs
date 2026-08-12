@@ -12,8 +12,7 @@ namespace EasyField.Links.Implementations
     public class LinksBuilder<TNodeData, TNodeView, TId>
         where TNodeData : class, INodeData<TId>
         where TNodeView : MonoBehaviour, INodeView<TId>
-    {        
-
+    {
         private readonly SmartLinkDataFactory<TNodeData, TId> _linkDatasFactory;
         private readonly LinkViewFactory<TId> _linkViewsFactory;
         private readonly StoredLinksProvider<LinkData<TId>, TId> _linksProvider;

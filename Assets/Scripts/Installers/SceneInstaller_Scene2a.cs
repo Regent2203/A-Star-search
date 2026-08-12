@@ -14,6 +14,7 @@ using EasyField.Links.LinkCostChangers;
 using EasyField.Links.Providers;
 using EasyField.Links.ViewMovers;
 using EasyField.Nodes.NodeBlockers;
+using EasyField.Nodes.NodePositionChanger;
 using EasyField.Nodes.ViewMovers;
 using EasyField.Nodes.ViewSelectors;
 using EasyField.ObjectsStorages;
@@ -124,6 +125,7 @@ namespace EasyField.Installers
         {
             Container.BindInstance(_clickHandler).AsSingle();
             Container.BindInstance(_dragHandler).AsSingle();
+            Container.BindInterfacesAndSelfTo<NodePositionChanger<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeBlocker<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeViewSelector<VertexView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeViewMover<VertexView>>().AsSingle();

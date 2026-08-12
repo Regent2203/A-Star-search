@@ -109,25 +109,25 @@ namespace EasyField.SceneControllers
         }
 
 
-        private void UpdateViewSprite(CellData node, CellType cellType)
+        private void UpdateViewSprite(CellData nodeData, CellType cellType)
         {
-            var view = _nodeViews.GetItem(node.Id);
-            view.UpdateSprite(cellType.Sprite);
+            var nodeView = _nodeViews.GetItem(nodeData.Id);
+            nodeView.UpdateSprite(cellType.Sprite);
         }
 
-        private void OnViewClicked(CellView view, PointerEventData.InputButton button, InputSnapshot input)
+        private void OnViewClicked(CellView nodeView, PointerEventData.InputButton button, InputSnapshot input)
         {
-            var node = _nodeDatas.GetItem(view.Id);
+            var nodeData = _nodeDatas.GetItem(nodeView.Id);
 
             if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
             {
                 switch (button)
                 {
                     case PointerEventData.InputButton.Left:
-                        _cellTypeChanger.TryChangeCellType(node, _cellTypebrushManager.GetBrush(1));
+                        _cellTypeChanger.TryChangeCellType(nodeData, _cellTypebrushManager.GetBrush(1));
                         break;
                     case PointerEventData.InputButton.Right:
-                        _cellTypeChanger.TryChangeCellType(node, _cellTypebrushManager.GetBrush(2));
+                        _cellTypeChanger.TryChangeCellType(nodeData, _cellTypebrushManager.GetBrush(2));
                         break;
                 }
             }
@@ -137,18 +137,18 @@ namespace EasyField.SceneControllers
                 switch (button)
                 {
                     case PointerEventData.InputButton.Left:
-                        _pathSetter.UpdateStartNode(node);
+                        _pathSetter.UpdateStartNode(nodeData);
                         break;
                     case PointerEventData.InputButton.Right:
-                        _pathSetter.UpdateFinishNode(node);
+                        _pathSetter.UpdateFinishNode(nodeData);
                         break;
                 }
             }
         }
 
-        private void OnCellTypeChanged(CellData node, CellType cellType)
+        private void OnCellTypeChanged(CellData nodeData, CellType cellType)
         {
-            UpdateViewSprite(node, cellType);
+            UpdateViewSprite(nodeData, cellType);
             OnFieldChanged();
         }
 
@@ -159,14 +159,14 @@ namespace EasyField.SceneControllers
 
         private void OnStartNodeChanged(CellData node, bool b)
         {
-            var view = _nodeViews.GetItem(node.Id);
-            view?.ShowStartMarker(b);
+            var nodeView = _nodeViews.GetItem(node.Id);
+            nodeView?.ShowStartMarker(b);
         }
 
-        private void OnFinishNodeChanged(CellData node, bool b)
+        private void OnFinishNodeChanged(CellData nodeData, bool b)
         {
-            var view = _nodeViews.GetItem(node.Id);
-            view?.ShowFinishMarker(b);
+            var nodeView = _nodeViews.GetItem(nodeData.Id);
+            nodeView?.ShowFinishMarker(b);
         }
 
         private void OnPathChanged(bool isReady)
