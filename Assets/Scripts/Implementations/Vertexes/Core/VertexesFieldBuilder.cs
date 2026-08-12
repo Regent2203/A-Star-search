@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace EasyField.Implementations.Vertexes
 {
-    public class VertexesFieldBuilder : IFieldBuilder<VertexDataDto, LinkDataDto<int>>
+    public class VertexesFieldBuilder : IFieldBuilder<VertexesFieldSaveDto>
     {
         private readonly SpatialField _field;
         private readonly PathSetter<VertexData> _pathSetter;
@@ -57,9 +57,11 @@ namespace EasyField.Implementations.Vertexes
             return _linksBuilder.TryDeleteLinkItem(from.Id, to.Id);
         }
 
-        public void BuildFromDto(FieldSaveDto<VertexDataDto, LinkDataDto<int>> data)
+        public void BuildFromDto(VertexesFieldSaveDto data)
         {
             ClearAll();
+
+            _field.SetSize((Vector2)data.FieldSize);
 
             foreach (var item in data.Nodes)
             {

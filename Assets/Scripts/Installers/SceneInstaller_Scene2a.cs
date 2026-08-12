@@ -1,6 +1,5 @@
 using EasyField.Fields;
 using EasyField.Heuristic.Functions;
-using EasyField.Implementations.Cells.UI;
 using EasyField.Implementations.Links;
 using EasyField.Implementations.Vertexes;
 using EasyField.Implementations.Vertexes.Core.Dto;
@@ -155,9 +154,9 @@ namespace EasyField.Installers
             Container.BindInterfacesAndSelfTo<VertexesFieldSaveDtoProvider>().AsSingle();
 
             //Choose only one variant here
-            //UseStringSaving();
+            UseStringSaving();
             //UseBytesSaving();
-            UseCompressedBytesSaving();
+            //UseCompressedBytesSaving();
 
             //Choose only one
             //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();

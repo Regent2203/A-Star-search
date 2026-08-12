@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EasyField.Implementations.Cells
 {
-    public class CellsFieldBuilder : IFieldBuilder<CellDataDto>
+    public class CellsFieldBuilder : IFieldBuilder<CellsFieldSaveDto>
     {
         private readonly GridField _field;
         private readonly PathSetter<CellData> _pathSetter;
@@ -30,7 +30,7 @@ namespace EasyField.Implementations.Cells
             _nodeViewsFactory = nodeViewsFactory;
         }
 
-        public void BuildFromDto(FieldSaveDto<CellDataDto> data) //todo
+        public void BuildFromDto(CellsFieldSaveDto data) //todo
         {
             ClearAll();
 

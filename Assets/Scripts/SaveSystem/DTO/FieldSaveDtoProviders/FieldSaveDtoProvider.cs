@@ -33,10 +33,15 @@ namespace EasyField.SaveSystem.Dto.FieldSaveDtoProviders
         {
             var dto = new TFieldSaveDto();
 
-            FillNodes(dto);
-            dto.Links = _linkDatas.AllItems.Select(link => _linksMapper.ToDto(link)).ToList();
+            PrepareNodes(dto);
+            PrepareLinks(dto);            
 
             return dto;
+        }
+
+        protected void PrepareLinks(FieldSaveDto<TNodeDataDto, TLinkDataDto> dto)
+        {
+            dto.Links = _linkDatas.AllItems.Select(link => _linksMapper.ToDto(link)).ToList();
         }
     }
 
@@ -60,12 +65,12 @@ namespace EasyField.SaveSystem.Dto.FieldSaveDtoProviders
         {
             var dto = new TFieldSaveDto();
 
-            FillNodes(dto);
+            PrepareNodes(dto);
 
             return dto;
         }
 
-        protected void FillNodes(FieldSaveDto<TNodeDataDto> dto)
+        protected void PrepareNodes(FieldSaveDto<TNodeDataDto> dto)
         {
             dto.Nodes = _nodeDatas.AllItems.Select(node => _nodesMapper.ToDto(node)).ToList();
         }

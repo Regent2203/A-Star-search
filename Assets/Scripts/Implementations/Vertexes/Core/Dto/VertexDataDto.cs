@@ -1,4 +1,5 @@
 ﻿using EasyField.Nodes.Dto;
+using EasyField.SaveSystem.Dto;
 using System;
 
 namespace EasyField.Implementations.Vertexes
