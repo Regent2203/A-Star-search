@@ -47,7 +47,7 @@ namespace EasyField.Implementations.Vertexes
 
             _nodeDatas.AddItem(id, nodeData);
             _nodeViews.AddItem(id, nodeView);
-        }        
+        }
 
         public void DeleteItem(int id)
         {

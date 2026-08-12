@@ -87,7 +87,7 @@ namespace EasyField.SceneControllers
             _cellTypebrushManager.SetBrush(1, _config.DefaultCellType);
             _cellTypebrushManager.SetBrush(2, _config.DefaultCellType);
 
-            _fieldBuilder.PopulateField(new Vector2Int(13, 11), _config.DefaultCellType);
+            _fieldBuilder.CreateNewField(8, 8);
         }
 
         protected override void UnsubscribeAll()
@@ -158,14 +158,20 @@ namespace EasyField.SceneControllers
 
         private void OnStartNodeChanged(CellData nodeData, bool b)
         {
-            var nodeView = _nodeViews.GetItem(nodeData.Id);
-            nodeView?.ShowStartMarker(b);
+            if (nodeData != null)
+            {
+                var nodeView = _nodeViews.GetItem(nodeData.Id);
+                nodeView?.ShowStartMarker(b);
+            }
         }
 
         private void OnFinishNodeChanged(CellData nodeData, bool b)
         {
-            var nodeView = _nodeViews.GetItem(nodeData.Id);
-            nodeView?.ShowFinishMarker(b);
+            if (nodeData != null)
+            {
+                var nodeView = _nodeViews.GetItem(nodeData.Id);
+                nodeView?.ShowFinishMarker(b);
+            }
         }
 
         private void OnPathChanged(bool isReady)

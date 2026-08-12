@@ -15,8 +15,14 @@ using EasyField.ObjectsStorages;
 using EasyField.PathDrawers;
 using EasyField.PathFinders;
 using EasyField.PathSetters;
+using EasyField.SaveSystem;
+using EasyField.SaveSystem.FileDtoGateways;
+using EasyField.SaveSystem.FilePathProviders;
 using EasyField.SceneControllers;
 using EasyField.SearchAlgorithms;
+using EasyField.Serializers;
+using EasyField.UICommon;
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -42,6 +48,9 @@ namespace EasyField.Installers
         private UIHotkeysInfoPanel_Cells _hotkeyInfoPanel;
         [SerializeField]
         private LineRenderer _pathLineRenderer;
+        [SerializeField]
+        private UIMainButtonsPanel _saveLoadPanel;
+
 
         public override void InstallBindings()
         {
@@ -62,6 +71,7 @@ namespace EasyField.Installers
 
             Container.BindInterfacesAndSelfTo<GridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<CellsFieldBuilder>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsNodesBuilder>().AsSingle();
         }
 
         private void BindEnviroment()
@@ -105,7 +115,7 @@ namespace EasyField.Installers
 
         private void BindPathfinding()
         {
-            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData, LinkData<Vector2Int>, Vector2Int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData, ILinkData<Vector2Int>, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<OctileDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellWeightGetter>().AsSingle();
@@ -119,6 +129,56 @@ namespace EasyField.Installers
 
         private void BindSaveSystem()
         {
+            Container.BindInterfacesAndSelfTo<Saver>().AsSingle();
+            Container.BindInterfacesAndSelfTo<Loader>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<CellDataMapper>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsFieldSaveDtoProvider>().AsSingle();
+
+            //Choose only one variant here
+            UseStringSaving();
+            //UseBytesSaving();
+            //UseCompressedBytesSaving();
+
+            //Choose only one
+            //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map_1b.json", Environment.SpecialFolder.Desktop);
+
+
+            #pragma warning disable CS8321
+            void UseStringSaving()
+            {
+                Container.BindInterfacesAndSelfTo<StringFileDtoGateway>().AsSingle();
+
+                //Choose only one
+                //Container.BindInterfacesAndSelfTo<NewtonsoftJsonStringSerializer>().AsSingle();
+                Container.BindInterfacesAndSelfTo<JsonUtilityStringSerializer>().AsSingle();
+            }
+
+            void UseBytesSaving()
+            {
+                Container.BindInterfacesAndSelfTo<BytesFileDtoGateway>().AsSingle();
+
+                //Choose only one
+                //Container.BindInterfacesAndSelfTo<NewtonsoftJsonBytesSerializer>().AsSingle();
+                Container.BindInterfacesAndSelfTo<JsonUtilityBytesSerializer>().AsSingle();
+            }
+
+            void UseCompressedBytesSaving()
+            {
+                Container.BindInterfacesAndSelfTo<BytesFileDtoGateway>().AsSingle();
+
+                Container.BindInterfacesAndSelfTo<GZipCompressedBytesSerializer>().FromSubContainerResolve()
+                    .ByMethod(subContainer =>
+                    {
+                        subContainer.Bind<GZipCompressedBytesSerializer>().AsSingle();
+
+                        //Choose only one
+                        //subContainer.BindInterfacesAndSelfTo<NewtonsoftJsonBytesSerializer>().AsSingle();
+                        subContainer.BindInterfacesAndSelfTo<JsonUtilityBytesSerializer>().AsSingle();
+                    }).AsSingle();
+            }
+            #pragma warning restore CS8321
         }
 
         private void BindUI()
@@ -126,6 +186,7 @@ namespace EasyField.Installers
             Container.BindInterfacesAndSelfTo<UICellsPalette>().FromInstance(_palette).AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsPaletteChoicePanel>().FromInstance(_paletteChoice).AsSingle();
             Container.BindInterfacesAndSelfTo<UIHotkeysInfoPanel_Cells>().FromInstance(_hotkeyInfoPanel).AsSingle();
+            Container.BindInterfacesAndSelfTo<UIMainButtonsPanel>().FromInstance(_saveLoadPanel).AsSingle();
         }
     }
 }

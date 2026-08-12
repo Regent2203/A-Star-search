@@ -337,6 +337,8 @@ namespace EasyField.SceneControllers
 
         private void OnNewBtnClicked(int sizeX, int sizeY)
         {
+            sizeX = Mathf.Max(sizeX, 1);
+            sizeY = Mathf.Max(sizeY, 1);
             _fieldBuilder.CreateNewField(sizeX, sizeY);
         }
     }

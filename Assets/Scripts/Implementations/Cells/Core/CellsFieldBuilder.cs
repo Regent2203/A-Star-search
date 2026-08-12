@@ -1,63 +1,55 @@
 using EasyField.Fields;
 using EasyField.Fields.FieldBuilders;
+using EasyField.Implementations.Vertexes;
 using EasyField.ObjectsStorages;
 using EasyField.PathSetters;
 using EasyField.SaveSystem.Dto;
+using System.Drawing;
 using UnityEngine;
 
 namespace EasyField.Implementations.Cells
 {
     public class CellsFieldBuilder : IFieldBuilder<CellsFieldSaveDto>
     {
+        private readonly CellsConfig _config;
         private readonly GridField _field;
         private readonly PathSetter<CellData> _pathSetter;
-
+        private readonly CellsNodesBuilder _nodesBuilder;
         private readonly GridTypeStorage<CellData> _nodeDatas;
-        private readonly GridTypeStorage<CellView> _nodeViews;        
-        private readonly CellDataFactory _nodeDatasFactory;
-        private readonly CellViewFactory _nodeViewsFactory;
+        private readonly GridTypeStorage<CellView> _nodeViews;
 
 
-        public CellsFieldBuilder(GridField field, PathSetter<CellData> pathSetter, 
-            GridTypeStorage<CellData> nodeDatas, GridTypeStorage<CellView> nodeViews,
-            CellDataFactory nodeDatasFactory, CellViewFactory nodeViewsFactory)
+        public CellsFieldBuilder(CellsConfig config, GridField field, PathSetter<CellData> pathSetter, CellsNodesBuilder nodesBuilder,
+            GridTypeStorage<CellData> nodeDatas, GridTypeStorage<CellView> nodeViews)
         {
+            _config = config;
             _field = field;
             _pathSetter = pathSetter;
+            _nodesBuilder = nodesBuilder;
             _nodeDatas = nodeDatas;
-            _nodeViews = nodeViews;            
-            _nodeDatasFactory = nodeDatasFactory;
-            _nodeViewsFactory = nodeViewsFactory;
+            _nodeViews = nodeViews;
         }
 
-        public void BuildFromDto(CellsFieldSaveDto data) //todo
+        public void BuildFromDto(CellsFieldSaveDto data)
         {
             ClearAll();
+            _field.SetSize((Vector2Int)data.FieldSize);
 
             foreach (var item in data.Nodes)
             {
                 var id = item.Id;
-                var pos = (Vector2)item.NodePosition;
-                //_nodesBuilder.CreateItem(id, pos);
+                var nodePos = (Vector2)item.NodePosition;
+                var cellType = item.CellType;
+                
+                //_nodesBuilder.CreateItem(id, nodePos, cellType);
             }
         }
 
-        public void CreateNewField(int sizeX, int sizeY) //todo
+        public void CreateNewField(int sizeX, int sizeY)
         {
             ClearAll();
-            _field.SetSize(new Vector2Int(sizeX, sizeY));
-        }
-
-        public void ClearAll() //todo
-        {
-            _pathSetter.UpdateStartNode(null);
-            _pathSetter.UpdateFinishNode(null);
-
-            //_nodesBuilder.ClearAll();
-        }
-
-        public void PopulateField(Vector2Int size, CellType cellType) //todo
-        {
+            var size = new Vector2Int(sizeX, sizeY);
+            
             _nodeDatas.Init(size);
             _nodeViews.Init(size);
             _field.SetSize(size);
@@ -72,17 +64,25 @@ namespace EasyField.Implementations.Cells
                     var localY = y - (size.y / 2f);
                     var localPos = new Vector3(localX * _field.Grid.cellSize.x, localY * _field.Grid.cellSize.y, 0);
 
-                    var nodePos = id;
-                    var nodeData = _nodeDatasFactory.CreateItem(id, nodePos, cellType);
-
+                    var nodePos = id;                    
                     var viewPos = _field.Grid.transform.TransformPoint(localPos);
-                    var nodeView = _nodeViewsFactory.CreateItem(id, _field.ScaleFactor);
-                    nodeView.Move(viewPos);
-
-                    _nodeDatas.AddItem(id, nodeData);
-                    _nodeViews.AddItem(id, nodeView);
+                    
+                    _nodesBuilder.CreateItem(id, nodePos, viewPos, _config.DefaultCellType);
                 }
             }
+        }
+
+        public void ClearAll() //todo
+        {
+            _pathSetter.UpdateStartNode(null);
+            _pathSetter.UpdateFinishNode(null);
+
+            _nodesBuilder.ClearAll();
+        }
+
+        private void PrepareNewField(Vector2Int size)
+        {
+            //
         }
     }
 }

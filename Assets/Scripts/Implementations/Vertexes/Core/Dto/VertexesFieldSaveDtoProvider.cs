@@ -12,6 +12,7 @@ namespace EasyField.Implementations.Vertexes
     {
         private readonly SpatialField _field;
 
+
         public VertexesFieldSaveDtoProvider(SpatialField field,
             IObjectsStorage<VertexData, int> nodeDatas,
             IObjectsStorage<LinkData<int>, DualKey<int>> linkDatas, 

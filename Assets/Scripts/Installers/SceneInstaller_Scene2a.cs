@@ -160,7 +160,7 @@ namespace EasyField.Installers
 
             //Choose only one
             //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map.json", Environment.SpecialFolder.Desktop);            
+            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map_2a.json", Environment.SpecialFolder.Desktop);            
 
 
             #pragma warning disable CS8321

@@ -1,9 +1,7 @@
 ﻿using EasyField.Fields;
 using EasyField.Fields.FieldBuilders;
-using EasyField.Implementations.Links;
 using EasyField.ObjectsStorages;
 using EasyField.PathSetters;
-using EasyField.SaveSystem.Dto;
 using UnityEngine;
 
 namespace EasyField.Implementations.Vertexes

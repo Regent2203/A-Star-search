@@ -610,7 +610,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2014121348998206453, guid: 69671317611f2e7478ee67b8c31a9dee,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2014121348998206453, guid: 69671317611f2e7478ee67b8c31a9dee,
+        type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2014121348998206453, guid: 69671317611f2e7478ee67b8c31a9dee,
+        type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2014121348998206453, guid: 69671317611f2e7478ee67b8c31a9dee,
@@ -1293,6 +1303,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69671317611f2e7478ee67b8c31a9dee, type: 3}
+--- !u!114 &995099076 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4239843834653371469, guid: 69671317611f2e7478ee67b8c31a9dee,
+    type: 3}
+  m_PrefabInstance: {fileID: 995099075}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c39eca79bdad7044f81d177eaf2eb9f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1114931756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1474,6 +1496,7 @@ MonoBehaviour:
   _paletteChoice: {fileID: 435939541}
   _hotkeyInfoPanel: {fileID: 494189130}
   _pathLineRenderer: {fileID: 1307543501}
+  _saveLoadPanel: {fileID: 995099076}
 --- !u!4 &1877987560 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7494231154362246262, guid: 306ff04cdadf4504fbc2f87029fd23d4,
