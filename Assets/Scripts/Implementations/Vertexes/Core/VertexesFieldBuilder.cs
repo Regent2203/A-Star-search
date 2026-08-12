@@ -1,4 +1,5 @@
 ﻿using EasyField.Fields;
+using EasyField.Fields.FieldBuilders;
 using EasyField.Implementations.Links;
 using EasyField.ObjectsStorages;
 using EasyField.PathSetters;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace EasyField.Implementations.Vertexes
 {
-    public class VertexesFieldBuilder
+    public class VertexesFieldBuilder : IFieldBuilder
     {
         private readonly SpatialField _field;
         private readonly PathSetter<VertexData> _pathSetter;
@@ -32,10 +33,20 @@ namespace EasyField.Implementations.Vertexes
             _nodesBuilder.CreateItem(pos);
         }
 
-        public void DeleteNode(VertexView view)
+        public void DeleteNode(int id)
         {
-            _nodesBuilder.DeleteItem(view.Id);
+            _nodesBuilder.DeleteItem(id);
             //_linksBuilder.TryDeleteLink //todo (all nodes from and to)
+        }
+
+        public bool TryCreateLink(VertexData from, VertexData to)
+        {
+            return _linksBuilder.TryCreateLink(from, to);
+        }
+
+        public bool TryDeleteLink(VertexData from, VertexData to)
+        {
+            return _linksBuilder.TryDeleteLink(from, to);
         }
 
         public void BuildFromDto(FieldSaveDto<VertexDataDto, LinkDataDto<int>> data)
@@ -46,7 +57,6 @@ namespace EasyField.Implementations.Vertexes
             {
                 var id = item.Id;
                 var pos = (Vector2)item.NodePosition;
-
                 _nodesBuilder.CreateItem(id, pos);
             }
 

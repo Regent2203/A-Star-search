@@ -13,11 +13,8 @@ using EasyField.Nodes.ViewSelectors;
 using EasyField.PathDrawers;
 using EasyField.PathFinders;
 using EasyField.PathSetters;
-using EasyField.SaveSystem;
 using EasyField.UICommon;
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -26,44 +23,43 @@ namespace EasyField.SceneControllers
 {
     public class SceneController_Scene2a : SceneControllerBase
     {
+        private VertexesFieldBuilder _fieldBuilder;
         private VertexDataStorage _nodeDatas;
         private VertexViewStorage _nodeViews;
         private LinkViewStorage_Int _linkViews;
         private VertexesClickHandler _clickHandler;
-        private VertexesDragHandler _dragHandler;
-        private VertexesFieldBuilder _fieldBuilder;
+        private VertexesDragHandler _dragHandler;        
         private ICostProvider<VertexData> _costProvider;
         private LinkCostSetter<LinkData<int>> _linkCostSetter;
         private NodeBlocker<VertexData> _nodeBlocker;
         private NodeViewSelector<VertexView> _nodeViewSelector;
         private NodeViewMover<VertexView> _nodeViewMover;
-        private VertexesLinksBuilder _linksBuilder;
         private StoredLinksProvider<LinkData<int>, int> _linksProvider;
         private LinkViewCoordinator<VertexView, int> _linkViewCoordinator;
         private PathSetter<VertexData> _pathSetter;
         private PathFinder<VertexData, int> _pathFinder;
         private IPathDrawer<VertexView> _pathDrawer;
         private VertexesSaveLoadManager _saveLoadManager;
-        //private UIVertexesHotkeyInfoPanel _hotkeyInfoPanel;
         private UIMainButtonsPanel _saveLoadPanel;
 
 
         [Inject]
-        public void Construct(VertexDataStorage nodeDatas, VertexViewStorage nodeViews, LinkViewStorage_Int linkViews,
-            VertexesClickHandler clickHandler, VertexesDragHandler dragHandler, VertexesFieldBuilder fieldBuilder,
+        public void Construct(VertexesFieldBuilder fieldBuilder, VertexDataStorage nodeDatas, VertexViewStorage nodeViews, LinkViewStorage_Int linkViews,
+            VertexesClickHandler clickHandler, VertexesDragHandler dragHandler, 
             ICostProvider<VertexData> costProvider, LinkCostSetter<LinkData<int>> linkCostSetter,
             NodeBlocker<VertexData> nodeBlocker, NodeViewSelector<VertexView> nodeViewSelector, NodeViewMover<VertexView> nodeViewMover, 
-            VertexesLinksBuilder linksBuilder, StoredLinksProvider<LinkData<int>, int> linksProvider, LinkViewCoordinator<VertexView, int> linkViewCoordinator,
+            StoredLinksProvider<LinkData<int>, int> linksProvider, LinkViewCoordinator<VertexView, int> linkViewCoordinator,
             PathSetter<VertexData> pathSetter, PathFinder<VertexData, int> pathFinder, IPathDrawer<VertexView> pathDrawer,
-            VertexesSaveLoadManager saveLoadManager,
-            UIMainButtonsPanel saveLoadPanel)
+            VertexesSaveLoadManager saveLoadManager, UIMainButtonsPanel saveLoadPanel)
         {
+            _fieldBuilder = fieldBuilder;
             _nodeDatas = nodeDatas;
             _nodeViews = nodeViews;
             _linkViews = linkViews;
+
             _clickHandler = clickHandler;
             _dragHandler = dragHandler;
-            _fieldBuilder = fieldBuilder;
+            
             _costProvider = costProvider;
             _linkCostSetter = linkCostSetter;
 
@@ -71,7 +67,6 @@ namespace EasyField.SceneControllers
             _nodeViewSelector = nodeViewSelector;
             _nodeViewMover = nodeViewMover;
 
-            _linksBuilder = linksBuilder;
             _linksProvider = linksProvider;
             _linkViewCoordinator = linkViewCoordinator;
 
@@ -154,7 +149,7 @@ namespace EasyField.SceneControllers
                 var to = _nodeDatas.GetItem(linkData.To);
                 cost = _costProvider.GetCost(from, to);
                 _linkCostSetter.SetLinkCost(linkData, cost);
-                linkView.UpdateCostText(cost);
+                linkView.UpdateCostText(cost); //todo onlinkcostchanged
             }
             foreach (var linkData in toLinks)
             {
@@ -205,11 +200,11 @@ namespace EasyField.SceneControllers
                     switch (button)
                     {
                         case PointerEventData.InputButton.Left:
-                            if (_linksBuilder.TryCreateLink(selectedNode, node))
+                            if (_fieldBuilder.TryCreateLink(selectedNode, node))
                                 OnFieldChanged();
                             break;
                         case PointerEventData.InputButton.Right:
-                            if (_linksBuilder.TryDeleteLink(selectedNode, node))
+                            if (_fieldBuilder.TryDeleteLink(selectedNode, node))
                                 OnFieldChanged();
                             break;
                     }                    
@@ -219,7 +214,7 @@ namespace EasyField.SceneControllers
             if (input.IsCreatingMode)
             {
                 if (button == PointerEventData.InputButton.Right)
-                    _fieldBuilder.DeleteNode(view);
+                    _fieldBuilder.DeleteNode(view.Id);
             }
         }
 

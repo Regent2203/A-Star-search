@@ -1,29 +1,62 @@
 using EasyField.Fields;
+using EasyField.Fields.FieldBuilders;
 using EasyField.ObjectsStorages;
+using EasyField.PathSetters;
+using EasyField.SaveSystem.Dto;
 using UnityEngine;
 
 namespace EasyField.Implementations.Cells
 {
-    public class CellsFieldBuilder
+    public class CellsFieldBuilder : IFieldBuilder
     {
         private readonly GridField _field;
+        private readonly PathSetter<CellData> _pathSetter;
+
         private readonly GridTypeStorage<CellData> _nodeDatas;
         private readonly GridTypeStorage<CellView> _nodeViews;        
         private readonly CellDataFactory _nodeDatasFactory;
         private readonly CellViewFactory _nodeViewsFactory;
 
 
-        public CellsFieldBuilder(GridField field, GridTypeStorage<CellData> nodeDatas, GridTypeStorage<CellView> nodeViews,
+        public CellsFieldBuilder(GridField field, PathSetter<CellData> pathSetter, 
+            GridTypeStorage<CellData> nodeDatas, GridTypeStorage<CellView> nodeViews,
             CellDataFactory nodeDatasFactory, CellViewFactory nodeViewsFactory)
         {
             _field = field;
+            _pathSetter = pathSetter;
             _nodeDatas = nodeDatas;
             _nodeViews = nodeViews;            
             _nodeDatasFactory = nodeDatasFactory;
             _nodeViewsFactory = nodeViewsFactory;
         }
 
-        public void PopulateField(Vector2Int size, CellType cellType)
+        public void BuildFromDto(FieldSaveDto<CellDataDto> data) //todo
+        {
+            ClearAll();
+
+            foreach (var item in data.Nodes)
+            {
+                var id = item.Id;
+                var pos = (Vector2)item.NodePosition;
+                //_nodesBuilder.CreateItem(id, pos);
+            }
+        }
+
+        public void CreateNewField(int sizeX, int sizeY) //todo
+        {
+            ClearAll();
+            _field.SetSize(new Vector2Int(sizeX, sizeY));
+        }
+
+        public void ClearAll() //todo
+        {
+            _pathSetter.UpdateStartNode(null);
+            _pathSetter.UpdateFinishNode(null);
+
+            //_nodesBuilder.ClearAll();
+        }
+
+        public void PopulateField(Vector2Int size, CellType cellType) //todo
         {
             _nodeDatas.Init(size);
             _nodeViews.Init(size);
@@ -45,7 +78,6 @@ namespace EasyField.Implementations.Cells
                     var viewPos = _field.Grid.transform.TransformPoint(localPos);
                     var nodeView = _nodeViewsFactory.CreateItem(id, _field.ScaleFactor);
                     nodeView.Move(viewPos);
-
 
                     _nodeDatas.AddItem(id, nodeData);
                     _nodeViews.AddItem(id, nodeView);

@@ -89,9 +89,25 @@ namespace EasyField.Links.Implementations
             _linkViews.ClearData();
         }
 
+        public void DeleteLinksFromNode(TNodeData from)
+        {
+            foreach (var linkdata in _linksProvider.GetLinksFromNode(from.Id))
+            {
+                //TryDeleteLink(linkdata.From, linkdata.To); //todo
+            }
+        }
+
+        public void DeleteLinksToNode(TNodeData to)
+        {
+            foreach (var linkdata in _linksProvider.GetLinksFromNode(to.Id))
+            {
+                //TryDeleteLink(linkdata.From, linkdata.To); //todo
+            }
+        }
+
         private bool ValidateSameNode(TNodeData from, TNodeData to)
         {
-            return from == to;
+            return from == to; //from.Id == to.Id;
         }
     }
 }

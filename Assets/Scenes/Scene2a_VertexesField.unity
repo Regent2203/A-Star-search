@@ -696,6 +696,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6209780092771049174, guid: c599a52c07166ad47998dda9b80fa996,
         type: 3}
+      propertyPath: m_SpriteTilingProperty.drawMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6209780092771049174, guid: c599a52c07166ad47998dda9b80fa996,
+        type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
       value: 64
       objectReference: {fileID: 0}
@@ -777,6 +782,11 @@ PrefabInstance:
     - target: {fileID: 8304202735571330401, guid: c599a52c07166ad47998dda9b80fa996,
         type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304202735571330401, guid: c599a52c07166ad47998dda9b80fa996,
+        type: 3}
+      propertyPath: m_DrawMode
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1657,6 +1667,7 @@ MonoBehaviour:
   _linkViewPrefab: {fileID: 246736580082225113, guid: 6a91640a09da55b40bdbf151f0023579,
     type: 3}
   _pathLineRenderer: {fileID: 1307543501}
+  _hotkeyInfoPanel: {fileID: 0}
   _saveLoadPanel: {fileID: 1634628135}
 --- !u!1 &1363423977
 GameObject:
@@ -2398,10 +2409,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5484683539230505682, guid: d19d5100e97166843b1275c024c37d64,
+        type: 3}
+      propertyPath: m_text
+      value: "40\u200B"
+      objectReference: {fileID: 0}
     - target: {fileID: 6259545691532611055, guid: d19d5100e97166843b1275c024c37d64,
         type: 3}
       propertyPath: m_Text
       value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947483929207241663, guid: d19d5100e97166843b1275c024c37d64,
+        type: 3}
+      propertyPath: m_text
+      value: "64\u200B"
       objectReference: {fileID: 0}
     - target: {fileID: 8578010484515482111, guid: d19d5100e97166843b1275c024c37d64,
         type: 3}

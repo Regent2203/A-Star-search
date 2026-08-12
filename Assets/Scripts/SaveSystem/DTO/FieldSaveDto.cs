@@ -4,9 +4,8 @@ using System.Collections.Generic;
 namespace EasyField.SaveSystem.Dto
 {
     [Serializable]
-    public class FieldSaveDto<TNodeDataDto, TLinkDataDto>
+    public class FieldSaveDto<TNodeDataDto, TLinkDataDto> : FieldSaveDto<TNodeDataDto>
     {
-        public List<TNodeDataDto> Nodes = new();
         public List<TLinkDataDto> Links = new();
     }
 
