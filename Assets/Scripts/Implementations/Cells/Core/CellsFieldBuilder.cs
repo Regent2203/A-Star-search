@@ -6,6 +6,8 @@ using EasyField.PathSetters;
 using EasyField.SaveSystem.Dto;
 using System.Drawing;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ScrollBar;
 
 namespace EasyField.Implementations.Cells
 {
@@ -32,27 +34,32 @@ namespace EasyField.Implementations.Cells
 
         public void BuildFromDto(CellsFieldSaveDto data)
         {
+            var size = (Vector2Int)data.FieldSize;
+
             ClearAll();
-            _field.SetSize((Vector2Int)data.FieldSize);
+            PrepareNewField(size);
 
             foreach (var item in data.Nodes)
             {
                 var id = item.Id;
                 var nodePos = (Vector2)item.NodePosition;
                 var cellType = item.CellType;
-                
-                //_nodesBuilder.CreateItem(id, nodePos, cellType);
+
+                var localX = nodePos.x - (size.x / 2f);
+                var localY = nodePos.y - (size.y / 2f);
+                var localPos = new Vector3(localX * _field.Grid.cellSize.x, localY * _field.Grid.cellSize.y, 0);
+                var viewPos = _field.Grid.transform.TransformPoint(localPos);
+
+                _nodesBuilder.CreateItem(id, nodePos, viewPos, cellType);
             }
         }
 
         public void CreateNewField(int sizeX, int sizeY)
         {
-            ClearAll();
             var size = new Vector2Int(sizeX, sizeY);
-            
-            _nodeDatas.Init(size);
-            _nodeViews.Init(size);
-            _field.SetSize(size);
+
+            ClearAll();            
+            PrepareNewField(size);
 
             for (int x = 0; x < size.x; x++)
             {
@@ -72,7 +79,7 @@ namespace EasyField.Implementations.Cells
             }
         }
 
-        public void ClearAll() //todo
+        public void ClearAll()
         {
             _pathSetter.UpdateStartNode(null);
             _pathSetter.UpdateFinishNode(null);
@@ -82,7 +89,9 @@ namespace EasyField.Implementations.Cells
 
         private void PrepareNewField(Vector2Int size)
         {
-            //
+            _nodeDatas.Init(size);
+            _nodeViews.Init(size);
+            _field.SetSize(size);
         }
     }
 }
