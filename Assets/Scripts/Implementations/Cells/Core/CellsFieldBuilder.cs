@@ -38,7 +38,7 @@ namespace EasyField.Implementations.Cells
             {
                 var id = item.Id;
                 var nodePos = (Vector2)item.NodePosition;
-                var cellType = item.CellType;
+                var cellType = _config.CellTypes[item.CellType];
 
                 var viewPos = IndexToViewPos((int)nodePos.x, (int)nodePos.y, size);
 

@@ -13,12 +13,14 @@ namespace EasyField.Implementations.Cells
         [SerializeField]
         private CellType _defaultCellType;
 
-        public IReadOnlyList<CellType> CellTypes => _cellTypes;
+        public IReadOnlyDictionary<CellTypeId, CellType> CellTypes;
         public CellType DefaultCellType => _defaultCellType;
 
 
         public override void InstallBindings()
         {
+            CellTypes = _cellTypes.ToDictionary(cellType => cellType.Id);
+
             Container.BindInstance(this).AsSingle();
         }
 

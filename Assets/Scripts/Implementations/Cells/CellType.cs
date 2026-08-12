@@ -2,7 +2,7 @@
 
 namespace EasyField.Implementations.Cells
 {
-    public enum CellId 
+    public enum CellTypeId 
     {
         Unassigned = 0,
         Normal = 1,
@@ -16,7 +16,7 @@ namespace EasyField.Implementations.Cells
     public class CellType : ScriptableObject
     {
         [SerializeField]
-        private CellId _id;
+        private CellTypeId _id;
         [SerializeField]
         private string _name;
         [SerializeField]
@@ -26,7 +26,7 @@ namespace EasyField.Implementations.Cells
         [SerializeField]
         private KeyCode _paletteHotkey;
 
-        public CellId Id => _id;
+        public CellTypeId Id => _id;
         public string Name => _name;
         public Sprite Sprite => _sprite;
         public float MoveCost => _moveCost;

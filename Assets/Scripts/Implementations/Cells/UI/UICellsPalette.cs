@@ -34,7 +34,7 @@ namespace EasyField.Implementations.Cells.UI
 
         private void Start()
         {
-            foreach (var cellType in _cellsConfig.CellTypes)
+            foreach (var cellType in _cellsConfig.CellTypes.Values)
             {
                 var item = _instantiator.InstantiatePrefabForComponent<UICellsPaletteItem>(_itemPrefab, _container);
                 item.Init(cellType, OnItemClicked);
