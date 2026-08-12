@@ -10,23 +10,22 @@ namespace EasyField.Links.Providers
     /// <summary>
     /// Creates links during search algorithm work - not beforehand
     /// </summary>
-    public class GridDynamicLinksProvider<TNodeData, TLinkData> : ILinksProvider<TLinkData, Vector2Int>
+    public class GridDynamicLinksProvider<TNodeData> : ILinksProvider<ILinkData<Vector2Int>, Vector2Int>
         where TNodeData : INodeData<Vector2Int>
-        where TLinkData : ILinkData<Vector2Int>
     {
-        private readonly ILinkDataFactory<TNodeData, TLinkData, Vector2Int> _factory;
+        private readonly SmartLinkDataFactory<TNodeData, Vector2Int> _factory;
         private readonly IGridNeighboursProvider<TNodeData> _neighboursProvider;
         private readonly GridTypeStorage<TNodeData> _nodeDatas;
 
 
-        public GridDynamicLinksProvider(ILinkDataFactory<TNodeData, TLinkData, Vector2Int> factory, IGridNeighboursProvider<TNodeData> neighboursProvider, GridTypeStorage<TNodeData> nodeDatas)
+        public GridDynamicLinksProvider(SmartLinkDataFactory<TNodeData, Vector2Int> factory, IGridNeighboursProvider<TNodeData> neighboursProvider, GridTypeStorage<TNodeData> nodeDatas)
         {
             _factory = factory;
             _neighboursProvider = neighboursProvider;
             _nodeDatas = nodeDatas;
         }
 
-        public IEnumerable<TLinkData> GetLinksFromNode(Vector2Int id)
+        public IEnumerable<ILinkData<Vector2Int>> GetLinksFromNode(Vector2Int id)
         {
             var neighbours = _nodeDatas.GetNeighbourObjects(id, _neighboursProvider);
             var node = _nodeDatas.GetItem(id);
@@ -34,7 +33,7 @@ namespace EasyField.Links.Providers
             return _factory.CreateLinksFromNode(node, neighbours);
         }
 
-        public IEnumerable<TLinkData> GetLinksToNode(Vector2Int id)
+        public IEnumerable<ILinkData<Vector2Int>> GetLinksToNode(Vector2Int id)
         {
             var neighbours = _nodeDatas.GetNeighbourObjects(id, _neighboursProvider);
             var node = _nodeDatas.GetItem(id);

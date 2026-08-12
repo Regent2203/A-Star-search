@@ -3,6 +3,8 @@ using EasyField.Links.Providers;
 using EasyField.Links.ViewMovers;
 using EasyField.Nodes;
 using EasyField.ObjectsStorages;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace EasyField.Links.Implementations
@@ -12,7 +14,7 @@ namespace EasyField.Links.Implementations
         where TNodeView : MonoBehaviour, INodeView<TId>
     {        
 
-        private readonly LinkDataFactory<TNodeData, TId> _linkDatasFactory;
+        private readonly SmartLinkDataFactory<TNodeData, TId> _linkDatasFactory;
         private readonly LinkViewFactory<TId> _linkViewsFactory;
         private readonly StoredLinksProvider<LinkData<TId>, TId> _linksProvider;
         private readonly LinkViewCoordinator<TNodeView, TId> _linkViewCoordinator;
@@ -21,7 +23,7 @@ namespace EasyField.Links.Implementations
         private readonly DictTypeStorage<LinkView<TId>, DualKey<TId>> _linkViews;
 
 
-        public LinksBuilder(LinkDataFactory<TNodeData, TId> linkDatasFactory, LinkViewFactory<TId> linkViewsFactory,
+        public LinksBuilder(SmartLinkDataFactory<TNodeData, TId> linkDatasFactory, LinkViewFactory<TId> linkViewsFactory,
             StoredLinksProvider<LinkData<TId>, TId> linksProvider, LinkViewCoordinator<TNodeView, TId> linkViewCoordinator,
             DictTypeStorage<LinkData<TId>, DualKey<TId>> linkDatas, DictTypeStorage<LinkView<TId>, DualKey<TId>> linkViews)
         {
@@ -36,7 +38,7 @@ namespace EasyField.Links.Implementations
 
         public bool TryCreateLink(TNodeData from, TNodeData to)
         {
-            if (ValidateSameNode(from, to)) 
+            if (ValidateSameNode(from.Id, to.Id)) 
                 return false;
 
             if (_linksProvider.TryGetLink(from.Id, to.Id, out _))
@@ -53,25 +55,31 @@ namespace EasyField.Links.Implementations
             return true;            
         }
 
-        public bool TryDeleteLink(TNodeData from, TNodeData to)
+        public bool TryDeleteLink(TId fromId, TId toId)
         {
-            if (ValidateSameNode(from, to))
+            if (ValidateSameNode(fromId, toId))
                 return false;
 
-            if (!_linksProvider.TryGetLink(from.Id, to.Id, out var linkData))
+            if (!_linksProvider.TryGetLink(fromId, toId, out var linkData))
                 return false;
 
-            var key = new DualKey<TId>(from.Id, to.Id);
+            DeleteLink(fromId, toId);
+
+            return true;
+        }
+
+        private void DeleteLink(TId fromId, TId toId)
+        {
+            var key = new DualKey<TId>(fromId, toId);
+            var linkData = _linkDatas.GetItem(key);
             var linkView = _linkViews.GetItem(key);
             _linkViewCoordinator.CheckDual(linkView, true);
 
-            _linksProvider.RemoveLink(linkData);
+            _linksProvider.RemoveLink(key);
             _linkViews.RemoveItem(key);
 
             _linkDatasFactory.DeleteItem(linkData);
             _linkViewsFactory.DeleteItem(linkView);
-
-            return true;
         }
 
         public void ClearAll()
@@ -89,25 +97,25 @@ namespace EasyField.Links.Implementations
             _linkViews.ClearData();
         }
 
-        public void DeleteLinksFromNode(TNodeData from)
+        public void DeleteLinksFromNode(TId id)
         {
-            foreach (var linkdata in _linksProvider.GetLinksFromNode(from.Id))
+            foreach (var linkdata in _linksProvider.GetLinksFromNode(id).ToList())
             {
-                //TryDeleteLink(linkdata.From, linkdata.To); //todo
+                DeleteLink(linkdata.From, linkdata.To);
             }
         }
 
-        public void DeleteLinksToNode(TNodeData to)
+        public void DeleteLinksToNode(TId id)
         {
-            foreach (var linkdata in _linksProvider.GetLinksFromNode(to.Id))
+            foreach (var linkdata in _linksProvider.GetLinksToNode(id).ToList())
             {
-                //TryDeleteLink(linkdata.From, linkdata.To); //todo
+                DeleteLink(linkdata.From, linkdata.To);
             }
         }
 
-        private bool ValidateSameNode(TNodeData from, TNodeData to)
+        private bool ValidateSameNode(TId fromId, TId toId)
         {
-            return from == to; //from.Id == to.Id;
+            return EqualityComparer<TId>.Default.Equals(fromId, toId);
         }
     }
 }

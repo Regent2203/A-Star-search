@@ -110,7 +110,7 @@ namespace EasyField.Installers
                 typeof(DictTypeStorage<LinkView<int>, DualKey<int>>), typeof(IObjectsStorage<LinkView<int>, DualKey<int>>)).
                 To<LinkViewStorage_Int>().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<LinkDataFactory<VertexData, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SmartLinkDataFactory<VertexData, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinkViewFactory<int>>().AsSingle();
             Container.BindMemoryPool<LinkData<int>, LinkDataPool<int>>().WithInitialSize(20);
             Container.BindMemoryPool<LinkView<int>, LinkViewPool<int>>().WithInitialSize(20).

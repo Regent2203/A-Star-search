@@ -47,9 +47,8 @@ namespace EasyField.Links.Providers
             incoming.Add(fromId);
         }
 
-        public void RemoveLink(TLinkData link)
+        public void RemoveLink(DualKey<TId> key)
         {
-            var key = new DualKey<TId>(link.From, link.To);
             var fromId = key.From;
             var toId = key.To;
 

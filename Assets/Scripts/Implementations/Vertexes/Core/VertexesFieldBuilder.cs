@@ -35,8 +35,16 @@ namespace EasyField.Implementations.Vertexes
 
         public void DeleteNode(int id)
         {
+            var nodeData = _nodeDatas.GetItem(id);
+            if (_pathSetter.StartNode == nodeData)
+                _pathSetter.UpdateStartNode(null);            
+            if (_pathSetter.FinishNode == nodeData)
+                _pathSetter.UpdateFinishNode(null);            
+
+            _linksBuilder.DeleteLinksFromNode(id);
+            _linksBuilder.DeleteLinksToNode(id);
+
             _nodesBuilder.DeleteItem(id);
-            //_linksBuilder.TryDeleteLink //todo (all nodes from and to)
         }
 
         public bool TryCreateLink(VertexData from, VertexData to)
@@ -46,7 +54,7 @@ namespace EasyField.Implementations.Vertexes
 
         public bool TryDeleteLink(VertexData from, VertexData to)
         {
-            return _linksBuilder.TryDeleteLink(from, to);
+            return _linksBuilder.TryDeleteLink(from.Id, to.Id);
         }
 
         public void BuildFromDto(FieldSaveDto<VertexDataDto, LinkDataDto<int>> data)

@@ -91,8 +91,8 @@ namespace EasyField.Installers
         {
             Container.BindMemoryPool<LinkData<Vector2Int>, LinkDataPool<Vector2Int>>().WithInitialSize(20);
 
-            Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellData, LinkData<Vector2Int>>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LinkDataFactory<CellData, Vector2Int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SmartLinkDataFactory<CellData, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<EightSideGridNeighbours<CellData>>().AsSingle();
         }
 
