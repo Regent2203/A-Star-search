@@ -13,6 +13,8 @@ namespace EasyField.Links.Implementations
         where TNodeData : class, INodeData<TId>
         where TNodeView : MonoBehaviour, INodeView<TId>
     {
+        private bool _useDual;
+
         private readonly SmartLinkDataFactory<TNodeData, TId> _linkDatasFactory;
         private readonly LinkViewFactory<TId> _linkViewsFactory;
         private readonly StoredLinksProvider<LinkData<TId>, TId> _linksProvider;
@@ -24,7 +26,8 @@ namespace EasyField.Links.Implementations
 
         public LinksBuilder(SmartLinkDataFactory<TNodeData, TId> linkDatasFactory, LinkViewFactory<TId> linkViewsFactory,
             StoredLinksProvider<LinkData<TId>, TId> linksProvider, LinkViewCoordinator<TNodeView, TId> linkViewCoordinator,
-            DictTypeStorage<LinkData<TId>, DualKey<TId>> linkDatas, DictTypeStorage<LinkView<TId>, DualKey<TId>> linkViews)
+            DictTypeStorage<LinkData<TId>, DualKey<TId>> linkDatas, DictTypeStorage<LinkView<TId>, DualKey<TId>> linkViews,
+            bool useDual)
         {
             _linkDatasFactory = linkDatasFactory;
             _linkViewsFactory = linkViewsFactory;
@@ -33,6 +36,8 @@ namespace EasyField.Links.Implementations
 
             _linkDatas = linkDatas;
             _linkViews = linkViews;
+
+            _useDual = useDual;
         }
 
         public bool TryCreateLinkItem(TNodeData from, TNodeData to)
@@ -66,7 +71,10 @@ namespace EasyField.Links.Implementations
             var key = new DualKey<TId>(from.Id, to.Id);
             var linkData = _linkDatasFactory.CreateLink(from, to);
             var linkView = _linkViewsFactory.CreateItem(from.Id, to.Id, linkData.Cost, PlacementType.Center);
-            _linkViewCoordinator.CheckDual(linkView, false);
+            if (_useDual)
+                _linkViewCoordinator.CheckDual(linkView, false);
+            else
+                _linkViewCoordinator.CheckSingle(linkView);
 
             _linksProvider.AddLink(linkData);
             _linkViews.AddItem(key, linkView);
@@ -77,7 +85,10 @@ namespace EasyField.Links.Implementations
             var key = new DualKey<TId>(fromId, toId);
             var linkData = _linkDatas.GetItem(key);
             var linkView = _linkViews.GetItem(key);
-            _linkViewCoordinator.CheckDual(linkView, true);
+            if (_useDual)
+                _linkViewCoordinator.CheckDual(linkView, true);
+            else
+                _linkViewCoordinator.CheckSingle(linkView);
 
             _linksProvider.RemoveLink(key);
             _linkViews.RemoveItem(key);
