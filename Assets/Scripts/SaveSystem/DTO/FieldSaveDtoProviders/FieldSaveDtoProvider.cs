@@ -9,40 +9,34 @@ using System.Linq;
 namespace EasyField.SaveSystem.Dto.FieldSaveDtoProviders
 {
     public class FieldSaveDtoProvider<TFieldSaveDto, TNodeData, TNodeDataDto, TLinkData, TLinkDataDto, TId>
-        : IFieldSaveDtoProvider<TFieldSaveDto, TNodeDataDto, TLinkDataDto>
+        : FieldSaveDtoProvider<TFieldSaveDto, TNodeData, TNodeDataDto, TId>,
+          IFieldSaveDtoProvider<TFieldSaveDto, TNodeDataDto, TLinkDataDto>
         where TFieldSaveDto : FieldSaveDto<TNodeDataDto, TLinkDataDto>, new()
         where TNodeData : INodeData<TId>
         where TNodeDataDto : NodeDataDto<TId>
         where TLinkData : ILinkData<TId>
         where TLinkDataDto : LinkDataDto<TId>
     {
-        private readonly IObjectsStorage<TNodeData, TId> _nodeDatas;
-        private readonly IObjectsStorage<TLinkData, DualKey<TId>> _linkDatas;
-        private readonly INodeDataMapper<TNodeData, TNodeDataDto, TId> _nodesMapper;
-        private readonly ILinkDataMapper<TLinkData, TLinkDataDto, TId> _linksMapper;
+        protected readonly IObjectsStorage<TLinkData, DualKey<TId>> _linkDatas;
+        protected readonly ILinkDataMapper<TLinkData, TLinkDataDto, TId> _linksMapper;
 
 
-        public FieldSaveDtoProvider(
-            IObjectsStorage<TNodeData, TId> nodeDatas,
-            IObjectsStorage<TLinkData, DualKey<TId>> linkDatas,
-            INodeDataMapper<TNodeData, TNodeDataDto, TId> nodesMapper,
-            ILinkDataMapper<TLinkData, TLinkDataDto, TId> linksMapper)
+        public FieldSaveDtoProvider(IObjectsStorage<TNodeData, TId> nodeDatas, IObjectsStorage<TLinkData, DualKey<TId>> linkDatas, 
+            INodeDataMapper<TNodeData, TNodeDataDto, TId> nodesMapper, ILinkDataMapper<TLinkData, TLinkDataDto, TId> linksMapper)
+            : base(nodeDatas, nodesMapper)
         {
-            _nodeDatas = nodeDatas;
             _linkDatas = linkDatas;
-            _nodesMapper = nodesMapper;
             _linksMapper = linksMapper;
         }
 
-        public virtual TFieldSaveDto GetDto()
+        public override TFieldSaveDto GetDto()
         {
-            var fieldSaveDto = new TFieldSaveDto
-            {
-                Nodes = _nodeDatas.AllItems.Select(node => _nodesMapper.ToDto(node)).ToList(),
-                Links = _linkDatas.AllItems.Select(link => _linksMapper.ToDto(link)).ToList(),
-            };
+            var dto = new TFieldSaveDto();
 
-            return fieldSaveDto;
+            FillNodes(dto);
+            dto.Links = _linkDatas.AllItems.Select(link => _linksMapper.ToDto(link)).ToList();
+
+            return dto;
         }
     }
 
@@ -52,13 +46,11 @@ namespace EasyField.SaveSystem.Dto.FieldSaveDtoProviders
         where TNodeData : INodeData<TId>
         where TNodeDataDto : NodeDataDto<TId>
     {
-        private readonly IObjectsStorage<TNodeData, TId> _nodeDatas;
-        private readonly INodeDataMapper<TNodeData, TNodeDataDto, TId> _nodesMapper;
+        protected readonly IObjectsStorage<TNodeData, TId> _nodeDatas;
+        protected readonly INodeDataMapper<TNodeData, TNodeDataDto, TId> _nodesMapper;
 
 
-        public FieldSaveDtoProvider(
-            IObjectsStorage<TNodeData, TId> nodeDatas,
-            INodeDataMapper<TNodeData, TNodeDataDto, TId> nodesMapper)
+        public FieldSaveDtoProvider(IObjectsStorage<TNodeData, TId> nodeDatas, INodeDataMapper<TNodeData, TNodeDataDto, TId> nodesMapper)
         {
             _nodeDatas = nodeDatas;
             _nodesMapper = nodesMapper;
@@ -66,12 +58,16 @@ namespace EasyField.SaveSystem.Dto.FieldSaveDtoProviders
 
         public virtual TFieldSaveDto GetDto()
         {
-            var fieldSaveDto = new TFieldSaveDto
-            {
-                Nodes = _nodeDatas.AllItems.Select(node => _nodesMapper.ToDto(node)).ToList()
-            };
+            var dto = new TFieldSaveDto();
 
-            return fieldSaveDto;
+            FillNodes(dto);
+
+            return dto;
+        }
+
+        protected void FillNodes(FieldSaveDto<TNodeDataDto> dto)
+        {
+            dto.Nodes = _nodeDatas.AllItems.Select(node => _nodesMapper.ToDto(node)).ToList();
         }
     }
 }
