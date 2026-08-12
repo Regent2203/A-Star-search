@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EasyField.Implementations.Cells
 {
-    public class CellsFieldBuilder : IFieldBuilder
+    public class CellsFieldBuilder : IFieldBuilder<CellDataDto>
     {
         private readonly GridField _field;
         private readonly PathSetter<CellData> _pathSetter;

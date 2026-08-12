@@ -36,7 +36,7 @@ namespace EasyField.Links.Implementations
             _linkViews = linkViews;
         }
 
-        public bool TryCreateLink(TNodeData from, TNodeData to)
+        public bool TryCreateLinkItem(TNodeData from, TNodeData to)
         {
             if (ValidateSameNode(from.Id, to.Id)) 
                 return false;
@@ -44,18 +44,12 @@ namespace EasyField.Links.Implementations
             if (_linksProvider.TryGetLink(from.Id, to.Id, out _))
                 return false;
 
-            var key = new DualKey<TId>(from.Id, to.Id);
-            var linkData = _linkDatasFactory.CreateLink(from, to);
-            var linkView = _linkViewsFactory.CreateItem(from.Id, to.Id, linkData.Cost, PlacementType.Center);
-            _linkViewCoordinator.CheckDual(linkView, false);
-
-            _linksProvider.AddLink(linkData);             
-            _linkViews.AddItem(key, linkView);
+            CreateLinkItem(from, to);            
 
             return true;            
         }
 
-        public bool TryDeleteLink(TId fromId, TId toId)
+        public bool TryDeleteLinkItem(TId fromId, TId toId)
         {
             if (ValidateSameNode(fromId, toId))
                 return false;
@@ -63,12 +57,23 @@ namespace EasyField.Links.Implementations
             if (!_linksProvider.TryGetLink(fromId, toId, out var linkData))
                 return false;
 
-            DeleteLink(fromId, toId);
+            DeleteLinkItem(fromId, toId);
 
             return true;
         }
 
-        private void DeleteLink(TId fromId, TId toId)
+        private void CreateLinkItem(TNodeData from, TNodeData to)
+        {
+            var key = new DualKey<TId>(from.Id, to.Id);
+            var linkData = _linkDatasFactory.CreateLink(from, to);
+            var linkView = _linkViewsFactory.CreateItem(from.Id, to.Id, linkData.Cost, PlacementType.Center);
+            _linkViewCoordinator.CheckDual(linkView, false);
+
+            _linksProvider.AddLink(linkData);
+            _linkViews.AddItem(key, linkView);
+        }
+
+        private void DeleteLinkItem(TId fromId, TId toId)
         {
             var key = new DualKey<TId>(fromId, toId);
             var linkData = _linkDatas.GetItem(key);
@@ -101,7 +106,7 @@ namespace EasyField.Links.Implementations
         {
             foreach (var linkdata in _linksProvider.GetLinksFromNode(id).ToList())
             {
-                DeleteLink(linkdata.From, linkdata.To);
+                DeleteLinkItem(linkdata.From, linkdata.To);
             }
         }
 
@@ -109,7 +114,7 @@ namespace EasyField.Links.Implementations
         {
             foreach (var linkdata in _linksProvider.GetLinksToNode(id).ToList())
             {
-                DeleteLink(linkdata.From, linkdata.To);
+                DeleteLinkItem(linkdata.From, linkdata.To);
             }
         }
 
