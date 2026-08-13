@@ -5,6 +5,9 @@ namespace EasyField.Implementations.Cells
 {
     public class CellView : NodeView<Vector2Int>
     {
+        [SerializeField]
+        private BoxCollider2D _collider;
+
         [Space]
         [SerializeField]
         private GameObject _pathMarker;

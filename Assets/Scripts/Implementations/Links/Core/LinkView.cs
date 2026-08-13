@@ -8,6 +8,9 @@ namespace EasyField.Links
 
     public class LinkView<TId> : MonoBehaviour, ILinkView<TId>, IPoolable<TId, TId, float, PlacementType>
     {
+        [SerializeField]
+        private BoxCollider2D _collider;
+
         [Header("Text")]
         [SerializeField]
         private float _textPercentageOffsetY = 0.6f; //text offset in percents (relative to arrow length), along arrow direction (from start point)
@@ -68,10 +71,16 @@ namespace EasyField.Links
             _placementType = placementType;
         }
 
+        public void UpdateCostText(float cost)
+        {
+            _costText.text = $"{cost.ToString("0.00")}";
+        }
+
         public void UpdatePositions(Vector2 posFrom, Vector2 posTo)
         {            
             var direction = (posFrom - posTo).normalized;
             var perpendicular = new Vector2(-direction.y, direction.x);
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
             Vector2 start, end;
 
@@ -96,21 +105,29 @@ namespace EasyField.Links
             //we have arrow tip sprite, so instead of drawing line between exactly start and end, we make line shorter and use arrow tip there
             end -= -direction * _arrowOffset;
 
-            var arrowAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
+
+            //arrow
+            var arrowAngle = angle + 90f;
 
             _arrowBodyRenderer.SetPosition(0, start);
             _arrowBodyRenderer.SetPosition(1, end);
             _arrowTipRenderer.transform.SetPositionAndRotation(end, Quaternion.Euler(0, 0, arrowAngle));
 
+
+            //text
             var textBasePos = start - _textPercentageOffsetY * Vector2.Distance(start, end) * direction; //centered on arrow line
             var textPosition = textBasePos + (0.5f + Mathf.Abs(direction.y / 2.0f)) * _textOffsetX * perpendicular; //offsetted to the side
 
-            _costText.transform.position = new Vector3(textPosition.x, textPosition.y, _costText.transform.position.z);
-        }
+            _costText.transform.position = new Vector3(textPosition.x, textPosition.y, 0);
 
-        public void UpdateCostText(float cost)
-        {
-            _costText.text = $"{cost.ToString("0.00")}";
+
+            //collider
+            var distance = Vector2.Distance(start, end);
+            var centerPosition = Vector2.Lerp(start, end, 0.5f);            
+            var collPos = new Vector3(centerPosition.x, centerPosition.y, 0);
+
+            _collider.transform.SetPositionAndRotation(collPos, Quaternion.Euler(0, 0, angle));
+            _collider.size = new Vector2(distance, _collider.size.y);
         }
     }
 }
