@@ -9,6 +9,8 @@ namespace EasyField.Implementations.Cells
         [SerializeField]
         private GameObject _pathMarker;
         [SerializeField]
+        private GameObject _selectedMarker;
+        [SerializeField]
         private GameObject _startMarker;
         [SerializeField]
         private GameObject _finishMarker;
@@ -32,6 +34,7 @@ namespace EasyField.Implementations.Cells
         private void ClearGraphics()
         {
             ShowPathMarker(false);
+            ShowSelectedMarker(false);
             ShowStartMarker(false);
             ShowFinishMarker(false);
         }
@@ -39,6 +42,10 @@ namespace EasyField.Implementations.Cells
         public void ShowPathMarker(bool show)
         {
             _pathMarker.SetActive(show);
+        }
+        public void ShowSelectedMarker(bool show)
+        {
+            _selectedMarker.SetActive(show);
         }
         public void ShowStartMarker(bool show)
         {

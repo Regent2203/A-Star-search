@@ -8,10 +8,14 @@ namespace EasyField.Links
 
     public class LinkView<TId> : MonoBehaviour, ILinkView<TId>, IPoolable<TId, TId, float, PlacementType>
     {
+        [Header("Text")]
         [SerializeField]
-        private float _textOffset = 2.0f;
+        private float _textPercentageOffsetY = 0.6f; //text offset in percents (relative to arrow length), along arrow direction (from start point)
         [SerializeField]
-        private float _placementOffset = 0.5f; //offset in units for PlacementType != Center
+        private float _textOffsetX = 2.0f; //text offset in units, perpendicular to arrow direction
+        [Header("Dual links")]
+        [SerializeField]
+        private float _spriteDualPlacementOffset = 0.5f; //sprite offset in units, perpendicular to arrow direction, for PlacementType != Center
 
         [Space]
         [SerializeField]
@@ -79,29 +83,27 @@ namespace EasyField.Links
                     end = posTo;
                     break;
                 case PlacementType.Left:
-                    start = posFrom + perpendicular * _placementOffset;
-                    end = posTo + perpendicular * _placementOffset;
+                    start = posFrom + perpendicular * _spriteDualPlacementOffset;
+                    end = posTo + perpendicular * _spriteDualPlacementOffset;
                     break;
 
                 case PlacementType.Right:
-                    start = posFrom - perpendicular * _placementOffset;
-                    end = posTo - perpendicular * _placementOffset;
+                    start = posFrom - perpendicular * _spriteDualPlacementOffset;
+                    end = posTo - perpendicular * _spriteDualPlacementOffset;
                     break;
             }
 
-            //todo
-            Vector2 textBasePos = start - 0.6f * Vector2.Distance(start, end) * direction;
-            Vector2 textPosition = textBasePos + perpendicular * _textOffset * (0.5f + Mathf.Abs(direction.y / 2.0f));
-
             //we have arrow tip sprite, so instead of drawing line between exactly start and end, we make line shorter and use arrow tip there
-            end += direction * _arrowOffset; 
+            end -= -direction * _arrowOffset;
 
-            //todo: set Z!
-            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
+            var arrowAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
 
             _arrowBodyRenderer.SetPosition(0, start);
             _arrowBodyRenderer.SetPosition(1, end);
-            _arrowTipRenderer.transform.SetPositionAndRotation(end, Quaternion.Euler(0, 0, angle));
+            _arrowTipRenderer.transform.SetPositionAndRotation(end, Quaternion.Euler(0, 0, arrowAngle));
+
+            var textBasePos = start - _textPercentageOffsetY * Vector2.Distance(start, end) * direction; //centered on arrow line
+            var textPosition = textBasePos + (0.5f + Mathf.Abs(direction.y / 2.0f)) * _textOffsetX * perpendicular; //offsetted to the side
 
             _costText.transform.position = new Vector3(textPosition.x, textPosition.y, _costText.transform.position.z);
         }

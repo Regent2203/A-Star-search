@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2906915375903265766}
   - component: {fileID: 246736580082225113}
   - component: {fileID: 5990035476382241510}
+  - component: {fileID: 5450932332649414356}
   m_Layer: 0
   m_Name: LinkView
   m_TagString: Untagged
@@ -47,8 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624d4c87f961fa64094b522be3143c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textOffset: 2
-  _placementOffset: 0.5
+  _textPercentageOffsetY: 0.6
+  _textOffsetX: 2
+  _spriteDualPlacementOffset: 0.5
   _costText: {fileID: 505872520081610572}
   _arrowBodyRenderer: {fileID: 5990035476382241510}
   _arrowTipRenderer: {fileID: 7081141431544256906}
@@ -156,6 +158,18 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!210 &5450932332649414356
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5979294418695045160}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 20
+  m_SortAtRoot: 0
 --- !u!1 &6797629677220892185
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +242,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e8374232c5ede904da4bdcf3298a2e1b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -317,7 +331,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &505872520081610572
 MonoBehaviour:
