@@ -403,6 +403,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 953047228407168596, guid: 6adb4a704c1068a40baf6b88e49e67db,
+        type: 3}
+      propertyPath: m_text
+      value: 'Scene 2a: Spatial Field of Vertexes. Vertexes can be dragged, selected,
+        set blocked, created or deleted.
+
+        Links are visible and must be created
+        manually (can also be deleted). Link cost directly depends on vertexes''
+        positions.'
+      objectReference: {fileID: 0}
     - target: {fileID: 1918448847858689742, guid: 6adb4a704c1068a40baf6b88e49e67db,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -427,6 +437,14 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4120287906866385837, guid: 6adb4a704c1068a40baf6b88e49e67db,
+        type: 3}
+      propertyPath: m_text
+      value: 'Scene 1b: Grid Field with Cells. Different terrain types can be used.
+        Cells cannot be created or deleted. Movement in all directions allowed (diagonal
+        costs more than straight). Links are auto-generated (invisible). Movecost
+        = average sum of two cells. PathDrawer draws line over cells.'
       objectReference: {fileID: 0}
     - target: {fileID: 5870155071367696746, guid: 6adb4a704c1068a40baf6b88e49e67db,
         type: 3}
@@ -587,6 +605,19 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9046241307107831288, guid: 6adb4a704c1068a40baf6b88e49e67db,
+        type: 3}
+      propertyPath: m_text
+      value: 'Scene 1a: Grid Field with Cells. Different terrain types can be used.
+        Cells cannot be created or deleted. Only horizontal and vertical movement
+        allowed. Links are auto-generated (invisible). Movecost = average sum of
+        two cells. PathDrawer uses cells'' graphics.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 9046241307107831288, guid: 6adb4a704c1068a40baf6b88e49e67db,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -40,7 +40,7 @@ namespace EasyField.Links.Implementations
             _useDual = useDual;
         }
 
-        public bool TryCreateLinkItem(TNodeData from, TNodeData to)
+        public bool TryCreateLinkItem(TNodeData from, TNodeData to, float? cost = null)
         {
             if (ValidateSameNode(from.Id, to.Id)) 
                 return false;
@@ -48,7 +48,7 @@ namespace EasyField.Links.Implementations
             if (_linksProvider.TryGetLink(from.Id, to.Id, out _))
                 return false;
 
-            CreateLinkItem(from, to);            
+            CreateLinkItem(from, to, cost);            
 
             return true;            
         }
@@ -66,10 +66,10 @@ namespace EasyField.Links.Implementations
             return true;
         }
 
-        private void CreateLinkItem(TNodeData from, TNodeData to)
+        private void CreateLinkItem(TNodeData from, TNodeData to, float? cost = null)
         {
             var key = new DualKey<TId>(from.Id, to.Id);
-            var linkData = _linkDatasFactory.CreateLink(from, to);
+            var linkData = _linkDatasFactory.CreateLink(from, to, cost);
             var linkView = _linkViewsFactory.CreateItem(from.Id, to.Id, linkData.Cost, PlacementType.Center);
             if (_useDual)
                 _linkViewCoordinator.CheckDual(linkView, false);

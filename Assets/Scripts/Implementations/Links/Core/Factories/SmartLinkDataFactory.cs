@@ -32,14 +32,14 @@ namespace EasyField.Links.Factories
             }
         }
 
-        public LinkData<TId> CreateLink(TNodeData from, TNodeData to)
+        public LinkData<TId> CreateLink(TNodeData from, TNodeData to, float? cost = null)
         {
-            var cost = GetCost(from, to);
+            float linkCost = cost ?? GetCost(from, to);
 
-            return CreateItem(from.Id, to.Id, cost);
+            return CreateItem(from.Id, to.Id, linkCost);
         }
 
-        public float GetCost(TNodeData from, TNodeData to)
+        private float GetCost(TNodeData from, TNodeData to)
         {
             return _costProvider.GetCost(from, to);
         }

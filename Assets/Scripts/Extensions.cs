@@ -39,7 +39,7 @@ public static class Extensions
     public static bool TryGetHitObject(this PointerEventData eventData, out GameObject hitObject)
     {
         hitObject = eventData.pointerCurrentRaycast.gameObject;
-        Debug.Log(hitObject.transform.parent.name, hitObject);
+
         return hitObject != null;
     }
 

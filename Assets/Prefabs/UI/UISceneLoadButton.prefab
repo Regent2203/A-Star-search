@@ -92,7 +92,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
+  m_fontSize: 13
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
@@ -188,6 +188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneToLoad: {fileID: 0}
   _btn: {fileID: 3743592989370690591}
+  _sceneName: 
 --- !u!222 &6026699605652957307
 CanvasRenderer:
   m_ObjectHideFlags: 0

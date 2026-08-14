@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Scene2a_VertexesField.unity
     guid: fa887a235aa1ba1428cb0c026a8cdcfd
+  - enabled: 1
+    path: Assets/Scenes/Scene2b_VertexesField.unity
+    guid: 04995e6cd1b0d2248bda40ecca2bb4c9
   m_configObjects: {}

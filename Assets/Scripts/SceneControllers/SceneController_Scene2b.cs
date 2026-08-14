@@ -139,12 +139,13 @@ namespace EasyField.SceneControllers
             {
                 if (_linksProvider.TryGetLink(view.From, view.To, out var linkData))
                 {
+                    const float value = 0.5f;
 
                     if (button == PointerEventData.InputButton.Left)
-                        _linkCostSetter.ChangeLinkCost(linkData, 1.0f);
+                        _linkCostSetter.ChangeLinkCost(linkData, value);
 
                     if (button == PointerEventData.InputButton.Right)
-                        _linkCostSetter.ChangeLinkCost(linkData, -1.0f);
+                        _linkCostSetter.ChangeLinkCost(linkData, -value);
                 }
             }
         }

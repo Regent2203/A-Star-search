@@ -72,7 +72,7 @@ namespace EasyField.Implementations.Vertexes
             {
                 var from = _nodeDatas.GetItem(item.From);
                 var to = _nodeDatas.GetItem(item.To);
-                _linksBuilder.TryCreateLinkItem(from, to);
+                _linksBuilder.TryCreateLinkItem(from, to, item.Cost);
             }
         }
 
