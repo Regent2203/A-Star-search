@@ -1,4 +1,10 @@
+Order in layer:
 * Field = -10
 * NodeView = 10
 * LinkView = 20
 * LineRenderer (for path drawing) = 30
+
+Z (required for correct work of click handlers):
+* Field = 0
+* NodeView = -1
+* LinkView = -2

@@ -29,7 +29,6 @@ namespace EasyField.Fields.ClickHandlers
 
             if (nodeView != null)
             {
-                Debug.Log("NodeView clicked");
                 NodeViewClicked?.Invoke(nodeView, eventData.button, _inputService.CreateSnapshot());
                 return true;
             }
@@ -62,7 +61,6 @@ namespace EasyField.Fields.ClickHandlers
 
             if (linkView != null)
             {
-                Debug.Log("LinkView clicked");
                 LinkViewClicked?.Invoke(linkView, eventData.button, _inputService.CreateSnapshot());
                 return true;
             }

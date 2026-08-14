@@ -111,14 +111,14 @@ namespace EasyField.Links
 
             _arrowBodyRenderer.SetPosition(0, start);
             _arrowBodyRenderer.SetPosition(1, end);
-            _arrowTipRenderer.transform.SetPositionAndRotation(end, Quaternion.Euler(0, 0, arrowAngle));
+            _arrowTipRenderer.transform.SetLocalPositionAndRotation(end, Quaternion.Euler(0, 0, arrowAngle));
 
 
             //text
             var textBasePos = start - _textPercentageOffsetY * Vector2.Distance(start, end) * direction; //centered on arrow line
             var textPosition = textBasePos + (0.5f + Mathf.Abs(direction.y / 2.0f)) * _textOffsetX * perpendicular; //offsetted to the side
 
-            _costText.transform.position = new Vector3(textPosition.x, textPosition.y, 0);
+            _costText.transform.position = new Vector3(textPosition.x, textPosition.y, _costText.transform.position.z);
 
 
             //collider
@@ -126,7 +126,7 @@ namespace EasyField.Links
             var centerPosition = Vector2.Lerp(start, end, 0.5f);            
             var collPos = new Vector3(centerPosition.x, centerPosition.y, 0);
 
-            _collider.transform.SetPositionAndRotation(collPos, Quaternion.Euler(0, 0, angle));
+            _collider.transform.SetLocalPositionAndRotation(collPos, Quaternion.Euler(0, 0, angle));
             _collider.size = new Vector2(distance, _collider.size.y);
         }
     }

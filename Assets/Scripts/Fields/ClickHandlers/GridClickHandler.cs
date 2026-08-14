@@ -41,7 +41,6 @@ namespace EasyField.Fields.ClickHandlers
 
             if (nodeView != null)
             {
-                Debug.Log("GridNodeView clicked");
                 NodeViewClicked?.Invoke(nodeView, eventData.button, _inputService.CreateSnapshot());
                 return true;
             }

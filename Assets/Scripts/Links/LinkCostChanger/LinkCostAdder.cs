@@ -9,7 +9,7 @@ namespace EasyField.Links.LinkCostChangers
         public event Action<TLinkData, float> LinkCostChanged;
 
 
-        public bool SetLinkCost(TLinkData linkData, float value)
+        public bool ChangeLinkCost(TLinkData linkData, float value)
         {
             if (linkData == null)
                 return false;
@@ -17,7 +17,7 @@ namespace EasyField.Links.LinkCostChangers
             if (Mathf.Approximately(value, 0f))
                 return false;
 
-            linkData.SetCost(linkData.Cost + value);
+            linkData.SetCost(Mathf.Max(0, linkData.Cost + value));
             LinkCostChanged?.Invoke(linkData, linkData.Cost);
 
             return true;

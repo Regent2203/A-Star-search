@@ -180,7 +180,7 @@ namespace EasyField.SceneControllers
             TryRun(isReady);
         }
 
-        private readonly List<CellView> _viewsPath = new List<CellView>();
+        private readonly List<CellView> _nodeViewsPath = new List<CellView>();
 
         private void TryRun(bool isReady)
         {
@@ -189,8 +189,8 @@ namespace EasyField.SceneControllers
                 var nodesPath = _pathFinder.GetPath(_pathSetter.StartNode, _pathSetter.FinishNode);
                 if (nodesPath != null)
                 {
-                    _nodeViews.NodesToViewsNonAlloc(nodesPath, _viewsPath);
-                    _pathDrawer.SetPath(_viewsPath);
+                    _nodeViews.NodesToViewsNonAlloc(nodesPath, _nodeViewsPath);
+                    _pathDrawer.SetPath(_nodeViewsPath);
                     _pathDrawer.ShowPath(true);
                 }
             }

@@ -37,7 +37,7 @@ namespace EasyField.Nodes
 
         public void Move(Vector2 position)
         {
-            transform.position = position;
+            transform.position = new Vector3(position.x, position.y, transform.position.z);
         }
     }
 }

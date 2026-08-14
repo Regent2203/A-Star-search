@@ -22,16 +22,15 @@ using Zenject;
 
 namespace EasyField.SceneControllers
 {
-    public class SceneController_Scene2a : SceneControllerBase
+    public class SceneController_Scene2b : SceneControllerBase
     {
         private VertexesFieldBuilder _fieldBuilder;
         private VertexDataStorage _nodeDatas;
         private VertexViewStorage _nodeViews;
         private LinkViewStorage_Int _linkViews;
-        private VertexesClickHandler _clickHandler;
-        private VertexesDragHandler _dragHandler;        
-        private DistanceCostProvider<VertexData> _costProvider;
-        private LinkCostSetter<LinkData<int>> _linkCostSetter;
+        private VertexesLinksClickHandler _clickHandler;
+        private VertexesDragHandler _dragHandler;
+        private LinkCostAdder<LinkData<int>> _linkCostSetter;
         private NodePositionChanger<VertexData> _nodePositionChanger;
         private NodeBlocker<VertexData> _nodeBlocker;
         private NodeViewSelector<VertexView> _nodeViewSelector;
@@ -47,8 +46,8 @@ namespace EasyField.SceneControllers
 
         [Inject]
         public void Construct(VertexesFieldBuilder fieldBuilder, VertexDataStorage nodeDatas, VertexViewStorage nodeViews, LinkViewStorage_Int linkViews,
-            VertexesClickHandler clickHandler, VertexesDragHandler dragHandler,
-            DistanceCostProvider<VertexData> costProvider, LinkCostSetter<LinkData<int>> linkCostSetter,
+            VertexesLinksClickHandler clickHandler, VertexesDragHandler dragHandler,
+            LinkCostAdder<LinkData<int>> linkCostSetter,
             NodeBlocker<VertexData> nodeBlocker, NodePositionChanger<VertexData> nodePositionChanger,
             NodeViewSelector<VertexView> nodeViewSelector, NodeViewMover<VertexView> nodeViewMover, 
             StoredLinksProvider<LinkData<int>, int> linksProvider, LinkViewCoordinator<VertexView, int> linkViewCoordinator,
@@ -63,7 +62,6 @@ namespace EasyField.SceneControllers
             _clickHandler = clickHandler;
             _dragHandler = dragHandler;
             
-            _costProvider = costProvider;
             _linkCostSetter = linkCostSetter;
 
             _nodePositionChanger = nodePositionChanger;
@@ -84,6 +82,7 @@ namespace EasyField.SceneControllers
 
         protected override void SubscribeAll()
         {
+            _clickHandler.LinkViewClicked += OnLinkViewClicked;
             _clickHandler.NodeViewClicked += OnNodeViewClicked;
             _clickHandler.FieldClicked += OnFieldClicked;
             _dragHandler.NodeViewDragStarted += OnNodeViewDragStarted;
@@ -112,6 +111,7 @@ namespace EasyField.SceneControllers
 
         protected override void UnsubscribeAll()
         {
+            _clickHandler.LinkViewClicked -= OnLinkViewClicked;
             _clickHandler.NodeViewClicked -= OnNodeViewClicked;
             _clickHandler.FieldClicked -= OnFieldClicked;
             _dragHandler.NodeViewDragStarted -= OnNodeViewDragStarted;
@@ -131,6 +131,22 @@ namespace EasyField.SceneControllers
             _saveLoadPanel.SaveBtnClicked -= OnSaveBtnClicked;
             _saveLoadPanel.LoadBtnClicked -= OnLoadBtnClicked;
             _saveLoadPanel.NewBtnClicked -= OnNewBtnClicked;
+        }
+
+        private void OnLinkViewClicked(LinkView_Int view, PointerEventData.InputButton button, InputSnapshot input)
+        {
+            if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
+            {
+                if (_linksProvider.TryGetLink(view.From, view.To, out var linkData))
+                {
+
+                    if (button == PointerEventData.InputButton.Left)
+                        _linkCostSetter.ChangeLinkCost(linkData, 1.0f);
+
+                    if (button == PointerEventData.InputButton.Right)
+                        _linkCostSetter.ChangeLinkCost(linkData, -1.0f);
+                }
+            }
         }
 
         private void OnNodeViewClicked(VertexView nodeView, PointerEventData.InputButton button, InputSnapshot input)
@@ -231,6 +247,8 @@ namespace EasyField.SceneControllers
         {
             var linkView = _linkViews.GetItem(linkData.Id);
             linkView.UpdateCostText(cost);
+
+            OnFieldChanged();
         }
 
         private void OnNodePositionChanged(VertexData nodeData, Vector2 pos)
@@ -257,23 +275,11 @@ namespace EasyField.SceneControllers
             {
                 linkView = _linkViews.GetItem(new DualKey<int>(id, linkData.Id.To));
                 _linkViewCoordinator.CheckSingle(linkView);
-
-                UpdateLinkCost(linkData);
             }
             foreach (var linkData in toLinks)
             {
                 linkView = _linkViews.GetItem(new DualKey<int>(linkData.Id.From, id));
                 _linkViewCoordinator.CheckSingle(linkView);
-
-                UpdateLinkCost(linkData);
-            }
-
-            void UpdateLinkCost(LinkData<int> linkData)
-            {
-                var from = _nodeDatas.GetItem(linkData.From);
-                var to = _nodeDatas.GetItem(linkData.To);
-                var cost = _costProvider.GetCost(from, to);
-                _linkCostSetter.ChangeLinkCost(linkData, cost);
             }
         }
 
