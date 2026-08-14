@@ -89,9 +89,9 @@ namespace EasyField.Installers
 
         private void BindNodes()
         {            
-            Container.Bind(typeof(VertexDataStorage), typeof(DictTypeStorage<VertexData, int>), typeof(IObjectsStorage<VertexData, int>)).
+            Container.Bind(typeof(VertexDataStorage), typeof(IObjectsStorage<VertexData, int>)).
                 To<VertexDataStorage>().AsSingle();
-            Container.Bind(typeof(VertexViewStorage), typeof(DictTypeStorage<VertexView, int>), typeof(IObjectsStorage<VertexView, int>)).
+            Container.Bind(typeof(VertexViewStorage), typeof(IObjectsStorage<VertexView, int>)).
                 To<VertexViewStorage>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<VertexDataFactory>().AsSingle();
@@ -103,11 +103,9 @@ namespace EasyField.Installers
 
         private void BindLinks()
         {
-            Container.Bind(typeof(LinkDataStorage_Int), 
-                typeof(DictTypeStorage<LinkData<int>, DualKey<int>>), typeof(IObjectsStorage<LinkData<int>, DualKey<int>>)).
+            Container.Bind(typeof(LinkDataStorage_Int), typeof(DictTypeStorage<LinkData<int>, DualKey<int>>), typeof(IObjectsStorage<LinkData<int>, DualKey<int>>)).
                 To<LinkDataStorage_Int>().AsSingle();
-            Container.Bind(typeof(LinkViewStorage_Int),
-                typeof(DictTypeStorage<LinkView<int>, DualKey<int>>), typeof(IObjectsStorage<LinkView<int>, DualKey<int>>)).
+            Container.Bind(typeof(LinkViewStorage_Int), typeof(DictTypeStorage<LinkView<int>, DualKey<int>>), typeof(IObjectsStorage<LinkView<int>, DualKey<int>>)).
                 To<LinkViewStorage_Int>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<SmartLinkDataFactory<VertexData, int>>().AsSingle();
@@ -138,7 +136,7 @@ namespace EasyField.Installers
             Container.BindInterfacesAndSelfTo<DijkstraHeuristicsProvider<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<ConstantCostProvider<VertexData>>().AsSingle().WithArguments(1.0f);
             Container.BindInterfacesAndSelfTo<PathSetter<VertexData>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<PathFinder<VertexData, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PathFinder<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinePathDrawer<VertexView>>().AsSingle();
             Container.Bind<LineRenderer>().WithId(LinePathDrawer.LineRendererId).FromInstance(_pathLineRenderer).AsSingle();
         }

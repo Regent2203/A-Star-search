@@ -13,7 +13,7 @@ namespace EasyField.Links.Implementations
         where TNodeData : class, INodeData<TId>
         where TNodeView : MonoBehaviour, INodeView<TId>
     {
-        private bool _useDual;
+        private readonly bool _useDual;
 
         private readonly SmartLinkDataFactory<TNodeData, TId> _linkDatasFactory;
         private readonly LinkViewFactory<TId> _linkViewsFactory;

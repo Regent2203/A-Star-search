@@ -1,6 +1,5 @@
 using EasyField.Fields;
 using EasyField.Fields.FieldBuilders;
-using EasyField.ObjectsStorages;
 using EasyField.PathSetters;
 using UnityEngine;
 
@@ -12,12 +11,12 @@ namespace EasyField.Implementations.Cells
         private readonly GridField _field;
         private readonly PathSetter<CellData> _pathSetter;
         private readonly CellsNodesBuilder _nodesBuilder;
-        private readonly GridTypeStorage<CellData> _nodeDatas;
-        private readonly GridTypeStorage<CellView> _nodeViews;
+        private readonly CellDataStorage _nodeDatas;
+        private readonly CellViewStorage _nodeViews;
 
 
         public CellsFieldBuilder(CellsConfig config, GridField field, PathSetter<CellData> pathSetter, CellsNodesBuilder nodesBuilder,
-            GridTypeStorage<CellData> nodeDatas, GridTypeStorage<CellView> nodeViews)
+            CellDataStorage nodeDatas, CellViewStorage nodeViews)
         {
             _config = config;
             _field = field;

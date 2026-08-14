@@ -39,7 +39,7 @@ namespace EasyField.SceneControllers
         private StoredLinksProvider<LinkData<int>, int> _linksProvider;
         private LinkViewCoordinator<VertexView, int> _linkViewCoordinator;
         private PathSetter<VertexData> _pathSetter;
-        private PathFinder<VertexData, int> _pathFinder;
+        private PathFinder<VertexData> _pathFinder;
         private LinePathDrawer<VertexView> _pathDrawer;
         private VertexesSaveLoadManager _saveLoadManager;
         private UIMainButtonsPanel _saveLoadPanel;
@@ -52,7 +52,7 @@ namespace EasyField.SceneControllers
             NodeBlocker<VertexData> nodeBlocker, NodePositionChanger<VertexData> nodePositionChanger,
             NodeViewSelector<VertexView> nodeViewSelector, NodeViewMover<VertexView> nodeViewMover, 
             StoredLinksProvider<LinkData<int>, int> linksProvider, LinkViewCoordinator<VertexView, int> linkViewCoordinator,
-            PathSetter<VertexData> pathSetter, PathFinder<VertexData, int> pathFinder, LinePathDrawer<VertexView> pathDrawer,
+            PathSetter<VertexData> pathSetter, PathFinder<VertexData> pathFinder, LinePathDrawer<VertexView> pathDrawer,
             VertexesSaveLoadManager saveLoadManager, UIMainButtonsPanel saveLoadPanel)
         {
             _fieldBuilder = fieldBuilder;

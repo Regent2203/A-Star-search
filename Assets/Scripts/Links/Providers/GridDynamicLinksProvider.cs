@@ -18,7 +18,8 @@ namespace EasyField.Links.Providers
         private readonly GridTypeStorage<TNodeData> _nodeDatas;
 
 
-        public GridDynamicLinksProvider(SmartLinkDataFactory<TNodeData, Vector2Int> factory, IGridNeighboursProvider<TNodeData> neighboursProvider, GridTypeStorage<TNodeData> nodeDatas)
+        public GridDynamicLinksProvider(SmartLinkDataFactory<TNodeData, Vector2Int> factory,
+            IGridNeighboursProvider<TNodeData> neighboursProvider, GridTypeStorage<TNodeData> nodeDatas)
         {
             _factory = factory;
             _neighboursProvider = neighboursProvider;

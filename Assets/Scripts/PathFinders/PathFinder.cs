@@ -4,9 +4,8 @@ using System.Collections.Generic;
 
 namespace EasyField.PathFinders
 {
-    //todo remove this class??
-    public class PathFinder<TNodeData, TId> : IPathFinder<TNodeData>
-        where TNodeData : INodeData<TId>
+    public class PathFinder<TNodeData> : IPathFinder<TNodeData>
+        where TNodeData : INodeData
     {
         private readonly ISearchAlgorithm<TNodeData> _searchAlgorithm;
 

@@ -1,6 +1,5 @@
 ﻿using EasyField.Fields;
 using EasyField.Fields.FieldBuilders;
-using EasyField.ObjectsStorages;
 using EasyField.PathSetters;
 using UnityEngine;
 
@@ -12,12 +11,12 @@ namespace EasyField.Implementations.Vertexes
         private readonly PathSetter<VertexData> _pathSetter;
         private readonly VertexesNodesBuilder _nodesBuilder;
         private readonly VertexesLinksBuilder _linksBuilder;
-        private readonly DictTypeStorage<VertexData, int> _nodeDatas;
+        private readonly VertexDataStorage _nodeDatas;
 
 
         public VertexesFieldBuilder(SpatialField field, PathSetter<VertexData> pathSetter,
             VertexesNodesBuilder nodesBuilder, VertexesLinksBuilder linksBuilder,
-            DictTypeStorage<VertexData, int> nodeDatas)
+            VertexDataStorage nodeDatas)
         {
             _field = field;
             _pathSetter = pathSetter;

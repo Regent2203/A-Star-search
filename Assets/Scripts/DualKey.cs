@@ -1,4 +1,7 @@
-﻿namespace EasyField
+﻿using System;
+using System.Collections.Generic;
+
+namespace EasyField
 {
     public readonly struct DualKey<TId>
     {
@@ -12,9 +15,22 @@
             To = toId;
         }
 
+        public bool Equals(DualKey<TId> other)
+        {
+            return EqualityComparer<TId>.Default.Equals(From, other.From) &&
+                   EqualityComparer<TId>.Default.Equals(To, other.To);
+        }
+
+        public override bool Equals(object obj) => obj is DualKey<TId> other && Equals(other);
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(From, To);
+        }
+
         public override string ToString()
         {
-            return $"LinkKey({From}->{To})";
+            return $"DualKey({From}->{To})";
         }
     }
 }

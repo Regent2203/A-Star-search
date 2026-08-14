@@ -1,9 +1,9 @@
 ﻿using EasyField.Fields.ClickHandlers;
-using EasyField.Links.Implementations;
+using EasyField.Links;
 
 namespace EasyField.Implementations.Vertexes
 {
-    public class VertexesLinksClickHandler : SpatialClickHandler<VertexView, LinkView_Int>
+    public class VertexesLinksClickHandler : SpatialClickHandler<VertexView, LinkView<int>>
     {
     }
 }

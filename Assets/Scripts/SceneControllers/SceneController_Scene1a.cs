@@ -8,7 +8,6 @@ using EasyField.PathFinders;
 using EasyField.PathSetters;
 using EasyField.UICommon;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
@@ -26,7 +25,7 @@ namespace EasyField.SceneControllers
         private BrushManager<CellType> _cellTypebrushManager;
 
         private PathSetter<CellData> _pathSetter;
-        private PathFinder<CellData, Vector2Int> _pathFinder;
+        private PathFinder<CellData> _pathFinder;
         private IPathDrawer<CellView> _pathDrawer;
 
         private CellsSaveLoadManager _saveLoadManager;
@@ -41,7 +40,7 @@ namespace EasyField.SceneControllers
         public void Construct(CellsFieldBuilder fieldBuilder, CellDataStorage nodeDatas, CellViewStorage nodeViews,
             CellsConfig config, CellsClickHandler clickHandler, 
             CellTypeChanger cellTypeChanger, BrushManager<CellType> cellTypebrushManager,
-            PathSetter<CellData> pathSetter, PathFinder<CellData, Vector2Int> pathFinder, IPathDrawer<CellView> pathDrawer,
+            PathSetter<CellData> pathSetter, PathFinder<CellData> pathFinder, IPathDrawer<CellView> pathDrawer,
             CellsSaveLoadManager saveLoadManager, UIMainButtonsPanel saveLoadPanel,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UIHotkeysInfoPanel_Cells hotkeyInfoPanel)
         {

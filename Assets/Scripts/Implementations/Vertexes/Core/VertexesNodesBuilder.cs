@@ -1,5 +1,4 @@
 ﻿using EasyField.Fields;
-using EasyField.ObjectsStorages;
 using UnityEngine;
 
 namespace EasyField.Implementations.Vertexes
@@ -7,15 +6,15 @@ namespace EasyField.Implementations.Vertexes
     public class VertexesNodesBuilder
     {
         private readonly SpatialField _field;
-        private readonly DictTypeStorage<VertexData, int> _nodeDatas;
-        private readonly DictTypeStorage<VertexView, int> _nodeViews;
+        private readonly VertexDataStorage _nodeDatas;
+        private readonly VertexViewStorage _nodeViews;
         private readonly VertexDataFactory _nodeDatasFactory;
         private readonly VertexViewFactory _nodeViewsFactory;
 
         private int _newId = 0;
 
 
-        public VertexesNodesBuilder(SpatialField field, DictTypeStorage<VertexData, int> nodeDatas, DictTypeStorage<VertexView, int> nodeViews,
+        public VertexesNodesBuilder(SpatialField field, VertexDataStorage nodeDatas, VertexViewStorage nodeViews,
             VertexDataFactory nodeDatasFactory, VertexViewFactory nodeViewsFactory)
         {
             _field = field;

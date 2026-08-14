@@ -10,15 +10,6 @@ namespace EasyField.BrushManagers
         public event Action<int, TBrushType> BrushChanged;
 
 
-        /*
-        public void PaintCell(CellData nodeData, int brushIndex)
-        {
-            if (_brushes.TryGetValue(brush, out CellType cellType))
-            {
-                _cellTypeChanger.TryChangeCellType(nodeData, cellType);
-            }
-        }*/
-
         public TBrushType GetBrush(int brushIndex)
         {
             return _brushes[brushIndex];
