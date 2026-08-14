@@ -9,42 +9,44 @@ using Zenject;
 namespace EasyField.Fields.ClickHandlers
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class GridClickHandler<TNodeView> : MonoBehaviour, IFieldClickHandler<TNodeView> 
+    public class GridClickHandler<TNodeView> : FieldClickHandler, IFieldClickHandler<TNodeView> 
         where TNodeView : MonoBehaviour, INodeView<Vector2Int>
     {
         private GridField _field;
         private GridTypeStorage<TNodeView> _nodeViews;
-        private Camera _mainCamera;
-        private IInputService _inputService;
 
         public event Action<TNodeView, PointerEventData.InputButton, InputSnapshot> NodeViewClicked;
-        public event Action<Vector2, PointerEventData.InputButton, InputSnapshot> FieldClicked;
 
 
         [Inject]
-        public void Construct(GridField field, GridTypeStorage<TNodeView> nodeViews, Camera camera, IInputService inputService)
+        public void Construct(GridField field, GridTypeStorage<TNodeView> nodeViews)
         {
             _field = field;
             _nodeViews = nodeViews;
-            _mainCamera = camera;
-            _inputService = inputService;
         }
 
         void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
         {
-            //todo
-            var index = _field.PositionToIndex(eventData.pointerCurrentRaycast.worldPosition);
-            Debug.Log(index);
+            if (eventData.TryGetHitObject(out var hitObject))
+            {
+                if (!CheckHitNodeView(hitObject, eventData))
+                    HitField(eventData);
+            }
+        }
 
+        protected bool CheckHitNodeView(GameObject hitObject, PointerEventData eventData)
+        {
+            var index = _field.PositionToIndex(eventData.pointerCurrentRaycast.worldPosition);
             var nodeView = _nodeViews.GetItem(index);
+
             if (nodeView != null)
             {
+                Debug.Log("GridNodeView clicked");
                 NodeViewClicked?.Invoke(nodeView, eventData.button, _inputService.CreateSnapshot());
-                return;
+                return true;
             }
 
-            Vector2 worldPos = _mainCamera.ScreenToWorldPoint(eventData.position);
-            FieldClicked?.Invoke(worldPos, eventData.button, _inputService.CreateSnapshot());
+            return false;
         }
     }
 }

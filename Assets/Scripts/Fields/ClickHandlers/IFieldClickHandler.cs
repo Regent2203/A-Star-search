@@ -7,11 +7,15 @@ using UnityEngine.EventSystems;
 
 namespace EasyField.Fields.ClickHandlers
 {
-    public interface IFieldClickHandler<TNodeView> : IPointerDownHandler
+    public interface IFieldClickHandler : IPointerDownHandler
+    {
+        public event Action<Vector2, PointerEventData.InputButton, InputSnapshot> FieldClicked;
+    }
+
+    public interface IFieldClickHandler<TNodeView> : IFieldClickHandler
         where TNodeView : MonoBehaviour, INodeView
     {
-        public event Action<TNodeView, PointerEventData.InputButton, InputSnapshot> NodeViewClicked;
-        public event Action<Vector2, PointerEventData.InputButton, InputSnapshot> FieldClicked;
+        public event Action<TNodeView, PointerEventData.InputButton, InputSnapshot> NodeViewClicked;        
     }
 
     public interface IFieldClickHandler<TNodeView, TLinkView> : IFieldClickHandler<TNodeView>

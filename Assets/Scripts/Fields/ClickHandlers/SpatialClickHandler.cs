@@ -4,29 +4,17 @@ using EasyField.Nodes;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Zenject;
 
 namespace EasyField.Fields.ClickHandlers
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class SpatialClickHandler<TNodeView> : MonoBehaviour, IFieldClickHandler<TNodeView>
+    public class SpatialClickHandler<TNodeView> : FieldClickHandler, IFieldClickHandler<TNodeView>
         where TNodeView : MonoBehaviour, INodeView
     {
-        protected Camera _mainCamera;
-        protected IInputService _inputService;
-
         public event Action<TNodeView, PointerEventData.InputButton, InputSnapshot> NodeViewClicked;
-        public event Action<Vector2, PointerEventData.InputButton, InputSnapshot> FieldClicked;
+        
 
-
-        [Inject]
-        public void Construct(Camera camera, IInputService inputService)
-        {
-            _mainCamera = camera;
-            _inputService = inputService;
-        }
-
-        public virtual void OnPointerDown(PointerEventData eventData)
+        public override void OnPointerDown(PointerEventData eventData)
         {
             if (eventData.TryGetHitObject(out var hitObject))
             {
@@ -46,12 +34,6 @@ namespace EasyField.Fields.ClickHandlers
                 return true;
             }
             return false;
-        }
-
-        protected void HitField(PointerEventData eventData)
-        {
-            Vector2 worldPos = _mainCamera.ScreenToWorldPoint(eventData.position);
-            FieldClicked?.Invoke(worldPos, eventData.button, _inputService.CreateSnapshot());
         }
     }
 
