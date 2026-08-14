@@ -28,15 +28,18 @@ namespace EasyField.Fields.ClickHandlers
 
         public virtual void OnPointerDown(PointerEventData eventData)
         {
-            var hitObject = eventData.pointerCurrentRaycast.gameObject;
-
-            if (!CheckHitNodeView(hitObject, eventData))
-                HitField(eventData);            
+            if (eventData.TryGetHitObject(out var hitObject))
+            {
+                if (!CheckHitNodeView(hitObject, eventData))
+                    HitField(eventData);
+            }
         }
 
         protected bool CheckHitNodeView(GameObject hitObject, PointerEventData eventData)
         {
-            if (hitObject != null && hitObject.TryGetComponent<TNodeView>(out var nodeView))
+            var nodeView = hitObject.GetComponentInParent<TNodeView>();
+
+            if (nodeView != null)
             {
                 Debug.Log("NodeView clicked");
                 NodeViewClicked?.Invoke(nodeView, eventData.button, _inputService.CreateSnapshot());
@@ -52,6 +55,7 @@ namespace EasyField.Fields.ClickHandlers
         }
     }
 
+
     [RequireComponent(typeof(BoxCollider2D))]
     public class SpatialClickHandler<TNodeView, TLinkView> : SpatialClickHandler<TNodeView>, IFieldClickHandler<TNodeView, TLinkView>
         where TNodeView : MonoBehaviour, INodeView
@@ -62,16 +66,19 @@ namespace EasyField.Fields.ClickHandlers
 
         public override void OnPointerDown(PointerEventData eventData)
         {
-            var hitObject = eventData.pointerCurrentRaycast.gameObject;
-            
-            if (!CheckHitLinkView(hitObject, eventData))
-                if (!CheckHitNodeView(hitObject, eventData))
-                    HitField(eventData);
+            if (eventData.TryGetHitObject(out var hitObject))
+            {
+                if (!CheckHitLinkView(hitObject, eventData))
+                    if (!CheckHitNodeView(hitObject, eventData))
+                        HitField(eventData);
+            }
         }
 
         protected bool CheckHitLinkView(GameObject hitObject, PointerEventData eventData)
         {
-            if (hitObject != null && hitObject.TryGetComponent<TLinkView>(out var linkView))
+            var linkView = hitObject.GetComponentInParent<TLinkView>();
+
+            if (linkView != null)
             {
                 Debug.Log("LinkView clicked");
                 LinkViewClicked?.Invoke(linkView, eventData.button, _inputService.CreateSnapshot());

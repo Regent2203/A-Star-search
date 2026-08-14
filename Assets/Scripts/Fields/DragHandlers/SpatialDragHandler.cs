@@ -43,22 +43,25 @@ namespace EasyField.Fields.DragHandlers
         }
 
         void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
-        {
+        {            
             if (_currentBtn != null)
                 return;
 
-            var hitObject = eventData.pointerCurrentRaycast.gameObject;
-
-            if (hitObject != null && hitObject.TryGetComponent<TNodeView>(out var view))
+            if (eventData.TryGetHitObject(out var hitObject))
             {
-                _currentBtn = eventData.button;
-                _currentView = view;
+                var nodeView = hitObject.GetComponentInParent<TNodeView>();
 
-                Vector2 mouseWorldPos = _mainCamera.ScreenToWorldPoint(eventData.position);
-                var startPosition = (Vector2)_currentView.transform.position;
-                _offset = startPosition - mouseWorldPos;
+                if (nodeView != null)
+                {
+                    _currentBtn = eventData.button;
+                    _currentView = nodeView;
 
-                NodeViewDragStarted?.Invoke(_currentView, startPosition, eventData.button, _inputService.CreateSnapshot());
+                    Vector2 mouseWorldPos = _mainCamera.ScreenToWorldPoint(eventData.position);
+                    var startPosition = (Vector2)_currentView.transform.position;
+                    _offset = startPosition - mouseWorldPos;
+
+                    NodeViewDragStarted?.Invoke(_currentView, startPosition, eventData.button, _inputService.CreateSnapshot());
+                }
             }
         }
 

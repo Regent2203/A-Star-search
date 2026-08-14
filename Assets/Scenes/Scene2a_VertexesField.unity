@@ -333,7 +333,19 @@ Transform:
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &371881655 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5042532691620232031, guid: c599a52c07166ad47998dda9b80fa996,
+  m_CorrespondingSourceObject: {fileID: 2502300814701312475, guid: c599a52c07166ad47998dda9b80fa996,
+    type: 3}
+  m_PrefabInstance: {fileID: 371881653}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc1899fd5e857734cb164b9cceea62f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &371881656 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 720415958629850836, guid: c599a52c07166ad47998dda9b80fa996,
     type: 3}
   m_PrefabInstance: {fileID: 371881653}
   m_PrefabAsset: {fileID: 0}
@@ -419,11 +431,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8902941443478827796, guid: 6a91640a09da55b40bdbf151f0023579,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a91640a09da55b40bdbf151f0023579, type: 3}
 --- !u!4 &409773867 stripped
 Transform:
@@ -511,18 +519,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1064474205 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9128622762643500671, guid: c599a52c07166ad47998dda9b80fa996,
-    type: 3}
-  m_PrefabInstance: {fileID: 371881653}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc1899fd5e857734cb164b9cceea62f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!120 &1307543501 stripped
 LineRenderer:
   m_CorrespondingSourceObject: {fileID: 7768314510250192999, guid: bb23c57a7ce7b794a877d1118cfe35f9,
@@ -632,8 +628,8 @@ MonoBehaviour:
   _vertexViewPrefab: {fileID: -8279709390206036373, guid: acea59b5bf20c2846bd6ed73e168ea7f,
     type: 3}
   _field: {fileID: 1312652363}
-  _clickHandler: {fileID: 371881655}
-  _dragHandler: {fileID: 1064474205}
+  _clickHandler: {fileID: 371881656}
+  _dragHandler: {fileID: 371881655}
   _linkViewPrefab: {fileID: 409773868}
   _pathLineRenderer: {fileID: 1307543501}
   _hotkeyInfoPanel: {fileID: 2042165948}

@@ -32,7 +32,9 @@ namespace EasyField.Fields.ClickHandlers
 
         void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
         {
+            //todo
             var index = _field.PositionToIndex(eventData.pointerCurrentRaycast.worldPosition);
+            Debug.Log(index);
 
             var nodeView = _nodeViews.GetItem(index);
             if (nodeView != null)
