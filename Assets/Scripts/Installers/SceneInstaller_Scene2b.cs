@@ -1,6 +1,5 @@
 using EasyField.Fields;
 using EasyField.Heuristic;
-using EasyField.Heuristic.Functions;
 using EasyField.Implementations.Links;
 using EasyField.Implementations.Vertexes;
 using EasyField.Implementations.Vertexes.Core.Dto;
@@ -153,50 +152,12 @@ namespace EasyField.Installers
             Container.BindInterfacesAndSelfTo<LinkDataMapper>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesFieldSaveDtoProvider>().AsSingle();
 
-            //Choose only one variant here
-            UseStringSaving();
-            //UseBytesSaving();
-            //UseCompressedBytesSaving();
+            Container.BindInterfacesAndSelfTo<StringFileDtoGateway>().AsSingle();
+            Container.BindInterfacesAndSelfTo<JsonUtilityStringSerializer>().AsSingle();
 
             //Choose only one
             //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map_2b.json", Environment.SpecialFolder.Desktop);            
-
-
-            #pragma warning disable CS8321
-            void UseStringSaving()
-            {
-                Container.BindInterfacesAndSelfTo<StringFileDtoGateway>().AsSingle();
-
-                //Choose only one
-                //Container.BindInterfacesAndSelfTo<NewtonsoftJsonStringSerializer>().AsSingle();
-                Container.BindInterfacesAndSelfTo<JsonUtilityStringSerializer>().AsSingle();
-            }
-            
-            void UseBytesSaving()
-            {
-                Container.BindInterfacesAndSelfTo<BytesFileDtoGateway>().AsSingle();
-
-                //Choose only one
-                //Container.BindInterfacesAndSelfTo<NewtonsoftJsonBytesSerializer>().AsSingle();
-                Container.BindInterfacesAndSelfTo<JsonUtilityBytesSerializer>().AsSingle();                
-            }
-
-            void UseCompressedBytesSaving()
-            {
-                Container.BindInterfacesAndSelfTo<BytesFileDtoGateway>().AsSingle();
-                
-                Container.BindInterfacesAndSelfTo<GZipCompressedBytesSerializer>().FromSubContainerResolve()
-                    .ByMethod(subContainer =>
-                    {
-                        subContainer.Bind<GZipCompressedBytesSerializer>().AsSingle();
-
-                        //Choose only one
-                        //subContainer.BindInterfacesAndSelfTo<NewtonsoftJsonBytesSerializer>().AsSingle();
-                        subContainer.BindInterfacesAndSelfTo<JsonUtilityBytesSerializer>().AsSingle();
-                    }).AsSingle();
-            }
-            #pragma warning restore CS8321
         }
 
         private void BindUI()
