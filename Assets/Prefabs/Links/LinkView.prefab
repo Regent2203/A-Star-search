@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider: {fileID: 6288023075236100153}
+  _linkOffsetY: 1.75
   _textPercentageOffsetY: 0.6
   _textOffsetX: 2
   _spriteDualPlacementOffset: 0.5

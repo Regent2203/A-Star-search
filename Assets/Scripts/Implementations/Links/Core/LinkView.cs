@@ -11,6 +11,9 @@ namespace EasyField.Links
         [SerializeField]
         private BoxCollider2D _collider;
 
+        [Header("Link")]
+        [SerializeField]
+        private float _linkOffsetY = 1.75f; //link offset in units for start and end point of arrow
         [Header("Text")]
         [SerializeField]
         private float _textPercentageOffsetY = 0.6f; //text offset in percents (relative to arrow length), along arrow direction (from start point)
@@ -35,12 +38,12 @@ namespace EasyField.Links
         public TId To => _id.To;
 
         private PlacementType _placementType = PlacementType.Center;
-        private float _arrowOffset; //sizeY of arrow tip sprite
+        private float _arrowTipOffsetY; //sizeY of arrow tip sprite
         
 
         private void Awake()
         {
-            _arrowOffset = _arrowTipRenderer.sprite.bounds.size.y;
+            _arrowTipOffsetY = _arrowTipRenderer.sprite.bounds.size.y;
         }
 
         public virtual void OnSpawned(TId from, TId to, float cost, PlacementType placementType)
@@ -102,8 +105,11 @@ namespace EasyField.Links
                     break;
             }
 
+            start += -direction * _linkOffsetY;
+            end -= -direction * _linkOffsetY;
+
             //we have arrow tip sprite, so instead of drawing line between exactly start and end, we make line shorter and use arrow tip there
-            end -= -direction * _arrowOffset;
+            end -= -direction * _arrowTipOffsetY;
 
 
             //arrow
