@@ -39,7 +39,9 @@ namespace EasyField.Links
 
         private PlacementType _placementType = PlacementType.Center;
         private float _arrowTipOffsetY; //sizeY of arrow tip sprite
-        
+
+        protected virtual string BasicName => "LinkView";
+
 
         private void Awake()
         {
@@ -49,7 +51,7 @@ namespace EasyField.Links
         public virtual void OnSpawned(TId from, TId to, float cost, PlacementType placementType)
         {
             _id = new DualKey<TId>(from, to);
-            name = $"LinkView {From}->{To}";
+            name = $"{BasicName} {From}->{To}";
             UpdateCostText(cost);
             _placementType = placementType;
 
@@ -59,7 +61,7 @@ namespace EasyField.Links
         public virtual void OnDespawned()
         {
             _id = default;
-            name = $"LinkView";
+            name = $"{BasicName}";
             UpdateCostText(0.0f);
             _placementType = PlacementType.Center;
 

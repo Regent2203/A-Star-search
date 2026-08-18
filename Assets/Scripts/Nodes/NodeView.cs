@@ -11,6 +11,8 @@ namespace EasyField.Nodes
         protected TId _id;
         public TId Id => _id;
 
+        protected virtual string BasicName => "NodeView";
+
 
         public virtual void OnSpawned(TId id, Vector2 scale)
         {

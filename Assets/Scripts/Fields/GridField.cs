@@ -42,7 +42,7 @@ namespace EasyField.Fields
 
             int x = Mathf.FloorToInt(localPos.x / _grid.cellSize.x + _size.x / 2f);
             int y = Mathf.FloorToInt(localPos.y / _grid.cellSize.y + _size.y / 2f);
-
+            Debug.Log($"{x},{y}");
             return new Vector2Int(x, y);
         }
     }

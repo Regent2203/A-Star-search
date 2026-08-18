@@ -2,6 +2,7 @@
 using EasyField.Implementations.Cells;
 using EasyField.Implementations.Cells.Core.Dto;
 using EasyField.Implementations.Cells.UI;
+using EasyField.Implementations.Hexes;
 using EasyField.Inputs;
 using EasyField.PathDrawers;
 using EasyField.PathFinders;
@@ -15,7 +16,7 @@ namespace EasyField.SceneControllers
 {
     public class SceneController_Scene3a : SceneControllerBase
     {        
-        private CellsFieldBuilder _fieldBuilder;
+        private HexesFieldBuilder _fieldBuilder;
         private CellDataStorage _nodeDatas;
         private CellViewStorage _nodeViews;
 
@@ -37,7 +38,7 @@ namespace EasyField.SceneControllers
 
 
         [Inject]
-        public void Construct(CellsFieldBuilder fieldBuilder, CellDataStorage nodeDatas, CellViewStorage nodeViews,
+        public void Construct(HexesFieldBuilder fieldBuilder, CellDataStorage nodeDatas, CellViewStorage nodeViews,
             CellsConfig config, CellsClickHandler clickHandler, 
             CellTypeChanger cellTypeChanger, BrushManager<CellType> cellTypebrushManager,
             PathSetter<CellData> pathSetter, PathFinder<CellData> pathFinder, IPathDrawer<CellView> pathDrawer,

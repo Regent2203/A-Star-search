@@ -5,6 +5,7 @@ using EasyField.Heuristic.Functions;
 using EasyField.Implementations.Cells;
 using EasyField.Implementations.Cells.Core.Dto;
 using EasyField.Implementations.Cells.UI;
+using EasyField.Implementations.Hexes;
 using EasyField.Inputs;
 using EasyField.Links;
 using EasyField.Links.CostProviders;
@@ -63,11 +64,11 @@ namespace EasyField.Installers
 
         private void BindMainComponents()
         {
-            Container.BindInterfacesAndSelfTo<SceneController_Scene1a>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SceneController_Scene3a>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsSaveLoadManager>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<GridField>().FromInstance(_field).AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsFieldBuilder>().AsSingle();
+            Container.BindInterfacesAndSelfTo<HexesFieldBuilder>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsNodesBuilder>().AsSingle();
         }
 

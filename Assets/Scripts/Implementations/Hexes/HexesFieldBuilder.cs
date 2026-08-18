@@ -1,0 +1,105 @@
+﻿using EasyField.Fields;
+using EasyField.Fields.FieldBuilders;
+using EasyField.Implementations.Cells;
+using EasyField.PathSetters;
+using UnityEngine;
+
+namespace EasyField.Implementations.Hexes
+{
+    public class HexesFieldBuilder : IFieldBuilder<CellsFieldSaveDto>
+    {
+        private readonly CellsConfig _config;
+        private readonly GridField _field;
+        private readonly PathSetter<CellData> _pathSetter;
+        private readonly CellsNodesBuilder _nodesBuilder;
+        private readonly CellDataStorage _nodeDatas;
+        private readonly CellViewStorage _nodeViews;
+
+
+        public HexesFieldBuilder(CellsConfig config, GridField field, PathSetter<CellData> pathSetter, CellsNodesBuilder nodesBuilder,
+            CellDataStorage nodeDatas, CellViewStorage nodeViews)
+        {
+            _config = config;
+            _field = field;
+            _pathSetter = pathSetter;
+            _nodesBuilder = nodesBuilder;
+            _nodeDatas = nodeDatas;
+            _nodeViews = nodeViews;
+        }
+
+        public void BuildFromDto(CellsFieldSaveDto data)
+        {
+            var size = (Vector2Int)data.FieldSize;
+
+            ClearAll();
+            PrepareNewField(size);
+
+            foreach (var item in data.Nodes)
+            {
+                var id = item.Id;
+                var nodePos = (Vector2)item.NodePosition;
+                var cellType = _config.CellTypes[item.CellType];
+
+                var viewPos = IndexToViewPos((int)nodePos.x, (int)nodePos.y, size);
+
+                _nodesBuilder.CreateItem(id, nodePos, viewPos, cellType);
+            }
+        }
+
+        public void CreateNewField(int sizeX, int sizeY)
+        {
+            var size = new Vector2Int(sizeX, sizeY);
+
+            ClearAll();
+            PrepareNewField(size);
+
+            for (int x = 0; x < size.x; x++)
+            {
+                for (int y = 0; y < size.y; y++)
+                {
+                    var id = new Vector2Int(x, y);
+                    var nodePos = id;
+                    var viewPos = IndexToViewPos(x, y, size);
+
+                    _nodesBuilder.CreateItem(id, nodePos, viewPos, _config.DefaultCellType);
+                }
+            }
+        }
+
+        public void ClearAll()
+        {
+            _pathSetter.UpdateStartNode(null);
+            _pathSetter.UpdateFinishNode(null);
+
+            _nodesBuilder.ClearAll();
+        }
+
+        private void PrepareNewField(Vector2Int size)
+        {
+            _nodeDatas.Init(size);
+            _nodeViews.Init(size);
+            _field.SetSize(size);
+        }
+
+        private Vector3 IndexToViewPos(int x, int y, Vector2Int size)
+        {
+            var localX = x - (size.x / 2f);
+            var localY = y - (size.y / 2f);
+            
+            if (y % 2 == 1)
+            {
+                localX += 0.5f;
+            }
+            else
+            {
+
+            }
+
+            var localPos = new Vector3(localX * _field.Grid.cellSize.x, localY * 0.75f * _field.Grid.cellSize.y, 0);
+
+            var viewPos = _field.Grid.transform.TransformPoint(localPos);
+
+            return viewPos;
+        }
+    }
+}

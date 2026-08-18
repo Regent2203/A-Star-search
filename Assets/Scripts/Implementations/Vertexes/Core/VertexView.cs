@@ -6,7 +6,7 @@ namespace EasyField.Implementations.Vertexes
     public class VertexView : NodeView<int>
     {
         [SerializeField]
-        private CircleCollider2D _collider;
+        private CircleCollider2D _collider; //todo remove
 
         [Space]
         [SerializeField]
@@ -17,13 +17,15 @@ namespace EasyField.Implementations.Vertexes
         private GameObject _startMarker;
         [SerializeField]
         private GameObject _finishMarker;
-        
+
+        protected override string BasicName => "VertexView";
+
 
         public override void OnSpawned(int id, Vector2 scale)
         {
             base.OnSpawned(id, scale);
 
-            name = $"VertexView {id}";
+            name = $"{BasicName} {id}";
             ClearGraphics();
         }
 
