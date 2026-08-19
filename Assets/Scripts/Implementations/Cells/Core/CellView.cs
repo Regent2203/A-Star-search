@@ -6,64 +6,21 @@ namespace EasyField.Implementations.Cells
     public class CellView : NodeView<Vector2Int>
     {
         [SerializeField]
-        private BoxCollider2D _collider;
-
-        [Space]
-        [SerializeField]
         private GameObject _pathMarker;
-        [SerializeField]
-        private GameObject _selectedMarker;
-        [SerializeField]
-        private GameObject _startMarker;
-        [SerializeField]
-        private GameObject _finishMarker;
 
         protected override string BasicName => "CellView";
 
 
-        public override void OnSpawned(Vector2Int id, Vector2 scale)
+        protected override void ClearGraphics()
         {
-            base.OnSpawned(id, scale);
+            base.ClearGraphics();
 
-            name = $"{BasicName} {id.x},{id.y}";
-            ClearGraphics();
-        }
-
-        public override void OnDespawned()
-        {
-            ClearGraphics();
-
-            base.OnDespawned();
-        }
-
-        private void ClearGraphics()
-        {
             ShowPathMarker(false);
-            ShowSelectedMarker(false);
-            ShowStartMarker(false);
-            ShowFinishMarker(false);
         }
-
+        
         public void ShowPathMarker(bool show)
         {
             _pathMarker.SetActive(show);
-        }
-        public void ShowSelectedMarker(bool show)
-        {
-            _selectedMarker.SetActive(show);
-        }
-        public void ShowStartMarker(bool show)
-        {
-            _startMarker.SetActive(show);
-        }
-        public void ShowFinishMarker(bool show)
-        {
-            _finishMarker.SetActive(show);
-        }
-
-        public void UpdateSprite(Sprite sprite)
-        {
-            _spriteRenderer.sprite = sprite;
         }
     }
 }

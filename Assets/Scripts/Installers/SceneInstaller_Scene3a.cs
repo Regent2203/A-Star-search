@@ -35,7 +35,7 @@ namespace EasyField.Installers
         [SerializeField]
         private InputSettings _inputSettings;
         [SerializeField]
-        private CellView _cellViewPrefab;
+        private HexView _cellViewPrefab;
         [SerializeField]
         private GridField _field;
         [SerializeField]
@@ -136,7 +136,7 @@ namespace EasyField.Installers
 
             //Choose only one
             //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map_1a.json", Environment.SpecialFolder.Desktop);
+            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map_3a.json", Environment.SpecialFolder.Desktop);
         }
 
         private void BindUI()
