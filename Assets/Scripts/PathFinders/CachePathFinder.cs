@@ -27,17 +27,19 @@ namespace EasyField.PathFinders
 
             if (_cache.TryGetValue(key, out var cachedPath))
             {
-                return cachedPath;
+                return new List<TNodeData>(cachedPath);
             }
 
             var calculatedPath = _searchAlgorithm.CalculateWay(startNode, finishNode);
-            _cache[key] = calculatedPath;
 
-            return calculatedPath;
+            var pathToCache = calculatedPath != null ? new List<TNodeData>(calculatedPath) : new List<TNodeData>();
+            _cache[key] = pathToCache;
+
+            return new List<TNodeData>(pathToCache);
         }
 
         /// <summary>
-        /// Use this method inside FieldChanged() method in sceneControllers
+        /// Use this method inside FieldChanged() method in SceneControllers
         /// </summary>
         public void ClearCache()
         {
