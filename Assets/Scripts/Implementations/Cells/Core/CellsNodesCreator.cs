@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EasyField.Implementations.Cells
 {
-    public class CellsNodesBuilder
+    public class CellsNodesCreator
     {        
         private readonly GridField _field;
         private readonly CellDataStorage _nodeDatas;
@@ -12,7 +12,7 @@ namespace EasyField.Implementations.Cells
         private readonly CellViewFactory _nodeViewsFactory;
 
 
-        public CellsNodesBuilder(GridField field, CellDataStorage nodeDatas, CellViewStorage nodeViews,
+        public CellsNodesCreator(GridField field, CellDataStorage nodeDatas, CellViewStorage nodeViews,
             CellDataFactory nodeDatasFactory, CellViewFactory nodeViewsFactory) 
         {            
             _field = field;

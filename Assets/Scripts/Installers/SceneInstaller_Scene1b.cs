@@ -71,7 +71,7 @@ namespace EasyField.Installers
 
             Container.BindInterfacesAndSelfTo<GridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<CellsFieldBuilder>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsNodesBuilder>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsNodesCreator>().AsSingle();
         }
 
         private void BindEnviroment()

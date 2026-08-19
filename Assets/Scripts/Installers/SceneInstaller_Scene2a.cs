@@ -76,8 +76,8 @@ namespace EasyField.Installers
 
             Container.BindInterfacesAndSelfTo<SpatialField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesFieldBuilder>().AsSingle();
-            Container.BindInterfacesAndSelfTo<VertexesNodesBuilder>().AsSingle();
-            Container.BindInterfacesAndSelfTo<VertexesLinksBuilder>().AsSingle().WithArguments(false);
+            Container.BindInterfacesAndSelfTo<VertexesNodesCreator>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexesLinksCreator>().AsSingle().WithArguments(false);
         }
 
         private void BindEnviroment()

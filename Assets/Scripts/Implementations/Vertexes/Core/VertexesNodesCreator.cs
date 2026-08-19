@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EasyField.Implementations.Vertexes
 {
-    public class VertexesNodesBuilder
+    public class VertexesNodesCreator
     {
         private readonly SpatialField _field;
         private readonly VertexDataStorage _nodeDatas;
@@ -14,7 +14,7 @@ namespace EasyField.Implementations.Vertexes
         private int _newId = 0;
 
 
-        public VertexesNodesBuilder(SpatialField field, VertexDataStorage nodeDatas, VertexViewStorage nodeViews,
+        public VertexesNodesCreator(SpatialField field, VertexDataStorage nodeDatas, VertexViewStorage nodeViews,
             VertexDataFactory nodeDatasFactory, VertexViewFactory nodeViewsFactory)
         {
             _field = field;

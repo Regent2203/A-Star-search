@@ -69,7 +69,7 @@ namespace EasyField.Installers
 
             Container.BindInterfacesAndSelfTo<GridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<HexesFieldBuilder>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsNodesBuilder>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsNodesCreator>().AsSingle();
         }
 
         private void BindEnviroment()

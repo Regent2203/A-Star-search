@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace EasyField.Links.Implementations
 {
-    public class LinksBuilder<TNodeData, TNodeView, TId>
+    public class LinksCreator<TNodeData, TNodeView, TId>
         where TNodeData : class, INodeData<TId>
         where TNodeView : MonoBehaviour, INodeView<TId>
     {
@@ -24,7 +24,7 @@ namespace EasyField.Links.Implementations
         private readonly DictTypeStorage<LinkView<TId>, DualKey<TId>> _linkViews;
 
 
-        public LinksBuilder(SmartLinkDataFactory<TNodeData, TId> linkDatasFactory, LinkViewFactory<TId> linkViewsFactory,
+        public LinksCreator(SmartLinkDataFactory<TNodeData, TId> linkDatasFactory, LinkViewFactory<TId> linkViewsFactory,
             StoredLinksProvider<LinkData<TId>, TId> linksProvider, LinkViewCoordinator<TNodeView, TId> linkViewCoordinator,
             DictTypeStorage<LinkData<TId>, DualKey<TId>> linkDatas, DictTypeStorage<LinkView<TId>, DualKey<TId>> linkViews,
             bool useDual)

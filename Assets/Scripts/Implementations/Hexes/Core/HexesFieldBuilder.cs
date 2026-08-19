@@ -11,18 +11,18 @@ namespace EasyField.Implementations.Hexes
         private readonly CellsConfig _config;
         private readonly GridField _field;
         private readonly PathSetter<CellData> _pathSetter;
-        private readonly CellsNodesBuilder _nodesBuilder;
+        private readonly CellsNodesCreator _nodesCreator;
         private readonly CellDataStorage _nodeDatas;
         private readonly CellViewStorage _nodeViews;
 
 
-        public HexesFieldBuilder(CellsConfig config, GridField field, PathSetter<CellData> pathSetter, CellsNodesBuilder nodesBuilder,
+        public HexesFieldBuilder(CellsConfig config, GridField field, PathSetter<CellData> pathSetter, CellsNodesCreator nodesCreator,
             CellDataStorage nodeDatas, CellViewStorage nodeViews)
         {
             _config = config;
             _field = field;
             _pathSetter = pathSetter;
-            _nodesBuilder = nodesBuilder;
+            _nodesCreator = nodesCreator;
             _nodeDatas = nodeDatas;
             _nodeViews = nodeViews;
         }
@@ -42,7 +42,7 @@ namespace EasyField.Implementations.Hexes
 
                 var viewPos = IndexToViewPos((int)nodePos.x, (int)nodePos.y, size);
 
-                _nodesBuilder.CreateItem(id, nodePos, viewPos, cellType);
+                _nodesCreator.CreateItem(id, nodePos, viewPos, cellType);
             }
         }
 
@@ -61,7 +61,7 @@ namespace EasyField.Implementations.Hexes
                     var nodePos = id;
                     var viewPos = IndexToViewPos(x, y, size);
 
-                    _nodesBuilder.CreateItem(id, nodePos, viewPos, _config.DefaultCellType);
+                    _nodesCreator.CreateItem(id, nodePos, viewPos, _config.DefaultCellType);
                 }
             }
         }
@@ -71,7 +71,7 @@ namespace EasyField.Implementations.Hexes
             _pathSetter.UpdateStartNode(null);
             _pathSetter.UpdateFinishNode(null);
 
-            _nodesBuilder.ClearAll();
+            _nodesCreator.ClearAll();
         }
 
         private void PrepareNewField(Vector2Int size)

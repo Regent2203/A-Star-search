@@ -9,25 +9,25 @@ namespace EasyField.Implementations.Vertexes
     {
         private readonly SpatialField _field;
         private readonly PathSetter<VertexData> _pathSetter;
-        private readonly VertexesNodesBuilder _nodesBuilder;
-        private readonly VertexesLinksBuilder _linksBuilder;
+        private readonly VertexesNodesCreator _nodesCreator;
+        private readonly VertexesLinksCreator _linksCreator;
         private readonly VertexDataStorage _nodeDatas;
 
 
         public VertexesFieldBuilder(SpatialField field, PathSetter<VertexData> pathSetter,
-            VertexesNodesBuilder nodesBuilder, VertexesLinksBuilder linksBuilder,
+            VertexesNodesCreator nodesCreator, VertexesLinksCreator linksCreator,
             VertexDataStorage nodeDatas)
         {
             _field = field;
             _pathSetter = pathSetter;
-            _nodesBuilder = nodesBuilder;
-            _linksBuilder = linksBuilder;
+            _nodesCreator = nodesCreator;
+            _linksCreator = linksCreator;
             _nodeDatas = nodeDatas;
         }
 
         public void CreateNode(Vector2 pos)
         {
-            _nodesBuilder.CreateItem(pos);
+            _nodesCreator.CreateItem(pos);
         }
 
         public void DeleteNode(int id)
@@ -38,20 +38,20 @@ namespace EasyField.Implementations.Vertexes
             if (_pathSetter.FinishNode == nodeData)
                 _pathSetter.UpdateFinishNode(null);            
 
-            _linksBuilder.DeleteLinksFromNode(id);
-            _linksBuilder.DeleteLinksToNode(id);
+            _linksCreator.DeleteLinksFromNode(id);
+            _linksCreator.DeleteLinksToNode(id);
 
-            _nodesBuilder.DeleteItem(id);
+            _nodesCreator.DeleteItem(id);
         }
 
         public bool TryCreateLink(VertexData from, VertexData to)
         {
-            return _linksBuilder.TryCreateLinkItem(from, to);
+            return _linksCreator.TryCreateLinkItem(from, to);
         }
 
         public bool TryDeleteLink(VertexData from, VertexData to)
         {
-            return _linksBuilder.TryDeleteLinkItem(from.Id, to.Id);
+            return _linksCreator.TryDeleteLinkItem(from.Id, to.Id);
         }
 
         public void BuildFromDto(VertexesFieldSaveDto data)
@@ -64,14 +64,14 @@ namespace EasyField.Implementations.Vertexes
             {
                 var id = item.Id;
                 var pos = (Vector2)item.NodePosition;
-                _nodesBuilder.CreateItem(id, pos);
+                _nodesCreator.CreateItem(id, pos);
             }
 
             foreach (var item in data.Links)
             {
                 var from = _nodeDatas.GetItem(item.From);
                 var to = _nodeDatas.GetItem(item.To);
-                _linksBuilder.TryCreateLinkItem(from, to, item.Cost);
+                _linksCreator.TryCreateLinkItem(from, to, item.Cost);
             }
         }
 
@@ -86,8 +86,8 @@ namespace EasyField.Implementations.Vertexes
             _pathSetter.UpdateStartNode(null);
             _pathSetter.UpdateFinishNode(null);
 
-            _nodesBuilder.ClearAll();
-            _linksBuilder.ClearAll();
+            _nodesCreator.ClearAll();
+            _linksCreator.ClearAll();
         }
     }
 }
