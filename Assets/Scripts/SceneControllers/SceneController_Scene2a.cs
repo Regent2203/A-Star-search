@@ -11,11 +11,8 @@ using EasyField.Nodes.NodeBlockers;
 using EasyField.Nodes.NodePositionChanger;
 using EasyField.Nodes.ViewMovers;
 using EasyField.Nodes.ViewSelectors;
-using EasyField.PathDrawers;
-using EasyField.PathFinders;
 using EasyField.PathSetters;
 using EasyField.UICommon;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -27,56 +24,60 @@ namespace EasyField.SceneControllers
         private VertexesFieldBuilder _fieldBuilder;
         private VertexDataStorage _nodeDatas;
         private VertexViewStorage _nodeViews;
+
+        private StoredLinksProvider<LinkData<int>, int> _linksProvider;
         private LinkViewStorage_Int _linkViews;
+        private LinkViewCoordinator<VertexView, int> _linkViewCoordinator;
+
         private VertexesClickHandler _clickHandler;
         private VertexesDragHandler _dragHandler;        
-        private DistanceCostProvider<VertexData> _costProvider;
-        private LinkCostSetter<LinkData<int>> _linkCostSetter;
+                
         private NodePositionChanger<VertexData> _nodePositionChanger;
         private NodeBlocker<VertexData> _nodeBlocker;
         private NodeViewSelector<VertexView> _nodeViewSelector;
         private NodeViewMover<VertexView> _nodeViewMover;
-        private StoredLinksProvider<LinkData<int>, int> _linksProvider;
-        private LinkViewCoordinator<VertexView, int> _linkViewCoordinator;
+
+        private DistanceCostProvider<VertexData> _costProvider;
+        private LinkCostSetter<LinkData<int>> _linkCostSetter;        
+
         private PathSetter<VertexData> _pathSetter;
-        private PathFinder<VertexData> _pathFinder;
-        private LinePathDrawer<VertexView> _pathDrawer;
+        private VertexesPathfindRunner _pathfindRunner;
+
         private VertexesSaveLoadManager _saveLoadManager;
         private UIMainButtonsPanel _saveLoadPanel;
 
 
         [Inject]
-        public void Construct(VertexesFieldBuilder fieldBuilder, VertexDataStorage nodeDatas, VertexViewStorage nodeViews, LinkViewStorage_Int linkViews,
+        public void Construct(VertexesFieldBuilder fieldBuilder, VertexDataStorage nodeDatas, VertexViewStorage nodeViews,
+            StoredLinksProvider<LinkData<int>, int> linksProvider, LinkViewStorage_Int linkViews, LinkViewCoordinator<VertexView, int> linkViewCoordinator,
             VertexesClickHandler clickHandler, VertexesDragHandler dragHandler,
+            NodePositionChanger<VertexData> nodePositionChanger, NodeBlocker<VertexData> nodeBlocker,
+            NodeViewSelector<VertexView> nodeViewSelector, NodeViewMover<VertexView> nodeViewMover,
             DistanceCostProvider<VertexData> costProvider, LinkCostSetter<LinkData<int>> linkCostSetter,
-            NodeBlocker<VertexData> nodeBlocker, NodePositionChanger<VertexData> nodePositionChanger,
-            NodeViewSelector<VertexView> nodeViewSelector, NodeViewMover<VertexView> nodeViewMover, 
-            StoredLinksProvider<LinkData<int>, int> linksProvider, LinkViewCoordinator<VertexView, int> linkViewCoordinator,
-            PathSetter<VertexData> pathSetter, PathFinder<VertexData> pathFinder, LinePathDrawer<VertexView> pathDrawer,
+            PathSetter<VertexData> pathSetter, VertexesPathfindRunner pathfindRunner,
             VertexesSaveLoadManager saveLoadManager, UIMainButtonsPanel saveLoadPanel)
         {
             _fieldBuilder = fieldBuilder;
             _nodeDatas = nodeDatas;
             _nodeViews = nodeViews;
+            
+            _linksProvider = linksProvider;
             _linkViews = linkViews;
+            _linkViewCoordinator = linkViewCoordinator;
 
             _clickHandler = clickHandler;
             _dragHandler = dragHandler;
             
-            _costProvider = costProvider;
-            _linkCostSetter = linkCostSetter;
-
             _nodePositionChanger = nodePositionChanger;
             _nodeBlocker = nodeBlocker;
             _nodeViewSelector = nodeViewSelector;
             _nodeViewMover = nodeViewMover;
 
-            _linksProvider = linksProvider;
-            _linkViewCoordinator = linkViewCoordinator;
+            _costProvider = costProvider;
+            _linkCostSetter = linkCostSetter;
 
             _pathSetter = pathSetter;
-            _pathFinder = pathFinder;
-            _pathDrawer = pathDrawer;
+            _pathfindRunner = pathfindRunner;
 
             _saveLoadManager = saveLoadManager;
             _saveLoadPanel = saveLoadPanel;
@@ -268,6 +269,7 @@ namespace EasyField.SceneControllers
                 UpdateLinkCost(linkData);
             }
 
+
             void UpdateLinkCost(LinkData<int> linkData)
             {
                 var from = _nodeDatas.GetItem(linkData.From);
@@ -302,24 +304,7 @@ namespace EasyField.SceneControllers
 
         private void OnPathChanged(bool isReady)
         {
-            _pathDrawer.ShowPath(false);
-            TryRun(isReady);
-        }
-
-        private readonly List<VertexView> _viewsPath = new List<VertexView>();
-
-        private void TryRun(bool isReady)
-        {
-            if (isReady)
-            {
-                var nodesPath = _pathFinder.GetPath(_pathSetter.StartNode, _pathSetter.FinishNode);
-                if (nodesPath != null)
-                {
-                    _nodeViews.NodesToViewsNonAlloc(nodesPath, _viewsPath);
-                    _pathDrawer.SetPath(_viewsPath);
-                    _pathDrawer.ShowPath(true);
-                }
-            }
+            _pathfindRunner.ProcessChanges(isReady);
         }
 
         private void OnSaveBtnClicked()

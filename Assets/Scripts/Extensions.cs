@@ -1,7 +1,4 @@
-﻿using EasyField.Nodes;
-using EasyField.ObjectsStorages;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public static class Extensions
@@ -41,18 +38,5 @@ public static class Extensions
         hitObject = eventData.pointerCurrentRaycast.gameObject;
 
         return hitObject != null;
-    }
-
-
-    public static void NodesToViewsNonAlloc<TNodeData, TNodeView, TId>(this IObjectsStorage<TNodeView, TId> views, IList<TNodeData> nodesList, IList<TNodeView> outViewsList)
-        where TNodeData : class, INodeData<TId>
-        where TNodeView : class, INodeView<TId>
-    {
-        outViewsList.Clear();
-
-        for (int i = 0; i < nodesList.Count; i++)
-        {
-            outViewsList.Add(views.GetItem(nodesList[i].Id));
-        }
     }
 }

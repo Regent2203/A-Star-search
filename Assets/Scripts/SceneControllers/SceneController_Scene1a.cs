@@ -40,11 +40,12 @@ namespace EasyField.SceneControllers
             CellsSaveLoadManager saveLoadManager, UIMainButtonsPanel saveLoadPanel,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UIHotkeysInfoPanel_Cells hotkeyInfoPanel)
         {
-            _config = config;
+            _fieldBuilder = fieldBuilder;            
             _nodeDatas = nodeDatas;
             _nodeViews = nodeViews;
-            _clickHandler = clickHandler;
-            _fieldBuilder = fieldBuilder;
+
+            _config = config;
+            _clickHandler = clickHandler;            
             _cellTypeChanger = cellTypeChanger;
             _cellTypebrushManager = cellTypebrushManager;
 

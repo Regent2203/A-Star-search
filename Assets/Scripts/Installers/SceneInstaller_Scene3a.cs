@@ -65,7 +65,6 @@ namespace EasyField.Installers
         private void BindMainComponents()
         {
             Container.BindInterfacesAndSelfTo<SceneController_Scene3a>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsSaveLoadManager>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<GridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<HexesFieldBuilder>().AsSingle();
@@ -120,11 +119,14 @@ namespace EasyField.Installers
             Container.BindInterfacesAndSelfTo<AverageCostProvider<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathSetter<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<CellData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsPathfindRunner>().AsSingle();
+
             Container.BindInterfacesAndSelfTo<CellsPathDrawer>().AsSingle();
         }
 
         private void BindSaveSystem()
         {
+            Container.BindInterfacesAndSelfTo<CellsSaveLoadManager>().AsSingle();
             Container.BindInterfacesAndSelfTo<Saver>().AsSingle();
             Container.BindInterfacesAndSelfTo<Loader>().AsSingle();
 

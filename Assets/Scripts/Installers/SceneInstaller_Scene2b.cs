@@ -72,7 +72,6 @@ namespace EasyField.Installers
         private void BindMainComponents()
         {
             Container.BindInterfacesAndSelfTo<SceneController_Scene2b>().AsSingle();
-            Container.BindInterfacesAndSelfTo<VertexesSaveLoadManager>().AsSingle();            
 
             Container.BindInterfacesAndSelfTo<SpatialField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesFieldBuilder>().AsSingle();
@@ -114,8 +113,7 @@ namespace EasyField.Installers
             Container.BindMemoryPool<LinkView<int>, LinkViewPool<int>>().WithInitialSize(20).
                 FromComponentInNewPrefab(_linkViewPrefab).UnderTransform(_field.LinksContainer);
 
-            Container.BindInterfacesAndSelfTo<StoredLinksProvider<LinkData<int>, int>>().AsSingle();
-            
+            Container.BindInterfacesAndSelfTo<StoredLinksProvider<LinkData<int>, int>>().AsSingle();            
         }
 
         private void BindManipulators()
@@ -134,15 +132,19 @@ namespace EasyField.Installers
         {
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<VertexData, LinkData<int>, int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<DijkstraHeuristicsProvider<VertexData>>().AsSingle();
+
             Container.BindInterfacesAndSelfTo<ConstantCostProvider<VertexData>>().AsSingle().WithArguments(1.0f);
             Container.BindInterfacesAndSelfTo<PathSetter<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<VertexData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VertexesPathfindRunner>().AsSingle();
+
             Container.BindInterfacesAndSelfTo<LinePathDrawer<VertexView>>().AsSingle();
             Container.Bind<LineRenderer>().WithId(LinePathDrawer.LineRendererId).FromInstance(_pathLineRenderer).AsSingle();
         }
 
         private void BindSaveSystem()
         {
+            Container.BindInterfacesAndSelfTo<VertexesSaveLoadManager>().AsSingle();
             Container.BindInterfacesAndSelfTo<Saver>().AsSingle();
             Container.BindInterfacesAndSelfTo<Loader>().AsSingle();
 

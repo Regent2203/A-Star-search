@@ -4,11 +4,8 @@ using EasyField.Implementations.Cells.Core.Dto;
 using EasyField.Implementations.Cells.UI;
 using EasyField.Implementations.Hexes;
 using EasyField.Inputs;
-using EasyField.PathDrawers;
-using EasyField.PathFinders;
 using EasyField.PathSetters;
 using EasyField.UICommon;
-using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using Zenject;
 
@@ -26,8 +23,7 @@ namespace EasyField.SceneControllers
         private BrushManager<CellType> _cellTypebrushManager;
 
         private PathSetter<CellData> _pathSetter;
-        private PathFinder<CellData> _pathFinder;
-        private IPathDrawer<CellView> _pathDrawer;
+        private CellsPathfindRunner _pathfindRunner;
 
         private CellsSaveLoadManager _saveLoadManager;
         private UIMainButtonsPanel _saveLoadPanel;
@@ -41,21 +37,21 @@ namespace EasyField.SceneControllers
         public void Construct(HexesFieldBuilder fieldBuilder, CellDataStorage nodeDatas, CellViewStorage nodeViews,
             CellsConfig config, HexesClickHandler clickHandler, 
             CellTypeChanger cellTypeChanger, BrushManager<CellType> cellTypebrushManager,
-            PathSetter<CellData> pathSetter, PathFinder<CellData> pathFinder, IPathDrawer<CellView> pathDrawer,
+            PathSetter<CellData> pathSetter, CellsPathfindRunner pathfindRunner,
             CellsSaveLoadManager saveLoadManager, UIMainButtonsPanel saveLoadPanel,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UIHotkeysInfoPanel_Cells hotkeyInfoPanel)
         {
-            _config = config;
+            _fieldBuilder = fieldBuilder;
             _nodeDatas = nodeDatas;
             _nodeViews = nodeViews;
+
+            _config = config;
             _clickHandler = clickHandler;
-            _fieldBuilder = fieldBuilder;
             _cellTypeChanger = cellTypeChanger;
             _cellTypebrushManager = cellTypebrushManager;
 
             _pathSetter = pathSetter;
-            _pathFinder = pathFinder;
-            _pathDrawer = pathDrawer;
+            _pathfindRunner = pathfindRunner;
 
             _saveLoadManager = saveLoadManager;
             _saveLoadPanel = saveLoadPanel;
@@ -176,24 +172,7 @@ namespace EasyField.SceneControllers
 
         private void OnPathChanged(bool isReady)
         {
-            _pathDrawer.ShowPath(false);
-            TryRun(isReady);
-        }
-
-        private readonly List<CellView> _nodeViewsPath = new List<CellView>();
-
-        private void TryRun(bool isReady)
-        {
-            if (isReady)
-            {
-                var nodesPath = _pathFinder.GetPath(_pathSetter.StartNode, _pathSetter.FinishNode);
-                if (nodesPath != null)
-                {
-                    _nodeViews.NodesToViewsNonAlloc(nodesPath, _nodeViewsPath);
-                    _pathDrawer.SetPath(_nodeViewsPath);
-                    _pathDrawer.ShowPath(true);
-                }
-            }
+            _pathfindRunner.ProcessChanges(isReady);
         }
 
         private void OnSaveBtnClicked()
