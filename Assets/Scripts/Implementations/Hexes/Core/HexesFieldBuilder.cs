@@ -88,7 +88,7 @@ namespace EasyField.Implementations.Hexes
             
             if (y % 2 == 1)
             {
-                localX += 0.5f;
+                localX += 0.5f; //todo
             }
             else
             {

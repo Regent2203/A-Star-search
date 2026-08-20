@@ -30,7 +30,5 @@ namespace EasyField.Fields
         }
 
         public abstract void SetSize(Vector2Int size);
-
-        public abstract Vector2Int PositionToIndex(Vector2 coords);
     }
 }

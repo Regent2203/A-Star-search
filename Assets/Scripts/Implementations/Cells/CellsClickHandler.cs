@@ -2,7 +2,7 @@
 
 namespace EasyField.Implementations.Cells
 {
-    public class CellsClickHandler : GridClickHandler<CellView>
+    public class CellsClickHandler : RectGridFieldClickHandler<CellView>
     {
     }
 }

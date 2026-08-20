@@ -1,9 +1,8 @@
-﻿using EasyField.Fields;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace EasyField.Implementations.Cells
+namespace EasyField.Fields
 {
-    public class CellsGridField : GridField
+    public class RectGridField : GridField
     {
         public override void SetSize(Vector2Int size)
         {
@@ -12,13 +11,13 @@ namespace EasyField.Implementations.Cells
             _collider.size = _grid.cellSize * new Vector2(_size.x, _size.y);
         }
 
-        public override Vector2Int PositionToIndex(Vector2 coords)
+        public Vector2Int PositionToIndex(Vector2 coords)
         {
             var localPos = transform.InverseTransformPoint(coords);
 
             int x = Mathf.FloorToInt(localPos.x / _grid.cellSize.x + _size.x / 2f);
             int y = Mathf.FloorToInt(localPos.y / _grid.cellSize.y + _size.y / 2f);
-            Debug.Log($"{x},{y}");
+            
             return new Vector2Int(x, y);
         }
     }

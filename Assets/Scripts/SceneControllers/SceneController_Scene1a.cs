@@ -175,24 +175,25 @@ namespace EasyField.SceneControllers
 
         private void OnPathChanged(bool isReady)
         {
+            //todo
             _pathDrawer.ShowPath(false);
-            TryRun(isReady);
+            if (!isReady)
+                _pathDrawer.SetPath(null);            
+            else
+                Run();
         }
 
         private readonly List<CellView> _nodeViewsPath = new List<CellView>();
 
-        private void TryRun(bool isReady)
+        private void Run()
         {
-            if (isReady)
+            var nodesPath = _pathFinder.GetPath(_pathSetter.StartNode, _pathSetter.FinishNode);
+            if (nodesPath != null)
             {
-                var nodesPath = _pathFinder.GetPath(_pathSetter.StartNode, _pathSetter.FinishNode);
-                if (nodesPath != null)
-                {
-                    _nodeViews.NodesToViewsNonAlloc(nodesPath, _nodeViewsPath);
-                    _pathDrawer.SetPath(_nodeViewsPath);
-                    _pathDrawer.ShowPath(true);
-                }
-            }
+                _nodeViews.NodesToViewsNonAlloc(nodesPath, _nodeViewsPath);
+                _pathDrawer.SetPath(_nodeViewsPath);
+                _pathDrawer.ShowPath(true);
+            }            
         }
 
         private void OnSaveBtnClicked()

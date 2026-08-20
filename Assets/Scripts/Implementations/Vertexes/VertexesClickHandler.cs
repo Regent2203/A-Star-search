@@ -2,7 +2,7 @@
 
 namespace EasyField.Implementations.Vertexes
 {
-    public class VertexesClickHandler : SpatialClickHandler<VertexView>
+    public class VertexesClickHandler : SpatialFieldClickHandler<VertexView>
     {
     }
 }

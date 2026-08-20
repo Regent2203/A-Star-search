@@ -37,7 +37,7 @@ namespace EasyField.Installers
         [SerializeField]
         private CellView _cellViewPrefab;
         [SerializeField]
-        private GridField _field;
+        private RectGridField _field;
         [SerializeField]
         private CellsClickHandler _clickHandler;
         [SerializeField]
@@ -69,7 +69,7 @@ namespace EasyField.Installers
             Container.BindInterfacesAndSelfTo<SceneController_Scene1b>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsSaveLoadManager>().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<GridField>().FromInstance(_field).AsSingle();
+            Container.Bind(typeof(GridField), typeof(RectGridField)).To<RectGridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<CellsFieldBuilder>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsNodesCreator>().AsSingle();
         }

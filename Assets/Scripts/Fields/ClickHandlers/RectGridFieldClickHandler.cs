@@ -1,20 +1,32 @@
-﻿using EasyField.Inputs;
+using EasyField.Inputs;
 using EasyField.Links;
 using EasyField.Nodes;
+using EasyField.ObjectsStorages;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 
 namespace EasyField.Fields.ClickHandlers
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class SpatialClickHandler<TNodeView> : FieldClickHandler, IFieldClickHandler<TNodeView>
-        where TNodeView : MonoBehaviour, INodeView
+    public class RectGridFieldClickHandler<TNodeView> : FieldClickHandler, IFieldClickHandler<TNodeView> 
+        where TNodeView : MonoBehaviour, INodeView<Vector2Int>
     {
-        public event Action<TNodeView, PointerEventData.InputButton, InputSnapshot> NodeViewClicked;
-        
+        private RectGridField _field;
+        private IObjectsStorage<TNodeView, Vector2Int> _nodeViews;
 
-        public override void OnPointerDown(PointerEventData eventData)
+        public event Action<TNodeView, PointerEventData.InputButton, InputSnapshot> NodeViewClicked;
+
+
+        [Inject]
+        public void Construct(RectGridField field, GridTypeStorage<TNodeView> nodeViews)
+        {
+            _field = field;
+            _nodeViews = nodeViews;
+        }
+
+        void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
         {
             if (eventData.TryGetHitObject(out var hitObject))
             {
@@ -25,21 +37,23 @@ namespace EasyField.Fields.ClickHandlers
 
         protected bool CheckHitNodeView(GameObject hitObject, PointerEventData eventData)
         {
-            var nodeView = hitObject.GetComponentInParent<TNodeView>();
+            var index = _field.PositionToIndex(eventData.pointerCurrentRaycast.worldPosition);
+            var nodeView = _nodeViews.GetItem(index);
 
             if (nodeView != null)
             {
                 NodeViewClicked?.Invoke(nodeView, eventData.button, _inputService.CreateSnapshot());
                 return true;
             }
+
             return false;
         }
     }
 
 
     [RequireComponent(typeof(BoxCollider2D))]
-    public class SpatialClickHandler<TNodeView, TLinkView> : SpatialClickHandler<TNodeView>, IFieldClickHandler<TNodeView, TLinkView>
-        where TNodeView : MonoBehaviour, INodeView
+    public class RectGridFieldClickHandler<TNodeView, TLinkView> : RectGridFieldClickHandler<TNodeView>, IFieldClickHandler<TNodeView, TLinkView>
+        where TNodeView : MonoBehaviour, INodeView<Vector2Int>
         where TLinkView : MonoBehaviour, ILinkView
     {
         public event Action<TLinkView, PointerEventData.InputButton, InputSnapshot> LinkViewClicked;

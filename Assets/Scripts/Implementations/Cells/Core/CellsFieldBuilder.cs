@@ -8,14 +8,14 @@ namespace EasyField.Implementations.Cells
     public class CellsFieldBuilder : IFieldBuilder<CellsFieldSaveDto>
     {
         private readonly CellsConfig _config;
-        private readonly GridField _field;
+        private readonly RectGridField _field;
         private readonly PathSetter<CellData> _pathSetter;
         private readonly CellsNodesCreator _nodesCreator;
         private readonly CellDataStorage _nodeDatas;
         private readonly CellViewStorage _nodeViews;
 
 
-        public CellsFieldBuilder(CellsConfig config, GridField field, PathSetter<CellData> pathSetter, CellsNodesCreator nodesCreator,
+        public CellsFieldBuilder(CellsConfig config, RectGridField field, PathSetter<CellData> pathSetter, CellsNodesCreator nodesCreator,
             CellDataStorage nodeDatas, CellViewStorage nodeViews)
         {
             _config = config;
