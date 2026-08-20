@@ -3,8 +3,6 @@ using EasyField.Implementations.Cells;
 using EasyField.Implementations.Cells.Core.Dto;
 using EasyField.Implementations.Cells.UI;
 using EasyField.Inputs;
-using EasyField.PathDrawers;
-using EasyField.PathFinders;
 using EasyField.PathSetters;
 using EasyField.UICommon;
 using System.Collections.Generic;
@@ -25,8 +23,7 @@ namespace EasyField.SceneControllers
         private BrushManager<CellType> _cellTypebrushManager;
 
         private PathSetter<CellData> _pathSetter;
-        private PathFinder<CellData> _pathFinder;
-        private IPathDrawer<CellView> _pathDrawer;
+        private CellsPathfindRunner _pathfindRunner;
 
         private CellsSaveLoadManager _saveLoadManager;
         private UIMainButtonsPanel _saveLoadPanel;        
@@ -40,7 +37,7 @@ namespace EasyField.SceneControllers
         public void Construct(CellsFieldBuilder fieldBuilder, CellDataStorage nodeDatas, CellViewStorage nodeViews,
             CellsConfig config, CellsClickHandler clickHandler, 
             CellTypeChanger cellTypeChanger, BrushManager<CellType> cellTypebrushManager,
-            PathSetter<CellData> pathSetter, PathFinder<CellData> pathFinder, IPathDrawer<CellView> pathDrawer,
+            PathSetter<CellData> pathSetter, CellsPathfindRunner pathfindRunner,
             CellsSaveLoadManager saveLoadManager, UIMainButtonsPanel saveLoadPanel,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UIHotkeysInfoPanel_Cells hotkeyInfoPanel)
         {
@@ -53,9 +50,8 @@ namespace EasyField.SceneControllers
             _cellTypebrushManager = cellTypebrushManager;
 
             _pathSetter = pathSetter;
-            _pathFinder = pathFinder;
-            _pathDrawer = pathDrawer;            
-            
+            _pathfindRunner = pathfindRunner;
+
             _saveLoadManager = saveLoadManager;
             _saveLoadPanel = saveLoadPanel;
 
@@ -176,24 +172,7 @@ namespace EasyField.SceneControllers
 
         private void OnPathChanged(bool isReady)
         {
-            _pathDrawer.ShowPath(false);
-            TryRun(isReady);
-        }
-
-        private readonly List<CellView> _nodeViewsPath = new List<CellView>();
-
-        private void TryRun(bool isReady)
-        {
-            if (isReady)
-            {
-                var nodesPath = _pathFinder.GetPath(_pathSetter.StartNode, _pathSetter.FinishNode);
-                if (nodesPath != null)
-                {
-                    _nodeViews.NodesToViewsNonAlloc(nodesPath, _nodeViewsPath);
-                    _pathDrawer.SetPath(_nodeViewsPath);
-                    _pathDrawer.ShowPath(true);
-                }
-            }
+            _pathfindRunner.ProcessChanges(isReady);
         }
 
         private void OnSaveBtnClicked()
