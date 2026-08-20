@@ -8,8 +8,8 @@ namespace EasyField.Fields
         {
             _size = size;
 
-            //todo
-            _collider.size = _grid.cellSize * new Vector2(_size.x, _size.y);
+            _collider.size = _grid.cellSize * new Vector2(_size.x + 0.5f, _size.y * 0.75f + 0.25f);
+            _collider.offset = new Vector2(_grid.cellSize.x / 4, 0);
         }
     }
 }

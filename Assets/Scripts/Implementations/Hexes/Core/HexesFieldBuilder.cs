@@ -83,17 +83,12 @@ namespace EasyField.Implementations.Hexes
 
         private Vector3 IndexToViewPos(int x, int y, Vector2Int size)
         {
-            var localX = x - (size.x / 2f);
-            var localY = y - (size.y / 2f);
+            var localX = x - (size.x - 1) / 2f;
+            var localY = y - (size.y - 1) / 2f;
             
             if (y % 2 == 1)
-            {
-                localX += 0.5f; //todo
-            }
-            else
-            {
-
-            }
+                localX += 0.5f; //horizontal offset for even rows
+            
 
             var localPos = new Vector3(localX * _field.Grid.cellSize.x, localY * 0.75f * _field.Grid.cellSize.y, 0);
 

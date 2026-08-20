@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7998194198596718192}
   - component: {fileID: 4197066097678701114}
-  - component: {fileID: 7947543725864766046}
+  - component: {fileID: 1973078813522330687}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -200,7 +200,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &7947543725864766046
+--- !u!114 &1973078813522330687
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5648895154222664486}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10061482e88a947419f0d2635b2cfd61, type: 3}
+  m_Script: {fileID: 11500000, guid: adc0baf9129eea646915d5bfe90ca4f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7967019184613758709

@@ -39,7 +39,7 @@ namespace EasyField.Installers
         [SerializeField]
         private GridField _field;
         [SerializeField]
-        private CellsClickHandler _clickHandler;
+        private HexesClickHandler _clickHandler;
         [SerializeField]
         private UICellsPalette _palette;
         [SerializeField]

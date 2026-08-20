@@ -21,7 +21,7 @@ namespace EasyField.SceneControllers
         private CellViewStorage _nodeViews;
 
         private CellsConfig _config;
-        private CellsClickHandler _clickHandler;
+        private HexesClickHandler _clickHandler;
         private CellTypeChanger _cellTypeChanger;
         private BrushManager<CellType> _cellTypebrushManager;
 
@@ -39,7 +39,7 @@ namespace EasyField.SceneControllers
 
         [Inject]
         public void Construct(HexesFieldBuilder fieldBuilder, CellDataStorage nodeDatas, CellViewStorage nodeViews,
-            CellsConfig config, CellsClickHandler clickHandler, 
+            CellsConfig config, HexesClickHandler clickHandler, 
             CellTypeChanger cellTypeChanger, BrushManager<CellType> cellTypebrushManager,
             PathSetter<CellData> pathSetter, PathFinder<CellData> pathFinder, IPathDrawer<CellView> pathDrawer,
             CellsSaveLoadManager saveLoadManager, UIMainButtonsPanel saveLoadPanel,
