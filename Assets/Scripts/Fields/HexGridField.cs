@@ -11,8 +11,8 @@ namespace EasyField.Fields
 
     public enum HexOffsetType
     {
-        Even = 1,
-        Odd = 0,        
+        Odd = 0,
+        Even = 1,        
     }
 
     public class HexGridField : GridField

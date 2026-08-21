@@ -24,24 +24,25 @@ namespace EasyField.GridNeighbours
             if (!gridItems.IsIndexWithinBounds(i, j))
                 return _neighboursList;
 
-            TryAddNeighbour(_neighboursList, gridItems, i, j - 1);
-            TryAddNeighbour(_neighboursList, gridItems, i, j + 1);
+            //left, right
+            TryAddNeighbour(_neighboursList, gridItems, i - 1, j);
+            TryAddNeighbour(_neighboursList, gridItems, i + 1, j);
 
-            if ((i & 1) == 0)
+            if ((j & 1) == 0)
             {
-                //even
-                TryAddNeighbour(_neighboursList, gridItems, i - 1, j - 1);
-                TryAddNeighbour(_neighboursList, gridItems, i - 1, j);
-                TryAddNeighbour(_neighboursList, gridItems, i + 1, j - 1);
-                TryAddNeighbour(_neighboursList, gridItems, i + 1, j);
+                //even row
+                TryAddNeighbour(_neighboursList, gridItems, i - 1, j - 1); // Снизу-слева
+                TryAddNeighbour(_neighboursList, gridItems, i, j - 1);     // Снизу-справа
+                TryAddNeighbour(_neighboursList, gridItems, i - 1, j + 1); // Сверху-слева
+                TryAddNeighbour(_neighboursList, gridItems, i, j + 1);     // Сверху-справа
             }
             else
             {
-                //odd
-                TryAddNeighbour(_neighboursList, gridItems, i - 1, j);
-                TryAddNeighbour(_neighboursList, gridItems, i - 1, j + 1);
-                TryAddNeighbour(_neighboursList, gridItems, i + 1, j);
-                TryAddNeighbour(_neighboursList, gridItems, i + 1, j + 1);
+                //odd row
+                TryAddNeighbour(_neighboursList, gridItems, i, j - 1);     // Снизу-слева
+                TryAddNeighbour(_neighboursList, gridItems, i + 1, j - 1); // Снизу-справа
+                TryAddNeighbour(_neighboursList, gridItems, i, j + 1);     // Сверху-слева
+                TryAddNeighbour(_neighboursList, gridItems, i + 1, j + 1); // Сверху-справа
             }
 
             return _neighboursList;
