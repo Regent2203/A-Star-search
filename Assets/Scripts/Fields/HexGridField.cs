@@ -32,13 +32,13 @@ namespace EasyField.Fields
 
             if (orientation == HexOrientationType.PointyTopped)
             {
-                colliderSize = _grid.cellSize * new Vector2(_size.x + 0.5f, _size.y * 0.75f + 0.25f);
+                colliderSize = new Vector2(_grid.cellSize.x * (_size.x + 0.5f), _grid.cellSize.y * (_size.y * 0.75f + 0.25f));
                 colliderOffset = new Vector2(_grid.cellSize.x / 4, 0);
             }
             else if (orientation == HexOrientationType.FlatTopped)
             {
-                colliderSize = _grid.cellSize * new Vector2(_size.x * 0.75f + 0.25f, _size.y + 0.5f);
-                colliderOffset = new Vector2(0, _grid.cellSize.y / 4);
+                colliderSize = new Vector2(_grid.cellSize.y * (_size.x * 0.75f + 0.25f), _grid.cellSize.x * (_size.y + 0.5f));
+                colliderOffset = new Vector2(0, _grid.cellSize.x / 4);
             }
 
             _collider.size = colliderSize;
