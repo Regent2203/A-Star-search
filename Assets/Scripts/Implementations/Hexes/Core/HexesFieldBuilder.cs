@@ -9,14 +9,15 @@ namespace EasyField.Implementations.Hexes
     public class HexesFieldBuilder : IFieldBuilder<CellsFieldSaveDto>
     {
         private readonly CellsConfig _config;
-        private readonly GridField _field;
+        private readonly HexGridField _field;
         private readonly PathSetter<CellData> _pathSetter;
         private readonly CellsNodesCreator _nodesCreator;
         private readonly CellDataStorage _nodeDatas;
         private readonly CellViewStorage _nodeViews;
+        private readonly int _offsetModulo; //0 or 1
 
 
-        public HexesFieldBuilder(CellsConfig config, GridField field, PathSetter<CellData> pathSetter, CellsNodesCreator nodesCreator,
+        public HexesFieldBuilder(CellsConfig config, HexGridField field, PathSetter<CellData> pathSetter, CellsNodesCreator nodesCreator,
             CellDataStorage nodeDatas, CellViewStorage nodeViews)
         {
             _config = config;
@@ -25,6 +26,7 @@ namespace EasyField.Implementations.Hexes
             _nodesCreator = nodesCreator;
             _nodeDatas = nodeDatas;
             _nodeViews = nodeViews;
+            _offsetModulo = (int)_field.GetHexOffsetType();
         }
 
         public void BuildFromDto(CellsFieldSaveDto data)
@@ -86,8 +88,8 @@ namespace EasyField.Implementations.Hexes
             var localX = x - (size.x - 1) / 2f;
             var localY = y - (size.y - 1) / 2f;
             
-            if (y % 2 == 1)
-                localX += 0.5f; //horizontal offset for even rows
+            if (y % 2 == _offsetModulo)
+                localX += 0.5f; //horizontal offset for odd/even rows
             
 
             var localPos = new Vector3(localX * _field.Grid.cellSize.x, localY * 0.75f * _field.Grid.cellSize.y, 0);

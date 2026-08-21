@@ -9,14 +9,41 @@ namespace EasyField.Fields
         FlatTopped = 2,
     }
 
+    public enum HexOffsetType
+    {
+        Even = 0,
+        Odd = 1,        
+    }
+
     public class HexGridField : GridField
     {
+        [SerializeField]
+        private HexOffsetType _hexOffsetType;        
+
+
         public override void SetSize(Vector2Int size)
         {
             _size = size;
 
-            _collider.size = _grid.cellSize * new Vector2(_size.x + 0.5f, _size.y * 0.75f + 0.25f);
+            Vector2 calculatedSize = Vector2.zero;
+            HexOrientationType orientation = GetHexOrientationType();
+
+            if (orientation == HexOrientationType.PointyTopped)
+            {
+                calculatedSize = _grid.cellSize * new Vector2(_size.x + 0.5f, _size.y * 0.75f + 0.25f);
+            }
+            else if (orientation == HexOrientationType.FlatTopped)
+            {
+                calculatedSize = _grid.cellSize * new Vector2(_size.x * 0.75f + 0.25f, _size.y + 0.5f); //todo check
+            }
+
+            _collider.size = calculatedSize;
             _collider.offset = new Vector2(_grid.cellSize.x / 4, 0);
+        }
+
+        public HexOffsetType GetHexOffsetType()
+        {
+            return _hexOffsetType;
         }
 
         public HexOrientationType GetHexOrientationType()
