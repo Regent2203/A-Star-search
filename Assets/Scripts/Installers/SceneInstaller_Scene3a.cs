@@ -100,7 +100,7 @@ namespace EasyField.Installers
 
             Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<SmartLinkDataFactory<CellData, Vector2Int>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<FourSideGridNeighbours<CellData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<OddRHexGridNeighbours<CellData>>().AsSingle();
         }
 
         private void BindManipulators()
@@ -114,7 +114,7 @@ namespace EasyField.Installers
         {
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData, ILinkData<Vector2Int>, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
+            Container.BindInterfacesAndSelfTo<OddRDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellWeightGetter>().AsSingle();
             Container.BindInterfacesAndSelfTo<AverageCostProvider<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathSetter<CellData>>().AsSingle();

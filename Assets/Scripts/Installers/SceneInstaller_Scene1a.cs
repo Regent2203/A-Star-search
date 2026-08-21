@@ -99,7 +99,7 @@ namespace EasyField.Installers
 
             Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<SmartLinkDataFactory<CellData, Vector2Int>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<FourSideGridNeighbours<CellData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<FourSideRectGridNeighbours<CellData>>().AsSingle();
         }
 
         private void BindManipulators()

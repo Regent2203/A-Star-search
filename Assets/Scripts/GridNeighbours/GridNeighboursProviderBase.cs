@@ -5,7 +5,15 @@ namespace EasyField.GridNeighbours
 {
     public abstract class GridNeighboursProviderBase<TNodeData> : IGridNeighboursProvider<TNodeData>
     {
-        protected void TryAddCell(List<TNodeData> list, TNodeData[,] gridItems, int i, int j)
+        protected abstract int Capacity { get; }
+        protected readonly List<TNodeData> _neighboursList;
+
+        public GridNeighboursProviderBase()
+        {
+            _neighboursList = new List<TNodeData>(Capacity);
+        }
+
+        protected void TryAddNeighbour(List<TNodeData> list, TNodeData[,] gridItems, int i, int j)
         {
             if (gridItems.IsIndexWithinBounds(i, j))
                 list.Add(gridItems[i, j]);
