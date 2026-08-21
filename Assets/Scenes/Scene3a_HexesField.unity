@@ -494,12 +494,22 @@ PrefabInstance:
     - target: {fileID: 40272456039224674, guid: c8064025040a7fb41a4225de249042a5,
         type: 3}
       propertyPath: m_Name
-      value: HexesField
+      value: HexesField_OddR
+      objectReference: {fileID: 0}
+    - target: {fileID: 1544103524662629253, guid: c8064025040a7fb41a4225de249042a5,
+        type: 3}
+      propertyPath: _hexOffsetType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3024631908344665649, guid: c8064025040a7fb41a4225de249042a5,
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3024631908344665649, guid: c8064025040a7fb41a4225de249042a5,
+        type: 3}
+      propertyPath: m_CellSwizzle
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7494231154362246262, guid: c8064025040a7fb41a4225de249042a5,
         type: 3}

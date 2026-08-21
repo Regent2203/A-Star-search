@@ -38,7 +38,7 @@ namespace EasyField.Fields
             else if (orientation == HexOrientationType.FlatTopped)
             {
                 colliderSize = new Vector2(_grid.cellSize.y * (_size.x * 0.75f + 0.25f), _grid.cellSize.x * (_size.y + 0.5f));
-                colliderOffset = new Vector2(0, _grid.cellSize.x / 4);
+                colliderOffset = new Vector2(0, -_grid.cellSize.x / 4);
             }
 
             _collider.size = colliderSize;

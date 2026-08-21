@@ -28,7 +28,6 @@ namespace EasyField.Implementations.Cells
             var nodeView = _nodeViewsFactory.CreateItem(id, _field.ScaleFactor);
             nodeView.Move(viewPos);
             nodeView.UpdateSprite(cellType.Sprite);
-            nodeView.transform.rotation = Quaternion.Euler(0, 0, 90); //todo
 
             _nodeDatas.AddItem(id, nodeData);
             _nodeViews.AddItem(id, nodeView);

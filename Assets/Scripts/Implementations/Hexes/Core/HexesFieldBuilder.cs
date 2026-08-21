@@ -97,14 +97,14 @@ namespace EasyField.Implementations.Hexes
             switch (_hexOrientationType)
             {
                 case HexOrientationType.PointyTopped:
-                    if (y % 2 == _offsetModulo)
+                    if (y % 2 != _offsetModulo)
                         localX += 0.5f; //horizontal offset (right) for odd/even rows
                     localPos = new Vector3(localX * _field.Grid.cellSize.x, localY * 0.75f * _field.Grid.cellSize.y, 0);
                     break;
 
                 case HexOrientationType.FlatTopped:
-                    if (x % 2 == _offsetModulo)
-                        localY += 0.5f; //vertical offset (down) for odd/even columns
+                    if (x % 2 != _offsetModulo)
+                        localY -= 0.5f; //vertical offset (down) for odd/even columns
                     localPos = new Vector3(localX * 0.75f * _field.Grid.cellSize.y, localY * _field.Grid.cellSize.x, 0);
                     break;
             }            
