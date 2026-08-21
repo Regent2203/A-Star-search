@@ -126,7 +126,7 @@ namespace EasyField.SceneControllers
                 //_nodeViews.GetItem(item.Id).ShowPathMarker(true);
             }
 
-
+            //return;
             var nodeData = _nodeDatas.GetItem(nodeView.Id);
 
             if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)

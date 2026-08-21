@@ -31,18 +31,18 @@ namespace EasyField.GridNeighbours
             if ((j & 1) == 0)
             {
                 //even row
-                TryAddNeighbour(_neighboursList, gridItems, i - 1, j - 1); // Снизу-слева
-                TryAddNeighbour(_neighboursList, gridItems, i, j - 1);     // Снизу-справа
-                TryAddNeighbour(_neighboursList, gridItems, i - 1, j + 1); // Сверху-слева
-                TryAddNeighbour(_neighboursList, gridItems, i, j + 1);     // Сверху-справа
+                TryAddNeighbour(_neighboursList, gridItems, i - 1, j - 1); //down-left
+                TryAddNeighbour(_neighboursList, gridItems, i, j - 1);     //down-right
+                TryAddNeighbour(_neighboursList, gridItems, i - 1, j + 1); //up-left
+                TryAddNeighbour(_neighboursList, gridItems, i, j + 1);     //up-right
             }
             else
             {
                 //odd row
-                TryAddNeighbour(_neighboursList, gridItems, i, j - 1);     // Снизу-слева
-                TryAddNeighbour(_neighboursList, gridItems, i + 1, j - 1); // Снизу-справа
-                TryAddNeighbour(_neighboursList, gridItems, i, j + 1);     // Сверху-слева
-                TryAddNeighbour(_neighboursList, gridItems, i + 1, j + 1); // Сверху-справа
+                TryAddNeighbour(_neighboursList, gridItems, i, j - 1);     //down-left
+                TryAddNeighbour(_neighboursList, gridItems, i + 1, j - 1); //down-right
+                TryAddNeighbour(_neighboursList, gridItems, i, j + 1);     //up-left
+                TryAddNeighbour(_neighboursList, gridItems, i + 1, j + 1); //up-right
             }
 
             return _neighboursList;

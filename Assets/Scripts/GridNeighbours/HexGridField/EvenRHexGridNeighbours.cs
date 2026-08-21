@@ -24,24 +24,24 @@ namespace EasyField.GridNeighbours
             if (!gridItems.IsIndexWithinBounds(i, j))
                 return _neighboursList;
 
-            TryAddNeighbour(_neighboursList, gridItems, i, j - 1);
-            TryAddNeighbour(_neighboursList, gridItems, i, j + 1);
+            TryAddNeighbour(_neighboursList, gridItems, i - 1, j);
+            TryAddNeighbour(_neighboursList, gridItems, i + 1, j);
 
-            if ((i & 1) == 0)
+            if ((j & 1) == 0)
             {
-                //even
-                TryAddNeighbour(_neighboursList, gridItems, i - 1, j);
-                TryAddNeighbour(_neighboursList, gridItems, i - 1, j + 1);
-                TryAddNeighbour(_neighboursList, gridItems, i + 1, j);
-                TryAddNeighbour(_neighboursList, gridItems, i + 1, j + 1);
+                //even row
+                TryAddNeighbour(_neighboursList, gridItems, i, j - 1);     //down-left
+                TryAddNeighbour(_neighboursList, gridItems, i + 1, j - 1); //down-right
+                TryAddNeighbour(_neighboursList, gridItems, i, j + 1);     //up-left
+                TryAddNeighbour(_neighboursList, gridItems, i + 1, j + 1); //up-right
             }
             else
             {
-                //odd
-                TryAddNeighbour(_neighboursList, gridItems, i - 1, j - 1);
-                TryAddNeighbour(_neighboursList, gridItems, i - 1, j);
-                TryAddNeighbour(_neighboursList, gridItems, i + 1, j - 1);
-                TryAddNeighbour(_neighboursList, gridItems, i + 1, j);
+                //odd row
+                TryAddNeighbour(_neighboursList, gridItems, i - 1, j - 1); //down-left
+                TryAddNeighbour(_neighboursList, gridItems, i, j - 1);     //down-right
+                TryAddNeighbour(_neighboursList, gridItems, i - 1, j + 1); //up-left
+                TryAddNeighbour(_neighboursList, gridItems, i, j + 1);     //up-right
             }
 
             return _neighboursList;
