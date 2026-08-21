@@ -24,6 +24,7 @@ namespace EasyField.GridNeighbours
             if (!gridItems.IsIndexWithinBounds(i, j))
                 return _neighboursList;
 
+            //left, right
             TryAddNeighbour(_neighboursList, gridItems, i - 1, j);
             TryAddNeighbour(_neighboursList, gridItems, i + 1, j);
 
