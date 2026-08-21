@@ -2,6 +2,10 @@
 
 namespace EasyField.Heuristic.Functions
 {
+    /// <summary>
+    /// This heuristic function is used for rectangular grid field where movement is allowed in all eight directions, 
+    /// and diagonal movement costs approximately 1.414 times of straight movement
+    /// </summary>
     public class OctileDistance : IHeuristicFunction
     {
         private const float StraightCost = 1.0f;

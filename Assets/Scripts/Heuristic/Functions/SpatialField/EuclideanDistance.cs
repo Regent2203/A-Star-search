@@ -2,6 +2,9 @@
 
 namespace EasyField.Heuristic.Functions
 {
+    /// <summary>
+    /// This heuristic function is used for spatial field where movement is allowed in any direction at any angle
+    /// </summary>
     public class EuclideanDistance : IHeuristicFunction
     {
         public float Estimate(Vector2 p1, Vector2 p2)

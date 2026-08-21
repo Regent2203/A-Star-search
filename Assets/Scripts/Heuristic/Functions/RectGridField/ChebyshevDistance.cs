@@ -2,6 +2,10 @@
 
 namespace EasyField.Heuristic.Functions
 {
+    /// <summary>
+    /// This heuristic function is used for rectangular grid field where movement is allowed in all eight directions,
+    /// and both diagonal and straight movement has the same cost
+    /// </summary>
     public class ChebyshevDistance : IHeuristicFunction
     {
         public float Estimate(Vector2 p1, Vector2 p2)
