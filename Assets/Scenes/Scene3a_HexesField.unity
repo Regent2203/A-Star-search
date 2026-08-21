@@ -501,6 +501,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3024631908344665649, guid: c8064025040a7fb41a4225de249042a5,
+        type: 3}
+      propertyPath: m_CellSwizzle
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7494231154362246262, guid: c8064025040a7fb41a4225de249042a5,
         type: 3}
       propertyPath: m_LocalPosition.x

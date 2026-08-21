@@ -25,20 +25,24 @@ namespace EasyField.Fields
         {
             _size = size;
 
-            Vector2 calculatedSize = Vector2.zero;
+            Vector2 colliderSize = Vector2.zero;
+            Vector2 colliderOffset = Vector2.zero;
+
             HexOrientationType orientation = GetHexOrientationType();
 
             if (orientation == HexOrientationType.PointyTopped)
             {
-                calculatedSize = _grid.cellSize * new Vector2(_size.x + 0.5f, _size.y * 0.75f + 0.25f);
+                colliderSize = _grid.cellSize * new Vector2(_size.x + 0.5f, _size.y * 0.75f + 0.25f);
+                colliderOffset = new Vector2(_grid.cellSize.x / 4, 0);
             }
             else if (orientation == HexOrientationType.FlatTopped)
             {
-                calculatedSize = _grid.cellSize * new Vector2(_size.x * 0.75f + 0.25f, _size.y + 0.5f); //todo check
+                colliderSize = _grid.cellSize * new Vector2(_size.x * 0.75f + 0.25f, _size.y + 0.5f);
+                colliderOffset = new Vector2(0, -_grid.cellSize.y / 4);
             }
 
-            _collider.size = calculatedSize;
-            _collider.offset = new Vector2(_grid.cellSize.x / 4, 0);
+            _collider.size = colliderSize;
+            _collider.offset = colliderOffset;
         }
 
         public HexOffsetType GetHexOffsetType()

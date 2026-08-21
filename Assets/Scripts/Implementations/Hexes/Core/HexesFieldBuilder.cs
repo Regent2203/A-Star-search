@@ -8,13 +8,15 @@ namespace EasyField.Implementations.Hexes
 {
     public class HexesFieldBuilder : IFieldBuilder<CellsFieldSaveDto>
     {
+        private readonly HexOrientationType _hexOrientationType;
+        private readonly int _offsetModulo; //0 or 1
+
         private readonly CellsConfig _config;
         private readonly HexGridField _field;
         private readonly PathSetter<CellData> _pathSetter;
         private readonly CellsNodesCreator _nodesCreator;
         private readonly CellDataStorage _nodeDatas;
-        private readonly CellViewStorage _nodeViews;
-        private readonly int _offsetModulo; //0 or 1
+        private readonly CellViewStorage _nodeViews;        
 
 
         public HexesFieldBuilder(CellsConfig config, HexGridField field, PathSetter<CellData> pathSetter, CellsNodesCreator nodesCreator,
@@ -26,6 +28,8 @@ namespace EasyField.Implementations.Hexes
             _nodesCreator = nodesCreator;
             _nodeDatas = nodeDatas;
             _nodeViews = nodeViews;
+            
+            _hexOrientationType = _field.GetHexOrientationType();
             _offsetModulo = (int)_field.GetHexOffsetType();
         }
 
@@ -85,14 +89,25 @@ namespace EasyField.Implementations.Hexes
 
         private Vector3 IndexToViewPos(int x, int y, Vector2Int size)
         {
+            Vector3 localPos = Vector3.zero;
+
             var localX = x - (size.x - 1) / 2f;
             var localY = y - (size.y - 1) / 2f;
-            
-            if (y % 2 == _offsetModulo)
-                localX += 0.5f; //horizontal offset for odd/even rows
-            
 
-            var localPos = new Vector3(localX * _field.Grid.cellSize.x, localY * 0.75f * _field.Grid.cellSize.y, 0);
+            switch (_hexOrientationType)
+            {
+                case HexOrientationType.PointyTopped:
+                    if (y % 2 == _offsetModulo)
+                        localX += 0.5f; //horizontal offset (right) for odd/even rows
+                    localPos = new Vector3(localX * _field.Grid.cellSize.x, localY * 0.75f * _field.Grid.cellSize.y, 0);
+                    break;
+
+                case HexOrientationType.FlatTopped:
+                    if (x % 2 == _offsetModulo)
+                        localY -= 0.5f; //vertical offset (up) for odd/even columns
+                    localPos = new Vector3(localX * 0.75f * _field.Grid.cellSize.x, localY * _field.Grid.cellSize.y, 0);
+                    break;
+            }            
 
             var viewPos = _field.Grid.transform.TransformPoint(localPos);
 
