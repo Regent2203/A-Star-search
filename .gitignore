@@ -16,3 +16,5 @@
 *.sln
 *.user
 *.userprefs
+
+**/LiberationSans SDF - Fallback.asset
