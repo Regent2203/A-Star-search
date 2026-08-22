@@ -47,15 +47,14 @@ namespace EasyField.SearchAlgorithms
 
             while (needToCheck.Count > 0)
             {
-                var current = needToCheck.Dequeue();
+                var currentNode = needToCheck.Dequeue();
 
-                if (current.Equals(finishNode))
+                if (currentNode.Equals(finishNode))
                 {
-                    //Debug.Log($"{_costSoFar[finishNode]}");
                     return RetracePath(startNode, finishNode);
                 }
 
-                foreach (var link in _linksProvider.GetLinksFromNode(current.Id))
+                foreach (var link in _linksProvider.GetLinksFromNode(currentNode.Id))
                 {
                     fromNode = _nodes.GetItem(link.From);
                     toNode = _nodes.GetItem(link.To);
@@ -63,12 +62,12 @@ namespace EasyField.SearchAlgorithms
                     if (fromNode.IsBlocked || toNode.IsBlocked)
                         continue;
 
-                    var newCost = _costSoFar[current] + link.Cost;
+                    var newCost = _costSoFar[currentNode] + link.Cost;
 
                     if (!_costSoFar.ContainsKey(toNode) || newCost < _costSoFar[toNode])
                     {
                         _costSoFar[toNode] = newCost;
-                        _cameFrom[toNode] = current;
+                        _cameFrom[toNode] = currentNode;
 
                         var newPriority = newCost + _heuristicsProvider.EstimateCost(toNode, finishNode);
                         needToCheck.Enqueue(toNode, newPriority);

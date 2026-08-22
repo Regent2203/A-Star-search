@@ -41,6 +41,7 @@ namespace EasyField.Links.Factories
 
         private float GetCost(TNodeData from, TNodeData to)
         {
+            //todo is diagonal
             return _costProvider.GetCost(from, to);
         }
     }

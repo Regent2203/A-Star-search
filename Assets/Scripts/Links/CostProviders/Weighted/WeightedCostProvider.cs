@@ -1,5 +1,4 @@
 ﻿using EasyField.Nodes;
-using UnityEngine;
 
 namespace EasyField.Links.CostProviders
 {
@@ -17,7 +16,7 @@ namespace EasyField.Links.CostProviders
 
         public float GetCost(TNodeData from, TNodeData to)
         {
-            return GetWeight(from, to) * Vector2.Distance(from.NodePosition, to.NodePosition);
+            return GetWeight(from, to);
         }
     }
 }

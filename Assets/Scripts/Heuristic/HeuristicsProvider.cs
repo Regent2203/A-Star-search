@@ -18,7 +18,9 @@ namespace EasyField.Heuristic
 
         public float EstimateCost(TNodeData nodeData1, TNodeData nodeData2)
         {
-            return _heuristicFunction.Estimate(nodeData1.NodePosition, nodeData2.NodePosition) * _minStepCost;
+            var result = _heuristicFunction.Estimate(nodeData1.NodePosition, nodeData2.NodePosition) * _minStepCost;
+            //UnityEngine.Debug.Log($"Estimate: {nodeData1.NodePosition} -> {nodeData2.NodePosition} : {result}");
+            return result;
         }
     }
 }
