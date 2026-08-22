@@ -3,7 +3,7 @@
 namespace EasyField.Heuristic.Functions
 {
     /// <summary>
-    /// Hexagonal heuristic for flat-topped grid where odd columns are shifted down.
+    /// Hexagonal heuristic for flat-topped grid where even columns are shifted up.
     /// </summary>
     public class OddQDistance : HexGridDistance
     {

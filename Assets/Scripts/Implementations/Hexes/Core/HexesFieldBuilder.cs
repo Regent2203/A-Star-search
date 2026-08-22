@@ -104,7 +104,7 @@ namespace EasyField.Implementations.Hexes
 
                 case HexOrientationType.FlatTopped:
                     if (x % 2 != _offsetModulo)
-                        localY -= 0.5f; //vertical offset (down) for odd/even columns
+                        localY += 0.5f; //vertical offset (up) for odd/even columns
                     localPos = new Vector3(localX * 0.75f * _field.Grid.cellSize.y, localY * _field.Grid.cellSize.x, 0);
                     break;
             }            

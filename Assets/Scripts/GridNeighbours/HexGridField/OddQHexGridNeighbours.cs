@@ -32,19 +32,19 @@ namespace EasyField.GridNeighbours
 
             if ((i & 1) == 0)
             {
-                //even column
-                TryAddNeighbour(_neighboursList, gridItems, i - 1, j);     //down-left
-                TryAddNeighbour(_neighboursList, gridItems, i - 1, j + 1); //up-left
-                TryAddNeighbour(_neighboursList, gridItems, i + 1, j);     //down-right
-                TryAddNeighbour(_neighboursList, gridItems, i + 1, j + 1); //up-right
-            }
-            else
-            {
-                //odd column
+                //even column                
                 TryAddNeighbour(_neighboursList, gridItems, i - 1, j - 1); //down-left
                 TryAddNeighbour(_neighboursList, gridItems, i - 1, j);     //up-left
                 TryAddNeighbour(_neighboursList, gridItems, i + 1, j - 1); //down-right
                 TryAddNeighbour(_neighboursList, gridItems, i + 1, j);     //up-right
+            }
+            else
+            {
+                //odd column
+                TryAddNeighbour(_neighboursList, gridItems, i - 1, j);     //down-left
+                TryAddNeighbour(_neighboursList, gridItems, i - 1, j + 1); //up-left
+                TryAddNeighbour(_neighboursList, gridItems, i + 1, j);     //down-right
+                TryAddNeighbour(_neighboursList, gridItems, i + 1, j + 1); //up-right
             }
 
             return _neighboursList;

@@ -90,7 +90,7 @@ namespace EasyField.SceneControllers
             _cellTypebrushManager.SetBrush(1, _config.DefaultCellType);
             _cellTypebrushManager.SetBrush(2, _config.DefaultCellType);
 
-            _fieldBuilder.CreateNewField(3, 3);
+            _fieldBuilder.CreateNewField(5, 7);
         }
 
         protected override void UnsubscribeAll()
