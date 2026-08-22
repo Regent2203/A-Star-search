@@ -1,6 +1,5 @@
 ﻿using EasyField.Fields;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace EasyField.Implementations.Vertexes
 {
@@ -41,12 +40,9 @@ namespace EasyField.Implementations.Vertexes
 
         private void CreateItemInternal(int id, Vector2 pos)
         {
-            var nodeView = _nodeViewsFactory.CreateItem(id, _field.ScaleFactor);            
-            var offset = nodeView.GetSize() / 2;
-            pos = pos.Clamp(_field.Box.bounds, offset);
+            var nodeData = _nodeDatasFactory.CreateItem(id, pos);
+            var nodeView = _nodeViewsFactory.CreateItem(id, _field.ScaleFactor);
             nodeView.Move(pos);
-
-            var nodeData = _nodeDatasFactory.CreateItem(id, pos);            
 
             _nodeDatas.AddItem(id, nodeData);
             _nodeViews.AddItem(id, nodeView);

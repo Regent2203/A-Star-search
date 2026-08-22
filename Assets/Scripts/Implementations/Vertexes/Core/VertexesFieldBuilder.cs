@@ -7,6 +7,8 @@ namespace EasyField.Implementations.Vertexes
 {
     public class VertexesFieldBuilder : IFieldBuilder<VertexesFieldSaveDto>
     {
+        private readonly Vector2 _nodeViewOffset;
+
         private readonly SpatialField _field;
         private readonly PathSetter<VertexData> _pathSetter;
         private readonly VertexesNodesCreator _nodesCreator;
@@ -16,17 +18,21 @@ namespace EasyField.Implementations.Vertexes
 
         public VertexesFieldBuilder(SpatialField field, PathSetter<VertexData> pathSetter,
             VertexesNodesCreator nodesCreator, VertexesLinksCreator linksCreator,
-            VertexDataStorage nodeDatas)
+            VertexDataStorage nodeDatas, VertexView nodeView)
         {
             _field = field;
             _pathSetter = pathSetter;
             _nodesCreator = nodesCreator;
             _linksCreator = linksCreator;
             _nodeDatas = nodeDatas;
+
+            _nodeViewOffset = nodeView.GetSize() / 2;
         }
 
         public void CreateNode(Vector2 pos)
         {
+            pos = pos.Clamp(_field.Box.bounds, _nodeViewOffset);
+
             _nodesCreator.CreateItem(pos);
         }
 

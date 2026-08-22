@@ -23,12 +23,11 @@ namespace EasyField.Implementations.Cells
         }
 
         public void CreateItem(Vector2Int id, Vector2 nodePos, Vector2 viewPos, CellType cellType)
-        {            
+        {
+            var nodeData = _nodeDatasFactory.CreateItem(id, nodePos, cellType);
             var nodeView = _nodeViewsFactory.CreateItem(id, _field.ScaleFactor);
             nodeView.Move(viewPos);
             nodeView.UpdateSprite(cellType.Sprite);
-
-            var nodeData = _nodeDatasFactory.CreateItem(id, nodePos, cellType);
 
             _nodeDatas.AddItem(id, nodeData);
             _nodeViews.AddItem(id, nodeView);

@@ -97,7 +97,9 @@ namespace EasyField.Installers
             Container.BindInterfacesAndSelfTo<VertexViewFactory>().AsSingle();
             Container.BindMemoryPool<VertexData, VertexDataPool>().WithInitialSize(20);
             Container.BindMemoryPool<VertexView, VertexViewPool>().WithInitialSize(20).
-                FromComponentInNewPrefab(_vertexViewPrefab).UnderTransform(_field.NodesContainer);            
+                FromComponentInNewPrefab(_vertexViewPrefab).UnderTransform(_field.NodesContainer);
+
+            Container.BindInterfacesAndSelfTo<VertexView>().FromInstance(_vertexViewPrefab).AsSingle();
         }
 
         private void BindLinks()
