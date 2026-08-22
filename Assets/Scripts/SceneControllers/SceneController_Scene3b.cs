@@ -23,9 +23,6 @@ namespace EasyField.SceneControllers
         private CellTypeChanger _cellTypeChanger;
         private BrushManager<CellType> _cellTypebrushManager;
 
-        //temp
-        private IGridNeighboursProvider<CellData> _neighboursProvider;
-
         private PathSetter<CellData> _pathSetter;
         private CellsPathfindRunner _pathfindRunner;
 
@@ -41,7 +38,6 @@ namespace EasyField.SceneControllers
         public void Construct(HexesFieldBuilder fieldBuilder, CellDataStorage nodeDatas, CellViewStorage nodeViews,
             CellsConfig config, HexesClickHandler clickHandler, 
             CellTypeChanger cellTypeChanger, BrushManager<CellType> cellTypebrushManager,
-            IGridNeighboursProvider<CellData> neighboursProvider, //temp
             PathSetter<CellData> pathSetter, CellsPathfindRunner pathfindRunner,
             CellsSaveLoadManager saveLoadManager, UIMainButtonsPanel saveLoadPanel,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UIHotkeysInfoPanel_Cells hotkeyInfoPanel)
@@ -54,8 +50,6 @@ namespace EasyField.SceneControllers
             _clickHandler = clickHandler;
             _cellTypeChanger = cellTypeChanger;
             _cellTypebrushManager = cellTypebrushManager;
-
-            _neighboursProvider = neighboursProvider; //temp
 
             _pathSetter = pathSetter;
             _pathfindRunner = pathfindRunner;
@@ -119,14 +113,6 @@ namespace EasyField.SceneControllers
 
         private void OnNodeViewClicked(CellView nodeView, PointerEventData.InputButton button, InputSnapshot input)
         {
-            //temp
-            var neighboursList = _nodeDatas.GetNeighbourObjects(nodeView.Id, _neighboursProvider);
-            foreach (var item in neighboursList)
-            {
-                //_nodeViews.GetItem(item.Id).ShowPathMarker(true);
-            }
-
-            //return;
             var nodeData = _nodeDatas.GetItem(nodeView.Id);
 
             if (!input.IsMarkingMode && !input.IsCreatingMode && !input.IsLinkingMode)
