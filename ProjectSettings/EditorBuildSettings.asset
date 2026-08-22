@@ -20,4 +20,17 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Scene2b_VertexesField.unity
     guid: 04995e6cd1b0d2248bda40ecca2bb4c9
+  - enabled: 1
+    path: Assets/Scenes/Scene3a_HexesField.unity
+    guid: f8c06449ae110874e87ca8cea3b9d879
+  - enabled: 1
+    path: Assets/Scenes/Scene3b_HexesField.unity
+    guid: 6143b2e037c6824429fe1173e61893bd
+  - enabled: 1
+    path: Assets/Scenes/Scene3c_HexesField.unity
+    guid: 33f32b6a977f0d54f9c1de7962ba6c20
+  - enabled: 1
+    path: Assets/Scenes/Scene3d_HexesField.unity
+    guid: 7ece3a811aa38574da9a22c312d45d46
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
