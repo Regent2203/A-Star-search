@@ -119,6 +119,7 @@ namespace EasyField.SceneInstallers
             Container.BindInterfacesAndSelfTo<OctileDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellWeightGetter>().AsSingle();
             Container.BindInterfacesAndSelfTo<AverageCostProvider<CellData>>().AsSingle();
+            Container.Decorate<ICostProvider<CellData>>().With<DiagonalCostProvider<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathSetter<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPathfindRunner>().AsSingle();
