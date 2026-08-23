@@ -44,7 +44,7 @@ namespace EasyField.Implementations.Hexes
             {
                 var id = item.Id;
                 var nodePos = (Vector2)item.NodePosition;
-                var cellType = _config.CellTypes[item.CellType];
+                var cellType = _config.CellTypes[item.CellTypeId];
 
                 var viewPos = IndexToViewPos((int)nodePos.x, (int)nodePos.y, size);
 

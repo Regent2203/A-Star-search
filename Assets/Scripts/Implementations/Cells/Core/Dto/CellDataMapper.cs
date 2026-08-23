@@ -7,7 +7,7 @@ namespace EasyField.Implementations.Cells
     {
         public CellDataDto ToDto(CellData nodeData)
         {
-            return new CellDataDto(nodeData.Id, nodeData.NodePosition, nodeData.CellType);
+            return new CellDataDto(nodeData.Id, nodeData.NodePosition, nodeData.CellType.Id);
         }
     }
 }

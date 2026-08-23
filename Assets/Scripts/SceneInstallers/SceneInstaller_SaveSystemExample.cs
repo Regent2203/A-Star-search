@@ -57,25 +57,15 @@ namespace EasyField.SceneInstallers
             void UseCompressedBytesSaving_NewtonsoftJson()
             {
                 Container.BindInterfacesAndSelfTo<BytesFileDtoGateway>().AsSingle();
-
-                Container.BindInterfacesAndSelfTo<GZipCompressedBytesSerializer>().FromSubContainerResolve()
-                    .ByMethod(subContainer =>
-                    {
-                        subContainer.Bind<GZipCompressedBytesSerializer>().AsSingle();
-                        subContainer.BindInterfacesAndSelfTo<NewtonsoftJsonBytesSerializer>().AsSingle();
-                    }).AsSingle();
+                Container.BindInterfacesAndSelfTo<NewtonsoftJsonBytesSerializer>().AsSingle();
+                Container.Decorate<IBytesSerializer>().With<GZipCompressedBytesSerializer>();
             }
 
             void UseCompressedBytesSaving_JsonUtility()
             {
                 Container.BindInterfacesAndSelfTo<BytesFileDtoGateway>().AsSingle();
-
-                Container.BindInterfacesAndSelfTo<GZipCompressedBytesSerializer>().FromSubContainerResolve()
-                    .ByMethod(subContainer =>
-                    {
-                        subContainer.Bind<GZipCompressedBytesSerializer>().AsSingle();
-                        subContainer.BindInterfacesAndSelfTo<JsonUtilityBytesSerializer>().AsSingle();
-                    }).AsSingle();
+                Container.BindInterfacesAndSelfTo<JsonUtilityBytesSerializer>().AsSingle();
+                Container.Decorate<IBytesSerializer>().With<GZipCompressedBytesSerializer>();
             }
             #pragma warning restore CS8321
         }

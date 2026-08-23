@@ -315,7 +315,8 @@ namespace EasyField.SceneControllers
         private async void OnLoadBtnClicked()
         {
             var dto = await _saveLoadManager.StartLoading();
-            _fieldBuilder.BuildFromDto(dto);
+            if (dto != null)
+                _fieldBuilder.BuildFromDto(dto);
         }
 
         private void OnNewBtnClicked(int sizeX, int sizeY)

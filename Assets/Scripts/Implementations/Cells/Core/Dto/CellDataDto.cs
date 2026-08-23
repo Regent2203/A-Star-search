@@ -8,11 +8,11 @@ namespace EasyField.Implementations.Cells
     [Serializable]
     public class CellDataDto : NodeDataDto<Vector2Int>
     {
-        public CellTypeId CellType;
+        public CellTypeId CellTypeId;
 
-        public CellDataDto(Vector2Int id, Vector2Dto nodePosition, CellType cellType) : base(id, nodePosition)
+        public CellDataDto(Vector2Int id, Vector2Dto nodePosition, CellTypeId cellTypeId) : base(id, nodePosition)
         {
-            CellType = cellType.Id;
+            CellTypeId = cellTypeId;
         }
     }
 }
