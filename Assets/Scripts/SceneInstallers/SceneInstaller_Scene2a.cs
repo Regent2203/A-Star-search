@@ -1,5 +1,5 @@
 using EasyField.Fields;
-using EasyField.Heuristic;
+using EasyField.Heuristic.Functions;
 using EasyField.Implementations.Links;
 using EasyField.Implementations.Vertexes;
 using EasyField.Implementations.Vertexes.Core.Dto;
@@ -31,9 +31,9 @@ using System;
 using UnityEngine;
 using Zenject;
 
-namespace EasyField.Installers
+namespace EasyField.SceneInstallers
 {
-    public class SceneInstaller_Scene2b : MonoInstaller
+    public class SceneInstaller_Scene2a : MonoInstaller
     {
         [SerializeField]
         private Camera _mainCamera;
@@ -44,7 +44,7 @@ namespace EasyField.Installers
         [SerializeField]
         private SpatialField _field;
         [SerializeField]
-        private VertexesLinksClickHandler _clickHandler;
+        private VertexesClickHandler _clickHandler;
         [SerializeField]
         private VertexesDragHandler _dragHandler;
         [SerializeField]
@@ -71,12 +71,12 @@ namespace EasyField.Installers
 
         private void BindMainComponents()
         {
-            Container.BindInterfacesAndSelfTo<SceneController_Scene2b>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SceneController_Scene2a>().AsSingle();            
 
             Container.BindInterfacesAndSelfTo<SpatialField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesFieldBuilder>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesNodesCreator>().AsSingle();
-            Container.BindInterfacesAndSelfTo<VertexesLinksCreator>().AsSingle().WithArguments(true);
+            Container.BindInterfacesAndSelfTo<VertexesLinksCreator>().AsSingle().WithArguments(false);
         }
 
         private void BindEnviroment()
@@ -127,15 +127,15 @@ namespace EasyField.Installers
             Container.BindInterfacesAndSelfTo<NodeViewSelector<VertexView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeViewMover<VertexView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinkViewCoordinator<VertexView, int>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LinkCostAdder<LinkData<int>>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkCostSetter<LinkData<int>>>().AsSingle();
         }
 
         private void BindPathfinding()
         {
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<VertexData, LinkData<int>, int>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<DijkstraHeuristicsProvider<VertexData>>().AsSingle();
-
-            Container.BindInterfacesAndSelfTo<ConstantCostProvider<VertexData>>().AsSingle().WithArguments(1.0f);
+            Container.BindInterfacesAndSelfTo<VertexesHeuristicsProvider>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EuclideanDistance>().AsSingle();
+            Container.BindInterfacesAndSelfTo<DistanceCostProvider<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathSetter<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<VertexData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesPathfindRunner>().AsSingle();
@@ -159,7 +159,7 @@ namespace EasyField.Installers
 
             //Choose only one
             //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map_2b.json", Environment.SpecialFolder.Desktop);            
+            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map_2a.json", Environment.SpecialFolder.Desktop);
         }
 
         private void BindUI()

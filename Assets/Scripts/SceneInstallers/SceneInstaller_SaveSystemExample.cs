@@ -3,7 +3,7 @@ using EasyField.SaveSystem.FileDtoGateways;
 using EasyField.Serializers;
 using Zenject;
 
-namespace EasyField.Installers
+namespace EasyField.SceneInstallers
 {
     public class SceneInstaller_SaveSystemExample : MonoInstaller
     {

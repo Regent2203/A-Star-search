@@ -26,9 +26,9 @@ using System;
 using UnityEngine;
 using Zenject;
 
-namespace EasyField.Installers
+namespace EasyField.SceneInstallers
 {
-    public class SceneInstaller_Scene3a : MonoInstaller
+    public class SceneInstaller_Scene3c : MonoInstaller
     {
         [SerializeField]
         private Camera _mainCamera;
@@ -64,7 +64,7 @@ namespace EasyField.Installers
 
         private void BindMainComponents()
         {
-            Container.BindInterfacesAndSelfTo<SceneController_Scene3a>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SceneController_Scene3c>().AsSingle();
 
             Container.Bind(typeof(GridField), typeof(HexGridField)).To<HexGridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<HexesFieldBuilder>().AsSingle();
@@ -100,7 +100,7 @@ namespace EasyField.Installers
 
             Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<SmartLinkDataFactory<CellData, Vector2Int>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<OddRHexGridNeighbours<CellData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<OddQHexGridNeighbours<CellData>>().AsSingle();
         }
 
         private void BindManipulators()
@@ -114,7 +114,7 @@ namespace EasyField.Installers
         {
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData, ILinkData<Vector2Int>, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
-            Container.BindInterfacesAndSelfTo<OddRDistance>().AsSingle();
+            Container.BindInterfacesAndSelfTo<OddQDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellWeightGetter>().AsSingle();
             Container.BindInterfacesAndSelfTo<AverageCostProvider<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathSetter<CellData>>().AsSingle();
@@ -138,7 +138,7 @@ namespace EasyField.Installers
 
             //Choose only one
             //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map_3a.json", Environment.SpecialFolder.Desktop);
+            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map_3c.json", Environment.SpecialFolder.Desktop);
         }
 
         private void BindUI()

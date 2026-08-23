@@ -5,6 +5,7 @@ using EasyField.Heuristic.Functions;
 using EasyField.Implementations.Cells;
 using EasyField.Implementations.Cells.Core.Dto;
 using EasyField.Implementations.Cells.UI;
+using EasyField.Implementations.Hexes;
 using EasyField.Inputs;
 using EasyField.Links;
 using EasyField.Links.CostProviders;
@@ -12,7 +13,6 @@ using EasyField.Links.Factories;
 using EasyField.Links.Implementations;
 using EasyField.Links.Providers;
 using EasyField.ObjectsStorages;
-using EasyField.PathDrawers;
 using EasyField.PathFinders;
 using EasyField.PathSetters;
 using EasyField.SaveSystem;
@@ -26,28 +26,26 @@ using System;
 using UnityEngine;
 using Zenject;
 
-namespace EasyField.Installers
+namespace EasyField.SceneInstallers
 {
-    public class SceneInstaller_Scene1b : MonoInstaller
+    public class SceneInstaller_Scene3b : MonoInstaller
     {
         [SerializeField]
         private Camera _mainCamera;
         [SerializeField]
         private InputSettings _inputSettings;
         [SerializeField]
-        private CellView _cellViewPrefab;
+        private HexView _cellViewPrefab;
         [SerializeField]
-        private RectGridField _field;
+        private GridField _field;
         [SerializeField]
-        private CellsClickHandler _clickHandler;
+        private HexesClickHandler _clickHandler;
         [SerializeField]
         private UICellsPalette _palette;
         [SerializeField]
         private UICellsPaletteChoicePanel _paletteChoice;
         [SerializeField]
         private UIHotkeysInfoPanel_Cells _hotkeyInfoPanel;
-        [SerializeField]
-        private LineRenderer _pathLineRenderer;
         [SerializeField]
         private UIMainButtonsPanel _saveLoadPanel;
 
@@ -61,15 +59,15 @@ namespace EasyField.Installers
             BindManipulators();
             BindPathfinding();
             BindSaveSystem();
-            BindUI();
+            BindUI();            
         }
 
         private void BindMainComponents()
         {
-            Container.BindInterfacesAndSelfTo<SceneController_Scene1b>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SceneController_Scene3b>().AsSingle();
 
-            Container.Bind(typeof(GridField), typeof(RectGridField)).To<RectGridField>().FromInstance(_field).AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsFieldBuilder>().AsSingle();
+            Container.Bind(typeof(GridField), typeof(HexGridField)).To<HexGridField>().FromInstance(_field).AsSingle();
+            Container.BindInterfacesAndSelfTo<HexesFieldBuilder>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsNodesCreator>().AsSingle();
         }
 
@@ -102,7 +100,7 @@ namespace EasyField.Installers
 
             Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<SmartLinkDataFactory<CellData, Vector2Int>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<EightSideRectGridNeighbours<CellData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EvenRHexGridNeighbours<CellData>>().AsSingle();
         }
 
         private void BindManipulators()
@@ -116,15 +114,14 @@ namespace EasyField.Installers
         {
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData, ILinkData<Vector2Int>, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
-            Container.BindInterfacesAndSelfTo<OctileDistance>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EvenRDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellWeightGetter>().AsSingle();
             Container.BindInterfacesAndSelfTo<AverageCostProvider<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathSetter<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPathfindRunner>().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<LinePathDrawer<CellView>>().AsSingle();
-            Container.Bind<LineRenderer>().WithId(LinePathDrawer.LineRendererId).FromInstance(_pathLineRenderer).AsSingle();
+            Container.BindInterfacesAndSelfTo<CellsPathDrawer>().AsSingle();
         }
 
         private void BindSaveSystem()
@@ -141,7 +138,7 @@ namespace EasyField.Installers
 
             //Choose only one
             //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map_1b.json", Environment.SpecialFolder.Desktop);
+            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map_3b.json", Environment.SpecialFolder.Desktop);
         }
 
         private void BindUI()

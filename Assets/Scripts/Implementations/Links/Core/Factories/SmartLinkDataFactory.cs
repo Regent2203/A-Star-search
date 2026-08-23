@@ -2,6 +2,7 @@
 using EasyField.Links.CostProviders;
 using EasyField.Links.Implementations;
 using EasyField.Nodes;
+using UnityEngine;
 
 namespace EasyField.Links.Factories
 {
@@ -43,6 +44,22 @@ namespace EasyField.Links.Factories
         {
             //todo is diagonal
             return _costProvider.GetCost(from, to);
+        }
+    }
+
+    //todo
+    public interface IDiag<TNodeData, TId>
+        where TNodeData : INodeData<TId>
+    {
+        public void IsDiag(TNodeData from, TNodeData to);
+    }
+
+    public class Diag<TNodeData>
+        where TNodeData : INodeData<Vector2Int>
+    {
+        public bool IsDiag(TNodeData from, TNodeData to)
+        {
+            return Mathf.Abs(from.Id.x - to.Id.x) == 1 && Mathf.Abs(from.Id.y - to.Id.y) == 1;
         }
     }
 }
