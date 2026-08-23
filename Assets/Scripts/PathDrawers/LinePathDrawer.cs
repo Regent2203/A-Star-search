@@ -7,7 +7,7 @@ namespace EasyField.PathDrawers
 {
     public static class LinePathDrawer
     {
-        public const string LineRendererId = "PathLine";
+        public const string LineRendererId = "PathLineRenderer";
     }
 
     public class LinePathDrawer<TNodeView> : IPathDrawer<TNodeView>

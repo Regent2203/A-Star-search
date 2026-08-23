@@ -20,10 +20,7 @@ namespace EasyField.Fields
             _collider.size = size;
             _collider.offset = _collider.size / 2;
 
-            _imgBackground.size = size;
-            _imgFrame.size = size + _framePadding;
-
-            transform.position = Vector2.zero - _collider.offset;
+            UpdateGraphicsAndPosition(size);            
         }
     }
 }

@@ -43,10 +43,8 @@ namespace EasyField.Fields
             _collider.size = colliderSize;
             _collider.offset = colliderOffset + _collider.size / 2;
 
-            _imgBackground.size = size;
-            _imgFrame.size = size + _framePadding;
-
-            transform.position = Vector2.zero - _collider.offset;
+            var fieldSize = colliderSize;
+            UpdateGraphicsAndPosition(fieldSize);
         }
 
         public HexOffsetType GetHexOffsetType()
