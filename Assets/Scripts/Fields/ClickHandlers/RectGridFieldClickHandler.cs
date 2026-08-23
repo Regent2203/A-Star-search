@@ -37,6 +37,12 @@ namespace EasyField.Fields.ClickHandlers
 
         protected bool CheckHitNodeView(GameObject hitObject, PointerEventData eventData)
         {
+            Vector3 mouseScreenPos = Input.mousePosition;
+            Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(mouseScreenPos);
+            Vector3Int cellIndex = _field.Grid.WorldToCell(mouseWorldPos);
+            Debug.Log($" лик по €чейке с индексом: {cellIndex}");
+            //
+
             var index = _field.PositionToIndex(eventData.pointerCurrentRaycast.worldPosition);
             var nodeView = _nodeViews.GetItem(index);
 

@@ -117,9 +117,9 @@ namespace EasyField.Links
             //arrow
             var arrowAngle = angle + 90f;
 
-            _arrowBodyRenderer.SetPosition(0, start);
-            _arrowBodyRenderer.SetPosition(1, end);
-            _arrowTipRenderer.transform.SetLocalPositionAndRotation(end, Quaternion.Euler(0, 0, arrowAngle));
+            _arrowBodyRenderer.SetPosition(0, start - (Vector2)_arrowBodyRenderer.transform.position);
+            _arrowBodyRenderer.SetPosition(1, end - (Vector2)_arrowBodyRenderer.transform.position);
+            _arrowTipRenderer.transform.SetPositionAndRotation(end, Quaternion.Euler(0, 0, arrowAngle));
 
 
             //text
@@ -134,7 +134,7 @@ namespace EasyField.Links
             var centerPosition = Vector2.Lerp(start, end, 0.5f);            
             var collPos = new Vector3(centerPosition.x, centerPosition.y, 0);
 
-            _collider.transform.SetLocalPositionAndRotation(collPos, Quaternion.Euler(0, 0, angle));
+            _collider.transform.SetPositionAndRotation(collPos, Quaternion.Euler(0, 0, angle));
             _collider.size = new Vector2(distance, _collider.size.y);
         }
     }

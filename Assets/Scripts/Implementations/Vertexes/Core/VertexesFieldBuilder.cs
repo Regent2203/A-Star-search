@@ -62,9 +62,7 @@ namespace EasyField.Implementations.Vertexes
 
         public void BuildFromDto(VertexesFieldSaveDto data)
         {
-            ClearAll();
-
-            _field.SetSize((Vector2)data.FieldSize);
+            CreateNewField((Vector2)data.FieldSize);
 
             foreach (var item in data.Nodes)
             {
@@ -83,8 +81,13 @@ namespace EasyField.Implementations.Vertexes
 
         public void CreateNewField(int sizeX, int sizeY)
         {
+            CreateNewField(new Vector2(sizeX, sizeY));
+        }
+
+        private void CreateNewField(Vector2 fieldSize)
+        {
             ClearAll();
-            _field.SetSize(new Vector2(sizeX, sizeY));
+            _field.SetSize(fieldSize);
         }
 
         public void ClearAll()

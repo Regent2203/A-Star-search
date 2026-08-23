@@ -82,9 +82,7 @@ namespace EasyField.Implementations.Cells
 
         private Vector3 IndexToViewPos(int x, int y, Vector2Int size)
         {
-            var localX = x - (size.x / 2f);
-            var localY = y - (size.y / 2f);
-            var localPos = new Vector3(localX * _field.Grid.cellSize.x, localY * _field.Grid.cellSize.y, 0);
+            var localPos = new Vector3(x * _field.Grid.cellSize.x, y * _field.Grid.cellSize.y, 0);
 
             var viewPos = _field.Grid.transform.TransformPoint(localPos);
 
