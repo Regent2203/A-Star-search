@@ -21,12 +21,12 @@ namespace EasyField.Installers
             Container.BindInterfacesAndSelfTo<Loader>().AsSingle();
 
             //Choose and uncomment any variant here (only one)
-            UseStringSaving_NewtonsoftJson();
-            UseStringSaving_JsonUtility();
-            UseBytesSaving_NewtonsoftJson();
-            UseBytesSaving_JsonUtility();
-            UseCompressedBytesSaving_NewtonsoftJson();
-            UseCompressedBytesSaving_JsonUtility();
+            //UseStringSaving_NewtonsoftJson();
+            //UseStringSaving_JsonUtility();
+            //UseBytesSaving_NewtonsoftJson();
+            //UseBytesSaving_JsonUtility();
+            //UseCompressedBytesSaving_NewtonsoftJson();
+            //UseCompressedBytesSaving_JsonUtility();
 
 
             #pragma warning disable CS8321

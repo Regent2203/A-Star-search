@@ -17,8 +17,9 @@ namespace EasyField.Fields
         {
             _size = size;
 
-            _spriteRenderer.size = size;
-            _collider.size = size;            
+            _collider.size = size;
+            _imgBackground.size = size;
+            _imgFrame.size = size + _framePadding;
         }
     }
 }
