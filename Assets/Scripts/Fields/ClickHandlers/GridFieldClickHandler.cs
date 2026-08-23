@@ -10,17 +10,17 @@ using Zenject;
 namespace EasyField.Fields.ClickHandlers
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class RectGridFieldClickHandler<TNodeView> : FieldClickHandler, IFieldClickHandler<TNodeView> 
+    public class GridFieldClickHandler<TNodeView> : FieldClickHandler, IFieldClickHandler<TNodeView> 
         where TNodeView : MonoBehaviour, INodeView<Vector2Int>
     {
-        private RectGridField _field;
+        private GridField _field;
         private IObjectsStorage<TNodeView, Vector2Int> _nodeViews;
 
         public event Action<TNodeView, PointerEventData.InputButton, InputSnapshot> NodeViewClicked;
 
 
         [Inject]
-        public void Construct(RectGridField field, GridTypeStorage<TNodeView> nodeViews)
+        public void Construct(GridField field, GridTypeStorage<TNodeView> nodeViews)
         {
             _field = field;
             _nodeViews = nodeViews;
@@ -37,14 +37,9 @@ namespace EasyField.Fields.ClickHandlers
 
         protected bool CheckHitNodeView(GameObject hitObject, PointerEventData eventData)
         {
-            Vector3 mouseScreenPos = Input.mousePosition;
-            Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(mouseScreenPos);
-            Vector3Int cellIndex = _field.Grid.WorldToCell(mouseWorldPos);
+            var cellIndex = (Vector2Int)_field.Grid.WorldToCell(eventData.pointerCurrentRaycast.worldPosition);
             Debug.Log($" лик по €чейке с индексом: {cellIndex}");
-            //
-
-            var index = _field.PositionToIndex(eventData.pointerCurrentRaycast.worldPosition);
-            var nodeView = _nodeViews.GetItem(index);
+            var nodeView = _nodeViews.GetItem(cellIndex);
 
             if (nodeView != null)
             {
@@ -58,7 +53,7 @@ namespace EasyField.Fields.ClickHandlers
 
 
     [RequireComponent(typeof(BoxCollider2D))]
-    public class RectGridFieldClickHandler<TNodeView, TLinkView> : RectGridFieldClickHandler<TNodeView>, IFieldClickHandler<TNodeView, TLinkView>
+    public class GridFieldClickHandler<TNodeView, TLinkView> : GridFieldClickHandler<TNodeView>, IFieldClickHandler<TNodeView, TLinkView>
         where TNodeView : MonoBehaviour, INodeView<Vector2Int>
         where TLinkView : MonoBehaviour, ILinkView
     {

@@ -30,7 +30,6 @@ namespace EasyField.Implementations.Cells
         {
             var size = (Vector2Int)data.FieldSize;
 
-            ClearAll();
             PrepareNewField(size);
 
             foreach (var item in data.Nodes)
@@ -39,7 +38,7 @@ namespace EasyField.Implementations.Cells
                 var nodePos = (Vector2)item.NodePosition;
                 var cellType = _config.CellTypes[item.CellTypeId];
 
-                var viewPos = IndexToViewPos((int)nodePos.x, (int)nodePos.y, size);
+                var viewPos = IndexToViewPos(nodePos.x, nodePos.y);
 
                 _nodesCreator.CreateItem(id, nodePos, viewPos, cellType);
             }
@@ -48,8 +47,7 @@ namespace EasyField.Implementations.Cells
         public void CreateNewField(int sizeX, int sizeY)
         {
             var size = new Vector2Int(sizeX, sizeY);
-
-            ClearAll();            
+            
             PrepareNewField(size);
 
             for (int x = 0; x < size.x; x++)
@@ -58,7 +56,7 @@ namespace EasyField.Implementations.Cells
                 {
                     var id = new Vector2Int(x, y);                    
                     var nodePos = id;
-                    var viewPos = IndexToViewPos(x, y, size);
+                    var viewPos = IndexToViewPos(x, y);
                     
                     _nodesCreator.CreateItem(id, nodePos, viewPos, _config.DefaultCellType);
                 }
@@ -75,12 +73,14 @@ namespace EasyField.Implementations.Cells
 
         private void PrepareNewField(Vector2Int size)
         {
+            ClearAll();
+
             _nodeDatas.Init(size);
             _nodeViews.Init(size);
             _field.SetSize(size);
         }
 
-        private Vector3 IndexToViewPos(int x, int y, Vector2Int size)
+        private Vector3 IndexToViewPos(float x, float y)
         {
             var localPos = new Vector3(x * _field.Grid.cellSize.x, y * _field.Grid.cellSize.y, 0);
 

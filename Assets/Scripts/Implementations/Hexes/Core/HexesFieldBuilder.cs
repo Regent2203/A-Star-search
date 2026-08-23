@@ -37,7 +37,6 @@ namespace EasyField.Implementations.Hexes
         {
             var size = (Vector2Int)data.FieldSize;
 
-            ClearAll();
             PrepareNewField(size);
 
             foreach (var item in data.Nodes)
@@ -46,7 +45,7 @@ namespace EasyField.Implementations.Hexes
                 var nodePos = (Vector2)item.NodePosition;
                 var cellType = _config.CellTypes[item.CellTypeId];
 
-                var viewPos = IndexToViewPos((int)nodePos.x, (int)nodePos.y, size);
+                var viewPos = IndexToViewPos(nodePos.x, nodePos.y);
 
                 _nodesCreator.CreateItem(id, nodePos, viewPos, cellType);
             }
@@ -55,8 +54,7 @@ namespace EasyField.Implementations.Hexes
         public void CreateNewField(int sizeX, int sizeY)
         {
             var size = new Vector2Int(sizeX, sizeY);
-
-            ClearAll();
+            
             PrepareNewField(size);
 
             for (int x = 0; x < size.x; x++)
@@ -65,7 +63,7 @@ namespace EasyField.Implementations.Hexes
                 {
                     var id = new Vector2Int(x, y);
                     var nodePos = id;
-                    var viewPos = IndexToViewPos(x, y, size);
+                    var viewPos = IndexToViewPos(x, y);
 
                     _nodesCreator.CreateItem(id, nodePos, viewPos, _config.DefaultCellType);
                 }
@@ -82,30 +80,29 @@ namespace EasyField.Implementations.Hexes
 
         private void PrepareNewField(Vector2Int size)
         {
+            ClearAll();
+
             _nodeDatas.Init(size);
             _nodeViews.Init(size);
             _field.SetSize(size);
         }
 
-        private Vector3 IndexToViewPos(int x, int y, Vector2Int size)
+        private Vector3 IndexToViewPos(float x, float y)
         {
             Vector3 localPos = Vector3.zero;
-
-            var localX = x - (size.x - 1) / 2f;
-            var localY = y - (size.y - 1) / 2f;
 
             switch (_hexOrientationType)
             {
                 case HexOrientationType.PointyTopped:
                     if (y % 2 != _offsetModulo)
-                        localX += 0.5f; //horizontal offset (right) for odd/even rows
-                    localPos = new Vector3(localX * _field.Grid.cellSize.x, localY * 0.75f * _field.Grid.cellSize.y, 0);
+                        x += 0.5f; //horizontal offset (right) for odd/even rows
+                    localPos = new Vector3(x * _field.Grid.cellSize.x, y * 0.75f * _field.Grid.cellSize.y, 0);
                     break;
 
                 case HexOrientationType.FlatTopped:
                     if (x % 2 != _offsetModulo)
-                        localY += 0.5f; //vertical offset (up) for odd/even columns
-                    localPos = new Vector3(localX * 0.75f * _field.Grid.cellSize.y, localY * _field.Grid.cellSize.x, 0);
+                        y += 0.5f; //vertical offset (up) for odd/even columns
+                    localPos = new Vector3(x * 0.75f * _field.Grid.cellSize.y, y * _field.Grid.cellSize.x, 0);
                     break;
             }            
 

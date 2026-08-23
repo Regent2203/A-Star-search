@@ -32,8 +32,7 @@ namespace EasyField.Fields.ClickHandlers
 
         protected void HitField(PointerEventData eventData)
         {
-            Vector2 worldPos = _mainCamera.ScreenToWorldPoint(eventData.position);
-            FieldClicked?.Invoke(worldPos, eventData.button, _inputService.CreateSnapshot());
+            FieldClicked?.Invoke(eventData.pointerCurrentRaycast.worldPosition, eventData.button, _inputService.CreateSnapshot());
         }
     }
 }

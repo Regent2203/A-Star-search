@@ -33,16 +33,20 @@ namespace EasyField.Fields
             if (orientation == HexOrientationType.PointyTopped)
             {
                 colliderSize = new Vector2(_grid.cellSize.x * (_size.x + 0.5f), _grid.cellSize.y * (_size.y * 0.75f + 0.25f));
-                colliderOffset = new Vector2(_grid.cellSize.x / 4, 0);
             }
             else if (orientation == HexOrientationType.FlatTopped)
             {
-                colliderSize = new Vector2(_grid.cellSize.y * (_size.x * 0.75f + 0.25f), _grid.cellSize.x * (_size.y + 0.5f));
-                colliderOffset = new Vector2(0, _grid.cellSize.x / 4);
+                colliderSize = new Vector2(_grid.cellSize.y * (_size.x * 0.75f + 0.25f), _grid.cellSize.x * (_size.y + 0.5f));                
             }
+            colliderOffset = new Vector2(-_grid.cellSize.x / 2, -_grid.cellSize.y / 2);
 
             _collider.size = colliderSize;
-            _collider.offset = colliderOffset;
+            _collider.offset = colliderOffset + _collider.size / 2;
+
+            _imgBackground.size = size;
+            _imgFrame.size = size + _framePadding;
+
+            transform.position = Vector2.zero - _collider.offset;
         }
 
         public HexOffsetType GetHexOffsetType()
