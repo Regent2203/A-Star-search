@@ -63,12 +63,12 @@ namespace EasyField.Fields
 
                 if (offsetType == HexOffsetType.Odd)
                 {
-                    colliderOffset = new Vector2(-_grid.cellSize.x / 2, -_grid.cellSize.y / 2);
+                    colliderOffset = new Vector2(-cellX / 2, -cellY / 2);
                     _grid.transform.localPosition = new Vector2(-stepX * (size.x - 1.0f), -stepY * (size.y - 0.5f));
                 }
                 else if (offsetType == HexOffsetType.Even)
                 {
-                    colliderOffset = new Vector2(-_grid.cellSize.x / 2, -_grid.cellSize.y / 2 - stepY);
+                    colliderOffset = new Vector2(-cellX / 2, -cellY / 2 - stepY);
                     _grid.transform.localPosition = new Vector2(-stepX * (size.x - 1.0f), -stepY * (size.y - 1.5f));
                 }
             }
