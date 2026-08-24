@@ -20,7 +20,7 @@ namespace EasyField.Fields
             _collider.size = size;
             _collider.offset = _collider.size / 2;
 
-            UpdateGraphicsAndPosition(size);            
+            UpdateGraphics(size);            
         }
     }
 }

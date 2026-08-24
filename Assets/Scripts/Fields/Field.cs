@@ -32,13 +32,10 @@ namespace EasyField.Fields
             _framePadding = new Vector2(border.x + border.w, border.y + border.w) / _imgFrame.sprite.pixelsPerUnit;
         }
 
-        protected void UpdateGraphicsAndPosition(Vector2 size)
+        protected void UpdateGraphics(Vector2 size)
         {
             _imgBackground.size = size;
             _imgFrame.size = size + _framePadding;
-            _imgFrame.transform.localPosition = Vector2.zero - _framePadding / 2;
-
-            transform.position = Vector2.zero - _collider.offset;
         }
     }
 }

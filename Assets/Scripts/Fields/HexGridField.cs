@@ -28,23 +28,43 @@ namespace EasyField.Fields
             Vector2 colliderSize = Vector2.zero;
             Vector2 colliderOffset = Vector2.zero;
 
-            HexOrientationType orientation = GetHexOrientationType();
+            var orientation = GetHexOrientationType();
+            var offsetType = GetHexOffsetType();
 
             if (orientation == HexOrientationType.PointyTopped)
             {
-                colliderSize = new Vector2(_grid.cellSize.x * (_size.x + 0.5f), _grid.cellSize.y * (_size.y * 0.75f + 0.25f));
+                colliderSize = new Vector2(_grid.cellSize.x * (_size.x + 0.5f), _grid.cellSize.y * (_size.y * 0.75f + 0.25f));                
+
+                if (offsetType == HexOffsetType.Odd)
+                {
+                    colliderOffset = new Vector2(-_grid.cellSize.x / 2, -_grid.cellSize.y / 2);
+                    _grid.transform.localPosition = new Vector2(-2.0f * (size.x - 0.5f), -1.5f * (size.y - 1.0f));
+                }
+                else if (offsetType == HexOffsetType.Even)
+                {
+                    colliderOffset = new Vector2(-_grid.cellSize.x / 2 - 2.0f, -_grid.cellSize.y / 2);
+                    _grid.transform.localPosition = new Vector2(-2.0f * (size.x - 1.5f), -1.5f * (size.y - 1.0f));
+                }
             }
             else if (orientation == HexOrientationType.FlatTopped)
             {
                 colliderSize = new Vector2(_grid.cellSize.y * (_size.x * 0.75f + 0.25f), _grid.cellSize.x * (_size.y + 0.5f));                
-            }
-            colliderOffset = new Vector2(-_grid.cellSize.x / 2, -_grid.cellSize.y / 2);
+
+                if (offsetType == HexOffsetType.Odd)
+                {
+                    colliderOffset = new Vector2(-_grid.cellSize.x / 2, -_grid.cellSize.y / 2);
+                    _grid.transform.localPosition = new Vector2(-1.5f * (size.x - 1.0f), -2.0f * (size.y - 0.5f));
+                }
+                else if (offsetType == HexOffsetType.Even)
+                {
+                    colliderOffset = new Vector2(-_grid.cellSize.x / 2, -_grid.cellSize.y / 2 - 2.0f);
+                    _grid.transform.localPosition = new Vector2(-1.5f * (size.x - 1.0f), -2.0f * (size.y - 1.5f));
+                }
+            }            
 
             _collider.size = colliderSize;
             _collider.offset = colliderOffset + _collider.size / 2;
-
-            var fieldSize = colliderSize;
-            UpdateGraphicsAndPosition(fieldSize);
+            UpdateGraphics(colliderSize);
         }
 
         public HexOffsetType GetHexOffsetType()
