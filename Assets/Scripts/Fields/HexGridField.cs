@@ -55,7 +55,6 @@ namespace EasyField.Fields
             {
                 float cellX = _grid.cellSize.y;
                 float cellY = _grid.cellSize.x;
-
                 float stepX = cellX * 0.375f;
                 float stepY = cellY * 0.5f;
 

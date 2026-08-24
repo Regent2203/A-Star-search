@@ -11,8 +11,9 @@ namespace EasyField.Fields
             _collider.size = _grid.cellSize * new Vector2(_size.x, _size.y);
             _collider.offset = _collider.size / 2;
 
-            var fieldSize = size * (Vector2)_grid.cellSize;
-            UpdateGraphics(fieldSize);
+            _grid.transform.localPosition = -_collider.size / 2;
+
+            UpdateGraphics(_collider.size);
         }
     }
 }
