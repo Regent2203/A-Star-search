@@ -8,12 +8,12 @@ namespace EasyField.GridNeighbours
         protected override int Capacity => 6;
 
         /*
-        2   2  //y=2
-          2    //y=2
-        1   1  //y=1
+        0   2  //y=2
+          1    //y=2
+        0   2  //y=1
           1    //y=1
-        0   0  //y=0
-          0    //y=0     
+        0   2  //y=0
+          1    //y=0     
         */
 
         public override IReadOnlyList<TNodeData> GetNeighbours(Vector2Int index, TNodeData[,] gridItems)

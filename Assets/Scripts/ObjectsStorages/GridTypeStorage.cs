@@ -58,14 +58,18 @@ namespace EasyField.ObjectsStorages
         public bool TryGetItem(Vector2Int id, out T item)
         {
             ValidateStorageInitialized();
-            ValidateBounds(id);
+
             item = default;
 
-            var result = !EqualityComparer<T>.Default.Equals(_data[id.x, id.y], default);
-            if (result)
-                item = _data[id.x, id.y];
+            if (ValidateBoundsSoft(id))
+            {
+                var result = !EqualityComparer<T>.Default.Equals(_data[id.x, id.y], default);
+                if (result)
+                    item = _data[id.x, id.y];
 
-            return result;
+                return result;
+            }
+            return false;
         }
 
         public void AddItem(Vector2Int id, T item)
@@ -123,9 +127,17 @@ namespace EasyField.ObjectsStorages
             }
         }
 
-        private void ValidateBounds(Vector2Int id)
+        private bool ValidateBoundsSoft(Vector2Int id)
         {
             if (id.x < 0 || id.x >= _size.x || id.y < 0 || id.y >= _size.y)
+                return false;
+
+            return true;
+        }
+
+        private void ValidateBounds(Vector2Int id)
+        {
+            if (!ValidateBoundsSoft(id))
             {
                 throw new IndexOutOfRangeException($"Id {id} is out of grid bounds. Grid size is {_size}.");
             }

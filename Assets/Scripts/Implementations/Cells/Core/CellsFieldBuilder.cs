@@ -38,7 +38,7 @@ namespace EasyField.Implementations.Cells
                 var nodePos = (Vector2)item.NodePosition;
                 var cellType = _config.CellTypes[item.CellTypeId];
 
-                var viewPos = IndexToViewPos(nodePos.x, nodePos.y);
+                var viewPos = IndexToViewPos((int)nodePos.x, (int)nodePos.y);
 
                 _nodesCreator.CreateItem(id, nodePos, viewPos, cellType);
             }
@@ -80,10 +80,9 @@ namespace EasyField.Implementations.Cells
             _field.SetSize(size);
         }
 
-        private Vector3 IndexToViewPos(float x, float y)
+        private Vector3 IndexToViewPos(int x, int y)
         {
-            var localPos = new Vector3(x * _field.Grid.cellSize.x, y * _field.Grid.cellSize.y, 0);
-
+            var localPos = _field.Grid.CellToLocal(new Vector3Int(x, y, 0));
             var viewPos = _field.Grid.transform.TransformPoint(localPos);
 
             return viewPos;

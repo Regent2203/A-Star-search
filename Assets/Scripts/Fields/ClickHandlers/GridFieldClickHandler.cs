@@ -37,17 +37,20 @@ namespace EasyField.Fields.ClickHandlers
 
         protected bool CheckHitNodeView(GameObject hitObject, PointerEventData eventData)
         {
-            var cellIndex = (Vector2Int)_field.Grid.WorldToCell(eventData.pointerCurrentRaycast.worldPosition);
-            Debug.Log($" лик по €чейке с индексом: {cellIndex}");
-            var nodeView = _nodeViews.GetItem(cellIndex);
+            var index = (Vector2Int)_field.Grid.WorldToCell(eventData.pointerCurrentRaycast.worldPosition);
+            CorrectIndexByGridType(ref index);
 
-            if (nodeView != null)
+            if (_nodeViews.TryGetItem(index, out var nodeView))
             {
                 NodeViewClicked?.Invoke(nodeView, eventData.button, _inputService.CreateSnapshot());
                 return true;
             }
 
             return false;
+        }
+
+        protected virtual void CorrectIndexByGridType(ref Vector2Int index)
+        {
         }
     }
 
