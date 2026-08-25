@@ -106,6 +106,7 @@ namespace EasyField.SceneControllers
 
         protected override void InitDefaultStates()
         {
+            _saveLoadPanel.SetInputValues(64, 40);
             _fieldBuilder.CreateNewField(64, 40);
         }
 

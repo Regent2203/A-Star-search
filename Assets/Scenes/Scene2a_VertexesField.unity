@@ -451,10 +451,10 @@ MonoBehaviour:
     MarkingKey: 304
   _vertexViewPrefab: {fileID: -8279709390206036373, guid: acea59b5bf20c2846bd6ed73e168ea7f,
     type: 3}
+  _linkViewPrefab: {fileID: 409773868}
   _field: {fileID: 1312652363}
   _clickHandler: {fileID: 371881656}
   _dragHandler: {fileID: 371881655}
-  _linkViewPrefab: {fileID: 409773868}
   _pathLineRenderer: {fileID: 1307543501}
   _hotkeyInfoPanel: {fileID: 2042165948}
   _saveLoadPanel: {fileID: 1634628135}
@@ -497,7 +497,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.4236383, g: 0.5523911, b: 0.754717, a: 0}
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

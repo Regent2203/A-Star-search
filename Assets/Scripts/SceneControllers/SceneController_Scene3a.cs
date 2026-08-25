@@ -82,6 +82,7 @@ namespace EasyField.SceneControllers
             _cellTypebrushManager.SetBrush(1, _config.DefaultCellType);
             _cellTypebrushManager.SetBrush(2, _config.DefaultCellType);
 
+            _saveLoadPanel.SetInputValues(5, 7);
             _fieldBuilder.CreateNewField(5, 7);
         }
 
