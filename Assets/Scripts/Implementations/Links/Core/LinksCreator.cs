@@ -5,28 +5,28 @@ using EasyField.Nodes;
 using EasyField.ObjectsStorages;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace EasyField.Links.Implementations
 {
-    public class LinksCreator<TNodeData, TNodeView, TId>
-        where TNodeData : class, INodeData<TId>
-        where TNodeView : MonoBehaviour, INodeView<TId>
+    public class LinksCreator<TNodeData, TNodeView, TLinkData, TId>
+        where TNodeData : INodeData<TId>
+        where TNodeView : INodeView<TId>
+        where TLinkData : ILinkData<TId>
     {
         private readonly bool _useDual;
 
-        private readonly SmartLinkDataFactory<TNodeData, TId> _linkDatasFactory;
+        private readonly SmartLinkDataFactory<TNodeData, TLinkData, TId> _linkDatasFactory;
         private readonly LinkViewFactory<TId> _linkViewsFactory;
-        private readonly StoredLinksProvider<LinkData<TId>, TId> _linksProvider;
+        private readonly StoredLinksProvider<TLinkData, TId> _linksProvider;
         private readonly LinkViewCoordinator<TNodeView, TId> _linkViewCoordinator;
 
-        private readonly DictTypeStorage<LinkData<TId>, DualKey<TId>> _linkDatas;
+        private readonly DictTypeStorage<TLinkData, DualKey<TId>> _linkDatas;
         private readonly DictTypeStorage<LinkView<TId>, DualKey<TId>> _linkViews;
 
 
-        public LinksCreator(SmartLinkDataFactory<TNodeData, TId> linkDatasFactory, LinkViewFactory<TId> linkViewsFactory,
-            StoredLinksProvider<LinkData<TId>, TId> linksProvider, LinkViewCoordinator<TNodeView, TId> linkViewCoordinator,
-            DictTypeStorage<LinkData<TId>, DualKey<TId>> linkDatas, DictTypeStorage<LinkView<TId>, DualKey<TId>> linkViews,
+        public LinksCreator(SmartLinkDataFactory<TNodeData, TLinkData, TId> linkDatasFactory, LinkViewFactory<TId> linkViewsFactory,
+            StoredLinksProvider<TLinkData, TId> linksProvider, LinkViewCoordinator<TNodeView, TId> linkViewCoordinator,
+            DictTypeStorage<TLinkData, DualKey<TId>> linkDatas, DictTypeStorage<LinkView<TId>, DualKey<TId>> linkViews,
             bool useDual)
         {
             _linkDatasFactory = linkDatasFactory;

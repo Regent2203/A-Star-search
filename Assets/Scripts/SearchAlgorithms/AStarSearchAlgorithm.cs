@@ -12,9 +12,9 @@ namespace EasyField.SearchAlgorithms
         where TNodeData : INodeData<TId>
         where TLinkData : ILinkData<TId>
     {
-        private List<TNodeData> _resultPath = new();
-        private Dictionary<TNodeData, TNodeData> _cameFrom = new();
-        private Dictionary<TNodeData, float> _costSoFar = new();
+        private readonly List<TNodeData> _resultPath = new();
+        private readonly Dictionary<TNodeData, TNodeData> _cameFrom = new();
+        private readonly Dictionary<TNodeData, float> _costSoFar = new();
 
         private readonly IObjectsStorage<TNodeData, TId> _nodes;
         private readonly IHeuristicsProvider<TNodeData> _heuristicsProvider;

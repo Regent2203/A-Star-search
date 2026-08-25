@@ -109,7 +109,8 @@ namespace EasyField.SceneInstallers
             Container.Bind(typeof(LinkViewStorage_Int), typeof(DictTypeStorage<LinkView<int>, DualKey<int>>), typeof(IObjectsStorage<LinkView<int>, DualKey<int>>)).
                 To<LinkViewStorage_Int>().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<SmartLinkDataFactory<VertexData, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SmartLinkDataFactory<VertexData, LinkData<int>, int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkDataFactory<int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinkViewFactory<int>>().AsSingle();
             Container.BindMemoryPool<LinkData<int>, LinkDataPool<int>>().WithInitialSize(20);
             Container.BindMemoryPool<LinkView<int>, LinkViewPool<int>>().WithInitialSize(20).

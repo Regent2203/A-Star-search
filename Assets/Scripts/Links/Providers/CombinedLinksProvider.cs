@@ -5,20 +5,22 @@ using UnityEngine;
 
 namespace EasyField.Links.Providers
 {
-    public class CombinedLinksProvider<TNodeData> : ILinksProvider<ILinkData<Vector2Int>, Vector2Int>
+    public class CombinedLinksProvider<TNodeData, TLinkData> : ILinksProvider<TLinkData, Vector2Int>
         where TNodeData : INodeData<Vector2Int>
+        where TLinkData : ILinkData<Vector2Int>, new()
     {
-        private readonly StoredLinksProvider<ILinkData<Vector2Int>, Vector2Int> _storedLinksProvider;
-        private readonly GridDynamicLinksProvider<TNodeData> _gridDynamicLinksProvider;
+        private readonly StoredLinksProvider<TLinkData, Vector2Int> _storedLinksProvider;
+        private readonly GridDynamicLinksProvider<TNodeData, TLinkData> _gridDynamicLinksProvider;
 
 
-        public CombinedLinksProvider(StoredLinksProvider<ILinkData<Vector2Int>, Vector2Int> storedLinksProvider, GridDynamicLinksProvider<TNodeData> gridDynamicLinksProvider)
+        public CombinedLinksProvider(StoredLinksProvider<TLinkData, Vector2Int> storedLinksProvider, 
+            GridDynamicLinksProvider<TNodeData, TLinkData> gridDynamicLinksProvider)
         {
             _storedLinksProvider = storedLinksProvider;
             _gridDynamicLinksProvider = gridDynamicLinksProvider;
         }
 
-        public IEnumerable<ILinkData<Vector2Int>> GetLinksFromNode(Vector2Int id)
+        public IEnumerable<TLinkData> GetLinksFromNode(Vector2Int id)
         {
             var storedLinks = _storedLinksProvider.GetLinksFromNode(id);
             var dynamicLinks = _gridDynamicLinksProvider.GetLinksFromNode(id);
@@ -27,7 +29,7 @@ namespace EasyField.Links.Providers
             return result;
         }
 
-        public IEnumerable<ILinkData<Vector2Int>> GetLinksToNode(Vector2Int id)
+        public IEnumerable<TLinkData> GetLinksToNode(Vector2Int id)
         {
             var storedLinks = _storedLinksProvider.GetLinksToNode(id);
             var dynamicLinks = _gridDynamicLinksProvider.GetLinksToNode(id);

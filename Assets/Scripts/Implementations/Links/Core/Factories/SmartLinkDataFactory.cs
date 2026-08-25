@@ -1,22 +1,24 @@
 ﻿using EasyField.Links.CostProviders;
-using EasyField.Links.Implementations;
 using EasyField.Nodes;
 using System.Collections.Generic;
 
 namespace EasyField.Links.Factories
 {
-    public class SmartLinkDataFactory<TNodeData, TId> : LinkDataFactory<TId>
+    public class SmartLinkDataFactory<TNodeData, TLinkData, TId>
         where TNodeData : INodeData<TId>
+        where TLinkData : ILinkData<TId>
     {
+        private readonly ILinkDataFactory<TLinkData, TId> _factory;
         private readonly ICostProvider<TNodeData> _costProvider;
 
 
-        public SmartLinkDataFactory(LinkDataPool<TId> linkDatasPool, ICostProvider<TNodeData> costProvider) : base(linkDatasPool)
+        public SmartLinkDataFactory(ILinkDataFactory<TLinkData, TId> factory, ICostProvider<TNodeData> costProvider)
         {
+            _factory = factory;
             _costProvider = costProvider;
         }
 
-        public IEnumerable<LinkData<TId>> CreateLinksFromNode(TNodeData from, IEnumerable<TNodeData> neighbours)
+        public IEnumerable<TLinkData> CreateLinksFromNode(TNodeData from, IEnumerable<TNodeData> neighbours)
         {
             foreach (var to in neighbours)
             {
@@ -24,7 +26,7 @@ namespace EasyField.Links.Factories
             }
         }
 
-        public IEnumerable<LinkData<TId>> CreateLinksToNode(TNodeData to, IEnumerable<TNodeData> neighbours)
+        public IEnumerable<TLinkData> CreateLinksToNode(TNodeData to, IEnumerable<TNodeData> neighbours)
         {
             foreach (var from in neighbours)
             {
@@ -32,16 +34,21 @@ namespace EasyField.Links.Factories
             }
         }
 
-        public LinkData<TId> CreateLink(TNodeData from, TNodeData to, float? cost = null)
+        public TLinkData CreateLink(TNodeData from, TNodeData to, float? cost = null)
         {
             float linkCost = cost ?? GetCost(from, to);
             
-            return CreateItem(from.Id, to.Id, linkCost);
+            return _factory.CreateItem(from.Id, to.Id, linkCost);
         }
 
         private float GetCost(TNodeData from, TNodeData to)
         {
             return _costProvider.GetCost(from, to);
+        }
+
+        public void DeleteItem(TLinkData item)
+        {
+            _factory.DeleteItem(item);
         }
     }
 }

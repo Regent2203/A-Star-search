@@ -2,7 +2,7 @@
 
 namespace EasyField.Links.Factories
 {
-    public class LinkDataFactory<TId>
+    public class LinkDataFactory<TId> : ILinkDataFactory<LinkData<TId>, TId>
     {
         protected readonly LinkDataPool<TId> _linkDatasPool;
 
