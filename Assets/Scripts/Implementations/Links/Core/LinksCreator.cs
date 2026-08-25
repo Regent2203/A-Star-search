@@ -45,7 +45,7 @@ namespace EasyField.Links.Implementations
             if (ValidateSameNode(from.Id, to.Id)) 
                 return false;
 
-            if (_linksProvider.TryGetLink(from.Id, to.Id, out _))
+            if (_linksProvider.HasLink(from.Id, to.Id))
                 return false;
 
             CreateLinkItem(from, to, cost);            

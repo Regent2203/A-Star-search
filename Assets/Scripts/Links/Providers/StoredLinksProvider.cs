@@ -24,6 +24,13 @@ namespace EasyField.Links.Providers
             return _linkDatas.TryGetItem(key, out link);
         }
 
+        public bool HasLink(TId fromId, TId toId)
+        {
+            var key = new DualKey<TId>(fromId, toId);
+
+            return _linkDatas.HasItem(key);
+        }
+
         public void AddLink(TLinkData link)
         {
             var key = new DualKey<TId>(link.From, link.To);

@@ -72,6 +72,18 @@ namespace EasyField.ObjectsStorages
             return false;
         }
 
+        public bool HasItem(Vector2Int id)
+        {
+            ValidateStorageInitialized();
+
+            if (!ValidateBoundsSoft(id))
+            {
+                return false;
+            }
+
+            return !EqualityComparer<T>.Default.Equals(_data[id.x, id.y], default);
+        }
+
         public void AddItem(Vector2Int id, T item)
         {
             ValidateStorageInitialized();

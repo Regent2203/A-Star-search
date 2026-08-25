@@ -13,16 +13,24 @@ namespace EasyField.Links.ViewMovers
     public class LinkViewCoordinator<TNodeView, TId>
         where TNodeView : INodeView<TId>
     {
+        private readonly PlacementType _dualModePlacementType;
+
         private readonly IObjectsStorage<TNodeView, TId> _nodeViews;
         private readonly DictTypeStorage<LinkView<TId>, DualKey<TId>> _linkViews;
 
 
-        public LinkViewCoordinator(IObjectsStorage<TNodeView, TId> nodeViews, DictTypeStorage<LinkView<TId>, DualKey<TId>> linkViews) 
+        public LinkViewCoordinator(IObjectsStorage<TNodeView, TId> nodeViews, DictTypeStorage<LinkView<TId>, DualKey<TId>> linkViews,
+            PlacementType dualModePlacementType = PlacementType.Left)
         {
             _nodeViews = nodeViews;
             _linkViews = linkViews;
+
+            _dualModePlacementType = dualModePlacementType;
         }
 
+        /// <summary>
+        /// Refreshes parameters of LinkView. Doesn't check the need for dual-mode offset (two oppositely directed LinkViews will overlap)
+        /// </summary>
         public void CheckSingle(LinkView<TId> linkView)
         {
             var viewFrom = _nodeViews.GetItem(linkView.From);
@@ -34,6 +42,10 @@ namespace EasyField.Links.ViewMovers
             linkView.UpdatePositions(posFrom, posTo);            
         }
 
+        /// <summary>
+        /// Refreshes parameters of LinkView, and checks the need for dual-mode offset (two oppositely directed LinkViews will be parallel)
+        /// </summary>
+        /// <param name="isDelete">Use True when deleting link and False when creating link.</param>
         public void CheckDual(LinkView<TId> linkView, bool isDelete)
         {
             var oppKey = new DualKey<TId>(linkView.To, linkView.From);
@@ -41,8 +53,8 @@ namespace EasyField.Links.ViewMovers
             {
                 if (!isDelete)
                 {
-                    linkView.ChangePlacementType(PlacementType.Left);                    
-                    oppLinkView.ChangePlacementType(PlacementType.Left);                    
+                    linkView.ChangePlacementType(_dualModePlacementType);                    
+                    oppLinkView.ChangePlacementType(_dualModePlacementType);                    
                 }
                 else
                 {

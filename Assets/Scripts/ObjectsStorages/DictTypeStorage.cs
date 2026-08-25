@@ -27,6 +27,11 @@ namespace EasyField.ObjectsStorages
             return _data.TryGetValue(id, out item);
         }
 
+        public bool HasItem(TId id)
+        {
+            return _data.ContainsKey(id);
+        }
+
         public void AddItem(TId id, T item)
         {
             if (!_data.TryAdd(id, item))
