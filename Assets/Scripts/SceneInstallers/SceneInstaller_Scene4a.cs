@@ -3,9 +3,9 @@ using EasyField.Fields;
 using EasyField.GridNeighbours;
 using EasyField.Heuristic.Functions;
 using EasyField.Implementations.Cells;
-using EasyField.Implementations.Cells.Core.Dto;
 using EasyField.Implementations.Cells.DynamicCells;
 using EasyField.Implementations.Cells.UI;
+using EasyField.Implementations.Links;
 using EasyField.Inputs;
 using EasyField.Links;
 using EasyField.Links.CostProviders;
@@ -142,12 +142,13 @@ namespace EasyField.SceneInstallers
 
         private void BindSaveSystem()
         {
-            Container.BindInterfacesAndSelfTo<CellsSaveLoadManager>().AsSingle();
+            Container.BindInterfacesAndSelfTo<DynamicCellsSaveLoadManager>().AsSingle();
             Container.BindInterfacesAndSelfTo<Saver>().AsSingle();
             Container.BindInterfacesAndSelfTo<Loader>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<CellDataMapper>().AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsFieldSaveDtoProvider>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkDataMapper<Vector2Int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<DynamicCellsFieldSaveDtoProvider>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<StringFileDtoGateway>().AsSingle();
             Container.BindInterfacesAndSelfTo<JsonUtilityStringSerializer>().AsSingle();

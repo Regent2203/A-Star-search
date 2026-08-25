@@ -1,7 +1,5 @@
 ﻿using EasyField.BrushManagers;
-using EasyField.GridNeighbours;
 using EasyField.Implementations.Cells;
-using EasyField.Implementations.Cells.Core.Dto;
 using EasyField.Implementations.Cells.UI;
 using EasyField.Implementations.Hexes;
 using EasyField.Inputs;

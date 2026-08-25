@@ -152,7 +152,7 @@ namespace EasyField.SceneInstallers
             Container.BindInterfacesAndSelfTo<Loader>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<VertexDataMapper>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LinkDataMapper>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkDataMapper<int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<VertexesFieldSaveDtoProvider>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<StringFileDtoGateway>().AsSingle();

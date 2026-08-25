@@ -4,7 +4,6 @@ using EasyField.Links.Providers;
 using EasyField.Nodes;
 using EasyField.ObjectsStorages;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace EasyField.SearchAlgorithms
 {

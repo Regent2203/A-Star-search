@@ -1,11 +1,9 @@
 ﻿using EasyField.BrushManagers;
 using EasyField.Implementations.Cells;
-using EasyField.Implementations.Cells.Core.Dto;
 using EasyField.Implementations.Cells.UI;
 using EasyField.Inputs;
 using EasyField.PathSetters;
 using EasyField.UICommon;
-using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using Zenject;
 

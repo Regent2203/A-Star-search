@@ -3,7 +3,6 @@ using EasyField.Fields;
 using EasyField.GridNeighbours;
 using EasyField.Heuristic.Functions;
 using EasyField.Implementations.Cells;
-using EasyField.Implementations.Cells.Core.Dto;
 using EasyField.Implementations.Cells.UI;
 using EasyField.Implementations.Hexes;
 using EasyField.Inputs;

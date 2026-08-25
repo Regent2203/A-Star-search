@@ -1,6 +1,5 @@
 ﻿using EasyField.BrushManagers;
 using EasyField.Implementations.Cells;
-using EasyField.Implementations.Cells.Core.Dto;
 using EasyField.Implementations.Cells.DynamicCells;
 using EasyField.Implementations.Cells.UI;
 using EasyField.Inputs;
@@ -30,7 +29,7 @@ namespace EasyField.SceneControllers
         private PathSetter<CellData> _pathSetter;        
         private CellsPathfindRunner _pathfindRunner;
 
-        private CellsSaveLoadManager _saveLoadManager;
+        private DynamicCellsSaveLoadManager _saveLoadManager;
         private UIMainButtonsPanel _saveLoadPanel;
         
         private UICellsPalette _palette;
@@ -44,7 +43,7 @@ namespace EasyField.SceneControllers
             CellsConfig config, CellsClickHandler clickHandler, 
             CellTypeChanger cellTypeChanger, BrushManager<CellType> cellTypebrushManager,
             PathSetter<CellData> pathSetter, CellsPathfindRunner pathfindRunner,
-            CellsSaveLoadManager saveLoadManager, UIMainButtonsPanel saveLoadPanel,
+            DynamicCellsSaveLoadManager saveLoadManager, UIMainButtonsPanel saveLoadPanel,
             UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UIHotkeysInfoPanel_Cells hotkeyInfoPanel)
         {
             _fieldBuilder = fieldBuilder;            
@@ -214,7 +213,7 @@ namespace EasyField.SceneControllers
             {
                 _fieldBuilder.BuildFromDto(dto);
                 //todo
-                _fieldBuilder.TryCreateLink(_nodeDatas.GetItem(new Vector2Int(0, 0)), _nodeDatas.GetItem(new Vector2Int(0, 3)));
+                //_fieldBuilder.TryCreateLink(_nodeDatas.GetItem(new Vector2Int(0, 0)), _nodeDatas.GetItem(new Vector2Int(0, 4)));
             }
         }
 

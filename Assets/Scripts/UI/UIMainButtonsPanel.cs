@@ -47,5 +47,11 @@ namespace EasyField.UICommon
             if (int.TryParse(_inputSizeX.text, out int X) && int.TryParse(_inputSizeY.text, out int Y))
                 NewBtnClicked?.Invoke(X,Y);
         }
+
+        public void SetInputValues(int x, int y)
+        {
+            _inputSizeX.text = x.ToString();
+            _inputSizeY.text = y.ToString();
+        }
     }
 }

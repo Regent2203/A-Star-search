@@ -3,11 +3,11 @@ using EasyField.SaveSystem.Dto.Mappers;
 
 namespace EasyField.Implementations.Links
 {
-    public class LinkDataMapper : ILinkDataMapper<LinkData<int>, LinkDataDto<int>, int>
+    public class LinkDataMapper<TId> : ILinkDataMapper<LinkData<TId>, LinkDataDto<TId>, TId>
     {
-        public LinkDataDto<int> ToDto(LinkData<int> nodeData)
+        public LinkDataDto<TId> ToDto(LinkData<TId> nodeData)
         {
-            return new LinkDataDto<int>(nodeData.From, nodeData.To, nodeData.Cost);
+            return new LinkDataDto<TId>(nodeData.From, nodeData.To, nodeData.Cost);
         }
     }
 }

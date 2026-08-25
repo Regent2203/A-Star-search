@@ -1,7 +1,7 @@
 ﻿using EasyField.SaveSystem;
 using EasyField.SceneControllers;
 
-namespace EasyField.Implementations.Cells.Core.Dto
+namespace EasyField.Implementations.Cells
 {
     public class CellsSaveLoadManager : SaveLoadManager<CellsFieldSaveDto>
     {

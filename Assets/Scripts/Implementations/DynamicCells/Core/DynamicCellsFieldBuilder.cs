@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EasyField.Implementations.Cells.DynamicCells
 {
-    public class DynamicCellsFieldBuilder : IFieldBuilder<CellsFieldSaveDto>
+    public class DynamicCellsFieldBuilder : IFieldBuilder<DynamicCellsFieldSaveDto>
     {
         private readonly CellsConfig _config;
         private readonly RectGridField _field;
@@ -72,7 +72,7 @@ namespace EasyField.Implementations.Cells.DynamicCells
             return _linksCreator.TryDeleteLinkItem(from.Id, to.Id);
         }
 
-        public void BuildFromDto(CellsFieldSaveDto data)
+        public void BuildFromDto(DynamicCellsFieldSaveDto data)
         {
             var size = (Vector2Int)data.FieldSize;
 
@@ -87,6 +87,13 @@ namespace EasyField.Implementations.Cells.DynamicCells
                 var viewPos = IndexToViewPos((int)nodePos.x, (int)nodePos.y);
 
                 _nodesCreator.CreateItem(id, nodePos, viewPos, cellType);
+            }
+
+            foreach (var item in data.Links)
+            {
+                var from = _nodeDatas.GetItem(item.From);
+                var to = _nodeDatas.GetItem(item.To);
+                _linksCreator.TryCreateLinkItem(from, to, item.Cost);
             }
         }
 
