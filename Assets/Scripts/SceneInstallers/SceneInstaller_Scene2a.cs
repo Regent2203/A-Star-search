@@ -42,13 +42,13 @@ namespace EasyField.SceneInstallers
         [SerializeField]
         private VertexView _vertexViewPrefab;
         [SerializeField]
+        private LinkView_Int _linkViewPrefab;
+        [SerializeField]
         private SpatialField _field;
         [SerializeField]
         private VertexesClickHandler _clickHandler;
         [SerializeField]
-        private VertexesDragHandler _dragHandler;
-        [SerializeField]
-        private LinkView_Int _linkViewPrefab;
+        private VertexesDragHandler _dragHandler;        
         [SerializeField]
         private LineRenderer _pathLineRenderer;
         [SerializeField]

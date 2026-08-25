@@ -12,6 +12,7 @@ using EasyField.Links.CostProviders;
 using EasyField.Links.Factories;
 using EasyField.Links.Implementations;
 using EasyField.Links.Providers;
+using EasyField.Links.ViewMovers;
 using EasyField.ObjectsStorages;
 using EasyField.PathFinders;
 using EasyField.PathSetters;
@@ -36,6 +37,8 @@ namespace EasyField.SceneInstallers
         private InputSettings _inputSettings;
         [SerializeField]
         private CellView _cellViewPrefab;
+        [SerializeField]
+        private LinkView_Vector2Int _linkViewPrefab;
         [SerializeField]
         private RectGridField _field;
         [SerializeField]
@@ -67,7 +70,7 @@ namespace EasyField.SceneInstallers
             Container.BindInterfacesAndSelfTo<SceneController_Scene4a>().AsSingle();            
 
             Container.Bind(typeof(GridField), typeof(RectGridField)).To<RectGridField>().FromInstance(_field).AsSingle();
-            Container.BindInterfacesAndSelfTo<CellsFieldBuilder>().AsSingle();
+            Container.BindInterfacesAndSelfTo<DynamicCellsFieldBuilder>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsNodesCreator>().AsSingle();
             Container.BindInterfacesAndSelfTo<DynamicCellsLinksCreator>().AsSingle().WithArguments(true);
         }
@@ -98,11 +101,16 @@ namespace EasyField.SceneInstallers
         private void BindLinks()
         {
             Container.Bind(typeof(DictTypeStorage<LinkData<Vector2Int>, DualKey<Vector2Int>>), typeof(IObjectsStorage<LinkData<Vector2Int>, DualKey<Vector2Int>>)).
-                To<DictTypeStorage<LinkData<Vector2Int>, DualKey<Vector2Int>>>().AsSingle();            
+                To<DictTypeStorage<LinkData<Vector2Int>, DualKey<Vector2Int>>>().AsSingle();
+            Container.Bind(typeof(DictTypeStorage<LinkView<Vector2Int>, DualKey<Vector2Int>>), typeof(IObjectsStorage<LinkView<Vector2Int>, DualKey<Vector2Int>>)).
+                To<DictTypeStorage<LinkView<Vector2Int>, DualKey<Vector2Int>>>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<SmartLinkDataFactory<CellData, LinkData<Vector2Int>, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinkDataFactory<Vector2Int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkViewFactory<Vector2Int>>().AsSingle();
             Container.BindMemoryPool<LinkData<Vector2Int>, LinkDataPool<Vector2Int>>().WithInitialSize(20);
+            Container.BindMemoryPool<LinkView<Vector2Int>, LinkViewPool<Vector2Int>>().WithInitialSize(20).
+                FromComponentInNewPrefab(_linkViewPrefab).UnderTransform(_field.LinksContainer);
 
             Container.BindInterfacesAndSelfTo<CombinedLinksProvider<CellData, LinkData<Vector2Int>>>().AsSingle();
             Container.Bind<StoredLinksProvider<LinkData<Vector2Int>, Vector2Int>>().ToSelf().AsSingle();
@@ -115,6 +123,7 @@ namespace EasyField.SceneInstallers
             Container.BindInstance(_clickHandler).AsSingle();
             Container.BindInterfacesAndSelfTo<CellTypeChanger>().AsSingle();
             Container.BindInterfacesAndSelfTo<BrushManager<CellType>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkViewCoordinator<CellView, Vector2Int>>().AsSingle();
         }
 
         private void BindPathfinding()

@@ -13,8 +13,7 @@ namespace EasyField.Implementations.Cells.DynamicCells
         public DynamicCellsLinksCreator(SmartLinkDataFactory<CellData, LinkData<Vector2Int>, Vector2Int> linkDatasFactory,
             LinkViewFactory<Vector2Int> linkViewsFactory,
             StoredLinksProvider<LinkData<Vector2Int>, Vector2Int> linksProvider, LinkViewCoordinator<CellView, Vector2Int> linkViewCoordinator,
-            DictTypeStorage<LinkData<Vector2Int>, DualKey<Vector2Int>> linkDatas, DictTypeStorage<LinkView<Vector2Int>, DualKey<Vector2Int>> linkViews, 
-            bool useDual)
+            DictTypeStorage<LinkData<Vector2Int>, DualKey<Vector2Int>> linkDatas, DictTypeStorage<LinkView<Vector2Int>, DualKey<Vector2Int>> linkViews, bool useDual)
             : base(linkDatasFactory, linkViewsFactory, linksProvider, linkViewCoordinator, linkDatas, linkViews, useDual)
         { 
         }

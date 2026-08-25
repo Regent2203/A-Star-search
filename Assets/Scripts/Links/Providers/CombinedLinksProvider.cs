@@ -44,18 +44,16 @@ namespace EasyField.Links.Providers
         {
             var storedLinks = _storedLinksProvider.GetLinksFromNode(id);
             var dynamicLinks = _gridDynamicLinksProvider.GetLinksFromNode(id);
-            var result = storedLinks.Concat(dynamicLinks);
-            Debug.Log($"result from {id}: {result.Count()}");
-            return result;
+            
+            return storedLinks.Concat(dynamicLinks);
         }
 
         public IEnumerable<TLinkData> GetLinksToNode(Vector2Int id)
         {
             var storedLinks = _storedLinksProvider.GetLinksToNode(id);
             var dynamicLinks = _gridDynamicLinksProvider.GetLinksToNode(id);
-            var result = storedLinks.Concat(dynamicLinks);
-            Debug.Log($"result to {id}: {result.Count()}");
-            return result;
+            
+            return storedLinks.Concat(dynamicLinks);
         }
     }
 }

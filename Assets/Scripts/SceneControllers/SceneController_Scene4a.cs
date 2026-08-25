@@ -1,6 +1,7 @@
 ﻿using EasyField.BrushManagers;
 using EasyField.Implementations.Cells;
 using EasyField.Implementations.Cells.Core.Dto;
+using EasyField.Implementations.Cells.DynamicCells;
 using EasyField.Implementations.Cells.UI;
 using EasyField.Inputs;
 using EasyField.Links;
@@ -15,7 +16,7 @@ namespace EasyField.SceneControllers
 {
     public class SceneController_Scene4a : SceneControllerBase
     {        
-        private CellsFieldBuilder _fieldBuilder;
+        private DynamicCellsFieldBuilder _fieldBuilder;
         private CellDataStorage _nodeDatas;
         private CellViewStorage _nodeViews;
 
@@ -38,7 +39,7 @@ namespace EasyField.SceneControllers
 
 
         [Inject]
-        public void Construct(CellsFieldBuilder fieldBuilder, CellDataStorage nodeDatas, CellViewStorage nodeViews,
+        public void Construct(DynamicCellsFieldBuilder fieldBuilder, CellDataStorage nodeDatas, CellViewStorage nodeViews,
             CombinedLinksProvider<CellData, LinkData<Vector2Int>> linksProvider,
             CellsConfig config, CellsClickHandler clickHandler, 
             CellTypeChanger cellTypeChanger, BrushManager<CellType> cellTypebrushManager,
@@ -213,6 +214,7 @@ namespace EasyField.SceneControllers
             {
                 _fieldBuilder.BuildFromDto(dto);
                 //todo
+                _fieldBuilder.TryCreateLink(_nodeDatas.GetItem(new Vector2Int(0, 0)), _nodeDatas.GetItem(new Vector2Int(0, 3)));
             }
         }
 

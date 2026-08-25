@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 5990035476382241510}
   - component: {fileID: 5450932332649414356}
   m_Layer: 0
-  m_Name: LinkView
+  m_Name: LinkView_Int
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
