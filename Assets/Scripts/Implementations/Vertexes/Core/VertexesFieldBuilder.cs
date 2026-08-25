@@ -50,9 +50,9 @@ namespace EasyField.Implementations.Vertexes
             _nodesCreator.DeleteItem(id);
         }
 
-        public bool TryCreateLink(VertexData from, VertexData to)
+        public bool TryCreateLink(VertexData from, VertexData to, float? cost = null)
         {
-            return _linksCreator.TryCreateLinkItem(from, to);
+            return _linksCreator.TryCreateLinkItem(from, to, cost);
         }
 
         public bool TryDeleteLink(VertexData from, VertexData to)

@@ -62,9 +62,9 @@ namespace EasyField.Implementations.Cells.DynamicCells
             return false;
         }
 
-        public bool TryCreateLink(CellData from, CellData to)
+        public bool TryCreateLink(CellData from, CellData to, float? cost = null)
         {
-            return _linksCreator.TryCreateLinkItem(from, to);
+            return _linksCreator.TryCreateLinkItem(from, to, cost);
         }
 
         public bool TryDeleteLink(CellData from, CellData to)

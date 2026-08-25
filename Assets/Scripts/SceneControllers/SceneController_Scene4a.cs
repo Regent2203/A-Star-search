@@ -210,11 +210,7 @@ namespace EasyField.SceneControllers
         {
             var dto = await _saveLoadManager.StartLoading();
             if (dto != null)
-            {
                 _fieldBuilder.BuildFromDto(dto);
-                //todo
-                //_fieldBuilder.TryCreateLink(_nodeDatas.GetItem(new Vector2Int(0, 0)), _nodeDatas.GetItem(new Vector2Int(0, 4)));
-            }
         }
 
         private void OnNewBtnClicked(int sizeX, int sizeY)
