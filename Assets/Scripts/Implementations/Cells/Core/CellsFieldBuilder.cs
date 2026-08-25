@@ -1,5 +1,6 @@
 using EasyField.Fields;
 using EasyField.Fields.FieldBuilders;
+using EasyField.Links.Implementations;
 using EasyField.PathSetters;
 using UnityEngine;
 
@@ -24,6 +25,40 @@ namespace EasyField.Implementations.Cells
             _nodesCreator = nodesCreator;
             _nodeDatas = nodeDatas;
             _nodeViews = nodeViews;
+        }
+
+        public bool TryCreateNode(Vector2 pos)
+        {
+            var index = (Vector2Int)_field.Grid.WorldToCell(pos);
+            var viewPos = _field.Grid.CellToWorld((Vector3Int)index);
+
+            if (!_nodeDatas.TryGetItem(index, out _))
+            {
+                _nodesCreator.CreateItem(index, index, viewPos, _config.DefaultCellType);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool TryDeleteNode(Vector2Int id)
+        {
+            if (_nodeDatas.TryGetItem(id, out var nodeData))
+            {
+                if (_pathSetter.StartNode == nodeData)
+                    _pathSetter.UpdateStartNode(null);
+                if (_pathSetter.FinishNode == nodeData)
+                    _pathSetter.UpdateFinishNode(null);
+
+                //todo
+                //_linksCreator.DeleteLinksFromNode(id);
+                //_linksCreator.DeleteLinksToNode(id);
+
+                _nodesCreator.DeleteItem(id);
+                return true;
+            }
+
+            return false;
         }
 
         public void BuildFromDto(CellsFieldSaveDto data)

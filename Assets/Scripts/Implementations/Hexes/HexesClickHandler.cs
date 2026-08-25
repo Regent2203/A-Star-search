@@ -34,8 +34,6 @@ namespace EasyField.Implementations.Hexes
                     if ((index.y & 1) == 1)
                         index.x += 1;
             }
-
-            Debug.Log($"Cell clicked: {index}");
         }
     }
 }

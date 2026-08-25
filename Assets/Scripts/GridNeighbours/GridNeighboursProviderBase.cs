@@ -16,7 +16,8 @@ namespace EasyField.GridNeighbours
         protected void TryAddNeighbour(List<TNodeData> list, TNodeData[,] gridItems, int i, int j)
         {
             if (gridItems.IsIndexWithinBounds(i, j))
-                list.Add(gridItems[i, j]);
+                if (gridItems[i, j] != null)
+                    list.Add(gridItems[i, j]);
         }
 
         public abstract IReadOnlyList<TNodeData> GetNeighbours(Vector2Int index, TNodeData[,] gridItems);
