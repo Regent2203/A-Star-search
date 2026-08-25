@@ -5,6 +5,7 @@ using EasyField.Implementations.Cells.UI;
 using EasyField.Inputs;
 using EasyField.Links;
 using EasyField.Links.Providers;
+using EasyField.Nodes.ViewSelectors;
 using EasyField.PathSetters;
 using EasyField.UICommon;
 using UnityEngine;
@@ -23,6 +24,7 @@ namespace EasyField.SceneControllers
 
         private CellsConfig _config;
         private CellsClickHandler _clickHandler;
+        private NodeViewSelector<CellView> _nodeViewSelector;
         private CellTypeChanger _cellTypeChanger;
         private BrushManager<CellType> _cellTypebrushManager;
 
@@ -40,7 +42,7 @@ namespace EasyField.SceneControllers
         [Inject]
         public void Construct(DynamicCellsFieldBuilder fieldBuilder, CellDataStorage nodeDatas, CellViewStorage nodeViews,
             CombinedLinksProvider<CellData, LinkData<Vector2Int>> linksProvider,
-            CellsConfig config, CellsClickHandler clickHandler, 
+            CellsConfig config, CellsClickHandler clickHandler, NodeViewSelector<CellView> nodeViewSelector,
             CellTypeChanger cellTypeChanger, BrushManager<CellType> cellTypebrushManager,
             PathSetter<CellData> pathSetter, CellsPathfindRunner pathfindRunner,
             DynamicCellsSaveLoadManager saveLoadManager, UIMainButtonsPanel saveLoadPanel,
@@ -53,7 +55,8 @@ namespace EasyField.SceneControllers
             _linksProvider = linksProvider;
 
             _config = config;
-            _clickHandler = clickHandler;            
+            _clickHandler = clickHandler;
+            _nodeViewSelector = nodeViewSelector;
             _cellTypeChanger = cellTypeChanger;
             _cellTypebrushManager = cellTypebrushManager;
 
@@ -72,6 +75,7 @@ namespace EasyField.SceneControllers
         {
             _clickHandler.FieldClicked += OnFieldClicked;
             _clickHandler.NodeViewClicked += OnNodeViewClicked;
+            _nodeViewSelector.NodeViewSelected += OnNodeViewSelected;
             _cellTypeChanger.CellTypeChanged += OnCellTypeChanged;
 
             _pathSetter.StartNodeChanged += OnStartNodeChanged;
@@ -99,6 +103,7 @@ namespace EasyField.SceneControllers
         {
             _clickHandler.FieldClicked -= OnFieldClicked;
             _clickHandler.NodeViewClicked -= OnNodeViewClicked;
+            _nodeViewSelector.NodeViewSelected -= OnNodeViewSelected;
             _cellTypeChanger.CellTypeChanged -= OnCellTypeChanged;
 
             _pathSetter.StartNodeChanged -= OnStartNodeChanged;
@@ -160,12 +165,54 @@ namespace EasyField.SceneControllers
                 }
             }
 
+            if (input.IsLinkingMode)
+            {
+                if (_nodeViewSelector.SelectedNodeView == null)
+                {
+                    _nodeViewSelector.SelectView(nodeView);                        
+                }
+                else
+                {
+                    if (_nodeViewSelector.SelectedNodeView == nodeView)
+                        _nodeViewSelector.SelectView(null);
+                    else
+                    {
+                        const float linkCost = 1.5f;
+
+                        var selectedNode = _nodeDatas.GetItem(_nodeViewSelector.SelectedNodeView.Id);
+
+                        switch (button)
+                        {
+                            case PointerEventData.InputButton.Left:
+                                if (_fieldBuilder.TryCreateLink(selectedNode, nodeData, linkCost))
+                                {
+                                    _nodeViewSelector.SelectView(null);
+                                    OnFieldChanged();
+                                }
+                                break;
+                            case PointerEventData.InputButton.Right:
+                                if (_fieldBuilder.TryDeleteLink(selectedNode, nodeData))
+                                {
+                                    _nodeViewSelector.SelectView(null);
+                                    OnFieldChanged();
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+
             if (input.IsCreatingMode)
             {
                 if (button == PointerEventData.InputButton.Right)
                     if (_fieldBuilder.TryDeleteNode(nodeView.Id))
                         OnFieldChanged();
             }
+        }
+
+        private void OnNodeViewSelected(CellView nodeView, bool b)
+        {
+            nodeView.ShowSelectedMarker(b);
         }
 
         private void OnCellTypeChanged(CellData nodeData, CellType cellType)

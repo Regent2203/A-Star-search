@@ -13,6 +13,7 @@ using EasyField.Links.Factories;
 using EasyField.Links.Implementations;
 using EasyField.Links.Providers;
 using EasyField.Links.ViewMovers;
+using EasyField.Nodes.ViewSelectors;
 using EasyField.ObjectsStorages;
 using EasyField.PathFinders;
 using EasyField.PathSetters;
@@ -123,6 +124,7 @@ namespace EasyField.SceneInstallers
             Container.BindInstance(_clickHandler).AsSingle();
             Container.BindInterfacesAndSelfTo<CellTypeChanger>().AsSingle();
             Container.BindInterfacesAndSelfTo<BrushManager<CellType>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<NodeViewSelector<CellView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinkViewCoordinator<CellView, Vector2Int>>().AsSingle();
         }
 

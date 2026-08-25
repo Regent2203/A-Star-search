@@ -62,6 +62,16 @@ namespace EasyField.Implementations.Cells.DynamicCells
             return false;
         }
 
+        public bool TryCreateLink(CellData from, CellData to, float? cost = null)
+        {
+            return _linksCreator.TryCreateLinkItem(from, to, cost);
+        }
+
+        public bool TryDeleteLink(CellData from, CellData to)
+        {
+            return _linksCreator.TryDeleteLinkItem(from.Id, to.Id);
+        }
+
         public void BuildFromDto(DynamicCellsFieldSaveDto data)
         {
             var size = (Vector2Int)data.FieldSize;
