@@ -32,5 +32,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Scene3d_HexesField.unity
     guid: 7ece3a811aa38574da9a22c312d45d46
+  - enabled: 1
+    path: Assets/Scenes/Scene4a_CellsField.unity
+    guid: df1230c0f72b4c84ea219173a082a21f
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

@@ -483,22 +483,24 @@ PrefabInstance:
     - target: {fileID: 3002439937581616002, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
       propertyPath: _sceneName
-      value: 
+      value: Scene4a_CellsField
       objectReference: {fileID: 0}
     - target: {fileID: 3002439937581616002, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
       propertyPath: _sceneToLoad
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 102900000, guid: df1230c0f72b4c84ea219173a082a21f,
+        type: 3}
     - target: {fileID: 3672482812227839826, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
       propertyPath: m_text
-      value: 'Scene 2b: Spatial Field of Vertexes. Vertexes can be dragged, selected,
-        set blocked, created or deleted.
+      value: 'Scene 4a: Dynamic Grid Field of square cells. Cells can be selected,
+        created or deleted. Additional links (besides auto-generated) can be created
+        or deleted (they work like teleporters).
 
-        Links are visible and must be created
-        manually (can also be deleted). Link cost value can be modified and does
-        not depend on vertexes'' positions.'
+        Different terrain types
+        can be used. Only horizontal and vertical movement is allowed. Movecost =
+        average sum of two cells. PathDrawer uses cells'' graphics.'
       objectReference: {fileID: 0}
     - target: {fileID: 3672482812227839826, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
@@ -523,7 +525,7 @@ PrefabInstance:
     - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
@@ -533,12 +535,12 @@ PrefabInstance:
     - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 520.3503
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
@@ -598,12 +600,12 @@ PrefabInstance:
     - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -820
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
@@ -623,12 +625,12 @@ PrefabInstance:
     - target: {fileID: 7978225837543786604, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
       propertyPath: m_Name
-      value: btnScene4 (todo)
+      value: btnScene4a
       objectReference: {fileID: 0}
     - target: {fileID: 7978225837543786604, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1955,7 +1957,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8858504878399254681}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.52806425
+  m_Size: 0.47066596
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1998,7 +2000,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 0
   m_DecelerationRate: 0.15
-  m_ScrollSensitivity: 30
+  m_ScrollSensitivity: 50
   m_Viewport: {fileID: 5706369537888536445}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 5998798043402606941}
@@ -2034,7 +2036,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -193.49367}
+  m_AnchoredPosition: {x: 0, y: -243.49367}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7213097026846154636
