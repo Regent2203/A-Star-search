@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EasyField
 {
-    public readonly struct DualKey<TId>
+    public readonly struct DualKey<TId> : IEquatable<DualKey<TId>>
     {
         public TId From { get; }
         public TId To { get; }
