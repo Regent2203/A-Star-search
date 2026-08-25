@@ -7,7 +7,7 @@ namespace EasyField.Links.Providers
 {
     public class CombinedLinksProvider<TNodeData, TLinkData> : ILinksProvider<TLinkData, Vector2Int>
         where TNodeData : INodeData<Vector2Int>
-        where TLinkData : ILinkData<Vector2Int>, new()
+        where TLinkData : ILinkData<Vector2Int>
     {
         private readonly StoredLinksProvider<TLinkData, Vector2Int> _storedLinksProvider;
         private readonly GridDynamicLinksProvider<TNodeData, TLinkData> _gridDynamicLinksProvider;
@@ -18,6 +18,26 @@ namespace EasyField.Links.Providers
         {
             _storedLinksProvider = storedLinksProvider;
             _gridDynamicLinksProvider = gridDynamicLinksProvider;
+        }
+
+        public bool TryGetLink(Vector2Int fromId, Vector2Int toId, out TLinkData link)
+        {
+            return _storedLinksProvider.TryGetLink(fromId, toId, out link);
+        }
+
+        public void AddLink(TLinkData link)
+        {
+            _storedLinksProvider.AddLink(link);
+        }
+
+        public void RemoveLink(DualKey<Vector2Int> key)
+        {
+            _storedLinksProvider.RemoveLink(key);
+        }
+
+        public void ClearAllLinks()
+        {
+            _storedLinksProvider.ClearAllLinks();
         }
 
         public IEnumerable<TLinkData> GetLinksFromNode(Vector2Int id)

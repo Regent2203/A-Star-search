@@ -3,12 +3,13 @@ using EasyField.Implementations.Cells;
 using EasyField.Implementations.Cells.Core.Dto;
 using EasyField.Implementations.Cells.UI;
 using EasyField.Inputs;
+using EasyField.Links;
+using EasyField.Links.Providers;
 using EasyField.PathSetters;
 using EasyField.UICommon;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
-using static UnityEditor.PlayerSettings;
 
 namespace EasyField.SceneControllers
 {
@@ -17,6 +18,8 @@ namespace EasyField.SceneControllers
         private CellsFieldBuilder _fieldBuilder;
         private CellDataStorage _nodeDatas;
         private CellViewStorage _nodeViews;
+
+        private CombinedLinksProvider<CellData, LinkData<Vector2Int>> _linksProvider;
 
         private CellsConfig _config;
         private CellsClickHandler _clickHandler;
@@ -36,6 +39,7 @@ namespace EasyField.SceneControllers
 
         [Inject]
         public void Construct(CellsFieldBuilder fieldBuilder, CellDataStorage nodeDatas, CellViewStorage nodeViews,
+            CombinedLinksProvider<CellData, LinkData<Vector2Int>> linksProvider,
             CellsConfig config, CellsClickHandler clickHandler, 
             CellTypeChanger cellTypeChanger, BrushManager<CellType> cellTypebrushManager,
             PathSetter<CellData> pathSetter, CellsPathfindRunner pathfindRunner,
@@ -45,6 +49,8 @@ namespace EasyField.SceneControllers
             _fieldBuilder = fieldBuilder;            
             _nodeDatas = nodeDatas;
             _nodeViews = nodeViews;
+
+            _linksProvider = linksProvider;
 
             _config = config;
             _clickHandler = clickHandler;            
@@ -204,7 +210,10 @@ namespace EasyField.SceneControllers
         {
             var dto = await _saveLoadManager.StartLoading();
             if (dto != null)
+            {
                 _fieldBuilder.BuildFromDto(dto);
+                //todo
+            }
         }
 
         private void OnNewBtnClicked(int sizeX, int sizeY)

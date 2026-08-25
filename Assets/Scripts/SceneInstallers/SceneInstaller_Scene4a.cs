@@ -4,6 +4,7 @@ using EasyField.GridNeighbours;
 using EasyField.Heuristic.Functions;
 using EasyField.Implementations.Cells;
 using EasyField.Implementations.Cells.Core.Dto;
+using EasyField.Implementations.Cells.DynamicCells;
 using EasyField.Implementations.Cells.UI;
 using EasyField.Inputs;
 using EasyField.Links;
@@ -68,6 +69,7 @@ namespace EasyField.SceneInstallers
             Container.Bind(typeof(GridField), typeof(RectGridField)).To<RectGridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<CellsFieldBuilder>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsNodesCreator>().AsSingle();
+            Container.BindInterfacesAndSelfTo<DynamicCellsLinksCreator>().AsSingle().WithArguments(true);
         }
 
         private void BindEnviroment()
@@ -95,10 +97,16 @@ namespace EasyField.SceneInstallers
 
         private void BindLinks()
         {
+            Container.Bind(typeof(DictTypeStorage<LinkData<Vector2Int>, DualKey<Vector2Int>>), typeof(IObjectsStorage<LinkData<Vector2Int>, DualKey<Vector2Int>>)).
+                To<DictTypeStorage<LinkData<Vector2Int>, DualKey<Vector2Int>>>().AsSingle();            
+
+            Container.BindInterfacesAndSelfTo<SmartLinkDataFactory<CellData, LinkData<Vector2Int>, Vector2Int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkDataFactory<Vector2Int>>().AsSingle();
             Container.BindMemoryPool<LinkData<Vector2Int>, LinkDataPool<Vector2Int>>().WithInitialSize(20);
 
-            Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellData, LinkData<Vector2Int>>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<SmartLinkDataFactory<CellData, LinkData<Vector2Int>, Vector2Int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CombinedLinksProvider<CellData, LinkData<Vector2Int>>>().AsSingle();
+            Container.Bind<StoredLinksProvider<LinkData<Vector2Int>, Vector2Int>>().ToSelf().AsSingle();
+            Container.Bind<GridDynamicLinksProvider<CellData, LinkData<Vector2Int>>>().ToSelf().AsSingle();            
             Container.BindInterfacesAndSelfTo<FourSideRectGridNeighbours<CellData>>().AsSingle();
         }
 
@@ -111,7 +119,7 @@ namespace EasyField.SceneInstallers
 
         private void BindPathfinding()
         {
-            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData, ILinkData<Vector2Int>, Vector2Int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData, LinkData<Vector2Int>, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellWeightGetter>().AsSingle();

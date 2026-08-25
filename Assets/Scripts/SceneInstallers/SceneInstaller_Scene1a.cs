@@ -95,11 +95,11 @@ namespace EasyField.SceneInstallers
 
         private void BindLinks()
         {
-            Container.BindMemoryPool<LinkData<Vector2Int>, LinkDataPool<Vector2Int>>().WithInitialSize(20);
-
-            Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellData, LinkData<Vector2Int>>>().AsSingle();
             Container.BindInterfacesAndSelfTo<SmartLinkDataFactory<CellData, LinkData<Vector2Int>, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinkDataFactory<Vector2Int>>().AsSingle();
+            Container.BindMemoryPool<LinkData<Vector2Int>, LinkDataPool<Vector2Int>>().WithInitialSize(20);
+
+            Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellData, LinkData<Vector2Int>>>().AsSingle();            
             Container.BindInterfacesAndSelfTo<FourSideRectGridNeighbours<CellData>>().AsSingle();
         }
 
