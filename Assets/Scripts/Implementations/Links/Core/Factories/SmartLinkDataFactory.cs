@@ -46,7 +46,7 @@ namespace EasyField.Links.Factories
             return _costProvider.GetCost(from, to);
         }
 
-        public void DeleteItem(TLinkData item)
+        public void DeleteLink(TLinkData item)
         {
             _factory.DeleteItem(item);
         }

@@ -93,7 +93,7 @@ namespace EasyField.Links.Implementations
             _linksProvider.RemoveLink(key);
             _linkViews.RemoveItem(key);
 
-            _linkDatasFactory.DeleteItem(linkData);
+            _linkDatasFactory.DeleteLink(linkData);
             _linkViewsFactory.DeleteItem(linkView);
         }
 
@@ -101,7 +101,7 @@ namespace EasyField.Links.Implementations
         {
             foreach (var linkData in _linkDatas.AllItems)
             {
-                _linkDatasFactory.DeleteItem(linkData);                
+                _linkDatasFactory.DeleteLink(linkData);                
             }
             _linksProvider.ClearAllLinks();
 

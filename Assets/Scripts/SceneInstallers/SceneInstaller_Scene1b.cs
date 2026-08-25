@@ -102,6 +102,7 @@ namespace EasyField.SceneInstallers
 
             Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellData, LinkData<Vector2Int>>>().AsSingle();
             Container.BindInterfacesAndSelfTo<SmartLinkDataFactory<CellData, LinkData<Vector2Int>, Vector2Int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkDataFactory<Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<EightSideRectGridNeighbours<CellData>>().AsSingle();
         }
 

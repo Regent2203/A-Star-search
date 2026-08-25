@@ -100,6 +100,7 @@ namespace EasyField.SceneInstallers
 
             Container.BindInterfacesAndSelfTo<GridDynamicLinksProvider<CellData, LinkData<Vector2Int>>>().AsSingle();
             Container.BindInterfacesAndSelfTo<SmartLinkDataFactory<CellData, LinkData<Vector2Int>, Vector2Int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkDataFactory<Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<EvenQHexGridNeighbours<CellData>>().AsSingle();
         }
 
@@ -112,7 +113,7 @@ namespace EasyField.SceneInstallers
 
         private void BindPathfinding()
         {
-            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData, ILinkData<Vector2Int>, Vector2Int>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData, LinkData<Vector2Int>, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<EvenQDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellWeightGetter>().AsSingle();
