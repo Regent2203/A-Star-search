@@ -33,6 +33,9 @@ namespace EasyField.SearchAlgorithms
             if (startNode.Equals(finishNode))
                 return null;
 
+            Debug.Log("==== Algorithm start ====");
+            Debug.Log($"Path from {startNode.Id} to {finishNode.Id}");
+
             _cameFrom.Clear();
             _costSoFar.Clear();
 
@@ -45,27 +48,34 @@ namespace EasyField.SearchAlgorithms
             while (needToCheck.Count > 0)
             {
                 var fromNode = needToCheck.Dequeue();
+                Debug.Log($"<color=#0000FF>Checking node:</color> {fromNode.Id} (nodes to check: {needToCheck.Count})");
 
                 if (fromNode.Equals(finishNode))
                 {
+                    Debug.Log("Finish node reached!");
+                    Debug.Log("==== Algorithm finish ====");
                     return RetracePath(startNode, finishNode);
                 }
 
+                Debug.Log($"Cost from start node to this node: {_costSoFar[fromNode]}");
                 foreach (var link in _linksProvider.GetLinksFromNode(fromNode.Id))
                 {
                     var toNode = _nodes.GetItem(link.To);
 
                     if (fromNode.IsBlocked || toNode.IsBlocked)
                         continue;
-
+                    
+                    Debug.Log($"<color=#00FFFF>Checking link</color> from node {fromNode.Id} to node {toNode.Id}: cost = {link.Cost}");
                     var newCost = _costSoFar[fromNode] + link.Cost;
 
                     if (!_costSoFar.ContainsKey(toNode) || newCost < _costSoFar[toNode]) //we found shorter path
                     {
+                        Debug.Log($"New cost is better: {newCost} (was {(_costSoFar.TryGetValue(toNode, out var value) ? value : "null")})");
                         _costSoFar[toNode] = newCost;
                         _cameFrom[toNode] = fromNode;
 
                         var newPriority = newCost + _heuristicsProvider.EstimateCost(toNode, finishNode);
+                        Debug.Log($"Estimation from node {toNode.Id} to finish node: {newPriority - newCost}, priority: {newPriority}");
                         needToCheck.Enqueue(toNode, newPriority);
                     }
                 }
