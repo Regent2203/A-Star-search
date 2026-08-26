@@ -13,6 +13,8 @@ namespace EasyField.Implementations.Cells
         [SerializeField]
         private CellType _defaultCellType;
 
+        private float _minCellTypeWeight;
+
         public IReadOnlyDictionary<CellTypeId, CellType> CellTypes;
         public CellType DefaultCellType => _defaultCellType;
 
@@ -20,13 +22,14 @@ namespace EasyField.Implementations.Cells
         public override void InstallBindings()
         {
             CellTypes = _cellTypes.ToDictionary(cellType => cellType.Id);
+            _minCellTypeWeight = _cellTypes.Min(cellType => cellType.MoveCost);
 
             Container.BindInstance(this).AsSingle();
         }
 
         public float GetMinimumCellTypeWeight()
         {
-            return _cellTypes.Min(cellType => cellType.MoveCost);
+            return _minCellTypeWeight;
         }
     }
 }

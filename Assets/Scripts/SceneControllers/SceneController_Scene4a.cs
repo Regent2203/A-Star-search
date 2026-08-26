@@ -177,8 +177,7 @@ namespace EasyField.SceneControllers
                         _nodeViewSelector.SelectView(null);
                     else
                     {
-                        const float linkCost = 1.5f;
-
+                        var linkCost = _config.GetMinimumCellTypeWeight();
                         var selectedNode = _nodeDatas.GetItem(_nodeViewSelector.SelectedNodeView.Id);
 
                         switch (button)
