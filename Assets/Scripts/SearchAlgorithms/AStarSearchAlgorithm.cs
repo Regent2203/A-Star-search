@@ -4,6 +4,7 @@ using EasyField.Links.Providers;
 using EasyField.Nodes;
 using EasyField.ObjectsStorages;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace EasyField.SearchAlgorithms
 {
@@ -12,8 +13,8 @@ namespace EasyField.SearchAlgorithms
         where TLinkData : ILinkData<TId>
     {
         private readonly List<TNodeData> _resultPath = new();
-        private readonly Dictionary<TNodeData, TNodeData> _cameFrom = new();
-        private readonly Dictionary<TNodeData, float> _costSoFar = new();
+        private readonly Dictionary<TNodeData, TNodeData> _cameFrom = new(); //[nextNode, prevNode] - came to nextNode from prevNode, shortest known path
+        private readonly Dictionary<TNodeData, float> _costSoFar = new(); //[keyNode, cost] - contains minimum known cost for path from startNode to keyNode 
 
         private readonly IObjectsStorage<TNodeData, TId> _nodes;
         private readonly IHeuristicsProvider<TNodeData> _heuristicsProvider;
@@ -31,9 +32,6 @@ namespace EasyField.SearchAlgorithms
         {
             if (startNode.Equals(finishNode))
                 return null;
-
-            TNodeData fromNode;
-            TNodeData toNode;
 
             _cameFrom.Clear();
             _costSoFar.Clear();
@@ -55,15 +53,14 @@ namespace EasyField.SearchAlgorithms
 
                 foreach (var link in _linksProvider.GetLinksFromNode(currentNode.Id))
                 {
-                    fromNode = _nodes.GetItem(link.From);
-                    toNode = _nodes.GetItem(link.To);
+                    var toNode = _nodes.GetItem(link.To);
 
-                    if (fromNode.IsBlocked || toNode.IsBlocked)
+                    if (currentNode.IsBlocked || toNode.IsBlocked)
                         continue;
 
                     var newCost = _costSoFar[currentNode] + link.Cost;
 
-                    if (!_costSoFar.ContainsKey(toNode) || newCost < _costSoFar[toNode])
+                    if (!_costSoFar.ContainsKey(toNode) || newCost < _costSoFar[toNode]) //we found shorter path
                     {
                         _costSoFar[toNode] = newCost;
                         _cameFrom[toNode] = currentNode;
@@ -91,6 +88,7 @@ namespace EasyField.SearchAlgorithms
 
             _resultPath.Add(startNode);
             _resultPath.Reverse();
+
             return _resultPath;
         }
     }
