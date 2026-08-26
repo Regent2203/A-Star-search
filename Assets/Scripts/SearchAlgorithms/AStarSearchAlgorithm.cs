@@ -44,26 +44,26 @@ namespace EasyField.SearchAlgorithms
 
             while (needToCheck.Count > 0)
             {
-                var currentNode = needToCheck.Dequeue();
+                var fromNode = needToCheck.Dequeue();
 
-                if (currentNode.Equals(finishNode))
+                if (fromNode.Equals(finishNode))
                 {
                     return RetracePath(startNode, finishNode);
                 }
 
-                foreach (var link in _linksProvider.GetLinksFromNode(currentNode.Id))
+                foreach (var link in _linksProvider.GetLinksFromNode(fromNode.Id))
                 {
                     var toNode = _nodes.GetItem(link.To);
 
-                    if (currentNode.IsBlocked || toNode.IsBlocked)
+                    if (fromNode.IsBlocked || toNode.IsBlocked)
                         continue;
 
-                    var newCost = _costSoFar[currentNode] + link.Cost;
+                    var newCost = _costSoFar[fromNode] + link.Cost;
 
                     if (!_costSoFar.ContainsKey(toNode) || newCost < _costSoFar[toNode]) //we found shorter path
                     {
                         _costSoFar[toNode] = newCost;
-                        _cameFrom[toNode] = currentNode;
+                        _cameFrom[toNode] = fromNode;
 
                         var newPriority = newCost + _heuristicsProvider.EstimateCost(toNode, finishNode);
                         needToCheck.Enqueue(toNode, newPriority);
