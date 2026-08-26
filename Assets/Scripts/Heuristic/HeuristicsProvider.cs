@@ -16,9 +16,9 @@ namespace EasyField.Heuristic
             _minStepCost = minStepCost;
         }
 
-        public float EstimateCost(TNodeData nodeData1, TNodeData nodeData2)
+        public float EstimateCost(TNodeData from, TNodeData to)
         {
-            return _heuristicFunction.Estimate(nodeData1.NodePosition, nodeData2.NodePosition) * _minStepCost;
+            return _heuristicFunction.Estimate(from.NodePosition, to.NodePosition) * _minStepCost;
         }
     }
 }

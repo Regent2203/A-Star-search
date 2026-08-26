@@ -1,6 +1,7 @@
 using EasyField.BrushManagers;
 using EasyField.Fields;
 using EasyField.GridNeighbours;
+using EasyField.Heuristic;
 using EasyField.Heuristic.Functions;
 using EasyField.Implementations.Cells;
 using EasyField.Implementations.Cells.DynamicCells;
@@ -132,6 +133,7 @@ namespace EasyField.SceneInstallers
         {
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData, LinkData<Vector2Int>, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
+            Container.Decorate<IHeuristicsProvider<CellData>>().With<ShortcutHeuristicsProvider<CellData, LinkData<Vector2Int>, Vector2Int>>();
             Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellWeightGetter>().AsSingle();
             Container.BindInterfacesAndSelfTo<AverageCostProvider<CellData>>().AsSingle();

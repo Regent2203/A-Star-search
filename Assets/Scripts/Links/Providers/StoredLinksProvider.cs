@@ -105,6 +105,11 @@ namespace EasyField.Links.Providers
                 }
             }
         }
+
+        public IEnumerable<TLinkData> GetAllLinks()
+        {
+            return _linkDatas.AllItems;
+        }
     }
 }
 
