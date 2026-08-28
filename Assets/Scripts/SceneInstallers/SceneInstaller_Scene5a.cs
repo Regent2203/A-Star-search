@@ -7,6 +7,8 @@ using EasyField.Implementations.Cells;
 using EasyField.Implementations.Cells.DynamicCells;
 using EasyField.Implementations.Cells.UI;
 using EasyField.Implementations.DynamicCells.UI;
+using EasyField.Implementations.Hexes;
+using EasyField.Implementations.Hexes.DynamicHexes;
 using EasyField.Implementations.Links;
 using EasyField.Inputs;
 using EasyField.Links;
@@ -32,20 +34,20 @@ using Zenject;
 
 namespace EasyField.SceneInstallers
 {
-    public class SceneInstaller_Scene4a : MonoInstaller
+    public class SceneInstaller_Scene5a : MonoInstaller
     {
         [SerializeField]
         private Camera _mainCamera;
         [SerializeField]
         private InputSettings _inputSettings;
         [SerializeField]
-        private CellView _cellViewPrefab;
+        private HexView _cellViewPrefab;
         [SerializeField]
         private LinkView_Vector2Int _linkViewPrefab;
         [SerializeField]
-        private RectGridField _field;
+        private GridField _field;
         [SerializeField]
-        private CellsClickHandler _clickHandler;
+        private HexesClickHandler _clickHandler;
         [SerializeField]
         private UICellsPalette _palette;
         [SerializeField]
@@ -70,10 +72,10 @@ namespace EasyField.SceneInstallers
 
         private void BindMainComponents()
         {
-            Container.BindInterfacesAndSelfTo<SceneController_Scene4a>().AsSingle();            
+            Container.BindInterfacesAndSelfTo<SceneController_Scene5a>().AsSingle();
 
-            Container.Bind(typeof(GridField), typeof(RectGridField)).To<RectGridField>().FromInstance(_field).AsSingle();
-            Container.BindInterfacesAndSelfTo<DynamicCellsFieldBuilder>().AsSingle();
+            Container.Bind(typeof(GridField), typeof(HexGridField)).To<HexGridField>().FromInstance(_field).AsSingle();
+            Container.BindInterfacesAndSelfTo<DynamicHexesFieldBuilder>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsNodesCreator>().AsSingle();
             Container.BindInterfacesAndSelfTo<DynamicCellsLinksCreator>().AsSingle().WithArguments(true);
         }
@@ -118,7 +120,7 @@ namespace EasyField.SceneInstallers
             Container.BindInterfacesAndSelfTo<CombinedLinksProvider<CellData, LinkData<Vector2Int>>>().AsSingle();
             Container.Bind<StoredLinksProvider<LinkData<Vector2Int>, Vector2Int>>().ToSelf().AsSingle();
             Container.Bind<GridDynamicLinksProvider<CellData, LinkData<Vector2Int>>>().ToSelf().AsSingle();
-            Container.BindInterfacesAndSelfTo<FourSideRectGridNeighbours<CellData>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<OddRHexGridNeighbours<CellData>>().AsSingle();
         }
 
         private void BindManipulators()
@@ -135,14 +137,14 @@ namespace EasyField.SceneInstallers
             Container.BindInterfacesAndSelfTo<AStarSearchAlgorithm<CellData, LinkData<Vector2Int>, Vector2Int>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsHeuristicsProvider>().AsSingle();
             Container.Decorate<IHeuristicsProvider<CellData>>().With<ShortcutHeuristicsProvider<CellData, LinkData<Vector2Int>, Vector2Int>>();
-            Container.BindInterfacesAndSelfTo<ManhattanDistance>().AsSingle();
+            Container.BindInterfacesAndSelfTo<OddRDistance>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellWeightGetter>().AsSingle();
             Container.BindInterfacesAndSelfTo<AverageCostProvider<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathSetter<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<PathFinder<CellData>>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsPathfindRunner>().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<CellsPathDrawer>().AsSingle();            
+            Container.BindInterfacesAndSelfTo<CellsPathDrawer>().AsSingle();
         }
 
         private void BindSaveSystem()
@@ -160,7 +162,7 @@ namespace EasyField.SceneInstallers
 
             //Choose only one
             //Container.BindInterfacesAndSelfTo<DialogueFilePathProvider>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map_4a.json", Environment.SpecialFolder.Desktop);
+            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map_5a.json", Environment.SpecialFolder.Desktop);
         }
 
         private void BindUI()
