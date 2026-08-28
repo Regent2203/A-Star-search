@@ -122,6 +122,7 @@ namespace EasyField.Implementations.Cells.DynamicCells
             _pathSetter.UpdateFinishNode(null);
 
             _nodesCreator.ClearAll();
+            _linksCreator.ClearAll();
         }
 
         private void PrepareNewField(Vector2Int size)

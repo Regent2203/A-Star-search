@@ -4,6 +4,8 @@ using EasyField.Implementations.Cells.DynamicCells;
 using EasyField.Implementations.Cells.UI;
 using EasyField.Implementations.DynamicCells.UI;
 using EasyField.Inputs;
+using EasyField.Links;
+using EasyField.Links.Providers;
 using EasyField.Nodes.ViewSelectors;
 using EasyField.PathSetters;
 using EasyField.UICommon;
@@ -13,7 +15,7 @@ using Zenject;
 
 namespace EasyField.SceneControllers
 {
-    public class SceneController_Scene4a : SceneControllerBase
+    public class SceneController_Scene4b : SceneControllerBase
     {        
         private DynamicCellsFieldBuilder _fieldBuilder;
         private CellDataStorage _nodeDatas;
