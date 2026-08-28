@@ -6,6 +6,7 @@ using EasyField.Heuristic.Functions;
 using EasyField.Implementations.Cells;
 using EasyField.Implementations.Cells.DynamicCells;
 using EasyField.Implementations.Cells.UI;
+using EasyField.Implementations.DynamicCells.UI;
 using EasyField.Implementations.Links;
 using EasyField.Inputs;
 using EasyField.Links;
@@ -50,7 +51,7 @@ namespace EasyField.SceneInstallers
         [SerializeField]
         private UICellsPaletteChoicePanel _paletteChoice;
         [SerializeField]
-        private UIHotkeysInfoPanel_Cells _hotkeyInfoPanel;
+        private UIHotkeysInfoPanel_DynamicCells _hotkeyInfoPanel;
         [SerializeField]
         private UIMainButtonsPanel _saveLoadPanel;
 
@@ -166,7 +167,7 @@ namespace EasyField.SceneInstallers
         {
             Container.BindInterfacesAndSelfTo<UICellsPalette>().FromInstance(_palette).AsSingle();
             Container.BindInterfacesAndSelfTo<UICellsPaletteChoicePanel>().FromInstance(_paletteChoice).AsSingle();
-            Container.BindInterfacesAndSelfTo<UIHotkeysInfoPanel_Cells>().FromInstance(_hotkeyInfoPanel).AsSingle();
+            Container.BindInterfacesAndSelfTo<UIHotkeysInfoPanel_DynamicCells>().FromInstance(_hotkeyInfoPanel).AsSingle();
             Container.BindInterfacesAndSelfTo<UIMainButtonsPanel>().FromInstance(_saveLoadPanel).AsSingle();
         }
     }

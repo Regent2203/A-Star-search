@@ -2,6 +2,7 @@
 using EasyField.Implementations.Cells;
 using EasyField.Implementations.Cells.DynamicCells;
 using EasyField.Implementations.Cells.UI;
+using EasyField.Implementations.DynamicCells.UI;
 using EasyField.Inputs;
 using EasyField.Links;
 using EasyField.Links.Providers;
@@ -36,7 +37,7 @@ namespace EasyField.SceneControllers
         
         private UICellsPalette _palette;
         private UICellsPaletteChoicePanel _paletteChoice;
-        private UIHotkeysInfoPanel_Cells _hotkeyInfoPanel;
+        private UIHotkeysInfoPanel_DynamicCells _hotkeyInfoPanel;
 
 
         [Inject]
@@ -46,7 +47,7 @@ namespace EasyField.SceneControllers
             CellTypeChanger cellTypeChanger, BrushManager<CellType> cellTypebrushManager,
             PathSetter<CellData> pathSetter, CellsPathfindRunner pathfindRunner,
             DynamicCellsSaveLoadManager saveLoadManager, UIMainButtonsPanel saveLoadPanel,
-            UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UIHotkeysInfoPanel_Cells hotkeyInfoPanel)
+            UICellsPalette palette, UICellsPaletteChoicePanel paletteChoice, UIHotkeysInfoPanel_DynamicCells hotkeyInfoPanel)
         {
             _fieldBuilder = fieldBuilder;            
             _nodeDatas = nodeDatas;
@@ -169,7 +170,8 @@ namespace EasyField.SceneControllers
             {
                 if (_nodeViewSelector.SelectedNodeView == null)
                 {
-                    _nodeViewSelector.SelectView(nodeView);                        
+                    if (button == PointerEventData.InputButton.Left || button == PointerEventData.InputButton.Right)
+                        _nodeViewSelector.SelectView(nodeView);
                 }
                 else
                 {
