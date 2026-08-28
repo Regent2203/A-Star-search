@@ -227,18 +227,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f86083f81410f040a8d65408f5894f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &494189130 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1819305672900559342, guid: 69671317611f2e7478ee67b8c31a9dee,
-    type: 3}
-  m_PrefabInstance: {fileID: 995099075}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d493aa6193439c4396d293ad758bbac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1311,6 +1299,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c39eca79bdad7044f81d177eaf2eb9f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &995099077 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6362063291720852030, guid: 69671317611f2e7478ee67b8c31a9dee,
+    type: 3}
+  m_PrefabInstance: {fileID: 995099075}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d493aa6193439c4396d293ad758bbac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1114931756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1490,7 +1490,7 @@ MonoBehaviour:
   _clickHandler: {fileID: 2635198116479183756}
   _palette: {fileID: 124657246}
   _paletteChoice: {fileID: 435939541}
-  _hotkeyInfoPanel: {fileID: 494189130}
+  _hotkeyInfoPanel: {fileID: 995099077}
   _pathLineRenderer: {fileID: 1307543501}
   _saveLoadPanel: {fileID: 995099076}
 --- !u!4 &1877987560 stripped

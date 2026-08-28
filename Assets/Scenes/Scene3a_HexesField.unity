@@ -481,7 +481,7 @@ MonoBehaviour:
   _clickHandler: {fileID: 1931799695}
   _palette: {fileID: 1182276926078944939}
   _paletteChoice: {fileID: 695403347554323092}
-  _hotkeyInfoPanel: {fileID: 6209811340707633033}
+  _hotkeyInfoPanel: {fileID: 1602947747560282071}
   _saveLoadPanel: {fileID: 292291527}
 --- !u!1001 &1931799693
 PrefabInstance:
@@ -1072,11 +1072,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7854793560380493279, guid: 69671317611f2e7478ee67b8c31a9dee,
-        type: 3}
-      propertyPath: m_text
-      value: "??\u200B"
-      objectReference: {fileID: 0}
     - target: {fileID: 8093836707315242147, guid: 69671317611f2e7478ee67b8c31a9dee,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1107,9 +1102,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69671317611f2e7478ee67b8c31a9dee, type: 3}
---- !u!114 &6209811340707633033 stripped
+--- !u!114 &1602947747560282071 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1819305672900559342, guid: 69671317611f2e7478ee67b8c31a9dee,
+  m_CorrespondingSourceObject: {fileID: 6362063291720852030, guid: 69671317611f2e7478ee67b8c31a9dee,
     type: 3}
   m_PrefabInstance: {fileID: 1602947747560282070}
   m_PrefabAsset: {fileID: 0}
