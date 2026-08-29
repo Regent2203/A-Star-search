@@ -65,7 +65,7 @@ namespace EasyField.SceneInstallers
         {
             Container.BindInterfacesAndSelfTo<SceneController_Scene3b>().AsSingle();
 
-            Container.Bind(typeof(GridField), typeof(HexGridField)).To<HexGridField>().FromInstance(_field).AsSingle();
+            Container.Bind(typeof(IField), typeof(GridField), typeof(HexGridField)).To<HexGridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<HexesFieldBuilder>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsNodesCreator>().AsSingle();
         }

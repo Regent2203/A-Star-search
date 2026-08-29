@@ -1,4 +1,5 @@
-﻿using EasyField.Implementations.Vertexes;
+﻿using EasyField.Fields;
+using EasyField.Implementations.Vertexes;
 using EasyField.Implementations.Vertexes.Core.Dto;
 using EasyField.Inputs;
 using EasyField.Links;
@@ -204,7 +205,7 @@ namespace EasyField.SceneControllers
             }
         }
 
-        private void OnFieldClicked(Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
+        private void OnFieldClicked(Vector2 pos, IField field, PointerEventData.InputButton button, InputSnapshot input)
         {
             if (button == PointerEventData.InputButton.Left)
             {

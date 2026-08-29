@@ -9,7 +9,7 @@ namespace EasyField.Fields.ClickHandlers
 {
     public interface IFieldClickHandler : IPointerDownHandler
     {
-        public event Action<Vector2, PointerEventData.InputButton, InputSnapshot> FieldClicked;
+        public event Action<Vector2, IField, PointerEventData.InputButton, InputSnapshot> FieldClicked;
     }
 
     public interface IFieldClickHandler<TNodeView> : IFieldClickHandler

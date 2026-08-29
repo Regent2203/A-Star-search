@@ -1,4 +1,5 @@
 ﻿using EasyField.BrushManagers;
+using EasyField.Fields;
 using EasyField.Implementations.Cells;
 using EasyField.Implementations.Cells.DynamicCells;
 using EasyField.Implementations.Cells.UI;
@@ -119,7 +120,7 @@ namespace EasyField.SceneControllers
             nodeView.UpdateSprite(cellType.Sprite);
         }
 
-        private void OnFieldClicked(Vector2 pos, PointerEventData.InputButton button, InputSnapshot input)
+        private void OnFieldClicked(Vector2 pos, IField field, PointerEventData.InputButton button, InputSnapshot input)
         {
             if (input.IsCreatingMode)
             {

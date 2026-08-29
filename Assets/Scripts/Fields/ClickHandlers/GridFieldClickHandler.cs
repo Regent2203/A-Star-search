@@ -13,7 +13,7 @@ namespace EasyField.Fields.ClickHandlers
     public class GridFieldClickHandler<TNodeView> : FieldClickHandler, IFieldClickHandler<TNodeView> 
         where TNodeView : MonoBehaviour, INodeView<Vector2Int>
     {
-        private GridField _field;
+        private Grid _grid;
         private IObjectsStorage<TNodeView, Vector2Int> _nodeViews;
 
         public event Action<TNodeView, PointerEventData.InputButton, InputSnapshot> NodeViewClicked;
@@ -22,7 +22,7 @@ namespace EasyField.Fields.ClickHandlers
         [Inject]
         public void Construct(GridField field, GridTypeStorage<TNodeView> nodeViews)
         {
-            _field = field;
+            _grid = field.Grid;
             _nodeViews = nodeViews;
         }
 
@@ -37,7 +37,7 @@ namespace EasyField.Fields.ClickHandlers
 
         protected bool CheckHitNodeView(GameObject hitObject, PointerEventData eventData)
         {
-            var index = (Vector2Int)_field.Grid.WorldToCell(eventData.pointerCurrentRaycast.worldPosition);
+            var index = (Vector2Int)_grid.WorldToCell(eventData.pointerCurrentRaycast.worldPosition);
             CorrectIndexByGridType(ref index);
 
             if (_nodeViews.TryGetItem(index, out var nodeView))

@@ -75,7 +75,7 @@ namespace EasyField.SceneInstallers
         {
             Container.BindInterfacesAndSelfTo<SceneController_Scene4b>().AsSingle();            
 
-            Container.Bind(typeof(GridField), typeof(RectGridField)).To<RectGridField>().FromInstance(_field).AsSingle();
+            Container.Bind(typeof(IField), typeof(GridField), typeof(RectGridField)).To<RectGridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<DynamicCellsFieldBuilder>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsNodesCreator>().AsSingle();
             Container.BindInterfacesAndSelfTo<DynamicCellsLinksCreator>().AsSingle().WithArguments(true);

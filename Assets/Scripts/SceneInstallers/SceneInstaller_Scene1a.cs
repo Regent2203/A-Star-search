@@ -64,7 +64,7 @@ namespace EasyField.SceneInstallers
         {
             Container.BindInterfacesAndSelfTo<SceneController_Scene1a>().AsSingle();            
 
-            Container.Bind(typeof(GridField), typeof(RectGridField)).To<RectGridField>().FromInstance(_field).AsSingle();
+            Container.Bind(typeof(IField), typeof(GridField), typeof(RectGridField)).To<RectGridField>().FromInstance(_field).AsSingle();
             Container.BindInterfacesAndSelfTo<CellsFieldBuilder>().AsSingle();
             Container.BindInterfacesAndSelfTo<CellsNodesCreator>().AsSingle();
         }
