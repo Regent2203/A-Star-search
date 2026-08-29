@@ -165,8 +165,8 @@ namespace EasyField.SceneInstallers
 
         private void BindUI()
         {
-            Container.BindInterfacesAndSelfTo<UIHotkeysInfoPanel_Vertexes>().FromInstance(_hotkeyInfoPanel).AsSingle();
-            Container.BindInterfacesAndSelfTo<UIMainButtonsPanel>().FromInstance(_saveLoadPanel).AsSingle();
+            Container.BindInstance(_hotkeyInfoPanel).AsSingle();
+            Container.BindInstance(_saveLoadPanel).AsSingle();
         }
     }
 }

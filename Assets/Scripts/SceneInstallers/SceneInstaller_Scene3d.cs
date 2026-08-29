@@ -143,10 +143,10 @@ namespace EasyField.SceneInstallers
 
         private void BindUI()
         {
-            Container.BindInterfacesAndSelfTo<UICellsPalette>().FromInstance(_palette).AsSingle();
-            Container.BindInterfacesAndSelfTo<UICellsPaletteChoicePanel>().FromInstance(_paletteChoice).AsSingle();
-            Container.BindInterfacesAndSelfTo<UIHotkeysInfoPanel_Cells>().FromInstance(_hotkeyInfoPanel).AsSingle();
-            Container.BindInterfacesAndSelfTo<UIMainButtonsPanel>().FromInstance(_saveLoadPanel).AsSingle();
+            Container.BindInstance(_palette).AsSingle();
+            Container.BindInstance(_paletteChoice).AsSingle();
+            Container.BindInstance(_hotkeyInfoPanel).AsSingle();
+            Container.BindInstance(_saveLoadPanel).AsSingle();
         }
     }
 }
