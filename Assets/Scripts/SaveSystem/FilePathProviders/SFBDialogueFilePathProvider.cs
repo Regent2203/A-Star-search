@@ -3,7 +3,7 @@ using System;
 
 namespace EasyField.SaveSystem.FilePathProviders
 {
-    public class DialogueFilePathProvider : IFilePathProvider
+    public class SFBDialogueFilePathProvider : IFilePathProvider
     {
         private readonly ExtensionFilter[] _extensions = new[]
         {
