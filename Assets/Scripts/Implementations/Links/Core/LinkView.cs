@@ -116,10 +116,11 @@ namespace EasyField.Links
 
             //arrow
             var arrowAngle = angle + 90f;
+            var arrowTipPos = new Vector3(end.x, end.y, _arrowTipRenderer.transform.position.z);
 
             _arrowBodyRenderer.SetPosition(0, start - (Vector2)_arrowBodyRenderer.transform.position);
             _arrowBodyRenderer.SetPosition(1, end - (Vector2)_arrowBodyRenderer.transform.position);
-            _arrowTipRenderer.transform.SetPositionAndRotation(end, Quaternion.Euler(0, 0, arrowAngle));
+            _arrowTipRenderer.transform.SetPositionAndRotation(arrowTipPos, Quaternion.Euler(0, 0, arrowAngle));
 
 
             //text
@@ -132,7 +133,7 @@ namespace EasyField.Links
             //collider
             var distance = Vector2.Distance(start, end);
             var centerPosition = Vector2.Lerp(start, end, 0.5f);            
-            var collPos = new Vector3(centerPosition.x, centerPosition.y, 0);
+            var collPos = new Vector3(centerPosition.x, centerPosition.y, _collider.transform.position.z);
 
             _collider.transform.SetPositionAndRotation(collPos, Quaternion.Euler(0, 0, angle));
             _collider.size = new Vector2(distance, _collider.size.y);

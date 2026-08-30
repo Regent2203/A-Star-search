@@ -57,7 +57,7 @@ namespace EasyField.SceneInstallers
             BindManipulators();
             BindPathfinding();
             BindSaveSystem();
-            BindUI();            
+            BindUI();
         }
 
         private void BindMainComponents()
