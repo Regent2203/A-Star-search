@@ -138,7 +138,7 @@ namespace EasyField.SceneInstallers
 
             //Choose only one
             //Container.BindInterfacesAndSelfTo<SFBDialogueFilePathProvider>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map_3c.json", Environment.SpecialFolder.Desktop);
+            Container.BindInterfacesAndSelfTo<ConstantFilePathProvider>().AsSingle().WithArguments("Map_3c.json");
         }
 
         private void BindUI()

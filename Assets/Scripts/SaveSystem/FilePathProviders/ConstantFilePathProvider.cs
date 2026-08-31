@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using UnityEngine;
 
 namespace EasyField.SaveSystem.FilePathProviders
 {
@@ -8,9 +9,10 @@ namespace EasyField.SaveSystem.FilePathProviders
         private readonly string _filePath;
 
 
-        public ConstantFilePathProvider(string fileName, Environment.SpecialFolder specialFolder)
+        public ConstantFilePathProvider(string fileName)
         {
-            string folderPath = Environment.GetFolderPath(specialFolder);
+            var folderPath = Application.streamingAssetsPath;
+            //var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
             _filePath = Path.Combine(folderPath, fileName);
         }

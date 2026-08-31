@@ -1,10 +1,13 @@
 ﻿using SFB;
 using System;
+using UnityEngine;
 
 namespace EasyField.SaveSystem.FilePathProviders
 {
     public class SFBDialogueFilePathProvider : IFilePathProvider
     {
+        private readonly string _folderPath = string.Empty;
+
         private readonly ExtensionFilter[] _extensions = new[]
         {
             new ExtensionFilter("JSON Files", "json"),
@@ -12,11 +15,16 @@ namespace EasyField.SaveSystem.FilePathProviders
         };
 
 
+        public SFBDialogueFilePathProvider()
+        {
+            _folderPath = Application.streamingAssetsPath;
+            //_folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        }
+
+
         public string GetSaveFilePath()
         {
-            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-
-            string path = StandaloneFileBrowser.SaveFilePanel("Save field", folderPath, "", _extensions);
+            string path = StandaloneFileBrowser.SaveFilePanel("Save field", _folderPath, "", _extensions);
 
             if (string.IsNullOrEmpty(path))
             {
@@ -28,9 +36,7 @@ namespace EasyField.SaveSystem.FilePathProviders
 
         public string GetLoadFilePath()
         {
-            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-
-            string[] paths = StandaloneFileBrowser.OpenFilePanel("Load field", folderPath, _extensions, false);
+            string[] paths = StandaloneFileBrowser.OpenFilePanel("Load field", _folderPath, _extensions, false);
 
             if (paths == null || paths.Length == 0 || string.IsNullOrEmpty(paths[0]))
             {
