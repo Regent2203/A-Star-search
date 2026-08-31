@@ -119,6 +119,7 @@ namespace EasyField.Links
             start += -direction * _linkOffsetY;
             end -= -direction * _linkOffsetY;
 
+            var distance = Vector2.Distance(start, end);
             var centerPosition = Vector2.Lerp(start, end, 0.5f);
 
             //we have arrow tip sprite, so instead of drawing line between exactly start and end, we make line shorter and use arrow tip there
@@ -134,8 +135,7 @@ namespace EasyField.Links
             _arrowTipRenderer.transform.SetPositionAndRotation(arrowTipPos, Quaternion.Euler(0, 0, arrowAngle));
 
 
-            //text
-            var distance = Vector2.Distance(start, end);
+            //text            
             var textBasePos = start - _textPercentageOffsetY * distance * direction; //centered on arrow line
             var textPosition = textBasePos + (0.5f + Mathf.Abs(direction.y / 2.0f)) * _textOffsetX * perpendicular; //offsetted to the side
 
