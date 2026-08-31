@@ -4,7 +4,7 @@ using EasyField.Implementations.Vertexes.Core.Dto;
 using EasyField.Inputs;
 using EasyField.Links;
 using EasyField.Links.Implementations;
-using EasyField.Links.LinkCostChangers;
+using EasyField.Links.LinkBlockers;
 using EasyField.Links.Providers;
 using EasyField.Links.ViewMovers;
 using EasyField.Nodes.NodeBlockers;
@@ -37,7 +37,7 @@ namespace EasyField.SceneControllers
         private NodeViewSelector<VertexView> _nodeViewSelector;
         private NodeViewMover<VertexView> _nodeViewMover;
 
-        private LinkCostAdder<LinkData<int>> _linkCostAdder;
+        private LinkBlocker<LinkData<int>> _linkBlocker;
 
         private PathSetter<VertexData> _pathSetter;
         private VertexesPathfindRunner _pathfindRunner;
@@ -52,7 +52,7 @@ namespace EasyField.SceneControllers
             VertexesLinksClickHandler clickHandler, VertexesDragHandler dragHandler,
             NodePositionChanger<VertexData> nodePositionChanger, NodeBlocker<VertexData> nodeBlocker,
             NodeViewSelector<VertexView> nodeViewSelector, NodeViewMover<VertexView> nodeViewMover,
-            LinkCostAdder<LinkData<int>> linkCostAdder,            
+            LinkBlocker<LinkData<int>> linkBlocker,            
             PathSetter<VertexData> pathSetter, VertexesPathfindRunner pathfindRunner,
             VertexesSaveLoadManager saveLoadManager, UIMainButtonsPanel saveLoadPanel)
         {
@@ -72,7 +72,7 @@ namespace EasyField.SceneControllers
             _nodeViewSelector = nodeViewSelector;
             _nodeViewMover = nodeViewMover;
 
-            _linkCostAdder = linkCostAdder;
+            _linkBlocker = linkBlocker;
 
             _pathSetter = pathSetter;
             _pathfindRunner = pathfindRunner;
@@ -92,7 +92,7 @@ namespace EasyField.SceneControllers
 
             _nodeViewSelector.NodeViewSelected += OnNodeViewSelected;
             _nodeViewMover.NodeViewMoved += OnNodeViewMoved;
-            _linkCostAdder.LinkCostChanged += OnLinkCostChanged;
+            _linkBlocker.LinkBlocked -= OnLinkBlocked;
             _nodePositionChanger.NodePositionChanged += OnNodePositionChanged;
             _nodeBlocker.NodeBlocked += OnNodeBlocked;
 
@@ -122,7 +122,7 @@ namespace EasyField.SceneControllers
 
             _nodeViewSelector.NodeViewSelected -= OnNodeViewSelected;
             _nodeViewMover.NodeViewMoved -= OnNodeViewMoved;
-            _linkCostAdder.LinkCostChanged -= OnLinkCostChanged;
+            _linkBlocker.LinkBlocked -= OnLinkBlocked;
             _nodePositionChanger.NodePositionChanged -= OnNodePositionChanged;
             _nodeBlocker.NodeBlocked -= OnNodeBlocked;
 
@@ -141,13 +141,11 @@ namespace EasyField.SceneControllers
             {
                 if (_linksProvider.TryGetLink(view.From, view.To, out var linkData))
                 {
-                    const float value = 0.5f;
-
                     if (button == PointerEventData.InputButton.Left)
-                        _linkCostAdder.ChangeLinkCost(linkData, value);
+                        _linkBlocker.TryBlockLink(linkData, true);
 
                     if (button == PointerEventData.InputButton.Right)
-                        _linkCostAdder.ChangeLinkCost(linkData, -value);
+                        _linkBlocker.TryBlockLink(linkData, false);
                 }
             }
         }
@@ -246,10 +244,10 @@ namespace EasyField.SceneControllers
             _nodePositionChanger.TryChangeNodePosition(nodeData, pos);            
         }
 
-        private void OnLinkCostChanged(LinkData<int> linkData, float cost)
+        private void OnLinkBlocked(LinkData<int> linkData, bool block)
         {
             var linkView = _linkViews.GetItem(linkData.Id);
-            linkView.UpdateCostText(cost);
+            linkView.ShowBlockedMarker(block);
 
             OnFieldChanged();
         }

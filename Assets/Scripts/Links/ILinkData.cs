@@ -1,9 +1,11 @@
 ﻿namespace EasyField.Links
 {
     public interface ILinkData
-    {        
+    {
         public float Cost { get; }
+        public bool IsBlocked { get; }
         public void SetCost(float value);
+        public bool TrySetBlocked(bool blocked);
     }
 
     public interface ILinkData<TId> : ILinkData

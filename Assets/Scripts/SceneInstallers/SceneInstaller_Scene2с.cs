@@ -9,7 +9,7 @@ using EasyField.Links;
 using EasyField.Links.CostProviders;
 using EasyField.Links.Factories;
 using EasyField.Links.Implementations;
-using EasyField.Links.LinkCostChangers;
+using EasyField.Links.LinkBlockers;
 using EasyField.Links.Providers;
 using EasyField.Links.ViewMovers;
 using EasyField.Nodes.NodeBlockers;
@@ -27,7 +27,6 @@ using EasyField.SceneControllers;
 using EasyField.SearchAlgorithms;
 using EasyField.Serializers;
 using EasyField.UICommon;
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -128,7 +127,7 @@ namespace EasyField.SceneInstallers
             Container.BindInterfacesAndSelfTo<NodeViewSelector<VertexView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<NodeViewMover<VertexView>>().AsSingle();
             Container.BindInterfacesAndSelfTo<LinkViewCoordinator<VertexView, int>>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LinkCostAdder<LinkData<int>>>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LinkBlocker<LinkData<int>>>().AsSingle();
         }
 
         private void BindPathfinding()

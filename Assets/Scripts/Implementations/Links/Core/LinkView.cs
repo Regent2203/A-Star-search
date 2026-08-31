@@ -10,6 +10,8 @@ namespace EasyField.Links
     {
         [SerializeField]
         private BoxCollider2D _collider;
+        [SerializeField]
+        private GameObject _blockedMarker;
 
         [Header("Link")]
         [SerializeField]
@@ -81,6 +83,11 @@ namespace EasyField.Links
             _costText.text = $"{cost.ToString("0.00")}";
         }
 
+        public void ShowBlockedMarker(bool show)
+        {
+            _blockedMarker.SetActive(show);
+        }
+
         public void UpdatePositions(Vector2 posFrom, Vector2 posTo)
         {            
             var direction = (posFrom - posTo).normalized;
@@ -137,6 +144,10 @@ namespace EasyField.Links
 
             _collider.transform.SetPositionAndRotation(collPos, Quaternion.Euler(0, 0, angle));
             _collider.size = new Vector2(distance, _collider.size.y);
+
+            //blocked marker
+            //todo
+            //_blockedMarker.transform.SetPositionAndRotation
         }
     }
 }

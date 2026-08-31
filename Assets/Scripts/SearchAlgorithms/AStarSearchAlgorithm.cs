@@ -53,6 +53,9 @@ namespace EasyField.SearchAlgorithms
 
                 foreach (var link in _linksProvider.GetLinksFromNode(fromNode.Id))
                 {
+                    if (link.IsBlocked)
+                        continue;
+
                     var toNode = _nodes.GetItem(link.To);
 
                     if (fromNode.IsBlocked || toNode.IsBlocked)
