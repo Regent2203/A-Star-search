@@ -14,7 +14,9 @@ namespace EasyField.Links.Providers
         where TNodeData : INodeData<Vector2Int>
         where TLinkData : ILinkData<Vector2Int>
     {
-        private readonly SmartLinkDataFactory<TNodeData, TLinkData, Vector2Int> _factory;
+        private readonly List<TLinkData> _links = new(8);
+
+        private readonly SmartLinkDataFactory<TNodeData, TLinkData, Vector2Int> _smartFactory;
         private readonly IGridNeighboursProvider<TNodeData> _neighboursProvider;
         private readonly GridTypeStorage<TNodeData> _nodeDatas;
 
@@ -22,25 +24,44 @@ namespace EasyField.Links.Providers
         public GridDynamicLinksProvider(SmartLinkDataFactory<TNodeData, TLinkData, Vector2Int> factory,
             IGridNeighboursProvider<TNodeData> neighboursProvider, GridTypeStorage<TNodeData> nodeDatas)
         {
-            _factory = factory;
+            _smartFactory = factory;
             _neighboursProvider = neighboursProvider;
             _nodeDatas = nodeDatas;
         }
 
         public IEnumerable<TLinkData> GetLinksFromNode(Vector2Int id)
         {
+            ClearDynamicLinks();
+
             var neighbours = _nodeDatas.GetNeighbourObjects(id, _neighboursProvider);
             var node = _nodeDatas.GetItem(id);
+            
+            var links = _smartFactory.CreateLinksFromNode(node, neighbours);
+            _links.AddRange(links);
 
-            return _factory.CreateLinksFromNode(node, neighbours);
+            return _links;
         }
 
         public IEnumerable<TLinkData> GetLinksToNode(Vector2Int id)
         {
+            ClearDynamicLinks();
+
             var neighbours = _nodeDatas.GetNeighbourObjects(id, _neighboursProvider);
             var node = _nodeDatas.GetItem(id);
+            
+            var links = _smartFactory.CreateLinksToNode(node, neighbours);
+            _links.AddRange(links);
 
-            return _factory.CreateLinksToNode(node, neighbours);
+            return _links;
+        }
+
+        private void ClearDynamicLinks()
+        {
+            foreach (var link in _links)
+            {
+                _smartFactory.DeleteItem(link);
+            }
+            _links.Clear();
         }
     }
 }
