@@ -141,11 +141,8 @@ namespace EasyField.SceneControllers
             {
                 if (_linksProvider.TryGetLink(view.From, view.To, out var linkData))
                 {
-                    if (button == PointerEventData.InputButton.Left)
-                        _linkBlocker.TryBlockLink(linkData, true);
-
                     if (button == PointerEventData.InputButton.Right)
-                        _linkBlocker.TryBlockLink(linkData, false);
+                        _linkBlocker.TryBlockLink(linkData, !linkData.IsBlocked);
                 }
             }
         }

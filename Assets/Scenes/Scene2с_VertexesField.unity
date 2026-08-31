@@ -857,7 +857,7 @@ PrefabInstance:
     - target: {fileID: 2710465158141965598, guid: fc6c2c11c6bf4ca4b8bdaf70c6b74bf6,
         type: 3}
       propertyPath: m_text
-      value: LMB/RMB (on link) - set link blocked on/off
+      value: RMB (on link) - switch link's blocked state on/off
       objectReference: {fileID: 0}
     - target: {fileID: 2833478410832491945, guid: fc6c2c11c6bf4ca4b8bdaf70c6b74bf6,
         type: 3}

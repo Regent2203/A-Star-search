@@ -792,6 +792,176 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 295402258965618003}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1652518298
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6350129639041806637}
+    m_Modifications:
+    - target: {fileID: 3002439937581616002, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: _sceneName
+      value: "Scene2\u0441_VertexesField"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3002439937581616002, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: _sceneToLoad
+      value: 
+      objectReference: {fileID: 102900000, guid: 5548f80ebbb03a946838b6d244dad400,
+        type: 3}
+    - target: {fileID: 3672482812227839826, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_text
+      value: 'Scene 2c: Spatial Field of vertices. Vertices can be dragged, selected,
+        set to blocked status, created or deleted.
+
+        Links are visible and
+        must be created manually (can also be deleted). Link cost value is constant
+        and cannot be modified. Links can be blocked.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3672482812227839826, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7978225837543786604, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_Name
+      value: btnScene2c
+      objectReference: {fileID: 0}
+    - target: {fileID: 7978225837543786604, guid: 3df72704123b28640b96862888ccdf76,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3df72704123b28640b96862888ccdf76, type: 3}
+--- !u!224 &1652518299 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
+    type: 3}
+  m_PrefabInstance: {fileID: 1652518298}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2052167857 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6188579424748579940, guid: 3df72704123b28640b96862888ccdf76,
@@ -1760,11 +1930,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: 'Scene 2b: Spatial Field of vertices. Vertices can be dragged, selected,
-        set blocked, created or deleted.
+        set to blocked status, created or deleted.
 
-        Links are visible and must be created
-        manually (can also be deleted). Link cost value can be modified and does
-        not depend on vertices'' positions.'
+        Links are visible and
+        must be created manually (can also be deleted). Link cost value can be modified
+        and does not depend on vertices'' positions.'
       objectReference: {fileID: 0}
     - target: {fileID: 3672482812227839826, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
@@ -2140,11 +2310,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: 'Scene 2a: Spatial Field of vertices. Vertices can be dragged, selected,
-        set blocked, created or deleted.
+        set to blocked status, created or deleted.
 
-        Links are visible and must be created
-        manually (can also be deleted). Link cost directly depends on vertices''
-        positions.'
+        Links are visible and
+        must be created manually (can also be deleted). Link cost directly depends
+        on vertices'' positions.'
       objectReference: {fileID: 0}
     - target: {fileID: 3672482812227839826, guid: 3df72704123b28640b96862888ccdf76,
         type: 3}
@@ -2310,7 +2480,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8858504878399254681}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.38661847
+  m_Size: 0.35492843
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2380,6 +2550,7 @@ RectTransform:
   - {fileID: 166412125}
   - {fileID: 1058682454}
   - {fileID: 1416410027}
+  - {fileID: 1652518299}
   - {fileID: 921006561}
   - {fileID: 436685497}
   - {fileID: 294099009}
@@ -2391,7 +2562,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -343.49365}
+  m_AnchoredPosition: {x: 0, y: -393.49365}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7213097026846154636
