@@ -55,6 +55,7 @@ namespace EasyField.Links
             _id = new DualKey<TId>(from, to);
             name = $"{BasicName} {From}->{To}";
             UpdateCostText(cost);
+            ShowBlockedMarker(false);
             _placementType = placementType;
 
             gameObject.SetActive(true);
@@ -65,6 +66,7 @@ namespace EasyField.Links
             _id = default;
             name = $"{BasicName}";
             UpdateCostText(0.0f);
+            ShowBlockedMarker(false);
             _placementType = PlacementType.Center;
 
             gameObject.SetActive(false);
@@ -117,6 +119,8 @@ namespace EasyField.Links
             start += -direction * _linkOffsetY;
             end -= -direction * _linkOffsetY;
 
+            var centerPosition = Vector2.Lerp(start, end, 0.5f);
+
             //we have arrow tip sprite, so instead of drawing line between exactly start and end, we make line shorter and use arrow tip there
             end -= -direction * _arrowTipOffsetY;
 
@@ -131,23 +135,24 @@ namespace EasyField.Links
 
 
             //text
-            var textBasePos = start - _textPercentageOffsetY * Vector2.Distance(start, end) * direction; //centered on arrow line
+            var distance = Vector2.Distance(start, end);
+            var textBasePos = start - _textPercentageOffsetY * distance * direction; //centered on arrow line
             var textPosition = textBasePos + (0.5f + Mathf.Abs(direction.y / 2.0f)) * _textOffsetX * perpendicular; //offsetted to the side
 
             _costText.transform.position = new Vector3(textPosition.x, textPosition.y, _costText.transform.position.z);
 
 
-            //collider
-            var distance = Vector2.Distance(start, end);
-            var centerPosition = Vector2.Lerp(start, end, 0.5f);            
+            //collider            
             var collPos = new Vector3(centerPosition.x, centerPosition.y, _collider.transform.position.z);
 
             _collider.transform.SetPositionAndRotation(collPos, Quaternion.Euler(0, 0, angle));
             _collider.size = new Vector2(distance, _collider.size.y);
 
+
             //blocked marker
-            //todo
-            //_blockedMarker.transform.SetPositionAndRotation
+            var blockPos = new Vector3(centerPosition.x, centerPosition.y, _blockedMarker.transform.position.z);
+
+            _blockedMarker.transform.SetPositionAndRotation(blockPos, Quaternion.Euler(0, 0, angle));
         }
     }
 }

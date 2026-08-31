@@ -92,7 +92,7 @@ namespace EasyField.SceneControllers
 
             _nodeViewSelector.NodeViewSelected += OnNodeViewSelected;
             _nodeViewMover.NodeViewMoved += OnNodeViewMoved;
-            _linkBlocker.LinkBlocked -= OnLinkBlocked;
+            _linkBlocker.LinkBlocked += OnLinkBlocked;
             _nodePositionChanger.NodePositionChanged += OnNodePositionChanged;
             _nodeBlocker.NodeBlocked += OnNodeBlocked;
 
@@ -245,7 +245,7 @@ namespace EasyField.SceneControllers
         }
 
         private void OnLinkBlocked(LinkData<int> linkData, bool block)
-        {
+        {            
             var linkView = _linkViews.GetItem(linkData.Id);
             linkView.ShowBlockedMarker(block);
 
