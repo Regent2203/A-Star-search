@@ -51,6 +51,9 @@ namespace EasyField.SearchAlgorithms
                     return RetracePath(startNode, finishNode);
                 }
 
+                if (fromNode.IsBlocked)
+                    break;
+
                 foreach (var link in _linksProvider.GetLinksFromNode(fromNode.Id))
                 {
                     if (link.IsBlocked)
@@ -58,7 +61,7 @@ namespace EasyField.SearchAlgorithms
 
                     var toNode = _nodes.GetItem(link.To);
 
-                    if (fromNode.IsBlocked || toNode.IsBlocked)
+                    if (toNode.IsBlocked)
                         continue;
 
                     var newCost = _costSoFar[fromNode] + link.Cost;
