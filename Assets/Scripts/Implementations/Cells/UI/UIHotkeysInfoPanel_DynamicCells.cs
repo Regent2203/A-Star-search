@@ -28,8 +28,8 @@ namespace EasyField.Implementations.DynamicCells.UI
         {
             SetMarkStartText(inputSettings.MarkingKey.ToString());
             SetMarkFinishText(inputSettings.MarkingKey.ToString());
-            SetLMBCreateText(inputSettings.LinkingKey.ToString());
-            SetRMBCreateText(inputSettings.LinkingKey.ToString());
+            SetLMBCreateText(inputSettings.CreatingKey.ToString());
+            SetRMBCreateText(inputSettings.CreatingKey.ToString());
             SetLinkingText(inputSettings.LinkingKey.ToString());
         }
 
